@@ -65,9 +65,7 @@ function HomeWrapper({ children }) {
         return () => {
             router.events?.off?.('routeChangeComplete', handleRouteChangeComplete)
         }
-    }, [router, lenis])
-
-
+    }, [router, lenis, scrollToTop]) // Include scrollToTop in the dependency array
 
     return (
         <main className="wrapper">

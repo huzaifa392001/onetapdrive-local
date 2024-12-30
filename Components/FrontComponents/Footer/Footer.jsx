@@ -60,7 +60,7 @@ function Footer() {
           <div className="customContainer">
             <h2>Are you a Car Rental Company? Join US.</h2>
             <h4>
-              List your cars with the UAE's Biggest Car Rental & Learning
+              List your cars with the UAE&apos;s Biggest Car Rental & Learning
               Marketplace Today!
             </h4>
             <button className="themeBtn">Sign up now</button>

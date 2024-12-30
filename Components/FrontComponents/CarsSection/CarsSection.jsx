@@ -16,8 +16,8 @@ function CarsSection(props) {
                 </div>
                 <div className="prodRow col4">
                     {props?.data?.map((product, index) => (
-                        <Suspense fallback={<ProductCardSkeleton />}>
-                            <ProductCard className={`${props?.isFeatured ? "featured" : ""}`} data={product} key={index} />
+                        <Suspense key={index} fallback={<ProductCardSkeleton />}>
+                            <ProductCard className={`${props?.isFeatured ? "featured" : ""}`} data={product} />
                         </Suspense>
                     ))}
                 </div>

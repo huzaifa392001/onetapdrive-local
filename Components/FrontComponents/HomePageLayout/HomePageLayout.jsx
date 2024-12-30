@@ -66,7 +66,7 @@ function HomePageLayout() {
                             <strong>
                                 {`‘rent a car near me’? `}
                             </strong>
-                            Your perfect match is right here! OneTapDrive.com is one of Dubai's emerging car rental marketplaces, catering to budget-friendly car rental deals from the best rental companies. You can access our extensive fleet of over 2,000 vehicles from trusted rental companies across the UAE. We are confident that you will find the most affordable options, whether you are a tourist in need of a car or a resident looking for long-term rentals, starting from AED 30 per day.
+                            Your perfect match is right here! OneTapDrive.com is one of Dubai&apos;s emerging car rental marketplaces, catering to budget-friendly car rental deals from the best rental companies. You can access our extensive fleet of over 2,000 vehicles from trusted rental companies across the UAE. We are confident that you will find the most affordable options, whether you are a tourist in need of a car or a resident looking for long-term rentals, starting from AED 30 per day.
                         </p>
                     </div>
                 </div>

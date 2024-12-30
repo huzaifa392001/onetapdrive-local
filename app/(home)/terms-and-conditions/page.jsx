@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function page() {
     return (
@@ -24,7 +24,7 @@ function page() {
                             </span>
                             <p>
                                 OneTapDrive simplifies the process of car rental. Just visit our website or app to
-                                reserve a car, and you'll have access to a wide range of options for daily, weekly, or
+                                reserve a car, and you&apos;ll have access to a wide range of options for daily, weekly, or
                                 monthly rentals.
                             </p>
                         </li>
@@ -34,7 +34,7 @@ function page() {
                             </span>
                             <p>
                                 While making a booking through our website, you are agreeing to all the terms and
-                                conditions. If something doesn't feel right, you can always choose another service that
+                                conditions. If something doesn&apos;t feel right, you can always choose another service that
                                 works better for you.
                             </p>
                         </li>
@@ -44,7 +44,7 @@ function page() {
                             </span>
                             <p>
                                 We help you connect with trusted suppliers so you can easily find the right car. Whether
-                                you're looking for cheap cars or a larger SUV, we make the booking process simple, but
+                                you&apos;re looking for cheap cars or a larger SUV, we make the booking process simple, but
                                 the supplier handles the actual rental and payment directly.
                             </p>
                         </li>
@@ -53,8 +53,8 @@ function page() {
                         How to Book
                     </h3>
                     <p>
-                        Complete your reservation on our platform, and you'll get a final, upfront price—no surprises or
-                        hidden fees. Once confirmed, you'll receive an invoice at the email you provide.
+                        Complete your reservation on our platform, and you&apos;ll get a final, upfront price—no surprises or
+                        hidden fees. Once confirmed, you&apos;ll receive an invoice at the email you provide.
                     </p>
                     <h3>
                         Payments
@@ -62,7 +62,7 @@ function page() {
                     <p>
                         Payments are straightforward: use your credit card. However, any additional fees, like currency
                         conversion charges, are your responsibility. The amount displayed during booking is exactly what
-                        you'll be charged.
+                        you&apos;ll be charged.
                     </p>
                     <h3>
                         Keeping Things Smooth
@@ -73,7 +73,7 @@ function page() {
                                 Platform Changes
                             </span>
                             <p>
-                                We're always improving. Sometimes, updates or maintenance may result in temporary
+                                We&apos;re always improving. Sometimes, updates or maintenance may result in temporary
                                 changes or pauses in service, but these are designed to make your experience better.
                             </p>
                         </li>
@@ -92,7 +92,7 @@ function page() {
                                 Your Responsibility
                             </span>
                             <p>
-                                It's important to double-check the information you provide during booking. Accurate
+                                It&apos;s important to double-check the information you provide during booking. Accurate
                                 details ensure a seamless rental experience.
                             </p>
                         </li>
@@ -110,7 +110,7 @@ function page() {
                                 Our Role as a Facilitator
                             </span>
                             <p>
-                                OneTapDrive acts as an intermediary, connecting you with car suppliers. We don't provide
+                                OneTapDrive acts as an intermediary, connecting you with car suppliers. We don&apos;t provide
                                 the vehicles ourselves. All transactions and claims are handled directly with the
                                 supplier.
                             </p>
@@ -120,7 +120,7 @@ function page() {
                                 After Booking
                             </span>
                             <p>
-                                Once your booking is confirmed and payment is processed, we'll send a confirmation email
+                                Once your booking is confirmed and payment is processed, we&apos;ll send a confirmation email
                                 with your invoice. When driver details are shared, you can directly coordinate with the
                                 provider for your rental.
                             </p>
@@ -130,7 +130,7 @@ function page() {
                         Behavior Guidelines
                     </h3>
                     <p>
-                        Local laws require all passengers to wear seatbelt(s). Please follow the driver's instructions
+                        Local laws require all passengers to wear seatbelt(s). Please follow the driver&apos;s instructions
                         during your trip. Prohibited actions include opening doors while the car is moving, throwing
                         objects outside, or leaning out of the windows. Smoking and drinking alcohol in the vehicle are
                         strictly forbidden. Violations may result in cleaning charges or compensation for downtime.
@@ -146,7 +146,7 @@ function page() {
                         Vehicle Capacity and Safety
                     </h3>
                     <p>
-                        Passengers and luggage must adhere to the vehicle's safety limits. If there's a safety concern,
+                        Passengers and luggage must adhere to the vehicle&apos;s safety limits. If there&apos;s a safety concern,
                         the driver may refuse excess passengers or luggage.
                     </p>
                     <h3>
@@ -154,18 +154,18 @@ function page() {
                     </h3>
                     <p>
                         Our fleet includes various categories, like Luxury and Standard. Images shown during booking are
-                        for reference, and the actual car may differ. If the reserved vehicle isn't available, we'll
+                        for reference, and the actual car may differ. If the reserved vehicle isn&apos;t available, we&apos;ll
                         provide an upgraded option whenever possible.
                     </p>
                     <h3>
                         Using Our Content
                     </h3>
                     <p>
-                        We grant you a temporary license to view and download content from OneTapDrive's site for
+                        We grant you a temporary license to view and download content from OneTapDrive&apos;s site for
                         personal, non-commercial purposes. However, this license does not transfer ownership.
                     </p>
                     <h3>
-                        Here's what you cannot do:
+                        Here&apos;s what you cannot do:
                     </h3>
                     <ul>
                         <li>
@@ -223,7 +223,7 @@ function page() {
                             <p>
                                 If you need to cancel, please do so at least 24 hours before your booking time. A small
                                 processing fee will be deducted from your refund, which can take anywhere from 10 to 45
-                                days to process, depending on your bank. If you cancel too late or don't show up, no
+                                days to process, depending on your bank. If you cancel too late or don&apos;t show up, no
                                 refund will be issued.
                             </p>
                         </li>
@@ -240,10 +240,10 @@ function page() {
                         Limitations
                     </h3>
                     <p>
-                        We do our best to keep things running smoothly, but we can't control everything. If something
-                        goes wrong—whether it's a loss, delay, or disruption—we're not liable. This includes financial
-                        hiccups, data issues, or business interruptions. Even if you've flagged the possibility of a
-                        problem, we can't take responsibility for damages.
+                        We do our best to keep things running smoothly, but we can&apos;t control everything. If something
+                        goes wrong—whether it&apos;s a loss, delay, or disruption—we&apos;re not liable. This includes financial
+                        hiccups, data issues, or business interruptions. Even if you&apos;ve flagged the possibility of a
+                        problem, we can&apos;t take responsibility for damages.
                     </p>
                     <h3>
                         Updates and Corrections
@@ -260,10 +260,10 @@ function page() {
                     <ul>
                         <li>
                             <p>
-                                We follow UAE laws since that's where we're based. Payments on OneTapDrive are safe and
+                                We follow UAE laws since that&apos;s where we&apos;re based. Payments on OneTapDrive are safe and
                                 secure due to SSL encryption and a trusted payment gateway. You can pay using Visa or
                                 MasterCard in AED (United Arab Emirates Dirham). Before completing your transaction,
-                                it's a good idea to review the terms and policies of your payment provider.
+                                it&apos;s a good idea to review the terms and policies of your payment provider.
                             </p>
                         </li>
                         <li>
@@ -274,7 +274,7 @@ function page() {
                         </li>
                         <li>
                             <p>
-                                We also follow international regulations, so we can't offer services to anyone involved
+                                We also follow international regulations, so we can&apos;t offer services to anyone involved
                                 in activities restricted by organizations like OFAC. This includes individuals or groups
                                 linked to terrorism or illegal trade.
                             </p>
@@ -292,7 +292,7 @@ function page() {
                     </h3>
                     <p>
                         Sometimes, we update our terms to keep up with changes in the business or to improve the way we
-                        work. If anything changes, it'll be official only if it's put in writing by OneTapDrive. It's a
+                        work. If anything changes, it&apos;ll be official only if it&apos;s put in writing by OneTapDrive. It&apos;s a
                         good idea to check these terms now and then to stay in the loop.
                     </p>
                     <h3>
@@ -352,7 +352,7 @@ function page() {
                         Exemption
                     </h3>
                     <p>
-                        The platform and all its materials are provided "as is," without any guarantees. We can't
+                        The platform and all its materials are provided &quot;as is,&quot; without any guarantees. We can&apos;t
                         promise that everything is always accurate, suitable, or reliable. This includes any implied
                         warranties, such as fitness for a specific purpose, quality, or lack of copyright issues. Use of
                         the Platform outside the UAE must comply with local laws. Exporting or re-exporting materials in
@@ -362,11 +362,11 @@ function page() {
                         For Agents
                     </h3>
                     <p>
-                        "We," "our," or "us" refers to OneTapDrive Portal operating under "OneTapDrive," including its
-                        team, affiliates, agents, and representatives. The term "platform" covers both the website and
-                        app, while "you" or "the client" refers to the user. The Service includes options like managing
+                        &quot;We,&quot; &quot;our,&quot; or &quot;us&quot; refers to OneTapDrive Portal operating under &quot;OneTapDrive,&quot; including its
+                        team, affiliates, agents, and representatives. The term &quot;platform&quot; covers both the website and
+                        app, while &quot;you&quot; or &quot;the client&quot; refers to the user. The Service includes options like managing
                         vehicle listings, banner advertising, highlighting cars, and email marketing. By signing the
-                        Advertising Agreement, you agree to the outlined terms. "Month" in all agreements means 30 days.
+                        Advertising Agreement, you agree to the outlined terms. &quot;Month&quot; in all agreements means 30 days.
                     </p>
                     <h3>
                         Payment Terms
@@ -391,7 +391,7 @@ function page() {
                     <p>
                         No guarantees are provided beyond what is explicitly stated. Liability for issues is limited to
                         the cost of the service paid. External factors like tech issues or delays beyond control are not
-                        the platform's responsibility. If claims arise from your content, you must cover any damages or
+                        the platform&apos;s responsibility. If claims arise from your content, you must cover any damages or
                         costs.
                     </p>
                     <h3>
@@ -406,7 +406,7 @@ function page() {
                         For Advertisers
                     </h3>
                     <p>
-                        "We," "our," or "us" refers to OneTapDrive Portal and its team, while "you" or "the client"
+                        &quot;We,&quot; &quot;our,&quot; or &quot;us&quot; refers to OneTapDrive Portal and its team, while &quot;you&quot; or &quot;the client&quot;
                         refers to users of the Service. The Service includes advertising campaigns, banners, and
                         microsites. By signing the Advertising Agreement, you accept these terms.
                     </p>
@@ -414,7 +414,7 @@ function page() {
                         Your Obligations
                     </h3>
                     <p>
-                        Ensure submitted content complies with laws and isn't misleading or harmful. Using or
+                        Ensure submitted content complies with laws and isn&apos;t misleading or harmful. Using or
                         referencing the platform elsewhere requires prior approval. The platform reserves the right to
                         review or remove content if necessary. Responsibility for data security and communication costs
                         rests with you.
@@ -431,8 +431,8 @@ function page() {
                         Limitation of Liability
                     </h3>
                     <p>
-                        The platform is provided "as is" with no guarantees. Liability for damages or tech interruptions
-                        is not assumed. Mentioning products or services doesn't imply endorsement.
+                        The platform is provided &quot;as is&quot; with no guarantees. Liability for damages or tech interruptions
+                        is not assumed. Mentioning products or services doesn&apos;t imply endorsement.
                     </p>
                     <h3>
                         Governing Law

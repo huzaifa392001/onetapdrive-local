@@ -14,7 +14,7 @@ function page() {
                         2214 cars from 47 auto brands available for hire in Dubai
                     </h5>
                     <p>
-                        If you're looking to drive a car model of a specific auto brand in the UAE, you've come to the right place. <Link href={"https://onetapdrive.com"}>onetapdrive.com</Link> hosts the largest selection of cars for rent in the UAE. Listed below are cars available for hire by every auto brand. Be it cars by Ferrari, Lamborghini, Rolls Royce, Hyundai, Toyota, Honda, Kia and so on.
+                        If you&apos;re looking to drive a car model of a specific auto brand in the UAE, you&apos;ve come to the right place. <Link href={"https://onetapdrive.com"}>onetapdrive.com</Link> hosts the largest selection of cars for rent in the UAE. Listed below are cars available for hire by every auto brand. Be it cars by Ferrari, Lamborghini, Rolls Royce, Hyundai, Toyota, Honda, Kia and so on.
                     </p>
                 </div>
             </section>

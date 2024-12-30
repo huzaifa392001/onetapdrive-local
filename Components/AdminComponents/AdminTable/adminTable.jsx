@@ -13,10 +13,6 @@ const AdminDataTable = (props) => {
   const rowData = props?.data || [];
   const pathName = usePathname()
 
-  useEffect(() => {
-    console.log("pathname=> ", pathName)
-  })
-
   const [colDefs, setColDefs] = useState([]);
 
   useEffect(() => {
@@ -86,7 +82,9 @@ const AdminDataTable = (props) => {
                 </Link>
                 <button
                   className="themeBtn"
-                  onClick={() => alert(`Delete clicked for row: ${params.node.rowIndex + 1}`)}
+                  onClick={() =>
+                    alert(`Delete clicked for row: ${params.node.rowIndex + 1}`)
+                  }
                 >
                   Delete
                 </button>
@@ -96,7 +94,8 @@ const AdminDataTable = (props) => {
         },
       ]);
     }
-  }, [rowData]);
+  }, [rowData, pathName]); // Added pathName as a dependency
+
 
   const defaultColDef = useMemo(() => {
     return {

@@ -1,0 +1,42 @@
+.blogCard {
+    @apply rounded-3xl overflow-hidden border block h-full transition-all duration-300 shadow-lg;
+    figure {
+        @apply relative h-[250px] overflow-hidden;
+        img {
+            @apply w-full h-full object-cover transition-all duration-300;
+        }
+    }
+    .content {
+        @apply flex flex-col px-3 pt-2 pb-3;
+        height: calc(100% - 250px);
+
+        h2 {
+            @apply text-[2rem] leading-8 font-semibold;
+        }
+
+        p {
+            @apply mb-5 mt-2;
+        }
+
+        .author {
+            @apply mt-auto flex items-baseline justify-between;
+
+            h4 {
+                @apply border border-[var(--theme-color)] px-3 rounded-xl font-medium;
+            }
+
+            h6 {
+                @apply text-[var(--theme-color)] font-bold text-[13px];
+            }
+        }
+    }
+
+    &:hover {
+        @apply border-[var(--theme-color)];
+        figure {
+            img {
+                @apply scale-110;
+            }
+        }
+    }
+}

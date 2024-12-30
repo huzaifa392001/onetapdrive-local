@@ -1,0 +1,38 @@
+.vendorSidebar {
+    @apply w-[300px] bg-[var(--vendor-bg)] py-3 overflow-y-scroll;
+    flex: 0 1 300px;
+    height: calc(100% - 6rem);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    ul {
+        @apply mx-5;
+        li {
+            > a,
+            > span {
+                @apply py-3 px-2 text-[1rem] font-[500] transition-all duration-100 flex items-center justify-start cursor-pointer text-[var(--white)] gap-x-2;
+                &:hover,
+                &.active {
+                    @apply bg-[var(--white)] text-[var(--vendor-bg)] rounded-[10px];
+                }
+
+                span + i {
+                    @apply ml-auto;
+                }
+            }
+            &.divider {
+                @apply border-b border-[var(--white)];
+                h4 {
+                    @apply text-[var(--white)] py-3 px-2;
+                }
+            }
+
+            + li {
+                @apply mt-5;
+                &:has(h4) {
+                    @apply mt-5;
+                }
+            }
+        }
+    }
+}

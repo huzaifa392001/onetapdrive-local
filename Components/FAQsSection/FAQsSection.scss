@@ -1,0 +1,53 @@
+.faqCard {
+    @apply border-b;
+
+    .headingBtn {
+        @apply bg-[var(--white)] flex items-center w-full justify-between px-5 py-3 cursor-pointer transition-all duration-300;
+
+        h3 {
+            @apply text-[var(--theme-color)] text-[1.375rem] font-semibold transition-all duration-300;
+        }
+
+        i {
+            @apply text-[var(--theme-color)] transition-transform duration-300;
+        }
+    }
+
+    .faqContent {
+        @apply px-5 py-0 overflow-hidden max-h-0 transition-all duration-300;
+
+        p {
+            @apply text-[var(--grey-color)] leading-relaxed;
+        }
+
+        ul {
+            @apply flex flex-col gap-y-2;
+            li {
+                @apply text-[var(--grey-color)] flex items-center;
+                i {
+                    @apply mr-2 text-[var(--theme-color)];
+                }
+            }
+        }
+    }
+
+    &.active {
+        .faqContent {
+            @apply max-h-[1000px] py-4; /* Smooth expand to a sufficient height */
+        }
+
+        .headingBtn {
+            @apply bg-[var(--theme-color)];
+            h3 {
+                @apply text-[var(--white)];
+            }
+            i {
+                @apply rotate-180 text-[var(--white)]; /* Rotate chevron icon */
+            }
+        }
+    }
+
+    & + .faqCard {
+        @apply mt-5;
+    }
+}

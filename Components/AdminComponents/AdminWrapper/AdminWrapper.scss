@@ -1,0 +1,9 @@
+.adminWrapper {
+    @apply flex flex-wrap h-screen overflow-hidden;
+    .adminContentWrap {
+        width: calc(100% - 300px);
+        flex: 0 1 calc(100% - 300px);
+        height: calc(100% - 6rem);
+        @apply pl-8 pr-8 pt-4 overflow-y-auto;
+    }
+}

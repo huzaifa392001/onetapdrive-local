@@ -1,0 +1,8 @@
+.vendorWrapper {
+    @apply flex flex-wrap h-screen overflow-hidden;
+    .vendorContentWrap {
+        width: calc(100% - 300px);
+        flex: 0 1 calc(100% - 300px);
+        @apply p-8;
+    }
+}

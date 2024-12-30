@@ -1,0 +1,29 @@
+// Breakpoints
+$breakpoint-xl: 1440px;
+$breakpoint-lg: 991.98px;
+$breakpoint-md: 767.98px;
+$breakpoint-sm: 575.98px;
+$breakpoint-xs: 320.98px;
+
+:root {
+  --background: #fafafa;
+  --theme-color: #ffba00;
+  --secondary-color: #212121;
+  --text-color: #444444;
+  --white: #ffffff;
+  --black: #000000;
+  --grey-color: #757575;
+  --vendor-bg: #343a40;
+}
+
+.dark:root {
+  --background: #121212;
+  --text-color: var(--white);
+}
+
+// Mixin for media queries
+@mixin respond-to($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}

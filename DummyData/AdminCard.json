@@ -1,0 +1,8 @@
+[
+    { "icon": "far fa-user-plus", "title": "Vendors", "count": 18 },
+    { "icon": "fas fa-car", "title": "Cars Listed", "count": 12 },
+    { "icon": "fas fa-car", "title": "Car With Driver Listed", "count": 50 },
+    { "icon": "fa fa-users", "title": "Leads Received", "count": 120 },
+    { "icon": "fas fa-comment", "title": "Inquiries", "count": 200 },
+    { "icon": "fas fa-user-alt", "title": "Users", "count": 30 }
+  ]

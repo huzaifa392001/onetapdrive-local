@@ -1,0 +1,115 @@
+.customBanner {
+    @apply bg-cover bg-center text-center bg-fixed h-[450px] text-[var(--white)];
+    .content {
+        @apply absolute inset-0 flex items-center flex-col justify-center w-full mx-auto bg-[#0008];
+        h2 {
+            @apply text-[3rem] font-bold;
+        }
+        p {
+            @apply text-[1.25rem] leading-9;
+        }
+    }
+}
+
+.prodRow {
+    @apply grid gap-x-5;
+    &.col4 {
+        @apply grid-cols-4;
+    }
+}
+.addBanner {
+    @apply p-0;
+    figure {
+        img {
+            @apply w-full h-full;
+        }
+    }
+}
+
+.docSec {
+    @apply bg-no-repeat bg-cover bg-center;
+    .content {
+        @apply text-[var(--white)];
+        .secHeading {
+            @apply text-[var(--white)];
+        }
+        p {
+            @apply text-[1.25rem] leading-9 mt-3;
+        }
+    }
+    .docCardRow {
+        @apply grid grid-cols-4 mt-5 gap-x-8;
+        .docCard {
+            @apply bg-[var(--white)] shadow-md rounded-2xl overflow-hidden flex flex-col pb-2;
+            .cardHead {
+                @apply bg-[var(--secondary-color)] text-center py-2;
+                h5 {
+                    @apply text-[var(--theme-color)] font-semibold text-[1.25rem];
+                }
+            }
+            figure {
+                @apply flex items-center justify-center my-3;
+            }
+            ul {
+                @apply px-6 pb-2;
+                li {
+                    @apply flex items-center gap-2;
+                }
+            }
+            .note {
+                @apply mt-auto text-center text-[14px] text-[var(--grey-color)] font-semibold;
+            }
+        }
+    }
+}
+
+.benefitSec {
+    background: linear-gradient(180deg, #111010 0%, #111010cf 100%);
+
+    .secHeading {
+        @apply text-[var(--white)];
+    }
+
+    .benefitRow {
+        @apply grid grid-cols-3 gap-x-6 mt-8;
+
+        .benefitCard {
+            @apply bg-[#2a2a2a] text-[var(--white)] rounded-2xl overflow-hidden flex flex-col items-center py-6 px-10;
+
+            figure {
+                img {
+                    filter: invert(1);
+                }
+            }
+
+            h5 {
+                @apply text-[1.5rem] font-semibold mt-4 mb-2;
+            }
+            p {
+                @apply text-center;
+            }
+        }
+    }
+}
+
+.bestCarSec {
+    .bestCarRow {
+        @apply grid grid-cols-[33%_66%] gap-x-5 items-center;
+        figure {
+        }
+        .content {
+            ul {
+                @apply mt-6;
+                li {
+                    @apply flex items-baseline gap-x-4 text-[1.125rem];
+                    a {
+                        @apply underline;
+                    }
+                    & + li {
+                        @apply mt-4;
+                    }
+                }
+            }
+        }
+    }
+}

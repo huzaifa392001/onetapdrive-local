@@ -1,0 +1,36 @@
+.contactSec {
+    .contactRow {
+        @apply grid grid-cols-12 gap-x-6;
+        .content {
+            @apply col-span-7;
+
+            .contactForm {
+                .contactFormRow {
+                    @apply grid grid-cols-2 gap-5 mt-6;
+                    .inputWrapper {
+                        h6 {
+                            @apply font-semibold mb-1;
+                        }
+                    }
+                }
+            }
+
+            .themeBtn {
+                @apply mt-5;
+            }
+        }
+        figure {
+            @apply col-span-5;
+            iframe {
+                @apply w-full h-full;
+            }
+        }
+    }
+}
+
+.prodRow {
+    @apply grid gap-x-5;
+    &.col4 {
+        @apply grid-cols-4;
+    }
+}

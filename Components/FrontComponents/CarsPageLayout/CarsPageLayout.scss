@@ -1,0 +1,90 @@
+.searchBar {
+    @apply bg-[var(--secondary-color)] pb-4;
+    .customContainer {
+        @apply flex gap-x-4;
+    }
+    .searchCont {
+        @apply max-w-[500px] h-[50px] w-full flex items-center border rounded-lg px-3 gap-x-2;
+        input {
+            @apply h-full w-full outline-none border-none bg-transparent text-[var(--white)];
+
+            &::placeholder {
+                @apply text-[var(--white)];
+            }
+        }
+    }
+    .sortBar {
+        @apply flex gap-x-4 ms-auto relative;
+        .dropdownCont {
+            .placeholder {
+                @apply border border-[var(--white)] text-[var(--white)] flex items-center h-full px-3 rounded-lg gap-x-6 text-[14px];
+                .min {
+                    @apply text-[12px] block;
+                }
+            }
+            .dropdown {
+                @apply absolute top-[120%] bg-[var(--white)] z-10 pt-2 pb-5 px-3 rounded-lg shadow-md min-w-[200px];
+                &:has(ul) {
+                    @apply px-0;
+                }
+
+                h4 {
+                    @apply text-[var(--text-colo)] font-semibold text-[1rem] mb-3;
+                }
+                ul {
+                    @apply max-h-[200px] overflow-auto;
+                    li {
+                        @apply text-[14px] flex items-center justify-between py-1 cursor-pointer px-3;
+
+                        span {
+                            @apply font-bold;
+                        }
+
+                        & + li,
+                        &:first-of-type {
+                            @apply border-t;
+                        }
+
+                        &:last-of-type {
+                            @apply border-b;
+                        }
+
+                        &.active,
+                        &:hover {
+                            span {
+                                @apply text-[var(--theme-color)];
+                            }
+                        }
+                    }
+                }
+                .gridCont {
+                    @apply grid grid-cols-2 gap-4;
+
+                    .priceInputCont {
+                        label {
+                            @apply text-[13px];
+                        }
+                        input {
+                            @apply border w-full rounded-md border-[var(--black)] text-[var(--black)] p-1;
+
+                            &::placeholder {
+                                @apply text-[var(--black)] text-[11px] font-bold;
+                            }
+                        }
+                        button {
+                            @apply bg-[var(--secondary-color)] border border-transparent text-[var(--white)] text-[13px] font-medium text-center w-full block py-2 rounded-md;
+
+                            &.transparent {
+                                @apply border-2 border-[var(--secondary-color)] text-[var(--secondary-color)] bg-transparent;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.productSec {
+    @apply pt-0;
+}

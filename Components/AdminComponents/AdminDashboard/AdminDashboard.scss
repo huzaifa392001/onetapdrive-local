@@ -1,0 +1,29 @@
+.adminHomeCard {
+    @apply w-full flex items-center gap-[20px] bg-[--vendor-bg] rounded-[20px] pl-10 text-[20px] text-white font-[500] relative;
+
+    &:hover .bgIcon {
+        transition: all .3s ease-in;
+        transform: scale(1.4) rotate(-10deg) ;
+    }    
+}
+
+.cardBody {
+    @apply  min-h-[130px] flex items-center gap-[20px] bg-[--vendor-bg] rounded-[20px] mx-4 text-[18px] text-white font-[500];
+
+   
+}
+
+.cardCountPara {
+    @apply font-[600] text-[24px];
+}
+
+.adminCardsWrapper{
+        @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-8 my-4;
+}
+.bgIcon {
+    @apply absolute right-0 opacity-[0.1] text-[3rem];   
+    @apply transition-transform duration-300 ease-in-out;
+}
+
+
+  

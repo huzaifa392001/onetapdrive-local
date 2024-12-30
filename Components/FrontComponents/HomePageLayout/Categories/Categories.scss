@@ -1,0 +1,11 @@
+.categoriesSec {
+    .catRow {
+        @apply grid grid-cols-4 gap-y-4;
+        .catCol {
+            @apply px-2;
+        }
+    }
+    .showMoreCont {
+        @apply flex items-center justify-center mt-5;
+    }
+}

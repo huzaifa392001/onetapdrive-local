@@ -1,0 +1,4 @@
+.adminHeader {
+    @apply w-full h-24 bg-[var(--vendor-bg)] flex items-center justify-between px-4 sticky top-0 z-[999];
+    flex: 0 1 100%;
+}

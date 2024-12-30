@@ -1,0 +1,160 @@
+@use "./index.css" as *;
+
+html {
+    font-size: 16px;
+    overflow-x: clip;
+    scroll-behavior: initial !important;
+    overscroll-behavior: none !important;
+
+    @include respond-to($breakpoint-xl) {
+        font-size: 14px !important; // xl
+    }
+
+    @include respond-to($breakpoint-lg) {
+        font-size: 12px !important; // lg
+    }
+
+    @include respond-to($breakpoint-md) {
+        font-size: 14px !important; // md
+    }
+
+    @include respond-to($breakpoint-sm) {
+        font-size: 13px !important; // sm
+        section {
+            @apply py-6 px-4;
+        }
+    }
+
+    @include respond-to($breakpoint-xs) {
+        font-size: 11px !important; // xs
+    }
+
+    &.lenis {
+        @apply h-auto;
+        .body {
+            @apply h-auto;
+        }
+        &.lenis-smooth {
+            scroll-behavior: auto !important;
+            &[data-lenis-prevent] {
+                overscroll-behavior: contain;
+            }
+            iframe {
+                @apply pointer-events-none;
+            }
+        }
+        &.lenis-stopped {
+            @apply overflow-hidden;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 2px;
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: var(--theme-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.themeBtn {
+    @apply block text-center bg-[var(--theme-color)] py-2 px-4 rounded-lg text-[var(--secondary-color)] font-semibold text-[14px] border border-transparent transition-all duration-200 capitalize;
+
+    &:hover {
+        @apply bg-[var(--secondary-color)] text-[var(--theme-color)] border-[var(--theme-color)];
+    }
+
+    &.small {
+        @apply w-fit;
+    }
+
+    &.iconBtn {
+        i {
+            @apply mr-2;
+        }
+    }
+}
+
+section {
+    position: relative;
+    padding: 5rem 0;
+}
+
+.customContainer {
+    @apply container mx-auto;
+}
+
+.swiper {
+    padding-bottom: 2rem !important;
+    .swiper-pagination-bullet {
+        background-color: var(--theme-color) !important;
+        width: 10px;
+        height: 10px;
+        bottom: 0 !important;
+    }
+}
+
+.headingCont {
+    @apply flex items-center justify-between mb-3;
+
+    &.desc {
+        @apply flex-col items-start justify-start;
+    }
+}
+
+.termsSec {
+    .headingCont {
+        h1 {
+            @apply text-[3rem] font-bold;
+        }
+        p {
+            @apply text-[1.25rem] font-normal;
+        }
+
+        @apply mb-8;
+    }
+
+    h3 {
+        @apply text-[1.75rem] font-semibold mb-1 leading-[2.25rem];
+    }
+
+    ul {
+        @apply list-decimal pl-4;
+
+        li {
+            span {
+                @apply block font-semibold text-[1.375rem];
+            }
+
+            & + li {
+                @apply mt-4;
+            }
+        }
+
+        & + * {
+            @apply mt-10;
+        }
+    }
+
+    p {
+        @apply text-[1.125rem];
+
+        & + * {
+            @apply mt-10;
+        }
+    }
+}

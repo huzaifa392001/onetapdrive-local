@@ -1,0 +1,181 @@
+.menuWrapper {
+    @apply relative z-20;
+    header {
+        @apply bg-[var(--secondary-color)] relative z-20;
+        .headerContainer {
+            @apply container;
+        }
+        .topHeader {
+            @apply bg-[var(--black)] py-2;
+            .headerRow {
+                @apply flex items-center justify-between;
+                // * {
+                //     @apply text-[var(--white)];
+                // }
+                .leftNav {
+                    @apply flex items-center;
+                    .location {
+                        @apply relative;
+                        .placeHolder {
+                            @apply flex items-center gap-x-2 text-[var(--white)] cursor-pointer;
+                        }
+                        .dropdown {
+                            @apply absolute z-10 bg-[var(--white)] min-w-[250px] rounded-2xl shadow-md pt-3 pb-5 max-h-[350px] overflow-auto top-0 opacity-0 invisible select-none pointer-events-none transition-all duration-300;
+                            ul {
+                                li {
+                                    a {
+                                        @apply text-[var(--black)] px-3 py-1 text-[14px] font-medium flex items-center;
+                                        i {
+                                            @apply block ms-auto;
+                                        }
+                                        &.active {
+                                            @apply text-[var(--theme-color)];
+                                        }
+                                    }
+                                    + li {
+                                        @apply border-t;
+                                    }
+
+                                    &:last-child {
+                                        @apply border-b;
+                                    }
+
+                                    &:hover,
+                                    &.active {
+                                        a {
+                                            @apply text-[var(--theme-color)];
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.navShow {
+                                @apply top-[130%] select-auto opacity-100 visible pointer-events-auto;
+                            }
+                        }
+                    }
+                }
+
+                .rightNav {
+                    .login {
+                        @apply flex items-center text-[var(--theme-color)] gap-x-2 text-[14px];
+                    }
+                }
+            }
+        }
+        nav {
+            @apply flex items-center  gap-x-8 py-4;
+
+            .navItems {
+                @apply ms-auto;
+                ul {
+                    @apply flex items-center gap-x-6;
+                    li {
+                        a {
+                            @apply text-[var(--white)] flex items-center gap-2 text-[0.875rem] relative;
+
+                            &::before {
+                                content: "";
+                                @apply absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--white)] transition-all duration-200 scale-x-0 origin-left;
+                            }
+                        }
+
+                        &:hover {
+                            a {
+                                &::before {
+                                    @apply scale-x-100;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .searchBarCont {
+                @apply flex items-center gap-x-8;
+                .inputCont {
+                    @apply border-[var(--white)];
+                    input,
+                    button {
+                        @apply text-[var(--white)];
+                        &::placeholder {
+                            @apply text-[var(--white)];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .brandsDropdown {
+        @apply shadow-md w-full absolute min-h-[200px] top-[0px] opacity-0 invisible pointer-events-none select-none transition-all duration-300 z-10;
+        background: linear-gradient(90deg, rgb(236 234 230) 0%, rgb(228 225 220) 100%);
+
+        &.navShow {
+            @apply select-auto pointer-events-auto opacity-100 visible top-[113px];
+        }
+
+        .brandsCont {
+            @apply flex items-center justify-center flex-wrap gap-12 container py-12;
+            .brandCont {
+                @apply flex items-center gap-x-2;
+                figure {
+                    img {
+                        @apply transition-all duration-200 object-contain;
+                    }
+                }
+
+                h6 {
+                    @apply text-[var(--black)] text-[14px] font-semibold capitalize;
+                }
+
+                &:hover {
+                    figure {
+                        img {
+                            @apply scale-125;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .categoryDropdown {
+        @apply absolute min-h-[200px] top-[0px] opacity-0 invisible pointer-events-none select-none transition-all duration-300 z-10 bg-[var(--white)] rounded-xl overflow-hidden;
+        box-shadow: 0 0 15px 5px #0003;
+
+        &.navShow {
+            @apply select-auto pointer-events-auto opacity-100 visible top-[113px];
+        }
+
+        .catRow {
+            @apply flex;
+            .catCol {
+                @apply p-4 min-w-[250px];
+                h4 {
+                    @apply text-[14px] font-bold capitalize text-[#727171] m-0;
+                }
+                ul {
+                    li {
+                        a {
+                            @apply text-[var(--black)] py-2 w-full inline-block text-[14px] font-medium transition-all duration-300;
+                            &:hover {
+                                @apply text-[var(--theme-color)];
+                            }
+                        }
+                        + li {
+                            @apply border-t border-[#bfbfbf75];
+                        }
+                    }
+
+                    + h4 {
+                        @apply mt-8;
+                    }
+                }
+
+                &:last-child {
+                    @apply bg-[#f6f6f6];
+                }
+            }
+        }
+    }
+}

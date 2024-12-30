@@ -1,0 +1,20 @@
+.dataTable {
+  @apply w-full h-full;
+  .ag-row {
+    .ag-cell {
+      @apply flex items-center px-3;
+      .tableImgCol {
+        @apply flex items-center justify-start gap-x-2 py-2 max-h-[100px] overflow-hidden w-full;
+      }
+      .btnCont {
+        @apply flex items-center justify-center w-full gap-x-2;
+        .themeBtn {
+          @apply block w-full py-0;
+        }
+      }
+      .title {
+        @apply text-[1rem] font-normal;
+      }
+    }
+  }
+}

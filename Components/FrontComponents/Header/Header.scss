@@ -18,13 +18,16 @@
                         @apply relative;
                         .placeHolder {
                             @apply flex items-center gap-x-2 text-[var(--white)] cursor-pointer;
+                            .mapMarker {
+                                @apply text-[var(--theme-color)];
+                            }
                         }
                         .dropdown {
                             @apply absolute z-10 bg-[var(--white)] min-w-[250px] rounded-2xl shadow-md pt-3 pb-5 max-h-[350px] overflow-auto top-0 opacity-0 invisible select-none pointer-events-none transition-all duration-300;
                             ul {
                                 li {
-                                    a {
-                                        @apply text-[var(--black)] px-3 py-1 text-[14px] font-medium flex items-center;
+                                    button {
+                                        @apply text-[var(--black)] px-3 py-1 text-[14px] font-medium flex items-center w-full;
                                         i {
                                             @apply block ms-auto;
                                         }
@@ -42,7 +45,7 @@
 
                                     &:hover,
                                     &.active {
-                                        a {
+                                        button {
                                             @apply text-[var(--theme-color)];
                                         }
                                     }

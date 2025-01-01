@@ -2,11 +2,14 @@
 import React, { useState } from 'react';
 import "../CarsPageLayout.scss";
 import categoryData from "@/DummyData/Categories.json";
+import { usePathname, useRouter } from 'next/navigation';
 
 function SearchBar() {
+    const path = usePathname()
     const [activeDropdown, setActiveDropdown] = useState(''); // Manage active dropdown
-    const [selectedCategory, setSelectedCategory] = useState('SUV'); // Default category
+    const [selectedCategory, setSelectedCategory] = useState(path.split("/")[2].replace("-", " ")); // Default category
     const [priceFilter, setPriceFilter] = useState({ min: '', max: '' }); // Manage price inputs
+    const Router = useRouter()
 
     const handleDropdownToggle = (type) => {
         setActiveDropdown((prev) => (prev === type ? '' : type)); // Toggle dropdown
@@ -27,6 +30,8 @@ function SearchBar() {
     const handleCategorySelect = (category) => {
         setSelectedCategory(category); // Update selected category
         setActiveDropdown(''); // Close dropdown
+        let route = category.toString().replace(" ", "-")
+        Router.push(`/cars/${route.toLowerCase()}`)
     };
 
     return (
@@ -125,4 +130,4 @@ function SearchBar() {
     );
 }
 
-export default SearchBar;
+export default React.memo(SearchBar);

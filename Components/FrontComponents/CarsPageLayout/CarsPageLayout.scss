@@ -1,5 +1,5 @@
 .searchBar {
-    @apply bg-[var(--secondary-color)] pb-4;
+    @apply bg-[var(--secondary-color)] p-4;
     .customContainer {
         @apply flex gap-x-4;
     }
@@ -17,7 +17,7 @@
         @apply flex gap-x-4 ms-auto relative;
         .dropdownCont {
             .placeholder {
-                @apply border border-[var(--white)] text-[var(--white)] flex items-center h-full px-3 rounded-lg gap-x-6 text-[14px];
+                @apply border border-[var(--white)] text-[var(--white)] flex items-center h-full px-3 rounded-lg gap-x-6 text-[14px] capitalize;
                 .min {
                     @apply text-[12px] block;
                 }
@@ -85,6 +85,59 @@
     }
 }
 
+.addGrid {
+    @apply grid grid-cols-3 gap-6 border-b pb-2;
+    .adImg {
+        img {
+            @apply w-full aspect-video h-[150px] object-contain;
+        }
+    }
+}
+
+.breadCrumb {
+    @apply py-2 border-b;
+    ul {
+        @apply flex items-center gap-x-2;
+        li {
+            @apply flex items-center gap-x-1 text-[14px] font-medium capitalize transition-colors duration-300;
+
+            &::after {
+                content: "\f0da";
+                font-family: "Font Awesome 5 Pro";
+                font-weight: 900;
+
+                @apply text-[var(--grey-color)] ml-2;
+            }
+
+            &:last-child {
+                &::after {
+                    content: none;
+                }
+            }
+
+            &:hover {
+                @apply text-[var(--theme-color)];
+            }
+        }
+    }
+}
+
 .productSec {
     @apply pt-0;
+
+    .productGrid {
+        @apply grid grid-cols-10 gap-6;
+        .filteredCars {
+            @apply col-span-8;
+            .pageHeader {
+                @apply border-b pb-2 pt-8 mb-2;
+                h1 {
+                    @apply text-[2.5rem] font-bold capitalize;
+                }
+            }
+        }
+        .sider {
+            @apply col-span-2 h-full;
+        }
+    }
 }

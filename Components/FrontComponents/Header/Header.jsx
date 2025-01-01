@@ -6,12 +6,15 @@ import Link from 'next/link'
 import SearchBar from './SearchBar/SearchBar'
 import brandsData from '@/DummyData/brands.json'
 import categoryData from "@/DummyData/Categories.json"
+import { useSelector } from 'react-redux'
+import { GeneralServices } from '@/Services/FrontServices/GeneralServices'
 
 function Header() {
+    const currentCity = useSelector((state) => state.general.currentLocation)
     const [navShow, setNavShow] = useState('');
     const [dropdownPosition, setDropdownPosition] = useState(0); // For dynamic left position
     const rentACarRef = useRef(null); // Reference for the Rent a Car menu item
-    const [selectedLocation, setSelectedLocation] = useState('Dubai'); // Default location
+    const [selectedLocation, setSelectedLocation] = useState(currentCity); // Default location
 
     const handleMouseEnter = (type) => {
         if (type === 'cat') {
@@ -25,6 +28,7 @@ function Header() {
 
     const handleLocationSelect = (location) => {
         setSelectedLocation(location); // Update selected location
+        GeneralServices.setLocation(location)
         setNavShow(''); // Close the dropdown
     };
 
@@ -47,7 +51,8 @@ function Header() {
                                     onMouseEnter={() => handleMouseEnter('location')}
                                 >
                                     <div className="placeHolder">
-                                        <Image src={"/images/uae-flag.png"} width={30} height={15} alt="UAE's Flag" />
+                                        {/* <Image src={"/images/uae-flag.png"} width={30} height={15} alt="UAE's Flag" /> */}
+                                        <i className="fas fa-map-marker-alt mapMarker" />
                                         <h4>{selectedLocation}</h4> {/* Display selected location */}
                                         <i className="fas fa-chevron-down" />
                                     </div>
@@ -56,9 +61,9 @@ function Header() {
                                         <ul>
                                             {['Dubai', 'Abu Dhabi', 'Fujairah', 'Ajman', 'Al Ain', 'Sharjah', 'Ras Al Khaimah', 'Umm Al Quwain'].map((location) => (
                                                 <li key={location} className={selectedLocation === location ? 'active' : ''} >
-                                                    <Link href="#" onClick={() => handleLocationSelect(location)}>
+                                                    <button onClick={() => handleLocationSelect(location)}>
                                                         {location} {selectedLocation === location && <i className="fas fa-check" />}
-                                                    </Link>
+                                                    </button>
                                                 </li>
                                             ))}
                                         </ul>

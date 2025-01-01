@@ -47,6 +47,10 @@ html {
             @apply overflow-hidden;
         }
     }
+
+    body {
+        overflow-x: clip;
+    }
 }
 
 ::-webkit-scrollbar {

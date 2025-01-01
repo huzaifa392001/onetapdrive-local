@@ -54,6 +54,7 @@ function HomeWrapper({ children }) {
     useEffect(() => {
         lenisSetup()
         GeneralServices.setCategories()
+        GeneralServices.setLocation()
     }, [])
 
     useEffect(() => {

@@ -28,6 +28,19 @@
 .secHeading {
   @apply mb-5;
 }
-.headingFlex {
+
+.listingAddFlex {
   @apply flex items-center justify-between;
+  .listingNumbersFlex {
+    @apply flex gap-3;
+    .listingNumbers {
+      @apply max-w-sm px-8 py-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-3;
+      h3{
+        @apply text-center text-2xl mb-3;
+      }
+      h1{
+        @apply text-center text-4xl text-black;
+      }
+    }
+  }
 }

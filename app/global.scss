@@ -91,6 +91,10 @@ input[type="number"] {
             @apply mr-2;
         }
     }
+
+    &.altr {
+        @apply bg-[var(--secondary-color)] text-[var(--white)] hover:text-[var(--theme-color)];
+    }
 }
 
 section {
@@ -118,6 +122,10 @@ section {
     &.desc {
         @apply flex-col items-start justify-start;
     }
+}
+
+.adminHeadingCont {
+    @apply flex items-center justify-between mt-[2rem] mb-[3rem];
 }
 
 .termsSec {

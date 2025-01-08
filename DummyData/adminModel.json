@@ -1,0 +1,86 @@
+[
+    {
+        "slug": "aston-martin",
+        "brand": "Aston Martin",
+        "model": "DB11",
+        "images": [],
+        "status": "active"
+    },
+    {
+        "slug": "mercedes-benz",
+        "brand": "Mercedes-Benz",
+        "model": "C-Class",
+        "images": [],
+        "status": "active"
+    },
+    {
+        "slug": "bmw",
+        "brand": "BMW",
+        "model": "X5",
+        "images": [],
+        "status": "active"
+    },
+    {
+        "slug": "audi",
+        "brand": "Audi",
+        "model": "Q7",
+        "images": [],
+        "status": "deactive"
+    },
+    {
+        "slug": "porsche",
+        "brand": "Porsche",
+        "model": "911",
+        "images": [],
+        "status": "active"
+    },
+    {
+        "slug": "tesla",
+        "brand": "Tesla",
+        "model": "Model S",
+        "images": [],
+        "status": "active"
+    },
+    {
+        "slug": "jaguar",
+        "brand": "Jaguar",
+        "model": "F-Type",
+        "images": [],
+        "status": "deactive"
+    },
+    {
+        "slug": "rolls-royce",
+        "brand": "Rolls-Royce",
+        "model": "Ghost",
+        "images": [],
+        "status": "active"
+    },
+    {
+        "slug": "lamborghini",
+        "brand": "Lamborghini",
+        "model": "Huracan",
+        "images": [],
+        "status": "deactive"
+    },
+    {
+        "slug": "ferrari",
+        "brand": "Ferrari",
+        "model": "488 GTB",
+        "images": [],
+        "status": "active"
+    },
+    {
+        "slug": "chevrolet",
+        "brand": "Chevrolet",
+        "model": "Camaro",
+        "images": [],
+        "status": "deactive"
+    },
+    {
+        "slug": "ford",
+        "brand": "Ford",
+        "model": "Mustang",
+        "images": [],
+        "status": "active"
+    }
+]

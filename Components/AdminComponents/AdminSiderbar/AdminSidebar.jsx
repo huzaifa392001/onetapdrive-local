@@ -7,10 +7,6 @@ function AdminSidebar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const pathName = usePathname();
 
-  useEffect(() => {
-    console.log('pathname=> ', `/admin/${pathName.split('/')[2]}`);
-  }, [pathName]);
-
   const toggleSubMenu = () => {
     setIsExpanded(!isExpanded);
   };
@@ -23,8 +19,9 @@ function AdminSidebar() {
     { type: "divider", label: "Website" },
     { path: "/admin/brands", label: "Brands", icon: "fad fa-star" },
     { path: "/admin/categories", label: "Categories", icon: "fas fa-clipboard-list" },
-    { path: "/admin/packages-orders", label: "Packages Orders", icon: "fas fa-car" },
-    { path: "/admin/social-links", label: "Social Links", icon: "fas fa-share-square" },
+    { path: "/admin/blogs", label: "Blogs", icon: "far fa-books" },
+    { path: "/admin/packages", label: "Packages Orders", icon: "fas fa-car" },
+    { path: "/admin/social", label: "Social Links", icon: "fas fa-share-square" },
     // { path: "/admin/configurations", label: "Configurations", icon: "fas fa-cog" },
 
     { type: "divider", label: "Mobile App" },
@@ -37,8 +34,8 @@ function AdminSidebar() {
       icon: "fa fa-car fa-lg",
       isExpandable: true,
       subMenu: [
-        { path: "/admin/car-management/brand-management", label: "Brand Management", icon: "fad fa-horizontal-rule" },
-        { path: "/admin/car-management/car-brands-models", label: "Car Brands/Models", icon: "fad fa-horizontal-rule" },
+        //{ path: "/admin/brands", label: "Brand Management", icon: "fad fa-horizontal-rule" },
+        { path: "/admin/models", label: "Car Brands/Models", icon: "fad fa-horizontal-rule" },
       ],
     },
     { path: "/admin/car-listing", label: "Car Listing", icon: "fas fa-car" },

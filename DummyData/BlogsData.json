@@ -2,6 +2,7 @@
     {
         "id": 1,
         "title": "The Future of Web Development",
+        "slug": "The-Future-of-Web-Development",
         "min_content": "Exploring the next big trends in web development and what you need to know to stay ahead.",
         "content": "Web development is constantly evolving with new technologies and practices emerging every year. In this post, we will explore the future of web development, including the rise of AI-powered tools, serverless architecture, and the continued popularity of JavaScript frameworks. As developers, it’s important to stay up to date with the latest trends to ensure you're building scalable, efficient, and modern applications.",
         "author": {
@@ -13,6 +14,7 @@
     {
         "id": 2,
         "title": "JavaScript ES2024 Features You Should Know",
+        "slug": "JavaScript-ES2024-Features-You-Should-Know",
         "min_content": "A rundown of the latest features coming to JavaScript in ES2024, and how they will improve your coding experience.",
         "content": "JavaScript is constantly evolving, and with each new version, we see improvements that make the language more powerful and easier to work with. ES2024 introduces several new features such as improved async handling, new data structures, and more powerful built-in methods. In this post, we’ll break down the most exciting changes and show you how to incorporate them into your projects.",
         "author": {
@@ -24,6 +26,7 @@
     {
         "id": 3,
         "title": "Understanding React Server Components",
+        "slug": "Understanding-React-Server-Components",
         "min_content": "Learn about React Server Components and how they can enhance your React app’s performance.",
         "content": "React Server Components (RSC) allow you to render components on the server instead of the client, improving performance, and reducing the initial load time of your React applications. In this post, we’ll dive deep into what React Server Components are, how they work, and how you can start using them in your projects today. With RSC, you can offload more work to the server, providing a better user experience with faster rendering.",
         "author": {
@@ -35,6 +38,7 @@
     {
         "id": 4,
         "title": "CSS Grid vs Flexbox: When to Use Each",
+        "slug": "CSS-Grid-vs-Flexbox:-When-to-Use-Each",
         "min_content": "Both CSS Grid and Flexbox are powerful layout tools, but which one should you use in your next project?",
         "content": "CSS Grid and Flexbox are two of the most popular layout systems in CSS today. While both offer incredible flexibility and responsiveness, each has its own use cases. In this post, we’ll compare CSS Grid and Flexbox, helping you understand when to use each tool for the most efficient and effective layout designs.",
         "author": {
@@ -46,6 +50,7 @@
     {
         "id": 5,
         "title": "A Beginner’s Guide to Node.js",
+        "slug": "A-Beginner’s-Guide-to-Node.js",
         "min_content": "A comprehensive guide for anyone looking to get started with Node.js and its ecosystem.",
         "content": "Node.js is a runtime environment that allows developers to run JavaScript code server-side. In this beginner’s guide, we’ll cover everything you need to know to get started with Node.js, including setting up your environment, understanding its event-driven architecture, and creating your first server. Whether you’re transitioning from frontend development or just starting out, this guide will help you understand the core concepts of Node.js.",
         "author": {
@@ -57,6 +62,7 @@
     {
         "id": 6,
         "title": "Mastering Asynchronous JavaScript",
+        "slug": "Mastering-Asynchronous-JavaScript",
         "min_content": "A deep dive into JavaScript’s asynchronous programming model and how to master it.",
         "content": "JavaScript’s asynchronous nature is crucial for building fast, scalable web applications. In this post, we’ll explore various techniques for handling asynchronous code, including callbacks, promises, and async/await. You’ll also learn best practices for error handling and debugging async code, ensuring your apps run smoothly even under heavy load.",
         "author": {
@@ -68,6 +74,7 @@
     {
         "id": 7,
         "title": "Building Scalable Applications with Kubernetes",
+        "slug": "Building-Scalable-Applications-with-Kubernetes",
         "min_content": "A guide to using Kubernetes for deploying, scaling, and managing containerized applications.",
         "content": "Kubernetes is one of the most popular tools for orchestrating containerized applications. In this post, we’ll explore the key concepts of Kubernetes, including pods, services, deployments, and namespaces. You’ll also learn how to set up and manage a Kubernetes cluster, and how to use Kubernetes for scaling your applications automatically as traffic grows.",
         "author": {
@@ -79,6 +86,7 @@
     {
         "id": 8,
         "title": "Optimizing Frontend Performance",
+        "slug": "Optimizing-Frontend-Performance",
         "min_content": "Techniques for improving the performance of your frontend application and enhancing user experience.",
         "content": "Optimizing frontend performance is crucial for delivering a smooth user experience. In this post, we’ll discuss various strategies for reducing page load time, improving interactivity, and optimizing assets such as images and scripts. You’ll also learn about lazy loading, code splitting, and other modern techniques for ensuring your app runs efficiently on all devices.",
         "author": {
@@ -90,6 +98,7 @@
     {
         "id": 9,
         "title": "Exploring Progressive Web Apps",
+        "slug": "Exploring-Progressive-Web-Apps",
         "min_content": "An introduction to Progressive Web Apps (PWAs) and how they can improve user engagement on mobile and desktop.",
         "content": "Progressive Web Apps (PWAs) are web applications that offer a native app-like experience while being accessible through a browser. In this post, we’ll explore the key benefits of PWAs, including offline support, push notifications, and faster load times. We’ll also cover how to implement a PWA for your website and the tools you need to get started.",
         "author": {
@@ -101,6 +110,7 @@
     {
         "id": 10,
         "title": "Modern CSS: A Deep Dive",
+        "slug": "Modern-CSS:-A-Deep-Dive",
         "min_content": "Discover the latest advancements in CSS and how to use them in your projects.",
         "content": "CSS has evolved significantly over the past few years, with new features that make styling more powerful and flexible. In this post, we’ll cover the latest advancements in CSS, including CSS Grid, Flexbox, custom properties (CSS variables), and more. You’ll learn how to implement these new features in your projects to create modern, responsive, and maintainable designs.",
         "author": {
@@ -112,6 +122,7 @@
     {
         "id": 11,
         "title": "Introduction to TypeScript for JavaScript Developers",
+        "slug": "Introduction-to-TypeScript-for-JavaScript-Developers",
         "min_content": "A guide to getting started with TypeScript for JavaScript developers.",
         "content": "TypeScript is a superset of JavaScript that adds static typing to the language. If you're a JavaScript developer, transitioning to TypeScript can enhance your productivity and reduce bugs. In this post, we’ll cover the basics of TypeScript, including type annotations, interfaces, and type inference. We’ll also walk through how to convert an existing JavaScript project to TypeScript.",
         "author": {
@@ -123,6 +134,7 @@
     {
         "id": 12,
         "title": "Using GraphQL for API Development",
+        "slug": "Using-GraphQL-for-API-Development",
         "min_content": "A beginner’s guide to using GraphQL for building efficient and flexible APIs.",
         "content": "GraphQL is a query language for APIs that allows clients to request exactly the data they need. In this post, we’ll cover the basics of GraphQL, how to set up a GraphQL server, and how to interact with a GraphQL API. We’ll also compare GraphQL with traditional REST APIs and discuss the advantages and disadvantages of each approach.",
         "author": {
@@ -134,6 +146,7 @@
     {
         "id": 13,
         "title": "Introduction to Docker for Developers",
+        "slug": "Introduction-to-Docker-for-Developers",
         "min_content": "Learn the basics of Docker and how it can streamline your development workflow.",
         "content": "Docker is a tool that allows you to package your applications and their dependencies into containers. In this post, we’ll cover the basics of Docker, including containers, images, and Docker Compose. We’ll also explore how Docker can improve your development workflow by providing consistent environments across different machines.",
         "author": {
@@ -145,6 +158,7 @@
     {
         "id": 14,
         "title": "Exploring Serverless Architectures",
+        "slug": "Exploring-Serverless-Architectures",
         "min_content": "Learn how serverless architectures can help you build scalable applications with minimal effort.",
         "content": "Serverless architecture allows you to build and run applications without managing servers. In this post, we’ll explore the benefits of serverless computing, including reduced operational costs and improved scalability. We’ll also discuss how serverless platforms like AWS Lambda and Google Cloud Functions are revolutionizing application development.",
         "author": {
@@ -156,6 +170,7 @@
     {
         "id": 15,
         "title": "Mastering Responsive Web Design",
+        "slug": "Mastering-Responsive-Web-Design",
         "min_content": "A guide to building websites that look great on any device with responsive web design techniques.",
         "content": "Responsive web design ensures that your website provides an optimal viewing experience across a wide range of devices. In this post, we’ll cover the core principles of responsive design, including fluid grids, flexible images, and media queries. You’ll also learn how to design for various screen sizes and devices, ensuring your website is accessible and user-friendly.",
         "author": {
@@ -167,6 +182,7 @@
     {
         "id": 16,
         "title": "The Rise of Jamstack Websites",
+        "slug": "The-Rise-of-Jamstack-Websites",
         "min_content": "An overview of Jamstack websites and why they are the future of modern web development.",
         "content": "Jamstack (JavaScript, APIs, and Markup) is an architecture that is quickly gaining popularity for building fast and secure websites. In this post, we’ll explain the core concepts behind Jamstack, its advantages over traditional CMS systems, and how to get started with building Jamstack sites using static site generators and headless CMS tools.",
         "author": {
@@ -178,6 +194,7 @@
     {
         "id": 17,
         "title": "Exploring the Power of WebAssembly",
+        "slug": "Exploring-the-Power-of-WebAssembly",
         "min_content": "Learn about WebAssembly and how it’s changing the way we build performant web applications.",
         "content": "WebAssembly (Wasm) allows developers to run code written in languages like C, C++, and Rust directly in the browser, offering near-native performance. In this post, we’ll explore how WebAssembly works, what problems it solves, and how you can use it to build faster web applications. We’ll also discuss how Wasm can complement JavaScript and enhance the performance of your applications.",
         "author": {
@@ -189,6 +206,7 @@
     {
         "id": 18,
         "title": "Improving Developer Productivity with CI/CD",
+        "slug": "Improving-Developer-Productivity-with-CI/CD",
         "min_content": "An introduction to Continuous Integration (CI) and Continuous Deployment (CD) and how they can boost your development productivity.",
         "content": "Continuous Integration (CI) and Continuous Deployment (CD) are practices that enable developers to automatically build, test, and deploy code changes. In this post, we’ll cover the basics of CI/CD, including setting up a CI/CD pipeline, automating tests, and deploying to production. We’ll also explore how CI/CD can improve your development workflow by catching errors early and ensuring that new features are delivered quickly and reliably.",
         "author": {
@@ -200,6 +218,7 @@
     {
         "id": 19,
         "title": "Building RESTful APIs with Laravel",
+        "slug": "Building-RESTful-APIs-with-Laravel",
         "min_content": "Learn how to create RESTful APIs using the Laravel framework, including authentication, routing, and error handling.",
         "content": "Laravel makes it easy to build powerful, secure RESTful APIs. In this post, we’ll walk you through creating a RESTful API with Laravel, including setting up routes, using controllers, and implementing authentication with Laravel Passport. We’ll also discuss best practices for API design, error handling, and versioning.",
         "author": {
@@ -211,6 +230,7 @@
     {
         "id": 20,
         "title": "Intro to Functional Programming with JavaScript",
+        "slug": "Intro-to-Functional-Programming-with-JavaScript",
         "min_content": "Discover the key principles of functional programming in JavaScript and how they can improve your code.",
         "content": "Functional programming (FP) is a programming paradigm that treats computation as the evaluation of mathematical functions. In this post, we’ll explore the core principles of functional programming, such as first-class functions, immutability, and higher-order functions, and how you can apply these principles to your JavaScript code to make it more maintainable and expressive.",
         "author": {
@@ -222,6 +242,7 @@
     {
         "id": 21,
         "title": "How to Build a Custom JavaScript Framework",
+        "slug": "How-to-Build-a-Custom-JavaScript-Framework",
         "min_content": "Learn how to build your own custom JavaScript framework from scratch and gain deeper insights into the language.",
         "content": "Building your own JavaScript framework can be an eye-opening experience that helps you understand the inner workings of modern frontend frameworks like React, Angular, and Vue. In this post, we’ll guide you through building a simple JavaScript framework, covering the key concepts such as rendering views, managing state, and handling events.",
         "author": {
@@ -233,6 +254,7 @@
     {
         "id": 22,
         "title": "Using the Command Line for Web Development",
+        "slug": "Using-the-Command-Line-for-Web-Development",
         "min_content": "A guide to using the command line effectively for web development tasks.",
         "content": "The command line is a powerful tool for web developers, allowing you to automate tasks and perform complex operations quickly. In this post, we’ll cover some of the most useful command-line commands for web development, such as Git, npm, and file manipulation commands. You’ll also learn about terminal shortcuts and tips that will help you navigate the command line like a pro.",
         "author": {
@@ -244,6 +266,7 @@
     {
         "id": 23,
         "title": "How to Use Version Control with Git",
+        "slug": "How-to-Use-Version-Control-with-Git",
         "min_content": "A beginner’s guide to using Git for version control and collaboration in software development.",
         "content": "Git is an essential tool for managing code changes in software development. In this post, we’ll introduce the basics of Git, including repositories, commits, branches, and merges. We’ll also cover how to collaborate with others using Git and GitHub, making version control an easy and efficient part of your development workflow.",
         "author": {
@@ -255,6 +278,7 @@
     {
         "id": 24,
         "title": "Securing Your Web Applications",
+        "slug": "Securing-Your-Web-Applications",
         "min_content": "Learn best practices for securing your web applications and protecting against common security vulnerabilities.",
         "content": "Security is a top priority when developing web applications. In this post, we’ll cover best practices for securing your apps, including input validation, authentication, and protecting against common attacks such as SQL injection, XSS, and CSRF. You’ll also learn about using HTTPS, secure cookies, and other techniques to keep your users safe.",
         "author": {

@@ -1,4 +1,5 @@
 import moment from "moment";
+import { usePathname } from "next/navigation";
 
 /**
  * Formats a given date string into a relative time format.
@@ -20,8 +21,7 @@ export const formatDate = (date) => {
 
   if (differenceInMinutes < 60) {
     // Less than an hour old
-    return `${differenceInMinutes} minute${differenceInMinutes !== 1 ? "s" : ""
-      } ago`;
+    return `${differenceInMinutes} minute${differenceInMinutes !== 1 ? "s" : ""} ago`;
   } else if (differenceInHours < 24) {
     // Less than a day old
     return `${differenceInHours} hour${differenceInHours !== 1 ? "s" : ""} ago`;
@@ -44,9 +44,7 @@ export const formatDate = (date) => {
  * @returns {string} - The full URL or an empty string if no URL is provided.
  */
 export const getImage = (url) => {
-  if (url) {
-    return `https://api.mobilezmarket.com/images/${url}`;
-  } else return "";
+  return url ? `https://api.mobilezmarket.com/images/${url}` : "";
 };
 
 /**
@@ -56,9 +54,17 @@ export const getImage = (url) => {
  * @returns {string} - The formatted number with commas.
  */
 export const numberWithCommas = (x) => {
-  let num = `${x}`;
+  const num = `${x}`;
+  return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
-  // Add thousand separators
-  let res = num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return res;
+/**
+ * Extracts the page name from the current pathname.
+ *
+ * @returns {string} - The formatted page name with hyphens replaced by spaces.
+ */
+export const pageName = () => {
+  const path = usePathname();
+  const tempPath = path?.split("/");
+  return tempPath?.[tempPath.length - 1]?.replace(/-/g, " ") || "";
 };

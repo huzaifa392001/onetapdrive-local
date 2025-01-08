@@ -1,0 +1,32 @@
+[
+    {
+        "carName": "GMC Yukon XL 2023",
+        "companyName": "GMC",
+        "serviceType": "Point to Point Transfer",
+        "status": "active"
+    },
+    {
+        "carName": "Toyota Highlander 2023",
+        "companyName": "Toyota",
+        "serviceType": "Point to Point Transfer",
+        "status": "deactive"
+    },
+    {
+        "carName": "Ford F-150 2023",
+        "companyName": "Ford",
+        "serviceType": "Point to Point Transfer",
+        "status": "active"
+    },
+    {
+        "carName": "Chevrolet Tahoe 2023",
+        "companyName": "Chevrolet",
+        "serviceType": "Point to Point Transfer",
+        "status": "active"
+    },
+    {
+        "carName": "Honda CR-V 2023",
+        "companyName": "Honda",
+        "serviceType": "Point to Point Transfer",
+        "status": "deactive"
+    }
+]

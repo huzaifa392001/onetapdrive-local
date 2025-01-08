@@ -1,0 +1,91 @@
+[
+    {
+        "name": "Drift Car Rental",
+        "package": "Basic Package",
+        "price": "AED 49.00",
+        "item": "Boost",
+        "quantity": 50,
+        "account no": "1234567890"
+    },
+    {
+        "name": "Speed Car Rentals",
+        "package": "Premium Package",
+        "price": "AED 149.00",
+        "item": "Turbo Boost",
+        "quantity": 30,
+        "account no": "9876543210"
+    },
+    {
+        "name": "Luxury Rides",
+        "package": "VIP Package",
+        "price": "AED 299.00",
+        "item": "Supercharge",
+        "quantity": 20,
+        "account no": "1122334455"
+    },
+    {
+        "name": "Quick Drive Rentals",
+        "package": "Economy Package",
+        "price": "AED 39.00",
+        "item": "Speed Boost",
+        "quantity": 100,
+        "account no": "6677889900"
+    },
+    {
+        "name": "Max Performance Rentals",
+        "package": "Pro Package",
+        "price": "AED 199.00",
+        "item": "Ultimate Boost",
+        "quantity": 15,
+        "account no": "4455667788"
+    },
+    {
+        "name": "Elite Car Hire",
+        "package": "Luxury Package",
+        "price": "AED 399.00",
+        "item": "Advanced Turbo",
+        "quantity": 10,
+        "account no": "2233445566"
+    },
+    {
+        "name": "Turbo Rentals",
+        "package": "Standard Package",
+        "price": "AED 89.00",
+        "item": "Boost Power",
+        "quantity": 75,
+        "account no": "9988776655"
+    },
+    {
+        "name": "Fast Lane Rentals",
+        "package": "Standard Package",
+        "price": "AED 59.00",
+        "item": "Speed Boost",
+        "quantity": 120,
+        "account no": "3344556677"
+    },
+    {
+        "name": "Speedster Car Rentals",
+        "package": "Super Package",
+        "price": "AED 249.00",
+        "item": "Hyper Boost",
+        "quantity": 25,
+        "account no": "7766554433"
+    },
+    {
+        "name": "Quick Ride Rentals",
+        "package": "Basic Package",
+        "price": "AED 45.00",
+        "item": "Boost Pack",
+        "quantity": 60,
+        "account no": "3344778899"
+    },
+    {
+        "name": "Nitro Car Hire",
+        "package": "Turbo Package",
+        "price": "AED 169.00",
+        "item": "Nitro Boost",
+        "quantity": 40,
+        "account no": "9988112233"
+    }
+]
+  

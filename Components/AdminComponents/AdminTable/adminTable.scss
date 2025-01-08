@@ -1,5 +1,12 @@
 .dataTable {
-  @apply w-full h-full;
+  @apply w-full h-full overflow-x-auto;
+  .ag-theme-alpine {
+    @apply min-w-full;
+  }
+
+  .ag-header {
+    @apply overflow-x-auto;
+  }
   .ag-row {
     .ag-cell {
       @apply flex items-center px-3;
@@ -16,5 +23,24 @@
         @apply text-[1rem] font-normal;
       }
     }
+  }
+}
+
+.statusBtn {
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  &.active {
+    background-color: green;
+    color: white;
+  }
+
+  &.deactive {
+    background-color: red;
+    color: white;
   }
 }

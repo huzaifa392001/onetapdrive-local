@@ -1,0 +1,134 @@
+[
+    {
+        "carName": "DB11",
+        "companyName": "Aston Martin",
+        "contact": "+1-800-123-4567",
+        "price": {
+            "perDay": 100,
+            "perMonth": 3000
+        },
+        "premium": true,
+        "status": "active"
+    },
+    {
+        "carName": "C-Class",
+        "companyName": "Mercedes-Benz",
+        "contact": "+1-800-234-5678",
+        "price": {
+            "perDay": 80,
+            "perWeek": 500
+        },
+        "premium": false,
+        "status": "active"
+    },
+    {
+        "carName": "X5",
+        "companyName": "BMW",
+        "contact": "+1-800-345-6789",
+        "price": {
+            "perDay": 100,
+            "perMonth": 2500
+        },
+        "premium": false,
+        "status": "active"
+    },
+    {
+        "carName": "Q7",
+        "companyName": "Audi",
+        "contact": "+1-800-456-7890",
+        "price": {
+            "perDay": 90,
+            "perWeek": 600
+        },
+        "premium": false,
+        "status": "deactive"
+    },
+    {
+        "carName": "911",
+        "companyName": "Porsche",
+        "contact": "+1-800-567-8901",
+        "price": {
+            "perDay": 120,
+            "perMonth": 4000
+        },
+        "premium": true,
+        "status": "active"
+    },
+    {
+        "carName": "Model S",
+        "companyName": "Tesla",
+        "contact": "+1-800-678-9012",
+        "price": {
+            "perDay": 110,
+            "perWeek": 700
+        },
+        "premium": true,
+        "status": "active"
+    },
+    {
+        "carName": "F-Type",
+        "companyName": "Jaguar",
+        "contact": "+1-800-789-0123",
+        "price": {
+            "perDay": 95,
+            "perMonth": 3200
+        },
+        "premium": false,
+        "status": "deactive"
+    },
+    {
+        "carName": "Ghost",
+        "companyName": "Rolls-Royce",
+        "contact": "+1-800-890-1234",
+        "price": {
+            "perDay": 150,
+            "perMonth": 4500
+        },
+        "premium": true,
+        "status": "active"
+    },
+    {
+        "carName": "Huracan",
+        "companyName": "Lamborghini",
+        "contact": "+1-800-901-2345",
+        "price": {
+            "perDay": 130,
+            "perWeek": 900
+        },
+        "premium": true,
+        "status": "deactive"
+    },
+    {
+        "carName": "488 GTB",
+        "companyName": "Ferrari",
+        "contact": "+1-800-012-3456",
+        "price": {
+            "perDay": 140,
+            "perMonth": 3800
+        },
+        "premium": true,
+        "status": "active"
+    },
+    {
+        "carName": "Camaro",
+        "companyName": "Chevrolet",
+        "contact": "+1-800-123-5678",
+        "price": {
+            "perDay": 70,
+            "perWeek": 450
+        },
+        "premium": false,
+        "status": "deactive"
+    },
+    {
+        "carName": "Mustang",
+        "companyName": "Ford",
+        "contact": "+1-800-234-6789",
+        "price": {
+            "perDay": 85,
+            "perMonth": 2400
+        },
+        "premium": false,
+        "status": "active"
+    }
+]

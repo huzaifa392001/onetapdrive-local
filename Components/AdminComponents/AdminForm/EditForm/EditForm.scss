@@ -1,0 +1,19 @@
+.createWrapper{
+    @apply w-full bg-gray-100 py-[50px] px-[30px] rounded-[6px] mt-[50px] shadow-xl; 
+
+    .inputName{
+        @apply mb-2;
+    }
+    
+    input {
+        @apply w-full py-[12px] border border-[#ced4da] bg-transparent outline-none px-2 rounded-[6px] text-[#999a9b] placeholder:text-gray-300 mb-4;
+    }
+    p{
+        @apply text-[--vendor-bg] text-[1rem] font-[600];
+    }
+
+    .btnWrapper{
+        @apply flex gap-[10px];
+    }
+
+}

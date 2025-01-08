@@ -1,0 +1,102 @@
+[
+    {
+        "name": "Ibrahim",
+        "company name": "Drift Car Rental",
+        "leads": "10",
+        "inquiry": "4",
+        "email": "123test@gmail.com",
+        "contact": "+91 123 45667788",
+        "status": "active",
+        "joined": "12-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Urban Ride Rentals",
+        "leads": "12",
+        "inquiry": "5",
+        "email": "456test@gmail.com",
+        "contact": "+91 987 6543210",
+        "status": "inactive",
+        "joined": "15-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Luxury Wheels",
+        "leads": "8",
+        "inquiry": "3",
+        "email": "789test@gmail.com",
+        "contact": "+91 654 3210987",
+        "status": "active",
+        "joined": "18-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "City Drive Rentals",
+        "leads": "15",
+        "inquiry": "7",
+        "email": "xyztest@gmail.com",
+        "contact": "+91 111 2223333",
+        "status": "deactive",
+        "joined": "20-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Fast Track Cars",
+        "leads": "14",
+        "inquiry": "6",
+        "email": "testabc@gmail.com",
+        "contact": "+91 444 5556666",
+        "status": "active",
+        "joined": "22-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Elite Car Hire",
+        "leads": "5",
+        "inquiry": "2",
+        "email": "contacttest@gmail.com",
+        "contact": "+91 333 4445555",
+        "status": "deactive",
+        "joined": "24-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Speedy Rent-a-Car",
+        "leads": "20",
+        "inquiry": "10",
+        "email": "speedytest@gmail.com",
+        "contact": "+91 777 8889999",
+        "status": "active",
+        "joined": "25-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Luxury Motors",
+        "leads": "30",
+        "inquiry": "12",
+        "email": "luxurytest@gmail.com",
+        "contact": "+91 555 6667777",
+        "status": "active",
+        "joined": "27-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Global Car Rentals",
+        "leads": "9",
+        "inquiry": "4",
+        "email": "globaltest@gmail.com",
+        "contact": "+91 888 9990000",
+        "status": "deactive",
+        "joined": "28-Dec-2024"
+    },
+    {
+        "name": "Ibrahim",
+        "company name": "Super Car Rentals",
+        "leads": "40",
+        "inquiry": "20",
+        "email": "supercar@gmail.com",
+        "contact": "+91 999 0001111",
+        "status": "active",
+        "joined": "30-Dec-2024"
+    }
+]

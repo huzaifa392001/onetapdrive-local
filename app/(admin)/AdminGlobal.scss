@@ -1,0 +1,75 @@
+.inputCont {
+    label {
+    }
+    input {
+    }
+}
+
+.formWrapper {
+    @apply w-full grid grid-cols-12 mt-10;
+
+    &:not(:has(.preview)) {
+        form {
+            @apply col-span-12;
+        }
+    }
+
+    form {
+        @apply col-span-8 grid grid-cols-2 pr-6 gap-x-4;
+
+        &:not(:has(.divider)) {
+            @apply gap-y-6;
+        }
+
+        label {
+            @apply text-[1.125rem] mb-1 block;
+        }
+        .inputCont {
+            input,
+            textarea {
+                @apply w-full py-[12px] border shadow-md bg-transparent outline-none px-2 rounded-[6px] text-[var(--black)] placeholder:text-[#999a9b];
+            }
+
+            &.btnCont {
+                @apply flex items-center justify-end gap-x-4 col-span-2 mt-5;
+            }
+
+            &.content {
+                @apply col-span-2;
+            }
+        }
+
+        .divider {
+            @apply col-span-2 border-t mt-12 mb-2;
+        }
+
+        h3 {
+            @apply col-span-2 text-[1.5rem] font-medium mb-4;
+        }
+    }
+    .preview {
+        @apply col-span-4;
+        > h2 {
+            @apply text-center font-bold text-[2rem] mb-3;
+        }
+        .previewBox {
+            @apply py-3 px-6 border bg-[var(--white)] shadow-md rounded-[20px];
+            figure {
+                @apply relative w-full h-[150px] flex items-center justify-center border rounded-[20px] mb-2;
+                img {
+                    @apply object-contain object-center;
+                }
+            }
+            h2 {
+                @apply text-[1.5rem] text-center font-semibold;
+            }
+            .headingLayout {
+                @apply border-t mt-4 pt-2;
+
+                h3 {
+                    @apply text-[1.375rem];
+                }
+            }
+        }
+    }
+}

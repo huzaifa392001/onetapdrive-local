@@ -1,5 +1,5 @@
 .adminHomeCard {
-    @apply w-full flex items-center gap-[20px] bg-[--vendor-bg] rounded-[20px] pl-10 text-[20px] text-white font-[500] relative;
+    @apply w-full flex items-center gap-[20px] border-2 border-solid border-[#e5e7eb] rounded-[20px] pl-10 text-[20px] text-[--vendor-bg] font-[500] relative overflow-x-hidden;
 
     &:hover .bgIcon {
         transition: all .3s ease-in;
@@ -8,7 +8,7 @@
 }
 
 .cardBody {
-    @apply  min-h-[130px] flex items-center gap-[20px] bg-[--vendor-bg] rounded-[20px] mx-4 text-[18px] text-white font-[500];
+    @apply  min-h-[130px] flex items-center gap-[20px] rounded-[20px] mx-4 text-[18px] text-[--vendor-bg] font-[500];
 
    
 }
@@ -18,11 +18,15 @@
 }
 
 .adminCardsWrapper{
-        @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mr-8 my-4;
+        @apply grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6 my-12;
 }
 .bgIcon {
     @apply absolute right-0 opacity-[0.1] text-[3rem];   
     @apply transition-transform duration-300 ease-in-out;
+}
+
+.chartWrapper{
+    @apply flex gap-4 overflow-hidden;
 }
 
 

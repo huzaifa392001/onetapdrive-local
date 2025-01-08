@@ -1,6 +1,7 @@
 import '../global.scss';
 import MainWrapper from "@/Components/MainWrapper/MainWrapper";
 import AdminWrapper from "@/Components/AdminComponents/AdminWrapper/AdminWrapper";
+import "./AdminGlobal.scss"
 
 export const metadata = {
     title: "Admin - Onetapdrive",

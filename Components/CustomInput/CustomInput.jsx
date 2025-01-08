@@ -32,6 +32,7 @@ function CustomInput(props) {
     else {
         return (
             <div className={`inputCont ${props?.leftIcon && 'leftIcon'} ${inputType === 'password' && 'password'}`} >
+                <label for="">{props?.placeholder}</label>
                 <input
                     type={inputType === 'password' ? showPassword ? 'text' : 'password' : inputType}
                     required={props?.required || false}

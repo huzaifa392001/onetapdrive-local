@@ -1,0 +1,24 @@
+[
+    {
+        "slug":"Ali",
+        "title": "Ali",
+        "images": [
+        "/images/admin/user-1.jpg",
+        "/images/admin/user-2.jpg"
+        ]
+    },
+    {
+        "slug":"Sarah",
+        "title": "Sarah",
+        "images": [
+        "/images/admin/user-3.jpg"
+        ]
+    },
+    {
+        "slug":"David",
+        "title": "David",
+        "images": [
+        "/images/admin/user-4.jpg"
+        ]
+    }
+]  

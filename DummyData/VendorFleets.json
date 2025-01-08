@@ -3,7 +3,8 @@
     "id": 1,
     "car_name": "Tesla Model Y",
     "price_set": "450 / Day",
-    "status": "active"
+    "status": "active",
+    "Action": ""
   },
   {
     "id": 2,

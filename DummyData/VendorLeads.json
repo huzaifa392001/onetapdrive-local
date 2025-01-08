@@ -2,80 +2,80 @@
     {
         "Car": "Tesla Model Y",
         "Name": "John Doe",
-        "Email": "admin@rentcar.com",
-        "Contact": "john.doe@example.com",
+        "Email": "john.doe@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-01"
       },
       {
         "Car": "Ford F-Series",
         "Name": "Jane Smith",
-        "Email": "admin@rentcar.com",
-        "Contact": "jane.smith@example.com",
+        "Email": "jane.smith@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-02"
       },
       {
         "Car": "Toyota Corolla",
         "Name": "Alice Johnson",
-        "Email": "admin@rentcar.com",
-        "Contact": "alice.johnson@example.com",
+        "Email": "alice.johnson@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-03"
       },
       {
         "Car": "Mercedes EQA",
         "Name": "Bob Brown",
-        "Email": "admin@rentcar.com",
-        "Contact": "bob.brown@example.com",
+        "Email": "bob.brown@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-04"
       },
       {
         "Car": "Fiat 500",
         "Name": "Charlie Wilson",
-        "Email": "admin@rentcar.com",
-        "Contact": "charlie.wilson@example.com",
+        "Email": "charlie.wilson@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-05"
       },
       {
         "Car": "Nissan Juke",
         "Name": "Diana Prince",
-        "Email": "admin@rentcar.com",
-        "Contact": "diana.prince@example.com",
+        "Email": "diana.prince@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-06"
       },
       {
         "Car": "Vauxhall Corsa",
         "Name": "Edward King",
-        "Email": "admin@rentcar.com",
-        "Contact": "edward.king@example.com",
+        "Email": "edward.king@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-07"
       },
       {
         "Car": "Volvo EX30",
         "Name": "Fiona Queen",
-        "Email": "admin@rentcar.com",
-        "Contact": "fiona.queen@example.com",
+        "Email": "fiona.queen@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-08"
       },
       {
         "Car": "Mercedes Maybach",
         "Name": "George Knight",
-        "Email": "admin@rentcar.com",
-        "Contact": "george.knight@example.com",
+        "Email": "george.knight@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-09"
       },
       {
         "Car": "Jaguar I-PACE",
         "Name": "Helen Strong",
-        "Email": "admin@rentcar.com",
-        "Contact": "helen.strong@example.com",
+        "Email": "helen.strong@example.com",
+        "Contact": "32131564654",
         "Lead Type": "Whatsapp",
         "Date": "2024-12-10"
       }

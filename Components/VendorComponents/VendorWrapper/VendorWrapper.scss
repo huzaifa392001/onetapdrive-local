@@ -3,6 +3,6 @@
     .vendorContentWrap {
         width: calc(100% - 300px);
         flex: 0 1 calc(100% - 300px);
-        @apply p-8;
+        @apply p-8 overflow-y-auto;
     }
 }

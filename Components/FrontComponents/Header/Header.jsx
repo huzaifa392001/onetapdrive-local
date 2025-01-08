@@ -33,9 +33,20 @@ function Header() {
     };
 
     useEffect(() => {
-        const rect = rentACarRef.current.getBoundingClientRect(); // Get the position of Rent a Car
-        setDropdownPosition(rect.left); // Set the left position dynamically
-    }, [])
+        if (rentACarRef.current) {
+            const rect = rentACarRef.current.getBoundingClientRect(); // Get the position of Rent a Car
+            const dropdown = document.querySelector('.categoryDropdown'); // Select the dropdown
+            const dropdownWidth = dropdown ? dropdown.offsetWidth : 0; // Dynamically get the dropdown's width
+            const screenWidth = window.innerWidth;
+
+            // Adjust position to prevent overflow
+            const position = rect.left + dropdownWidth > screenWidth
+                ? screenWidth - dropdownWidth - 10 // Ensure it stays within bounds
+                : rect.left;
+
+            setDropdownPosition(position);
+        }
+    }, [navShow]); // Recalculate if dropdown visibility changes
 
     return (
         <div
@@ -135,7 +146,7 @@ function Header() {
                 <div className="catCont">
                     <div className="catRow">
                         <div className="catCol">
-                            <h4>Category</h4>
+                            <h4>Popular Categories</h4>
                             <ul>
                                 <li>
                                     <Link href={"/cars/economy"}>
@@ -168,7 +179,7 @@ function Header() {
                                     </Link>
                                 </li>
                             </ul>
-                            <h4>Category</h4>
+                            <h4>Categories</h4>
                             <ul>
                                 <li>
                                     <Link href={""}>

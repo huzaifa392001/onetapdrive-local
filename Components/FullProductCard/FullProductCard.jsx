@@ -1,34 +1,72 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import "./FullProductCard.scss"
 
 function FullProductCard(props) {
     const product = props?.data;
+
+    // Combine thumbnail with images array
+    const images = product?.thumbnail
+        ? [{ name: product?.thumbnail }, ...product?.images?.slice(0, 3)] // Thumbnail + 3 images
+        : [...product?.images?.slice(0, 4)]; // 4 images if no thumbnail
+
+    // State for active image
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
+
     return (
-        <div className='fullProductCard'>
-            <Link href={''}>
-                <figure className='productImg'>
+        <div onMouseLeave={() => setActiveImageIndex(0)} className='fullProductCard'>
+            <Link href={`/product/${product?.slug}`}>
+                <figure className="productImg">
                     {props?.featured && (
                         <span className="imgTag">
                             <i className="fas fa-stars" />
                             Featured
                         </span>
                     )}
-                    <Image src={`/images/product/${product?.thumbnail}`} fill alt='' />
+                    {images.map((image, index) => (
+                        <div key={index} className={`imgBox ${activeImageIndex === index ? "active" : ""}`}>
+                            <Image
+                                src={`/images/product/${image?.name}`}
+                                fill
+                                alt=""
+                            // className={activeImageIndex === index ? "active" : ""}
+                            />
+                            {index === images?.length - 1 && (
+                                <div className="goToCont">
+                                    <h6>Like what you see?</h6>
+                                    <button class="themeBtn">
+                                        Find out more
+                                        <i class="far fa-chevron-double-right" />
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                    <div className="barRow">
+                        {images.map((_, index) => (
+                            <span
+                                key={index}
+                                onMouseEnter={() => setActiveImageIndex(index)}
+                                className={activeImageIndex === index ? "active" : ""}
+                            />
+                        ))}
+                    </div>
                 </figure>
             </Link>
             <div className="content">
-                <Link href={""}>
+                <Link href={`/product/${product?.slug}`}>
                     <h3>
                         {product?.brand?.name} {product?.model_name} {product?.make_year}
+                        &nbsp;
                         <span>
-                            {" "}Hire in {product?.city}: {product?.exterior_color.split(":")[0]} {product?.category}, {product?.passengers} Seats with {product?.car_features.replaceAll(",", ", ")}
+                            Hire in {product?.city}: {product?.exterior_color.split(":")[0]} {product?.category}, {product?.passengers} Seats with {product?.car_features.replaceAll(",", ", ")}
                         </span>
                     </h3>
                 </Link>
-                <div class="carInfo">
-                    <div class="leftArea">
+                <div className="carInfo">
+                    <div className="leftArea">
                         <div className="tags">
                             <span className="tag">
                                 {product?.category}
@@ -92,7 +130,7 @@ function FullProductCard(props) {
                             </ul>
                         </div>
                     </div>
-                    <div class="rightArea">
+                    <div className="rightArea">
                         <div className="priceCont">
                             <div className="priceBox">
                                 {product?.daily_discount_price && (
@@ -121,8 +159,8 @@ function FullProductCard(props) {
                         </div>
                     </div>
                 </div>
-                <div class="btnCont">
-                    <figure class="brandImgCont">
+                <div className="btnCont">
+                    <figure className="brandImgCont">
                         <Image src={"/images/product/brand.jpg"} width={40} height={40} alt='' />
                     </figure>
                     <Link href={''} className='call'>

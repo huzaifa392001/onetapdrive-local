@@ -19,10 +19,10 @@ function VendorSidebar() {
   const menuItems = [
     // { path: "/", label: "Go To Website", icon: "fas fa-globe-asia" },
     { path: "/vendor", label: "Dashboard", icon: "fas fa-home" },
-    { path: "/vendor/trade-license", label: "Trade License", icon: "fas fa-id-badge" },
-    { path: "/vendor/leads-management", label: "Leads Management", icon: "fas fa-file-alt" },
+    { path: "/vendor/license", label: "Trade License", icon: "fas fa-id-badge" },
+    { path: "/vendor/leads", label: "Leads Management", icon: "fas fa-file-alt" },
     // { path: "/vendor/inquiry-forms", label: "Inquiry Forms", icon: "fas fa-phone-alt" },
-    { path: "/vendor/my-fleet", label: "My Fleet", icon: "fas fa-car" },
+    { path: "/vendor/fleet", label: "My Fleet", icon: "fas fa-car" },
     { path: "/vendor/my-fleet-with-driver", label: "My Fleet With Driver", icon: "fas fa-taxi" },
     { path: "/vendor/manage-car-offers", label: "Manage Car Offers", icon: "fas fa-percentage" },
     

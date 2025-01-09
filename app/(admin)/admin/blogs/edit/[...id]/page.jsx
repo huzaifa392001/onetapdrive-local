@@ -4,7 +4,7 @@ import SecHeading from '@/Components/SecHeading/SecHeading';
 import { pageName } from '@/Utils/Utils';
 import Image from 'next/image';
 
-function page() {
+function Page() {
     // State variables for form fields
     const [brandTitle, setBrandTitle] = useState('');
     const [brandImage, setBrandImage] = useState(null);
@@ -79,4 +79,4 @@ function page() {
     );
 }
 
-export default page
+export default Page;

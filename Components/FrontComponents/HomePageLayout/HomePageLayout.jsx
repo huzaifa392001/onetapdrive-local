@@ -7,8 +7,8 @@ import productsData from "@/DummyData/Products.json"
 import faqData from "@/DummyData/Faq.json"
 import CarsSection from '../CarsSection/CarsSection'
 import Image from 'next/image'
-import FAQsSection from '@/Components/FAQsSection/FAQsSection'
-import SecHeading from '@/Components/SecHeading/SecHeading'
+import FAQsSection from '@/components/FAQsSection/FAQsSection'
+import SecHeading from '@/components/SecHeading/SecHeading'
 import Link from 'next/link'
 
 function HomePageLayout() {

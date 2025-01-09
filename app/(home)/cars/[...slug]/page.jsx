@@ -1,4 +1,4 @@
-import CarsPageLayout from '@/Components/FrontComponents/CarsPageLayout/CarsPageLayout'
+import CarsPageLayout from '@/components/FrontComponents/CarsPageLayout/CarsPageLayout'
 import React from 'react'
 
 function page() {

@@ -1,6 +1,6 @@
 import '../global.scss';
-import MainWrapper from "@/Components/MainWrapper/MainWrapper";
-import AdminWrapper from "@/Components/AdminComponents/AdminWrapper/AdminWrapper";
+import MainWrapper from "@/components/MainWrapper/MainWrapper";
+import AdminWrapper from "@/components/AdminComponents/AdminWrapper/AdminWrapper";
 import "./AdminGlobal.scss"
 
 export const metadata = {

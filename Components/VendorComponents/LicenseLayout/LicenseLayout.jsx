@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import SecHeading from "@/Components/SecHeading/SecHeading";
+import SecHeading from "@/components/SecHeading/SecHeading";
 import "./LicenseLayout.scss";
 
 function LicenseLayout() {

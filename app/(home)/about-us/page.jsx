@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
 import "./about-us.scss"
-import SecHeading from '@/Components/SecHeading/SecHeading'
-import ContentSec from '@/Components/FrontComponents/ContentSec/ContentSec'
+import SecHeading from '@/components/SecHeading/SecHeading'
+import ContentSec from '@/components/FrontComponents/ContentSec/ContentSec'
 import Link from 'next/link'
 
 function page() {

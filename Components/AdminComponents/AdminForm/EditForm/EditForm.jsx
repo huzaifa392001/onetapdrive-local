@@ -1,7 +1,7 @@
 import React from 'react'
 import "./EditForm.scss";
-import AdminButton from '@/Components/AdminComponents/AdminButton/AdminButton';
-import CustomInput from '@/Components/CustomInput/CustomInput';
+import AdminButton from '@/components/AdminComponents/AdminButton/AdminButton';
+import CustomInput from '@/components/CustomInput/CustomInput';
 
 function page() {
   return (

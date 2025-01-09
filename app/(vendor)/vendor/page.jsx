@@ -1,5 +1,5 @@
 import React from 'react'
-import VendorDashboard from '@/Components/VendorComponents/VendorDashboard/VendorDashboard'
+import VendorDashboard from '@/components/VendorComponents/VendorDashboard/VendorDashboard'
 
 function page() {
   return (

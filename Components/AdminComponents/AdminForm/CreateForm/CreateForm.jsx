@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
 import "./CreateForm.scss";
-import AdminButton from "@/Components/AdminComponents/AdminButton/AdminButton";
+import AdminButton from "@/components/AdminComponents/AdminButton/AdminButton";
 import Image from "next/image";
 
 function page() {

@@ -1,5 +1,5 @@
-import AdminDashboard from '@/Components/AdminComponents/AdminDashboard/AdminDashboard'
-import AdminHeading from '@/Components/AdminComponents/AdminHeading/AdminHeading'
+import AdminDashboard from '@/components/AdminComponents/AdminDashboard/AdminDashboard'
+import AdminHeading from '@/components/AdminComponents/AdminHeading/AdminHeading'
 import React from 'react'
 
 function page() {

@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react'
 import "./BlogsPageLayout.scss"
 import blogsData from "@/DummyData/BlogsData.json"
 import BlogCardLayout from '../BlogCardLayout/BlogCardLayout'
-import SecHeading from '@/Components/SecHeading/SecHeading'
+import SecHeading from '@/components/SecHeading/SecHeading'
 
 function BlogsPageLayout() {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,9 +1,9 @@
-import ProductCard from '@/Components/ProductCard/ProductCard';
+import ProductCard from '@/components/ProductCard/ProductCard';
 import React, { Suspense } from 'react';
 import productsData from "@/DummyData/Products.json";
-import ProductCardSkeleton from '@/Components/ProductCard/ProductCardSkeleton';
+import ProductCardSkeleton from '@/components/ProductCard/ProductCardSkeleton';
 import "./FilteredCars.scss";
-import FullProductCard from '@/Components/FullProductCard/FullProductCard';
+import FullProductCard from '@/components/FullProductCard/FullProductCard';
 
 function FilteredCars(props) {
     return (

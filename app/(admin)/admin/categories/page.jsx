@@ -1,8 +1,8 @@
 import React from 'react';
 import CategoriesData from "@/DummyData/AdminCategories.json";
-import SecHeading from '@/Components/SecHeading/SecHeading';
+import SecHeading from '@/components/SecHeading/SecHeading';
 import Link from 'next/link';
-import AdminDataTable from '@/Components/AdminComponents/AdminTable/adminTable';
+import AdminDataTable from '@/components/AdminComponents/AdminTable/adminTable';
 
 function page() {
   return (

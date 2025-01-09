@@ -1,5 +1,5 @@
-import AdminDataTable from "@/Components/AdminComponents/AdminTable/adminTable";
-import SecHeading from "@/Components/SecHeading/SecHeading";
+import AdminDataTable from "@/components/AdminComponents/AdminTable/adminTable";
+import SecHeading from "@/components/SecHeading/SecHeading";
 import React from "react";
 import blogsData from "@/DummyData/BlogsData.json";
 import Link from "next/link";

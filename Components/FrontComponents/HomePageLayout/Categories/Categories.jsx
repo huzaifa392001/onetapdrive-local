@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import './Categories.scss';
-import SecHeading from '@/Components/SecHeading/SecHeading';
+import SecHeading from '@/components/SecHeading/SecHeading';
 import CategoryCard from './CategoryCard/CategoryCard';
 import { useSelector } from 'react-redux';
 

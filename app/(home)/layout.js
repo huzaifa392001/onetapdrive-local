@@ -1,6 +1,6 @@
-import Fonts from "@/Components/Fonts/Fonts";
-import HomeWrapper from "@/Components/FrontComponents/HomeWrapper/HomeWrapper";
-import MainWrapper from "@/Components/MainWrapper/MainWrapper";
+import Fonts from "@/components/Fonts/Fonts";
+import HomeWrapper from "@/components/FrontComponents/HomeWrapper/HomeWrapper";
+import MainWrapper from "@/components/MainWrapper/MainWrapper";
 import "@/app/global.scss"
 import Head from "next/head";
 

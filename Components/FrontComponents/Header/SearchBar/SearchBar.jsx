@@ -1,6 +1,6 @@
 import React from 'react'
 import Form from 'next/form'
-import CustomInput from '@/Components/CustomInput/CustomInput'
+import CustomInput from '@/components/CustomInput/CustomInput'
 
 function SearchBar() {
     return (

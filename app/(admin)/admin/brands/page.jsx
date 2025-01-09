@@ -1,7 +1,7 @@
-import AdminDataTable from '@/Components/AdminComponents/AdminTable/adminTable'
+import AdminDataTable from '@/components/AdminComponents/AdminTable/adminTable'
 import React from 'react'
 import brandsData from "@/DummyData/AdminBrands.json"
-import SecHeading from '@/Components/SecHeading/SecHeading'
+import SecHeading from '@/components/SecHeading/SecHeading'
 import Link from 'next/link'
 
 function page() {

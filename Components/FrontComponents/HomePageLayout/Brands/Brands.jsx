@@ -1,5 +1,5 @@
 'use client'
-import SecHeading from '@/Components/SecHeading/SecHeading'
+import SecHeading from '@/components/SecHeading/SecHeading'
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';

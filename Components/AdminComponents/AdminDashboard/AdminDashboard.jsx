@@ -1,7 +1,7 @@
 import React from "react";
 import "./AdminDashboard.scss";
-import UserChart from "@/components/ui/UserChart";
-import CarChart from "@/components/ui/CarChart";
+import UserChart from "@/Components/ui/UserChart";
+import CarChart from "@/Components/ui/CarChart";
 import AdminCard from "@/DummyData/AdminCard.json";
 import Link from "next/link";
 

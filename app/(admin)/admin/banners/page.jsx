@@ -1,7 +1,7 @@
 "use client"
 
-import AdminDataTable from '@/components/AdminComponents/AdminTable/adminTable';
-import SecHeading from '@/components/SecHeading/SecHeading';
+import AdminDataTable from '@/Components/AdminComponents/AdminTable/adminTable';
+import SecHeading from '@/Components/SecHeading/SecHeading';
 import Error from 'next/error';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';

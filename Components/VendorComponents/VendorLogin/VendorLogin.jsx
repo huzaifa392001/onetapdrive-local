@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./VendorLogin.scss";
 import Image from "next/image";
 import Link from "next/link";
-import SecHeading from "@/components/SecHeading/SecHeading";
-import CustomInput from "@/components/CustomInput/CustomInput";
+import SecHeading from "@/Components/SecHeading/SecHeading";
+import CustomInput from "@/Components/CustomInput/CustomInput";
 import { VendorServices } from "@/Services/VendorServices/VendorServices";
 
 function VendorLogin() {

@@ -1,6 +1,6 @@
 import React from 'react';
-import AdminDataTable from '@/components/AdminComponents/AdminTable/adminTable';
-import SecHeading from '@/components/SecHeading/SecHeading';
+import AdminDataTable from '@/Components/AdminComponents/AdminTable/adminTable';
+import SecHeading from '@/Components/SecHeading/SecHeading';
 import Link from 'next/link';
 import Data from "@/DummyData/carRefreshesManagement.json";
 

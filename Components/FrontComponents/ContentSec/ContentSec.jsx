@@ -1,4 +1,4 @@
-import SecHeading from '@/components/SecHeading/SecHeading'
+import SecHeading from '@/Components/SecHeading/SecHeading'
 import Image from 'next/image'
 import React from 'react'
 import "./ContentSec.scss"

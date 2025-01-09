@@ -1,4 +1,4 @@
-import ContactPageLayout from '@/components/FrontComponents/ContactPageLayout/ContactPageLayout'
+import ContactPageLayout from '@/Components/FrontComponents/ContactPageLayout/ContactPageLayout'
 import React from 'react'
 
 function page() {

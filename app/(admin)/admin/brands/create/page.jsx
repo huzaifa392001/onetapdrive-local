@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import SecHeading from '@/components/SecHeading/SecHeading';
+import SecHeading from '@/Components/SecHeading/SecHeading';
 import { pageName } from '@/Utils/Utils';
 import Image from 'next/image';
 

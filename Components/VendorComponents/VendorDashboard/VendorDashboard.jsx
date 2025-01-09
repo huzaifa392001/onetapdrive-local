@@ -1,7 +1,7 @@
 import React from "react";
 import "./VendorDashboard.scss";
 import VendorCards from "../../../DummyData/VendorCards";
-import VendorHeading from "@/components/VendorComponents/VendorHeading/VendorHeading";
+import VendorHeading from "@/Components/VendorComponents/VendorHeading/VendorHeading";
 export default function VendorDashboard() {
   return (
     <>

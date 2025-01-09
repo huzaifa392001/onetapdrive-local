@@ -1,5 +1,5 @@
 import React from 'react'
-import LicenseLayout from '@/components/VendorComponents/LicenseLayout/LicenseLayout'
+import LicenseLayout from '@/Components/VendorComponents/LicenseLayout/LicenseLayout'
 function page() {
   return (
     <LicenseLayout />

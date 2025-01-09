@@ -1,4 +1,4 @@
-import HomePageLayout from "@/components/FrontComponents/HomePageLayout/HomePageLayout";
+import HomePageLayout from "@/Components/FrontComponents/HomePageLayout/HomePageLayout";
 
 export default function Home() {
   return (

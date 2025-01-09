@@ -1,5 +1,5 @@
-import CustomInput from '@/components/CustomInput/CustomInput'
-import SecHeading from '@/components/SecHeading/SecHeading'
+import CustomInput from '@/Components/CustomInput/CustomInput'
+import SecHeading from '@/Components/SecHeading/SecHeading'
 import React from 'react'
 import "./ContactPageLayout.scss"
 import CarsSection from '../CarsSection/CarsSection'

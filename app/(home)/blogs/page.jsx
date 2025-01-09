@@ -1,4 +1,4 @@
-import BlogsPageLayout from '@/components/FrontComponents/BlogsPageLayout/BlogsPageLayout'
+import BlogsPageLayout from '@/Components/FrontComponents/BlogsPageLayout/BlogsPageLayout'
 import React from 'react'
 
 function page() {

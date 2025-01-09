@@ -1,5 +1,5 @@
 import React from 'react'
-import LeadsManagementLayout from '@/components/VendorComponents/LeadsManagementLayout/LeadsManagementLayout'
+import LeadsManagementLayout from '@/Components/VendorComponents/LeadsManagementLayout/LeadsManagementLayout'
 function page() {
   return (
     <LeadsManagementLayout />

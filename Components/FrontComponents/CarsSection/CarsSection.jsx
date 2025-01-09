@@ -1,6 +1,6 @@
-import ProductCard from '@/components/ProductCard/ProductCard'
-import ProductCardSkeleton from '@/components/ProductCard/ProductCardSkeleton'
-import SecHeading from '@/components/SecHeading/SecHeading'
+import ProductCard from '@/Components/ProductCard/ProductCard'
+import ProductCardSkeleton from '@/Components/ProductCard/ProductCardSkeleton'
+import SecHeading from '@/Components/SecHeading/SecHeading'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
 

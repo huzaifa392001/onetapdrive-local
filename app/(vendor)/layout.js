@@ -1,5 +1,5 @@
-import MainWrapper from "@/components/MainWrapper/MainWrapper";
-import VendorWrapper from "@/components/VendorComponents/VendorWrapper/VendorWrapper";
+import MainWrapper from "@/Components/MainWrapper/MainWrapper";
+import VendorWrapper from "@/Components/VendorComponents/VendorWrapper/VendorWrapper";
 import "@/app/global.scss"
 
 export const metadata = {

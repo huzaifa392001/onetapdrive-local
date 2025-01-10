@@ -18,9 +18,21 @@ function BreadCrumb(props) {
                         </Link>
                     </li>
                 )}
+                {props?.brand && (
+                    <li>
+                        <Link href={`/cars/${props?.brand}`}>
+                            {props?.brand}
+                        </Link>
+                    </li>
+                )}
                 {props?.route && (
                     <li>
                         {props?.route.replace("-", " ")}
+                    </li>
+                )}
+                {props?.model && (
+                    <li>
+                        {props?.model.replace("-", " ")}
                     </li>
                 )}
             </ul>
@@ -28,4 +40,4 @@ function BreadCrumb(props) {
     )
 }
 
-export default BreadCrumb
+export default React.memo(BreadCrumb)

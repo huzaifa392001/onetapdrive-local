@@ -3,6 +3,7 @@ import ProductCardSkeleton from '@/Components/ProductCard/ProductCardSkeleton'
 import SecHeading from '@/Components/SecHeading/SecHeading'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
+import "./CarsSection.scss"
 
 function CarsSection(props) {
     return (
@@ -10,9 +11,11 @@ function CarsSection(props) {
             <div className="customContainer">
                 <div className="headingCont">
                     <SecHeading heading={props?.secHeading} />
-                    <Link href={""} className='themeBtn'>
-                        View All
-                    </Link>
+                    {!props?.limited && (
+                        <Link href={""} className='themeBtn'>
+                            View All
+                        </Link>
+                    )}
                 </div>
                 <div className="prodRow col4">
                     {props?.data?.map((product, index) => (

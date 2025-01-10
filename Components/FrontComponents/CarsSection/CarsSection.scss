@@ -1,0 +1,6 @@
+.prodRow {
+    @apply grid gap-x-5;
+    &.col4 {
+        @apply grid-cols-4;
+    }
+}

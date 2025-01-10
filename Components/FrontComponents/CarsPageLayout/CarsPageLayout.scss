@@ -117,37 +117,8 @@
     }
 }
 
-.breadCrumb {
-    @apply py-2 border-b;
-    ul {
-        @apply flex items-center gap-x-2;
-        li {
-            @apply flex items-center gap-x-1 text-[14px] font-medium capitalize transition-colors duration-300;
-
-            &::after {
-                content: "\f0da";
-                font-family: "Font Awesome 5 Pro";
-                font-weight: 900;
-
-                @apply text-[var(--grey-color)] ml-2;
-            }
-
-            &:last-child {
-                &::after {
-                    content: none;
-                }
-            }
-
-            &:hover {
-                @apply text-[var(--theme-color)];
-            }
-        }
-    }
-}
-
-.productSec {
+.listingSec {
     @apply pt-0;
-
     .productGrid {
         @apply grid grid-cols-10 gap-6;
         .filteredCars {

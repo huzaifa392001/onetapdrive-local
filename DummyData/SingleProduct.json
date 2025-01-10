@@ -1,0 +1,91 @@
+{
+    "id": 149,
+    "user_id": "130",
+    "brand_id": "36",
+    "model_name": "Xterra",
+    "make_year": "2022",
+    "category": "Suv",
+    "price_per_day": "300",
+    "slug": "nissan-xterra-iid-149",
+    "per_day_mileage": "250",
+    "daily_availablity": null,
+    "days": "2",
+    "weekly_rent": "1570",
+    "weekly_mileage": "1770",
+    "available_weekly": null,
+    "monthly_extra": "6100",
+    "monthly_mileage": 5000,
+    "extra_free": null,
+    "daily_discount_price": 600,
+    "weekly_discount_price": 3140,
+    "is_monthly_available": null,
+    "monthly_discount_price": null,
+    "insurance_per_day": null,
+    "car_colors": "Gray",
+    "car_features": "Bluetooth,Power Mirrors,Power Windows,Power Door Locks",
+    "car_doors": "4",
+    "passengers": "5",
+    "bags": "2",
+    "registration_card": "1734026234.jpg",
+    "registration_card_back": "1734026234.jpg",
+    "registration_card_expiry": "2030-07-11",
+    "thumbnail": "thumbnail.jpg",
+    "specs": "Other",
+    "transmission": "Auto",
+    "fuel_type": "Petrol",
+    "status": 1,
+    "is_admin_approve": 1,
+    "is_featured": null,
+    "security_deposit": null,
+    "delivery_days": "Free Always",
+    "delivery_charges": null,
+    "cutomer_note": null,
+    "exterior_color": "Gray:#808080",
+    "interior_color": "Black:#000000",
+    "description": null,
+    "created_at": "2024-12-12 22:57:14",
+    "updated_at": "2024-12-13 04:58:31",
+    "refreshed_at": null,
+    "city": "Dubai",
+    "premium": true,
+    "user": {
+        "id": 130,
+        "name": "Shuja Ur Rehman",
+        "slug": "monaco-car-rental",
+        "company_name": "Monaco Car Rental",
+        "contact": "+971551010429",
+        "city": "Dubai",
+        "company_logo": "1732194718-monaco-car-rental.jpg",
+        "whatsapp_number": null
+    },
+    "images": [
+        {
+            "name": "2.jpg"
+        },
+        {
+            "name": "3.jpg"
+        },
+        {
+            "name": "4.jpg"
+        },
+        {
+            "name": "5.jpg"
+        },
+        {
+            "name": "6.jpg"
+        },
+        {
+            "name": "7.jpg"
+        },
+        {
+            "name": "8.jpg"
+        },
+        {
+            "name": "9.jpg"
+        }
+    ],
+    "brand": {
+        "name": "Nissan",
+        "image": "36.webp"
+    }
+}

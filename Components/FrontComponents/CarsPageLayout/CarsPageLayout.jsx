@@ -29,7 +29,7 @@ function CarsPageLayout() {
     };
 
     return (
-        <section className="productSec">
+        <section className="listingSec">
             <SearchBar activeCategory={activeRoute} />
             <div className="customContainer">
                 <BreadCrumb

@@ -123,6 +123,13 @@ function SearchBar({ activeCategory }) {
                                     <div className="dropdown">
                                         {type === 'category' ? (
                                             <ul data-lenis-prevent className="categoryGrid">
+                                                <li
+                                                    className={`categoryItem ${selectedCategory === "all" ? 'active' : ''}`}
+                                                    onClick={() => handleCategorySelect("all")}
+                                                >
+                                                    <span>All</span>
+                                                    <small>30 Cars</small>
+                                                </li>
                                                 {categoryData.map((item) => (
                                                     <li
                                                         key={item.name}

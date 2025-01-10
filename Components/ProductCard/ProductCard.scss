@@ -12,13 +12,13 @@
                 @apply text-[var(--theme-color)];
             }
         }
+        img {
+            @apply object-cover w-full h-full object-center transition-all duration-300;
+        }
         .imgBox {
             @apply absolute inset-0 w-full h-full overflow-hidden opacity-0 invisible transition-all duration-300;
             &.active {
                 @apply opacity-100 visible;
-            }
-            img {
-                @apply object-cover w-full h-full object-center transition-all duration-300;
             }
             .goToCont {
                 @apply absolute flex flex-col items-center justify-center h-full w-full bg-[#0004] backdrop-blur-[1px] gap-y-2;

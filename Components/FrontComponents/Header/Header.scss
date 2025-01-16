@@ -63,6 +63,25 @@
                     .login {
                         @apply flex items-center text-[var(--theme-color)] gap-x-2 text-[14px];
                     }
+                    .userMenu {
+                        @apply flex items-center gap-x-2 text-[14px] text-[var(--white)];
+                        h5 {
+                            @apply relative;
+
+                            &::before {
+                                content: "";
+                                @apply absolute bottom-0 left-0 w-full h-[1px] bg-[var(--white)] scale-x-0 origin-left transition-all duration-200;
+                            }
+                        }
+
+                        &:hover {
+                            h5 {
+                                &::before {
+                                    @apply scale-x-100;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

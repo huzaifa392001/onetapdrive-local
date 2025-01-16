@@ -122,7 +122,7 @@ const AdminDataTable = (props) => {
         ...(showAction ? [actionColumn] : []),
       ]);
     }
-  }, [rowData, showAction]);
+  }, [rowData, showAction, pathName]); // Added pathName to the dependency array
 
   const defaultColDef = useMemo(() => {
     return {

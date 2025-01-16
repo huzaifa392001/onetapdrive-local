@@ -57,9 +57,9 @@ function ProductCard(props) {
                                 {index === images?.length - 1 && (
                                     <div className="goToCont">
                                         <h6>Like what you see?</h6>
-                                        <button class="themeBtn">
+                                        <button className="themeBtn">
                                             Find out more
-                                            <i class="far fa-chevron-double-right" />
+                                            <i className="far fa-chevron-double-right" />
                                         </button>
                                     </div>
                                 )}

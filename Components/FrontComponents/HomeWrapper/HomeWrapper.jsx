@@ -1,27 +1,19 @@
 'use client'
-import React, { memo, useEffect, useState, Suspense } from 'react'
+import React, { memo, useEffect, useState, Suspense, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Lenis from 'lenis'
-import Image from 'next/image'
 import "./HomeWrapper.scss"
 import Loading from '@/app/(home)/loading'
 import { GeneralServices } from '@/Services/FrontServices/GeneralServices'
-
-function LoadingPopup() {
-    return (
-        <div className="loading-popup">
-            <Image src={'/images/logo.webp'} width={450} height={100} alt="OneTap Logo" />
-        </div>
-    )
-}
+import LoginModal from '../LoginModal/LoginModal'
 
 function HomeWrapper({ children }) {
     const [lenis, setLenis] = useState(null)
     const router = useRouter()
 
-    const lenisSetup = () => {
+    const lenisSetup = useCallback(() => {
         const lenisInstance = new Lenis({
             duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -43,19 +35,19 @@ function HomeWrapper({ children }) {
                 lenisInstance.scrollTo(this.getAttribute("href"))
             })
         })
-    }
+    }, [])
 
-    const scrollToTop = () => {
+    const scrollToTop = useCallback(() => {
         if (lenis) {
             lenis.scrollTo(0)
         }
-    }
+    }, [lenis])
 
     useEffect(() => {
         lenisSetup()
         GeneralServices.setCategories()
         GeneralServices.setLocation()
-    }, [])
+    }, [lenisSetup])
 
     useEffect(() => {
         const handleRouteChangeComplete = () => {
@@ -66,7 +58,7 @@ function HomeWrapper({ children }) {
         return () => {
             router.events?.off?.('routeChangeComplete', handleRouteChangeComplete)
         }
-    }, [router, lenis, scrollToTop]) // Include scrollToTop in the dependency array
+    }, [router, scrollToTop])
 
     return (
         <main className="wrapper">
@@ -74,6 +66,7 @@ function HomeWrapper({ children }) {
             <Suspense fallback={<Loading />}>
                 {children}
             </Suspense>
+            <LoginModal />
             <Footer />
         </main>
     )

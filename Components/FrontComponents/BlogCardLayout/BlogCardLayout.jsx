@@ -11,14 +11,14 @@ function BlogCardLayout(props) {
             <figure>
                 <Image src={'/images/cars/6.webp'} fill alt={`${props?.item?.title}`} />
             </figure>
-            <div class="content">
+            <div className="content">
                 <h2>
                     {props?.item?.title}
                 </h2>
                 <p>
                     {props?.item?.min_content}
                 </p>
-                <div class="author">
+                <div className="author">
                     <h4>{props?.item?.author?.name}</h4>
                     <h6>
                         {updatedDate}

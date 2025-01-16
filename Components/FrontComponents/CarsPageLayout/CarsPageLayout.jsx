@@ -120,8 +120,14 @@ function CarsPageLayout() {
                                 )}
                             </div>
                         ))}
-                        <figure class="rightAdd">
-                            <img src="/images/carLayout.gif" alt="" />
+                        <figure className="rightAdd">
+                            <Image
+                                src="/images/carLayout.gif"
+                                alt="Car Layout"
+                                width={500} // Adjust width as needed
+                                height={500} // Adjust height as needed
+                                layout="intrinsic" // Optional: Define the layout strategy
+                            />
                         </figure>
                     </div>
                 </div>

@@ -8,6 +8,8 @@ import brandsData from '@/DummyData/brands.json'
 import categoryData from "@/DummyData/Categories.json"
 import { useSelector } from 'react-redux'
 import { GeneralServices } from '@/Services/FrontServices/GeneralServices'
+import { store } from '@/Redux/Store'
+import { SET_USER_MODAL_STATUS } from '@/Redux/Slices/General'
 
 function Header() {
     const currentCity = useSelector((state) => state.general.currentLocation)
@@ -15,6 +17,7 @@ function Header() {
     const [dropdownPosition, setDropdownPosition] = useState(0); // For dynamic left position
     const rentACarRef = useRef(null); // Reference for the Rent a Car menu item
     const [selectedLocation, setSelectedLocation] = useState(currentCity); // Default location
+    const isUser = useSelector((state) => state.auth.isUser)
 
     const handleMouseEnter = (type) => {
         if (type === 'cat') {
@@ -47,6 +50,10 @@ function Header() {
             setDropdownPosition(position);
         }
     }, [navShow]); // Recalculate if dropdown visibility changes
+
+    const handleModalVisible = () => {
+        store.dispatch(SET_USER_MODAL_STATUS(true))
+    }
 
     return (
         <div
@@ -82,10 +89,18 @@ function Header() {
                                 </div>
                             </div>
                             <div className="rightNav">
-                                <Link href={"#"} className="login">
-                                    <i className="fas fa-user" />
-                                    <span>Log In</span>
-                                </Link>
+                                {!isUser && (
+                                    <button onClick={handleModalVisible} className="login">
+                                        <i className="fas fa-user" />
+                                        <span>Log In / Signup</span>
+                                    </button>
+                                )}
+                                {isUser && (
+                                    <Link href={"/user/dashboard"} className="userMenu">
+                                        <h5>Current user</h5>
+                                        <i className="fas fa-chevron-right" />
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -179,18 +194,18 @@ function Header() {
                                     </Link>
                                 </li>
                             </ul>
-                            <h4>Categories</h4>
+                            <h4>Others</h4>
                             <ul>
                                 <li>
                                     <Link href={""}>
                                         <span>List your cars</span>
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link href={""}>
                                         <span>Directory</span>
                                     </Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                         <div className="catCol">

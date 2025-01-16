@@ -24,6 +24,7 @@ function ProductPageLayout() {
                         model={product?.model_name}
                     // route={activeRoute}
                     />
+
                     <div className="headingContainer">
                         <figure>
                             <Image
@@ -43,6 +44,7 @@ function ProductPageLayout() {
                             </h3>
                         </div>
                     </div>
+
                     <div className="imagesRow">
                         <figure>
                             <Image
@@ -114,11 +116,14 @@ function ProductPageLayout() {
                             View All Photos
                         </Link>
                     </div>
+
                     <div className="detailLayout">
+
                         <div className="details">
                             <h2 className='name'>
                                 Rent {product?.brand?.name} {product?.model_name} {product?.make_year}
                             </h2>
+
                             <div className="tags">
                                 <span className="tag">
                                     {product?.category}
@@ -165,6 +170,7 @@ function ProductPageLayout() {
                                     {product?.bags}
                                 </span>
                             </div>
+
                             <div className="priceCont">
                                 <div className="leftSide">
                                     <h2>
@@ -187,33 +193,36 @@ function ProductPageLayout() {
                                     </ul>
                                 </div>
                             </div>
+
                             <div className="disclaimer">
                                 <h4>Disclaimer:</h4>
                                 <p>
                                     By using this website, you agree to our <Link href={"/terms-and-condition"}>Terms and Conditions</Link> and <Link href={"/privacy-policy"}>Privacy Policy</Link>, and disclaim <Link href={"/"}>Onetapdrive.com</Link> from any incorrect information provided by car rental companies or us.
                                 </p>
                             </div>
+                            
                             <div className="description">
                                 <h4>
-                                    <i class="far fa-file-alt" />
+                                    <i className="far fa-file-alt" />
                                     Description & Highlights:
                                 </h4>
                                 <p>
                                     Rent and drive this {product?.brand?.name} {product?.model_name} {product?.make_year}-model in Dubai, UAE for AED {product?.price_per_day}/day & AED 49999/month. Rental cost includes basic comprehensive insurance and standard mileage limit of {product?.per_day_mileage} km/day (AED 25 per additional km applicable). Security deposit of AED 5000 is required. Contact {product?.user?.company_name} directly for bookings and inquiries.
                                 </p>
-                                <button class="themeBtn themeBtnAlt">
+                                <button className="themeBtn themeBtnAlt">
                                     Read More
                                 </button>
                             </div>
                         </div>
+
                         <div className="companyDetails">
-                            <div class="supplierBox">
-                                <div class="company">
+                            <div className="supplierBox">
+                                <div className="company">
                                     <figure>
                                         <Image src={`/images/product/brand.jpg`} width={80} height={80} alt={`${product?.brand?.name}'s Image`} />
                                     </figure>
                                     <h5>Book directly from supplier</h5>
-                                    <div class="btnCont">
+                                    <div className="btnCont">
                                         <Link href={''} className='call'>
                                             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.1817 8.95829C14.8234 8.95829 14.54 8.66663 14.54 8.31663C14.54 8.00829 14.2317 7.36663 13.715 6.80829C13.2067 6.26663 12.6484 5.94996 12.1817 5.94996C11.8234 5.94996 11.54 5.65829 11.54 5.30829C11.54 4.95829 11.8317 4.66663 12.1817 4.66663C13.015 4.66663 13.89 5.11663 14.6567 5.92496C15.3734 6.68329 15.8317 7.62496 15.8317 8.30829C15.8317 8.66663 15.54 8.95829 15.1817 8.95829Z" />
@@ -233,9 +242,12 @@ function ProductPageLayout() {
                                         </Link>
                                     </div>
                                 </div>
-                                
+                                <div className='priceCont'>
+
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>

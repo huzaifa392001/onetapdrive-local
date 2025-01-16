@@ -1,5 +1,5 @@
 .inputCont {
-    @apply relative border border-[var(--black)] rounded-md h-8 md:min-w-[350px] min-w-full overflow-hidden;
+    @apply relative border border-[#bdbdbd] rounded-md h-8 md:min-w-[350px] min-w-full overflow-hidden;
     input,
     textarea {
         @apply bg-transparent border-none outline-none w-full h-full px-2 text-[14px];
@@ -54,5 +54,9 @@
         textarea {
             @apply py-1;
         }
+    }
+
+    i {
+        @apply text-[#bdbdbd];
     }
 }

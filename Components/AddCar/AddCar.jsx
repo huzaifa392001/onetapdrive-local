@@ -6,11 +6,15 @@ import CarDetails from './CarDetails/CarDetails';
 import './AddCar.scss';
 import CarPricing from './CarPricing/CarPricing';
 import SecHeading from '../SecHeading/SecHeading';
-import carColors from "@/DummyData/CarColors.json"
+import CarColors from './CarColors/CarColors';
+import RentalTerms from './RentalTerms/RentalTerms';
+import MulkiyaDetails from './MulkiyaDetails/MulkiyaDetails';
+import CarSpecs from './CarSpecs/CarSpecs';
+import CarFeatures from './CarFeatures/CarFeatures';
 
 function AddCar() {
-    const [carImages, setCarImages] = useState([]);
-    const [imageError, setImageError] = useState('');
+    const [carImages, setCarImages] = useState([]); // Store uploaded images
+    const [imageError, setImageError] = useState(''); // Store image upload errors
 
     // Default form schema values
     const defaultValues = {
@@ -19,11 +23,11 @@ function AddCar() {
         car_year: "",
         car_category: "",
         city: "",
-        price_per_day: "",
+        daily_price: "",
         daily_milleage: "",
-        weekly_per_day: "",
+        weekly_price: "",
         weekly_milleage: "",
-        monthly_per_day: "",
+        monthly_price: "",
         monthly_milleage: "",
         colors: {
             exterior: "",
@@ -31,6 +35,7 @@ function AddCar() {
         },
     };
 
+    // React Hook Form
     const {
         register,
         handleSubmit,
@@ -40,23 +45,47 @@ function AddCar() {
         clearErrors,
         formState: { errors },
     } = useForm({
-        defaultValues: defaultValues, // Passing default values
+        defaultValues, // Passing default values
     });
 
+    // Update images from child component
     const handleCarImages = (images) => {
-        setCarImages(images); // Update parent state with images from CarImages
+        setCarImages(images); // Update parent state with images
     };
 
+    // Form submission handler
     const onSubmit = (data) => {
+        console.log('data=> ', data)
         if (carImages.length < 5) {
             setImageError('Please upload at least 5 images.');
             return; // Prevent submission if validation fails
         }
 
         setImageError(''); // Clear any previous image errors
-        console.log('Form Submitted:', data);
-        console.log('Uploaded Images:', carImages);
+
+        // Create a FormData object
+        const formData = new FormData();
+
+        // Append flat and nested fields from `data` object
+        for (const key in data) {
+            if (typeof data[key] === 'object' && !Array.isArray(data[key])) {
+                // For nested objects, append each key-value pair
+                for (const nestedKey in data[key]) {
+                    formData.append(`${key}[${nestedKey}]`, data[key][nestedKey]);
+                }
+            } else {
+                formData.append(key, data[key]);
+            }
+        }
+
+        // Append car images to FormData
+        carImages.forEach((image, index) => {
+            formData.append(`carImages[${index}]`, image.src); // Use `image.src` for the blob URL
+        });
+
+        console.log('FormData prepared for submission');
     };
+
 
     return (
         <div className="fleetWrapper">
@@ -77,58 +106,38 @@ function AddCar() {
                     />
                     <CarPricing
                         register={register}
-                        watch={watch}
+                        errors={errors}
+                    />
+                    <CarColors
+                        register={register}
+                        errors={errors}
+                    />
+                    <RentalTerms
+                        register={register}
+                        errors={errors}
+                    />
+                    <MulkiyaDetails
+                        register={register}
                         setValue={setValue}
                         errors={errors}
                     />
-                    <div className="carDetails">
-                        <div className="headingCont">
-                            <SecHeading heading={"Car Color"} />
-                        </div>
-                        <div className="inputContainer">
-                            <div className={`inputCont ${errors?.colors?.exterior ? "error" : ''}`}>
-                                <label htmlFor="colors.exterior">Car Exterior</label>
-                                <select
-                                    id="colors.exterior"
-                                    {...register('colors.exterior', {
-                                        required: 'Car exterior color is required',
-                                    })}
-                                >
-                                    <option disabled selected value="">Select Car Exterior Color</option>
-                                    {carColors?.map((color, index) => (
-                                        <option style={{ backgroundColor: color, color: color === 'Black' || color === "Blue" || color === "Purple" || color === "Green" || color === "Brown" ? "#fff" : "" }} value={color} key={index}>{color}</option>
-                                    ))}
-                                </select>
-                                {errors?.colors?.exterior && (
-                                    <p className='errorText'>{errors.colors.exterior.message}</p>
-                                )}
-                            </div>
-                            <div className={`inputCont ${errors?.colors?.interior ? "error" : ''}`}>
-                                <label htmlFor="colors.interior">Car Interior</label>
-                                <select
-                                    id="colors.interior"
-                                    {...register('colors.interior', {
-                                        required: 'Car interior color is required',
-                                    })}
-                                >
-                                    <option disabled selected value="">Select Car Interior Color</option>
-                                    {carColors?.map((color, index) => (
-                                        <option style={{ backgroundColor: color, color: color === 'Black' || color === "Blue" || color === "Purple" || color === "Green" || color === "Brown" ? "#fff" : "" }} value={color} key={index}>{color}</option>
-                                    ))}
-                                </select>
-                                {errors?.colors?.interior && (
-                                    <p className='errorText'>{errors.colors.interior.message}</p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    <CarSpecs
+                        register={register}
+                        errors={errors}
+                    />
+                    <CarFeatures
+                        register={register}
+                        errors={errors}
+                    />
                 </div>
 
                 {imageError && <p className="errorText">{imageError}</p>} {/* Show image validation error */}
 
-                <button type="submit" className="themeBtn">
-                    Submit
-                </button>
+                <div class="btnCont">
+                    <button type="submit" className="themeBtn">
+                        Submit
+                    </button>
+                </div>
             </form>
         </div>
     );

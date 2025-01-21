@@ -214,8 +214,16 @@ section {
 .inputCont {
     label {
         @apply text-[1.125rem] font-medium block mb-1;
+
+        &:has(+ p) {
+            @apply mb-0;
+        }
+
+        & + p {
+            @apply mb-1 text-[12px];
+        }
     }
-    input,
+    input:not([type="file"]),
     textarea,
     select {
         @apply min-w-[350px] w-full rounded-md border min-h-10 block px-2;
@@ -232,8 +240,43 @@ section {
             &:first-child {
                 @apply w-3/4;
             }
-            &:last-child {
+            &:nth-child(n + 2) {
                 @apply w-1/4;
+            }
+        }
+    }
+
+    .imgInput {
+        @apply relative;
+        label {
+            @apply h-[80px] w-full border rounded-md flex items-center justify-center relative;
+            input {
+                @apply absolute inset-0 cursor-pointer opacity-0;
+            }
+        }
+        .imgBox {
+            @apply h-[80px] w-full border rounded-md flex items-center justify-center relative;
+            img {
+                @apply w-full h-full object-contain;
+            }
+            .actions {
+                @apply absolute top-1 right-1 z-10;
+                button {
+                    @apply bg-red-200 text-red-700 w-7 h-7 text-[13px] block rounded-md;
+                }
+            }
+        }
+    }
+
+    .featuresList {
+        @apply flex items-center flex-wrap gap-3;
+        li {
+            @apply relative border rounded-md overflow-hidden px-3 py-1 transition-all duration-300;
+            input {
+                @apply absolute inset-0 opacity-0 cursor-pointer;
+            }
+            &:has(input:checked) {
+                @apply bg-[var(--theme-color)] text-[var(--white)];
             }
         }
     }
@@ -243,6 +286,12 @@ section {
         select,
         textarea {
             @apply border-red-500;
+        }
+
+        .imgInput {
+            label {
+                @apply border-red-500;
+            }
         }
     }
 }

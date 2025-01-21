@@ -29,5 +29,11 @@
                 @apply col-span-2;
             }
         }
+        .carFeatures {
+            @apply col-span-2;
+        }
+    }
+    .btnCont {
+        @apply mt-4 flex items-center justify-end;
     }
 }

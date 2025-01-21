@@ -103,6 +103,10 @@ input[type="number"] {
             @apply text-[var(--theme-color)] border-[var(--theme-color)];
         }
     }
+
+    &.delete {
+        @apply bg-red-500 text-[var(--white)] hover:bg-red-700;
+    }
 }
 
 section {
@@ -205,4 +209,44 @@ section {
             }
         }
     }
+}
+
+.inputCont {
+    label {
+        @apply text-[1.125rem] font-medium block mb-1;
+    }
+    input,
+    textarea,
+    select {
+        @apply min-w-[350px] w-full rounded-md border min-h-10 block px-2;
+
+        &::placeholder {
+        }
+    }
+
+    .multiInput {
+        @apply flex items-center gap-x-2;
+
+        input {
+            @apply min-w-0;
+            &:first-child {
+                @apply w-3/4;
+            }
+            &:last-child {
+                @apply w-1/4;
+            }
+        }
+    }
+
+    &.error {
+        input,
+        select,
+        textarea {
+            @apply border-red-500;
+        }
+    }
+}
+
+.errorText {
+    @apply text-red-500;
 }

@@ -1,62 +1,62 @@
-.inputCont {
-    @apply relative border border-[#bdbdbd] rounded-md h-8 md:min-w-[350px] min-w-full overflow-hidden;
-    input,
-    textarea {
-        @apply bg-transparent border-none outline-none w-full h-full px-2 text-[14px];
+// .inputCont {
+//     @apply relative border border-[#bdbdbd] rounded-md h-8 md:min-w-[350px] min-w-full overflow-hidden;
+//     input,
+//     textarea {
+//         @apply bg-transparent border-none outline-none w-full h-full px-2 text-[14px];
 
-        &::placeholder {
-            @apply text-[var(--black)];
-        }
+//         &::placeholder {
+//             @apply text-[var(--black)];
+//         }
 
-        &:valid {
-            @apply border-green-500;
-        }
-        &:invalid {
-            @apply border-red-500;
-        }
-    }
+//         &:valid {
+//             @apply border-green-500;
+//         }
+//         &:invalid {
+//             @apply border-red-500;
+//         }
+//     }
 
-    &.withBtn {
-        input {
-            @apply pr-10;
-        }
-        button {
-            @apply absolute top-2/4 -translate-y-2/4 right-0 h-full w-8 flex items-center justify-center text-[var(--black)];
-        }
-    }
+//     &.withBtn {
+//         input {
+//             @apply pr-10;
+//         }
+//         button {
+//             @apply absolute top-2/4 -translate-y-2/4 right-0 h-full w-8 flex items-center justify-center text-[var(--black)];
+//         }
+//     }
 
-    + .inputCont,
-    + .btnCont {
-        @apply my-4;
-    }
+//     + .inputCont,
+//     + .btnCont {
+//         @apply my-4;
+//     }
 
-    &.leftIcon {
-        @apply h-12;
-        input {
-            @apply pl-8;
-        }
-        .icon {
-            @apply absolute top-2/4 -translate-y-2/4 left-3;
-        }
-    }
+//     &.leftIcon {
+//         @apply h-12;
+//         input {
+//             @apply pl-8;
+//         }
+//         .icon {
+//             @apply absolute top-2/4 -translate-y-2/4 left-3;
+//         }
+//     }
 
-    &.password {
-        input {
-            @apply px-8;
-        }
-        .eyeIconCont {
-            @apply absolute top-2/4 -translate-y-2/4 right-3;
-        }
-    }
+//     &.password {
+//         input {
+//             @apply px-8;
+//         }
+//         .eyeIconCont {
+//             @apply absolute top-2/4 -translate-y-2/4 right-3;
+//         }
+//     }
 
-    &.textarea {
-        @apply w-full min-w-max h-auto;
-        textarea {
-            @apply py-1;
-        }
-    }
+//     &.textarea {
+//         @apply w-full min-w-max h-auto;
+//         textarea {
+//             @apply py-1;
+//         }
+//     }
 
-    i {
-        @apply text-[#bdbdbd];
-    }
-}
+//     i {
+//         @apply text-[#bdbdbd];
+//     }
+// }

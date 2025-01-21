@@ -13,8 +13,10 @@ function VendorWrapper({ children }) {
       {isVendor ? (
         <main className="vendorWrapper">
           <VendorHeader />
-          <VendorSidebar />
-          <div className="vendorContentWrap">{children}</div>
+          <div className="vendorContentLayout">
+            <VendorSidebar />
+            <div className="vendorContentWrap">{children}</div>
+          </div>
         </main>
       ) : (
         <VendorLogin />

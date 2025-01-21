@@ -1,8 +1,15 @@
+
 .vendorWrapper {
-    @apply flex flex-wrap h-screen overflow-hidden;
+    @apply h-full overflow-hidden;
+    min-height: 100dvh; 
+    .vendorContentLayout{
+        @apply flex flex-wrap;
+        height: calc(100dvh - 6rem);
+    }
     .vendorContentWrap {
         width: calc(100% - 300px);
-        flex: 0 1 calc(100% - 300px);
+        flex: 1;
         @apply p-8 overflow-y-auto;
+        height: 100%;
     }
 }

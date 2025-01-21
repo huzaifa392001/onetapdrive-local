@@ -20,7 +20,7 @@ const MyFleetLayout = () => {
             <h1>13</h1>
           </div>
         </div>
-        <Link href="{}" className="themeBtn">
+        <Link href="fleet/create" className="themeBtn">
           Add
         </Link>
       </div>

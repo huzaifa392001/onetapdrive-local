@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import './ProductPageLayout.scss';
 import product from '@/DummyData/SingleProduct.json';
 import Image from 'next/image';
@@ -9,13 +9,76 @@ import { usePathname } from 'next/navigation';
 import BreadCrumb from '../BreadCrumb/BreadCrumb';
 import CarsSection from '../CarsSection/CarsSection';
 import relatedCars from "@/DummyData/Products.json"
+import Head from 'next/head';
 
 function ProductPageLayout() {
-    const currentCity = useSelector((state) => state.general.currentLocation)
+    const faqs = [
+        {
+            "question": "Can I get this car delivered?",
+            "answer": "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+        },
+        {
+            "question": "Can I get this car delivered?",
+            "answer": "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+        },
+        {
+            "question": "Can I get this car delivered?",
+            "answer": "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+        },
+        {
+            "question": "Can I get this car delivered?",
+            "answer": "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+        },
+        {
+            "question": "Can I get this car delivered?",
+            "answer": "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+        },
+        {
+            "question": "Can I get this car delivered?",
+            "answer": "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+        },
+    ];
+
+    const [activeFaq, setActiveFaq] = useState(null);  // Track the active FAQ
+    const [activeModal, setActiveModal] = useState(null);  // Track which modal is active
+    const currentCity = useSelector((state) => state.general.currentLocation);
     const route = usePathname().split('/');
-    const activeRoute = route[route.length - 1].replaceAll("-", " ");
+    const activeRoute = route[route.length - 1]?.replaceAll("-", " ") || "Default Route";
+
+    const renderTags = () => {
+        const tags = [];
+        if (product?.premium) tags.push("Premium");
+        if (product?.featured) tags.push("Featured");
+
+        return tags.map((tag, index) => (
+            <span key={index} className="tag">
+                <i className={`fas fa-${tag.toLowerCase()}`} />
+                {tag}
+            </span>
+        ));
+    };
+
+    const handleFaqClick = (index) => {
+        if (activeFaq === index) {
+            setActiveFaq(null);  // Deselect the FAQ if it's already active
+        } else {
+            setActiveFaq(index);  // Set the clicked FAQ as active
+        }
+    };
+
+    const handleOptionClick = (option) => {
+        setActiveModal(option);  // Set the active modal to the clicked option
+    };
+
     return (
         <>
+            <Head>
+                <title>{product?.brand?.name} {product?.model_name}</title>
+                <meta name="description" content={`Rent ${product?.brand?.name} ${product?.model_name} in ${currentCity}.`} />
+            </Head>
+
+
+
             <section className="productDetailSec">
                 <div className="customContainer">
                     <BreadCrumb
@@ -35,7 +98,7 @@ function ProductPageLayout() {
                         </figure>
                         <div className="heading">
                             <h1>
-                                {product?.brand?.name} {product?.model_name} {product?.make_year}
+                                {product?.brand?.name || "Unknown Brand"} {product?.model_name || "Model"} {product?.make_year || "Year"}
                             </h1>
                             <h3>
                                 Hire in {product?.city}: {product?.exterior_color.split(':')[0]}{' '}
@@ -90,18 +153,8 @@ function ProductPageLayout() {
                             );
                         })}
                         <div className="imgTags">
-                            {product?.premium && (
-                                <span className='tag'>
-                                    <i className="fas fa-star" />
-                                    Premium
-                                </span>
-                            )}
-                            {product?.featured && (
-                                <span className='tag'>
-                                    <i className="fas fa-stars" />
-                                    featured
-                                </span>
-                            )}
+                            {renderTags()}
+
                             <div className="btnCont">
                                 <Link href={""}>
                                     <i className="fal fa-share-alt" />
@@ -200,7 +253,7 @@ function ProductPageLayout() {
                                     By using this website, you agree to our <Link href={"/terms-and-condition"}>Terms and Conditions</Link> and <Link href={"/privacy-policy"}>Privacy Policy</Link>, and disclaim <Link href={"/"}>Onetapdrive.com</Link> from any incorrect information provided by car rental companies or us.
                                 </p>
                             </div>
-                            
+
                             <div className="description">
                                 <h4>
                                     <i className="far fa-file-alt" />
@@ -213,49 +266,165 @@ function ProductPageLayout() {
                                     Read More
                                 </button>
                             </div>
-                        </div>
 
-                        <div className="companyDetails">
-                            <div className="supplierBox">
-                                <div className="company">
-                                    <figure>
-                                        <Image src={`/images/product/brand.jpg`} width={80} height={80} alt={`${product?.brand?.name}'s Image`} />
-                                    </figure>
-                                    <h5>Book directly from supplier</h5>
-                                    <div className="btnCont">
-                                        <Link href={''} className='call'>
-                                            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M15.1817 8.95829C14.8234 8.95829 14.54 8.66663 14.54 8.31663C14.54 8.00829 14.2317 7.36663 13.715 6.80829C13.2067 6.26663 12.6484 5.94996 12.1817 5.94996C11.8234 5.94996 11.54 5.65829 11.54 5.30829C11.54 4.95829 11.8317 4.66663 12.1817 4.66663C13.015 4.66663 13.89 5.11663 14.6567 5.92496C15.3734 6.68329 15.8317 7.62496 15.8317 8.30829C15.8317 8.66663 15.54 8.95829 15.1817 8.95829Z" />
-                                                <path d="M18.1895 8.95829C17.8312 8.95829 17.5479 8.66663 17.5479 8.31663C17.5479 5.35829 15.1395 2.95829 12.1895 2.95829C11.8312 2.95829 11.5479 2.66663 11.5479 2.31663C11.5479 1.96663 11.8312 1.66663 12.1812 1.66663C15.8479 1.66663 18.8312 4.64996 18.8312 8.31663C18.8312 8.66663 18.5395 8.95829 18.1895 8.95829Z" />
-                                                <path d="M9.70671 12.4583L8.16504 14C7.84004 14.325 7.32337 14.325 6.99004 14.0083C6.89837 13.9166 6.80671 13.8333 6.71504 13.7416C5.85671 12.875 5.08171 11.9666 4.39004 11.0166C3.70671 10.0666 3.15671 9.11663 2.75671 8.17496C2.36504 7.22496 2.16504 6.31663 2.16504 5.44996C2.16504 4.88329 2.26504 4.34163 2.46504 3.84163C2.66504 3.33329 2.98171 2.86663 3.42337 2.44996C3.95671 1.92496 4.54004 1.66663 5.15671 1.66663C5.39004 1.66663 5.62337 1.71663 5.83171 1.81663C6.04837 1.91663 6.24004 2.06663 6.39004 2.28329L8.32337 5.00829C8.47337 5.21663 8.58171 5.40829 8.6567 5.59163C8.73171 5.76663 8.77337 5.94163 8.77337 6.09996C8.77337 6.29996 8.71504 6.49996 8.59837 6.69163C8.49004 6.88329 8.33171 7.08329 8.1317 7.28329L7.49837 7.94163C7.4067 8.03329 7.36504 8.14163 7.36504 8.27496C7.36504 8.34163 7.37337 8.39996 7.39004 8.46663C7.41504 8.53329 7.44004 8.58329 7.45671 8.63329C7.60671 8.90829 7.86504 9.26663 8.2317 9.69996C8.6067 10.1333 9.0067 10.575 9.44004 11.0166C9.52337 11.1 9.61504 11.1833 9.69837 11.2666C10.0317 11.5916 10.04 12.125 9.70671 12.4583Z" />
-                                                <path d="M18.8064 15.2751C18.8064 15.5084 18.7647 15.7501 18.6814 15.9834C18.6564 16.0501 18.6314 16.1167 18.598 16.1834C18.4564 16.4834 18.273 16.7667 18.0314 17.0334C17.623 17.4834 17.173 17.8084 16.6647 18.0167C16.6564 18.0167 16.648 18.0251 16.6397 18.0251C16.148 18.2251 15.6147 18.3334 15.0397 18.3334C14.1897 18.3334 13.2814 18.1334 12.323 17.7251C11.3647 17.3167 10.4064 16.7667 9.45638 16.0751C9.13138 15.8334 8.80638 15.5917 8.49805 15.3334L11.223 12.6084C11.4564 12.7834 11.6647 12.9167 11.8397 13.0084C11.8814 13.0251 11.9314 13.0501 11.9897 13.0751C12.0564 13.1001 12.123 13.1084 12.198 13.1084C12.3397 13.1084 12.448 13.0584 12.5397 12.9667L13.173 12.3417C13.3814 12.1334 13.5814 11.9751 13.773 11.8751C13.9647 11.7584 14.1564 11.7001 14.3647 11.7001C14.523 11.7001 14.6897 11.7334 14.873 11.8084C15.0564 11.8834 15.248 11.9917 15.4564 12.1334L18.2147 14.0917C18.4314 14.2417 18.5814 14.4167 18.673 14.6251C18.7564 14.8334 18.8064 15.0417 18.8064 15.2751Z" />
-                                            </svg>
-                                            <span>
-                                                {product?.user?.contact}
-                                            </span>
-                                        </Link>
-                                        <Link href={''} className='whatsapp'>
-                                            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M16.584 3.79297C14.9473 2.15234 12.7676 1.25 10.4512 1.25C5.66992 1.25 1.7793 5.14062 1.7793 9.92188C1.7793 11.4492 2.17773 12.9414 2.93555 14.2578L1.70508 18.75L6.30273 17.543C7.56836 18.2344 8.99414 18.5977 10.4473 18.5977H10.4512C15.2285 18.5977 19.2051 14.707 19.2051 9.92578C19.2051 7.60938 18.2207 5.43359 16.584 3.79297ZM10.4512 17.1367C9.1543 17.1367 7.88477 16.7891 6.7793 16.1328L6.51758 15.9766L3.79102 16.6914L4.51758 14.0312L4.3457 13.7578C3.62305 12.6094 3.24414 11.2852 3.24414 9.92188C3.24414 5.94922 6.47852 2.71484 10.4551 2.71484C12.3809 2.71484 14.1895 3.46484 15.5488 4.82812C16.9082 6.19141 17.7441 8 17.7402 9.92578C17.7402 13.9023 14.4238 17.1367 10.4512 17.1367ZM14.4043 11.7383C14.1895 11.6289 13.123 11.1055 12.9238 11.0352C12.7246 10.9609 12.5801 10.9258 12.4355 11.1445C12.291 11.3633 11.877 11.8477 11.748 11.9961C11.623 12.1406 11.4941 12.1602 11.2793 12.0508C10.0059 11.4141 9.16992 10.9141 8.33008 9.47266C8.10742 9.08984 8.55273 9.11719 8.9668 8.28906C9.03711 8.14453 9.00195 8.01953 8.94727 7.91016C8.89258 7.80078 8.45898 6.73438 8.2793 6.30078C8.10352 5.87891 7.92383 5.9375 7.79102 5.92969C7.66602 5.92188 7.52148 5.92188 7.37695 5.92188C7.23242 5.92188 6.99805 5.97656 6.79883 6.19141C6.59961 6.41016 6.04102 6.93359 6.04102 8C6.04102 9.06641 6.81836 10.0977 6.92383 10.2422C7.0332 10.3867 8.45117 12.5742 10.627 13.5156C12.002 14.1094 12.541 14.1602 13.2285 14.0586C13.6465 13.9961 14.5098 13.5352 14.6895 13.0273C14.8691 12.5195 14.8691 12.0859 14.8145 11.9961C14.7637 11.8984 14.6191 11.8438 14.4043 11.7383Z" />
-                                            </svg>
-                                            <span>Whatsapp</span>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className='priceCont'>
-
-                                </div>
+                            <div className="optionCont">
+                                <ul>
+                                    <li onClick={() => handleOptionClick('features')}>
+                                        <span>Features & Specs</span>
+                                        <i className='fas fa-chevron-right' />
+                                    </li>
+                                    <li onClick={() => handleOptionClick('supplier')}>
+                                        <span>Supplier Details</span>
+                                        <i className='fas fa-chevron-right' />
+                                    </li>
+                                    <li onClick={() => handleOptionClick('requirements')}>
+                                        <span>Requirements</span>
+                                        <i className='fas fa-chevron-right' />
+                                    </li>
+                                    {/* <li onClick={() => handleOptionClick('payment')}>
+                                        <span>Payment Mode</span>
+                                        <i className='fas fa-chevron-right' />
+                                    </li> */}
+                                    <li onClick={() => handleOptionClick('faq')}>
+                                        <span>FAQs (Frequently Asked Questions)</span>
+                                        <i className='fas fa-chevron-right' />
+                                    </li>
+                                </ul>
                             </div>
+
                         </div>
+
+
 
                     </div>
                 </div>
             </section>
+
             <CarsSection
                 secHeading={"More Like This"}
                 limited
                 data={relatedCars}
             />
+
+            <div className={`sideModal ${activeModal === "faq" ? "active" : ""}`}>
+                <div className="backdrop" onClick={() => handleOptionClick()} />
+                <div className="modalContent">
+                    <div className="modalHeader">
+                        <h2>Frequently Asked Questions</h2>
+                        <button onClick={() => handleOptionClick()}>
+                            <i className="fas fa-times" />
+                        </button>
+                    </div>
+                    <div className="modalBody">
+                        <div className="faqs">
+                            {faqs?.map((faq, index) => (
+                                <div
+                                    key={index}
+                                    className={`faqBox ${activeFaq === index ? 'active' : ''}`} // Add active class based on state
+                                    onClick={() => handleFaqClick(index)}
+                                >
+                                    <div className="question">
+                                        <h3>{faq?.question}</h3>
+                                        <i className={`far ${activeFaq === index ? "fa-minus" : "fa-plus"}`} />
+                                    </div>
+                                    {activeFaq === index && (  // Only show answer if this FAQ is active
+                                        <div className="answer">
+                                            <p>{faq?.answer}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className={`sideModal ${activeModal === "requirements" ? "active" : ""}`}>
+                <div className="backdrop" onClick={() => handleOptionClick()} />
+                <div className="modalContent">
+                    <div className="modalHeader">
+                        <h2>Requirements</h2>
+                        <button onClick={() => handleOptionClick()}>
+                            <i className="fas fa-times" />
+                        </button>
+                    </div>
+                    <div className="modalBody">
+                        <div class="reqBox">
+                            <h3>
+                                <i class="far fa-id-card" />
+                                Documents Required
+                            </h3>
+                            <p>
+                                You are eligible to rent a car across the emirates provided you have the below mentioned documents valid with you:
+                            </p>
+                            <ul>
+                                <li>
+                                    <h4>Minimum Driver's Age</h4>
+                                    <h3>18 Years</h3>
+                                </li>
+                                <li>
+                                    <h4>Security Deposit</h4>
+                                    <h3>AED 5000</h3>
+                                </li>
+                                <li>
+                                    <h4>Refunded in</h4>
+                                    <h3>30 days</h3>
+                                </li>
+                            </ul>
+                            <h3>For UAE Residents</h3>
+                            <ul>
+                                <li className='nospace'>
+                                    <i class="fas fa-check" />
+                                    <h4>UAE Driving License</h4>
+                                </li>
+                                <li className='nospace'>
+                                    <i class="fas fa-check" />
+                                    <h4>Emirates ID (Residential Visa may be acceptable)</h4>
+                                </li>
+                            </ul>
+                            <h3>For Tourist Visition UAE</h3>
+                            <ul>
+                                <li className='nospace'>
+                                    <i class="fas fa-check" />
+                                    <h4>Passport</h4>
+                                </li>
+                                <li className='nospace'>
+                                    <i class="fas fa-check" />
+                                    <h4>Visit Visa</h4>
+                                </li>
+                                <li className='nospace'>
+                                    <i class="fas fa-check" />
+                                    <h4>Home Country Driving License</h4>
+                                </li>
+                                <li className='nospace'>
+                                    <i class="fas fa-check" />
+                                    <h4>International Driving Permin (IDP)</h4>
+                                </li>
+                            </ul>
+                            <p>
+                                Visitors from the GCC, US, UK, Canada, Europe and certain other countries can drive with their home country driving license, without the need of an IDP.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className={`sideModal ${activeModal === "features" ? "active" : ""}`}>
+                <div className="backdrop" onClick={() => handleOptionClick()} />
+                <div className="modalContent">
+                    <div className="modalHeader">
+                        <h2>Features & Specs</h2>
+                        <button onClick={() => handleOptionClick()}>
+                            <i className="fas fa-times" />
+                        </button>
+                    </div>
+                    <div className="modalBody">
+                        <div class="featureBox">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

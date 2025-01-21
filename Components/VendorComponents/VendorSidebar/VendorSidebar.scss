@@ -1,7 +1,6 @@
 .vendorSidebar {
-    @apply w-[300px] bg-[var(--vendor-bg)] py-3 overflow-y-scroll;
-    flex: 0 1 300px;
-    height: calc(100% - 6rem);
+    @apply w-[300px] bg-[var(--vendor-bg)] py-3 overflow-hidden h-full;
+    flex: 0 0 300px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 

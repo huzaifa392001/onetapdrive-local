@@ -1,5 +1,5 @@
 .vendorHeader {
-  @apply w-full h-24 bg-[var(--vendor-bg)] flex items-center justify-between px-4 sticky top-0 z-[999];
+  @apply w-full h-24 bg-[var(--vendor-bg)] flex items-center justify-between px-4 relative;
   .customDropdown{
     @apply relative inline-block;
     .dropdownButton{

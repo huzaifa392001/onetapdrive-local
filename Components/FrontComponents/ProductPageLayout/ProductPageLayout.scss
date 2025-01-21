@@ -141,6 +141,26 @@
                     @apply mt-4;
                 }
             }
+
+            .optionCont {
+                @apply mt-6;
+                ul {
+                    li {
+                        @apply flex items-center justify-between border-t py-3 text-[1.125rem] cursor-pointer transition-all duration-200 text-[var(--black)];
+
+                        &:last-of-type {
+                            @apply border-b;
+                        }
+
+                        &:hover {
+                            @apply text-[var(--theme-color)];
+                            i {
+                                @apply text-[var(--black)];
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .companyDetails {
@@ -155,7 +175,7 @@
                         @apply uppercase text-[14px];
                     }
                 }
-                
+
                 .btnCont {
                     @apply flex gap-x-4 mt-3 w-full;
                     a {
@@ -198,6 +218,109 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.sideModal {
+    @apply fixed inset-0 z-[99999] h-screen overflow-hidden invisible select-none opacity-0 transition-all duration-300;
+    .backdrop {
+        @apply absolute inset-0 bg-[#0005] backdrop-blur transition-all duration-300 opacity-0 invisible;
+    }
+    .modalContent {
+        @apply absolute h-screen max-w-[500px] w-full bg-[var(--white)] top-0 z-10 -right-full transition-all duration-300;
+        .modalHeader {
+            @apply flex items-center justify-between border-b py-2 px-3;
+            h2 {
+                @apply text-[1.125rem] font-medium;
+            }
+            button {
+                @apply w-10 h-10;
+            }
+        }
+        .modalBody {
+            @apply h-auto overflow-y-auto px-4 pt-3;
+            .faqs {
+                @apply flex flex-col gap-y-5;
+                .faqBox {
+                    @apply border rounded-md overflow-hidden border-[#bdbdbd] transition-all duration-200 shadow-md;
+                    .question {
+                        @apply flex items-center justify-between py-1 px-2 cursor-pointer;
+                        h3 {
+                            @apply font-semibold text-[1rem] transition-all duration-200;
+                        }
+                    }
+
+                    .answer {
+                        @apply px-2 pt-3 pb-1 hidden border-t border-t-[#bdbdbd];
+                        p {
+                            @apply text-[14px];
+                        }
+                    }
+
+                    &:hover {
+                        @apply border-[var(--theme-color)];
+                        .question {
+                            h3 {
+                                @apply text-[var(--theme-color)];
+                            }
+                        }
+                    }
+
+                    &.active {
+                        .answer {
+                            @apply block;
+                        }
+                    }
+                }
+            }
+
+            .reqBox {
+                > h3 {
+                    @apply text-[1rem] flex items-center gap-x-2 font-semibold;
+                    &:has(+ ul) {
+                        @apply mt-6;
+                    }
+                    & + ul {
+                        @apply mt-1;
+                    }
+                }
+                > P {
+                    @apply text-[13px] mt-1;
+                }
+                ul {
+                    @apply mt-5;
+                    li {
+                        @apply flex items-center justify-between py-2 border-b border-b-[#bdbdbd];
+
+                        h4 {
+                            @apply text-[1rem] font-normal;
+                        }
+
+                        h3 {
+                            @apply text-[1rem] font-semibold;
+                        }
+
+                        i {
+                            @apply text-[var(--theme-color)];
+                        }
+
+                        &.nospace {
+                            @apply justify-start gap-x-2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.active {
+        @apply opacity-100 visible select-auto;
+        .backdrop {
+            @apply opacity-100 visible;
+        }
+        .modalContent {
+            @apply right-0;
         }
     }
 }

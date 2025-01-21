@@ -1,0 +1,33 @@
+.fleetWrapper {
+    .carRow {
+        @apply grid grid-cols-2 gap-8;
+
+        .carSpecs {
+            @apply mt-5 border-t-2 col-span-2;
+            .specs_list {
+                @apply flex mb-5 gap-5 flex-wrap;
+                li {
+                    @apply relative;
+                }
+                .btn-check {
+                    @apply pointer-events-none absolute;
+                    clip: rect(0, 0, 0, 0);
+                }
+                .btn-label {
+                    @apply text-[#343A40] bg-white border-solid border-2 border-[#343A40] px-5 py-1 rounded-lg cursor-pointer;
+                }
+                .btn-check:checked + .btn-label {
+                    @apply text-white bg-[#343A40] border-solid border-2 border-[#343A40];
+                }
+            }
+        }
+
+        .inputContainer {
+            @apply grid grid-cols-2 gap-x-6 gap-y-2;
+
+            .full {
+                @apply col-span-2;
+            }
+        }
+    }
+}

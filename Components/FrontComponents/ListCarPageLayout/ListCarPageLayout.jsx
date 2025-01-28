@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import "./ListCarPageLayout.scss";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import SecHeading from "@/Components/SecHeading/SecHeading";
+
+
 function ListCarPageLayout() {
   const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
   const [companyLicensePreview, setCompanyLicensePreview] = useState(null);
@@ -113,9 +115,8 @@ function ListCarPageLayout() {
                 <div className="contentRow">
                   <div className="contentCol">
                     <div
-                      className={`inputCont full ${
-                        errors?.name ? "error" : ""
-                      }`}
+                      className={`inputCont full ${errors?.name ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="name">
                         Your Name<span className="required">*</span>
@@ -139,17 +140,15 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont full ${
-                        errors?.company_name ? "error" : ""
-                      }`}
+                      className={`inputCont full ${errors?.company_name ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="company_name">
                         Company Name<span className="required">*</span>
                       </label>
                       <input
-                        className={`${
-                          errors?.company_name ? "errorInput" : ""
-                        }`}
+                        className={`${errors?.company_name ? "errorInput" : ""
+                          }`}
                         {...register("company_name", {
                           required: "Company Name is required.",
                         })}
@@ -169,9 +168,8 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont full ${
-                        errors?.job_title ? "error" : ""
-                      }`}
+                      className={`inputCont full ${errors?.job_title ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="job_title">
                         Job Title<span className="required">*</span>
@@ -195,9 +193,8 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont ${
-                        errors?.fleet_size ? "error" : ""
-                      }`}
+                      className={`inputCont ${errors?.fleet_size ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="fleet_size">
                         Fleet Size<span className="required">*</span>
@@ -228,9 +225,8 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont full ${
-                        errors?.contact_no ? "error" : ""
-                      }`}
+                      className={`inputCont full ${errors?.contact_no ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="contact_no">
                         Contact No.<span className="required">*</span>
@@ -254,17 +250,15 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont full ${
-                        errors?.email_address ? "error" : ""
-                      }`}
+                      className={`inputCont full ${errors?.email_address ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="email_address">
                         Email Address<span className="required">*</span>
                       </label>
                       <input
-                        className={`${
-                          errors?.email_address ? "errorInput" : ""
-                        }`}
+                        className={`${errors?.email_address ? "errorInput" : ""
+                          }`}
                         {...register("email_address", {
                           required: "Email Address is required.",
                         })}
@@ -326,9 +320,8 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont img ${
-                        errors?.company_logo ? "error" : ""
-                      }`}
+                      className={`inputCont img ${errors?.company_logo ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="company_logo">
                         Company Logo<span className="required">*</span>
@@ -350,7 +343,7 @@ function ListCarPageLayout() {
                           </div>
                         ) : (
                           <label htmlFor="company_logo">
-                            "Click to Upload"
+                            Click to Upload
                             <input
                               {...register("company_logo", {
                                 required: "Company Logo is Required",
@@ -370,7 +363,7 @@ function ListCarPageLayout() {
                         )}
                       </div>
                       <p className="small">
-                        Only "PNG, JPG, JPEG, and PDF" are accepted
+                        Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
                       </p>
                       {errors?.company_logo && (
                         <p className="errorText">
@@ -381,9 +374,8 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont img ${
-                        errors?.company_license ? "error" : ""
-                      }`}
+                      className={`inputCont img ${errors?.company_license ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="company_license">
                         Company License<span className="required">*</span>
@@ -407,7 +399,7 @@ function ListCarPageLayout() {
                           </div>
                         ) : (
                           <label htmlFor="company_license">
-                            "Click to Upload"
+                            Click to Upload
                             <input
                               {...register("company_license", {
                                 required: "Company License is Required",
@@ -427,7 +419,7 @@ function ListCarPageLayout() {
                         )}
                       </div>
                       <p className="small">
-                        Only "PNG, JPG, JPEG, and PDF" are accepted
+                        Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
                       </p>
                       {errors?.company_license && (
                         <p className="errorText">
@@ -438,18 +430,16 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont full ${
-                        errors?.company_license_expiry ? "error" : ""
-                      }`}
+                      className={`inputCont full ${errors?.company_license_expiry ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="company_license_expiry">
                         Company License Expiry
                         <span className="required">*</span>
                       </label>
                       <input
-                        className={`${
-                          errors?.company_license_expiry ? "errorInput" : ""
-                        }`}
+                        className={`${errors?.company_license_expiry ? "errorInput" : ""
+                          }`}
                         {...register("company_license_expiry", {
                           required: "Company License Expiry is required.",
                         })}
@@ -468,9 +458,8 @@ function ListCarPageLayout() {
                   </div>
                   <div className="contentCol">
                     <div
-                      className={`inputCont ${
-                        errors?.service_type ? "error" : ""
-                      }`}
+                      className={`inputCont ${errors?.service_type ? "error" : ""
+                        }`}
                     >
                       <label htmlFor="service_type">
                         Service Type<span className="required">*</span>
@@ -524,4 +513,4 @@ function ListCarPageLayout() {
   );
 }
 
-export default ListCarPageLayout;
+export default memo(ListCarPageLayout);

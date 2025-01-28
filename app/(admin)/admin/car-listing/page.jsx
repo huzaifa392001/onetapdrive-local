@@ -9,8 +9,10 @@ import CarListingData from "@/DummyData/CarListing.json";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const AdminPage = () => {
-  const rowData = CarListingData || [];
+const Page = () => {
+  // Memoize rowData to prevent unnecessary recalculations
+  const rowData = useMemo(() => CarListingData || [], []);
+
   const showAction = true;
   const pathName = usePathname();
 
@@ -134,4 +136,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default Page;

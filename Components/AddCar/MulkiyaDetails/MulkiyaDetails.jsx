@@ -27,62 +27,34 @@ function MulkiyaDetails({ register, setValue, errors, edit }) {
                 <SecHeading heading={edit ? "Update Mulkiya Details" : "Mulkiya Details"} />
             </div>
             <div className="inputContainer">
-                <div className={`inputCont img ${errors?.daily && errors.daily_km ? "error" : ""}`}>
-                    <label htmlFor="mulkiya_front">Upload Registration Card (Mulkiya) Front*</label>
-                    <div className="imgInput">
-                        {mulkiyaFrontPreview ? (
-                            <div className='imgBox'>
-                                <Image src={mulkiyaFrontPreview} width={300} height={80} alt='Mulkiya Back' />
-                                <div className="actions">
-                                    <button onClick={() => setMulkiyaFrontPreview("")}>
-                                        <i className="fas fa-trash" />
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <label htmlFor="mulkiya_front">
-                                "Click to Upload"
-                                <input {...register("mulkiya_front", {
-                                    required: "Mulkiya Front Image is Required"
-                                })}
-                                    type="file"
-                                    name=""
-                                    id="mulkiya_front"
-                                    onChange={(e) => handleImageChange(e, setMulkiyaFrontPreview, "mulkiya_front")}
-                                />
-                            </label>
-                        )}
+                <label htmlFor="mulkiyaFront">Mulkiya Front</label>
+                <input
+                    type="file"
+                    id="mulkiyaFront"
+                    {...register("mulkiyaFront", { required: "Mulkiya Front is required" })}
+                    onChange={(e) => handleImageChange(e, setMulkiyaFrontPreview, "mulkiyaFront")}
+                />
+                {errors.mulkiyaFront && <p className="errorText">{errors.mulkiyaFront.message}</p>}
+                {mulkiyaFrontPreview && (
+                    <div className="imagePreview">
+                        <Image src={mulkiyaFrontPreview} alt="Mulkiya Front Preview" width={100} height={100} />
                     </div>
-                    {errors?.mulkiya_front && (<p className='errorText'>{errors?.mulkiya_front?.message}</p>)}
-                </div>
-                <div className={`inputCont img ${errors?.daily && errors.daily_km ? "error" : ""}`}>
-                    <label htmlFor="mulkiya_back">Upload Registration Card (Mulkiya) Back*</label>
-                    <div className="imgInput">
-                        {mulkiyaBackPreview ? (
-                            <div className='imgBox'>
-                                <Image src={mulkiyaBackPreview} width={300} height={80} alt='Mulkiya Back' />
-                                <div className="actions">
-                                    <button onClick={() => setMulkiyaBackPreview("")}>
-                                        <i className="fas fa-trash" />
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <label htmlFor="mulkiya_back">
-                                "Click to Upload"
-                                <input {...register("mulkiya_back", {
-                                    required: "Mulkiya Back Image is Required"
-                                })}
-                                    type="file"
-                                    name=""
-                                    id="mulkiya_back"
-                                    onChange={(e) => handleImageChange(e, setMulkiyaBackPreview, "mulkiya_back")}
-                                />
-                            </label>
-                        )}
+                )}
+            </div>
+            <div className="inputContainer">
+                <label htmlFor="mulkiyaBack">Mulkiya Back</label>
+                <input
+                    type="file"
+                    id="mulkiyaBack"
+                    {...register("mulkiyaBack", { required: "Mulkiya Back is required" })}
+                    onChange={(e) => handleImageChange(e, setMulkiyaBackPreview, "mulkiyaBack")}
+                />
+                {errors.mulkiyaBack && <p className="errorText">{errors.mulkiyaBack.message}</p>}
+                {mulkiyaBackPreview && (
+                    <div className="imagePreview">
+                        <Image src={mulkiyaBackPreview} alt="Mulkiya Back Preview" width={100} height={100} />
                     </div>
-                    {errors?.mulkiya_back && (<p className='errorText'>{errors?.mulkiya_back?.message}</p>)}
-                </div>
+                )}
             </div>
         </div>
     );

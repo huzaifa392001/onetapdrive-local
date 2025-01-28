@@ -10,8 +10,9 @@ import { usePathname } from "next/navigation";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-function page() {
-    const rowData = Data || [];
+function Page() {
+    // Memoize rowData to prevent unnecessary recalculations
+    const rowData = useMemo(() => Data || [], [Data]);
     const [colDefs, setColDefs] = useState([]);
     const showAction = true;
     const pathName = usePathname();
@@ -146,4 +147,4 @@ function page() {
     );
 }
 
-export default page;
+export default Page;

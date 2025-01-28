@@ -387,8 +387,8 @@ function Header() {
                                     <ul className='brands'>
                                         {brandsData &&
                                             brandsData.map((brand, index) => (
-                                                <li>
-                                                    <Link href={`/cars/${brand?.url}`} className="brandCont" key={index}>
+                                                <li key={index}>
+                                                    <Link href={`/cars/${brand?.url}`} className="brandCont">
                                                         <h6>{brand?.name}</h6>
                                                         <figure>
                                                             <Image src={brand?.img} width={50} height={50} alt="" />

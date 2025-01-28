@@ -1,42 +1,45 @@
 .vendorLoginSec {
-  @apply flex items-center justify-center min-h-screen bg-[var(--white)] relative overflow-hidden;
-  .login-container {
-    @apply relative z-20 w-full max-w-[800px] backdrop-blur-[20px] rounded-[24px] p-12 text-black overflow-hidden flex flex-col gap-y-3;
-    background: var(--white);
-    border: 1px solid var(--theme-color);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    animation: slideIn 0.6s ease-out forwards;
-    .secHeading {
-      @apply mx-auto w-fit; 
-    }
-    .image-side{
-        @apply md:block hidden;
-    }
-    .login-header {
-      @apply text-center mb-10;
+    @apply flex items-center justify-center min-h-screen bg-[var(--white)] relative overflow-hidden;
+    .login-container {
+        @apply relative z-20 w-full max-w-[800px] backdrop-blur-[20px] rounded-[24px] p-12 text-black overflow-hidden flex flex-col gap-y-3;
+        background: var(--white);
+        border: 1px solid var(--theme-color);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        animation: slideIn 0.6s ease-out forwards;
+        .secHeading {
+            @apply mx-auto w-fit;
+        }
+        .image-side {
+            @apply md:block hidden;
+        }
 
-      h1 {
-        @apply text-[3rem] font-bold mb-2;
-      }
+        .formSide {
+            .inputCont {
+                & + .inputCont {
+                    @apply mt-4;
+                }
+            }
+        }
+        .forget_pass {
+            @apply text-[var(--theme-color)] mt-2 block font-bold text-right;
+        }
 
-      p {
-        @apply text-black text-[1.125rem];
-      }
-    }
+        .btnCont {
+            @apply flex items-center justify-center gap-2;
+        }
 
-    .forget_pass {
-      @apply text-[var(--theme-color)] mb-2 block font-bold;
-    }
-    .signup_link {
-      @apply flex flex-wrap gap-2 mt-3 justify-end;
-    }
-  }
-  .loginRow {
-    @apply grid md:grid-cols-2 grid-cols-1 gap-2 items-center;
-    p {
-      @apply text-center text-[1.125rem] m-0 font-semibold;
-    }
-  }
+        .signup_link {
+            @apply flex flex-wrap items-center gap-2 mt-3 justify-center;
 
- 
+            .forget_pass {
+                @apply mt-0;
+            }
+        }
+    }
+    .loginRow {
+        @apply grid md:grid-cols-2 grid-cols-1 gap-2 items-center;
+        p {
+            @apply text-center text-[1.125rem] m-0 font-semibold;
+        }
+    }
 }

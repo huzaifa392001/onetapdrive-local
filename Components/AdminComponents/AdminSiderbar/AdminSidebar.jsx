@@ -20,7 +20,7 @@ function AdminSidebar() {
     { path: "/admin/brands", label: "Brands", icon: "fad fa-star" },
     { path: "/admin/categories", label: "Categories", icon: "fas fa-clipboard-list" },
     { path: "/admin/blogs", label: "Blogs", icon: "far fa-books" },
-    { path: "/admin/packages", label: "Packages Orders", icon: "fas fa-car" },
+    // { path: "/admin/packages", label: "Packages Orders", icon: "fas fa-car" },
     { path: "/admin/social", label: "Social Links", icon: "fas fa-share-square" },
     // { path: "/admin/configurations", label: "Configurations", icon: "fas fa-cog" },
 
@@ -40,7 +40,7 @@ function AdminSidebar() {
     },
     { path: "/admin/car-listing", label: "Car Listing", icon: "fas fa-car" },
     { path: "/admin/car-with-driver-listing", label: "Car With Driver Listing", icon: "fas fa-car" },
-    { path: "/admin/car-active-management", label: "Car Active Management", icon: "fas fa-check-square" },
+    // { path: "/admin/car-active-management", label: "Car Active Management", icon: "fas fa-check-square" },
     { path: "/admin/car-refresh-management", label: "Car Refresh Management", icon: "fas fa-sync-alt" },
 
     // Divider for other admin options
@@ -49,9 +49,10 @@ function AdminSidebar() {
     { path: "/admin/vendor-management", label: "Vendor Management", icon: "fas fa-users" },
     { path: "/admin/user-management", label: "Users Management", icon: "fas fa-users" },
     { path: "/admin/leads-management", label: "Leads Management", icon: "fas fa-file-alt" },
-    { path: "/admin/inquiry-management", label: "Inquiry Management", icon: "fas fa-phone-alt" },
-    { path: "/admin/reviews-management", label: "Reviews Management", icon: "fas fa-comments" },
+    // { path: "/admin/inquiry-management", label: "Inquiry Management", icon: "fas fa-phone-alt" },
+    // { path: "/admin/reviews-management", label: "Reviews Management", icon: "fas fa-comments" },
     { path: "/admin/subscription-email", label: "Subscription Email", icon: "fas fa-envelope" },
+    { path: "/admin/subscription-email", label: "Website Traffic", icon: "fas fa-envelope" },
   ];
 
   return (

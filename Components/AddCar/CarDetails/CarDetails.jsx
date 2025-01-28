@@ -3,12 +3,8 @@ import React from 'react';
 import carData from '@/DummyData/carBrandsModels.json'; // Import carData from JSON
 import carCategories from "@/DummyData/Categories.json"
 
-function CarDetails({ register, watch, setValue, errors }) {
+function CarDetails({ register, watch, setValue, errors, edit }) {
     const selectedBrand = watch('car_brand');
-    const selectedModel = watch('car_model');
-    const selectedCategory = watch('car_category');
-    const selectedYear = watch('car_year');
-    const selectedCity = watch('city');
 
     const handleBrandChange = (e) => {
         setValue('car_brand', e.target.value); // Update the selected brand
@@ -18,11 +14,11 @@ function CarDetails({ register, watch, setValue, errors }) {
     return (
         <div className="carDetails">
             <div className="headingCont">
-                <SecHeading heading="Car Details" />
+                <SecHeading heading={edit ? "Update Car Details" : "Car Details"} />
             </div>
             <div className="inputContainer">
                 <div className={`inputCont ${errors?.car_brand ? "error" : ''}`}>
-                    <label htmlFor="car_brand">Car Brand</label>
+                    {/* <label htmlFor="car_brand">Car Brand*</label> */}
                     <select
                         id="car_brand"
                         value={selectedBrand || ''}
@@ -33,7 +29,7 @@ function CarDetails({ register, watch, setValue, errors }) {
                         className="inputCont"
                     >
                         <option value="" disabled>
-                            Select Car Brand
+                            Select Car Brand*
                         </option>
                         {Object.keys(carData).map((brand) => (
                             <option key={brand} value={brand}>
@@ -47,10 +43,9 @@ function CarDetails({ register, watch, setValue, errors }) {
                 </div>
 
                 <div className={`inputCont ${errors?.car_model ? "error" : ''}`}>
-                    <label htmlFor="car_model">Car Model</label>
+                    {/* <label htmlFor="car_model">Car Model*</label> */}
                     <select
                         id="car_model"
-                        value={selectedModel || ''}
                         {...register('car_model', {
                             required: 'Car Model is required',
                         })}
@@ -74,16 +69,15 @@ function CarDetails({ register, watch, setValue, errors }) {
                 </div>
 
                 <div className={`inputCont ${errors?.car_category ? "error" : ''}`}>
-                    <label htmlFor="car_category">Category</label>
+                    {/* <label htmlFor="car_category">Category*</label> */}
                     <select
                         id="car_category"
-                        value={selectedCategory || ''}
                         {...register('car_category', {
                             required: 'Category is required',
                         })}
                     >
                         <option value="" disabled>
-                            Select Category
+                            Select Car Category*
                         </option>
                         {carCategories?.map((cat, index) => (
                             <option key={index} value={cat?.name}>
@@ -97,16 +91,15 @@ function CarDetails({ register, watch, setValue, errors }) {
                 </div>
 
                 <div className={`inputCont ${errors?.car_year ? "error" : ''}`}>
-                    <label htmlFor="car_year">Make (Year)</label>
+                    {/* <label htmlFor="car_year">Make (Year)*</label> */}
                     <select
                         id="car_year"
-                        value={selectedYear || ''}
                         {...register('car_year', {
                             required: 'Make (Year) is required',
                         })}
                     >
                         <option value="" disabled>
-                            Select Car Make
+                            Select Car Make*
                         </option>
                         <option value="2026">2026</option>
                         <option value="2025">2025</option>
@@ -121,16 +114,15 @@ function CarDetails({ register, watch, setValue, errors }) {
                 </div>
 
                 <div className={`inputCont ${errors?.city ? "error" : ''}`}>
-                    <label htmlFor="city">City</label>
+                    {/* <label htmlFor="city">City*</label> */}
                     <select
                         id="city"
-                        value={selectedCity || ''}
                         {...register('city', {
                             required: 'City is required',
                         })}
                     >
                         <option value="" disabled>
-                            Select City
+                            Select City*
                         </option>
                         {['Dubai', 'Abu Dhabi', 'Fujairah', 'Ajman', 'Al Ain', 'Sharjah', 'Ras Al Khaimah', 'Umm Al Quwain'].map((location) => (
                             <option key={location} value={location}>

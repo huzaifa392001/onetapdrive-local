@@ -161,6 +161,7 @@
             }
         }
     }
+
     .categoryDropdown {
         @apply absolute min-h-[200px] top-[0px] opacity-0 invisible pointer-events-none select-none transition-all duration-300 z-10 bg-[var(--white)] rounded-xl overflow-hidden;
         box-shadow: 0 0 15px 5px #0003;
@@ -199,5 +200,97 @@
                 }
             }
         }
+    }
+}
+
+.headerMenu {
+    @apply relative;
+    header {
+        @apply bg-[var(--secondary-color)] py-3 px-4 shadow-md;
+        .headerRow {
+            @apply flex items-center justify-between;
+            .location {
+                .placeHolder {
+                    @apply flex items-center gap-x-2 text-[var(--white)] cursor-pointer text-[1.125rem] font-medium;
+                    .mapMarker {
+                        @apply text-[var(--theme-color)];
+                    }
+                }
+            }
+            .menu {
+                button {
+                    @apply text-[var(--white)] text-[1.125rem] font-medium w-12 h-12 flex items-center justify-center;
+                }
+            }
+        }
+    }
+    .fullMenu {
+        @apply w-full h-full z-50 relative pointer-events-none transition-all duration-300;
+        &.navShow {
+            @apply pointer-events-auto;
+
+            .menuCont {
+                @apply left-0;
+            }
+
+            .backDropBg {
+                @apply opacity-100 visible;
+            }
+        }
+        .backDropBg {
+            @apply fixed inset-0 w-screen h-screen bg-[#00000075] z-0 transition-all duration-300 opacity-0 invisible;
+        }
+
+        .menuCont {
+            @apply fixed h-screen overflow-y-auto max-w-[300px] w-full top-0 bg-[var(--white)] z-10 transition-all duration-300 pt-14 shadow-md -left-[300px];
+
+            &:has(h4) {
+                @apply pt-0;
+            }
+            .closeBtn {
+                @apply absolute top-0 right-0 cursor-pointer h-12 w-12 flex items-center justify-center text-[1.125rem];
+            }
+            h4 {
+                @apply text-[var(--grey-color)] text-[1.25rem] text-center py-2 bg-gray-200 font-semibold capitalize;
+            }
+            ul {
+                li {
+                    button,
+                    a {
+                        @apply py-3 px-4 text-[var(--black)] font-medium transition-all duration-300 flex items-center justify-between w-full capitalize;
+                        &.active {
+                            @apply text-[var(--theme-color)];
+                        }
+                    }
+
+                    @apply border-t;
+
+                    &:last-child {
+                        @apply border-b;
+                    }
+                }
+
+                &.brands {
+                    li {
+                        a,
+                        button {
+                            // @apply justify-start gap-x-2;
+                            figure {
+                                @apply w-24 h-12 overflow-hidden;
+                                img {
+                                    @apply h-full w-full object-contain;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+html {
+    &:has(.headerMenu .navShow) {
+        overflow: hidden;
     }
 }

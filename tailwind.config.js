@@ -11,8 +11,8 @@ module.exports = {
   		center: true,
   		screens: {
   			sm: '100%',
-  			md: '576px',
-  			lg: '768px',
+  			md: '767px',
+  			lg: '992px',
   			xl: '1200px',
   			xxl: '1440px'
   		}
@@ -22,7 +22,7 @@ module.exports = {
   		md: '767.98px',
   		lg: '991.98px',
   		xl: '1199.98px',
-  		xxl: '1399.98px'
+  		xxl: '1439.98px'
   	},
   	extend: {
   		borderRadius: {

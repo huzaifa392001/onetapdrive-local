@@ -60,11 +60,11 @@
             &.withImage {
                 @apply bg-transparent items-start justify-start;
                 .images {
-                    @apply grid grid-cols-4 w-full gap-3 relative;
+                    @apply grid grid-cols-4 w-full gap-3 relative overflow-y-auto;
                     .imgWrapper {
-                        @apply relative w-full overflow-hidden;
+                        @apply relative w-full overflow-hidden h-[150px];
                         figure {
-                            @apply relative h-[150px] w-full overflow-hidden border rounded-lg bg-gray-200 transition-all duration-200;
+                            @apply relative h-full w-full overflow-hidden border rounded-lg bg-gray-200 transition-all duration-200;
                             span {
                                 @apply absolute top-1 left-1 w-5 h-5 bg-gray-200 flex items-center justify-center rounded-full;
                             }

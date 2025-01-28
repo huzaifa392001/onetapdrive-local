@@ -2,14 +2,14 @@
     .contentSec {
         @apply bg-cover bg-no-repeat bg-center p-0;
         .content {
-            @apply flex items-center justify-center text-center bg-[#0007] h-full w-full min-h-[450px];
+            @apply flex items-center justify-center text-center bg-[#0007] h-full w-full lg:min-h-[450px] min-h-[300px];
             backdrop-filter: blur(4px);
             h2 {
-                @apply text-[var(--theme-color)] text-[4rem] font-bold;
+                @apply text-[var(--theme-color)] text-[2.5rem] lg:text-[4rem] font-bold;
             }
 
             h4 {
-                @apply text-[2rem] text-[var(--white)];
+                @apply text-[1.5rem] lg:text-[2rem] text-[var(--white)];
             }
 
             .themeBtn {
@@ -20,6 +20,9 @@
 
     .footerSec {
         @apply bg-[var(--secondary-color)] py-16 text-[var(--white)];
+        .footerContainer {
+            @apply lg:container mx-auto lg:px-0 px-2;
+        }
         .footerRow {
             @apply grid gap-x-6 grid-cols-12;
             .footerCol {

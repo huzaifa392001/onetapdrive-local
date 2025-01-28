@@ -91,117 +91,122 @@ function SearchBar({ activeCategory }) {
     }, [activeCategory]);
 
     return (
-        <div className="searchBar">
-            <div className="customContainer">
-                <div className="searchCont">
-                    <input placeholder="Search" type="text" />
-                    <button className="themeBtn">Search</button>
-                </div>
-                <div className="sortBar">
-                    {[{ label: selectedCategory, type: 'category' }, { label: selectedSort, type: 'sort' }, { label: 'Price', type: 'price' }]
-                        .map(({ label, type }) => (
-                            <div className={`dropdownCont ${activeDropdown === type ? 'active' : ''}`} key={type}>
-                                {type !== 'sort' && (
-                                    <button className="placeholder" onClick={() => handleDropdownToggle(type)}>
-                                        <div>
-                                            <span>{label}</span>
-                                            {type === 'sort' && <span className="min">(high to low)</span>}
-                                        </div>
-                                        <i className={`fas ${type === 'sort' ? 'fa-sort' : 'fa-chevron-down'}`} />
-                                    </button>
-                                )}
-                                {type === "sort" && (
-                                    <button className="placeholder" onClick={() => handleDropdownToggle('sort')}>
-                                        <div>
-                                            <span>{selectedSort.split(':')[0]}</span> {/* Main heading */}
-                                            {selectedSort.includes(':') && <span className="min">({selectedSort.split(':')[1].trim()})</span>}
-                                        </div>
-                                        <i className="fas fa-sort" />
-                                    </button>
-                                )}
-                                {activeDropdown === type && (
-                                    <div className="dropdown">
-                                        {type === 'category' ? (
-                                            <ul data-lenis-prevent className="categoryGrid">
-                                                <li
-                                                    className={`categoryItem ${selectedCategory === "all" ? 'active' : ''}`}
-                                                    onClick={() => handleCategorySelect("all")}
-                                                >
-                                                    <span>All</span>
-                                                    <small>30 Cars</small>
-                                                </li>
-                                                {categoryData.map((item) => (
+        <>
+            <div className="searchBar">
+                <div className="customContainer">
+                    <div className="searchCont">
+                        <input placeholder="Search" type="text" />
+                        <button className="themeBtn">Search</button>
+                    </div>
+                    <div className="sortBar">
+                        {[{ label: selectedCategory, type: 'category' }, { label: selectedSort, type: 'sort' }, { label: 'Price', type: 'price' }]
+                            .map(({ label, type }) => (
+                                <div className={`dropdownCont ${activeDropdown === type ? 'active' : ''}`} key={type}>
+                                    {type !== 'sort' && (
+                                        <button className="placeholder" onClick={() => handleDropdownToggle(type)}>
+                                            <div>
+                                                <span>{label}</span>
+                                                {type === 'sort' && <span className="min">(high to low)</span>}
+                                            </div>
+                                            <i className={`fas ${type === 'sort' ? 'fa-sort' : 'fa-chevron-down'}`} />
+                                        </button>
+                                    )}
+                                    {type === "sort" && (
+                                        <button className="placeholder" onClick={() => handleDropdownToggle('sort')}>
+                                            <div>
+                                                <span>{selectedSort.split(':')[0]}</span> {/* Main heading */}
+                                                {selectedSort.includes(':') && <span className="min">({selectedSort.split(':')[1].trim()})</span>}
+                                            </div>
+                                            <i className="fas fa-sort" />
+                                        </button>
+                                    )}
+                                    {activeDropdown === type && (
+                                        <div className="dropdown">
+                                            {type === 'category' ? (
+                                                <ul data-lenis-prevent className="categoryGrid">
                                                     <li
-                                                        key={item.name}
-                                                        className={`categoryItem ${selectedCategory === item.name ? 'active' : ''}`}
-                                                        onClick={() => handleCategorySelect(item.name)}
+                                                        className={`categoryItem ${selectedCategory === "all" ? 'active' : ''}`}
+                                                        onClick={() => handleCategorySelect("all")}
                                                     >
-                                                        <span>{item.name}</span>
-                                                        <small>{item.quantity} Cars</small>
+                                                        <span>All</span>
+                                                        <small>30 Cars</small>
                                                     </li>
-                                                ))}
-                                            </ul>
-                                        ) : type === 'sort' ? (
-                                            <ul data-lenis-prevent className="sortGrid">
-                                                {sortOptions.map((option, index) => (
-                                                    <li
-                                                        key={index}
-                                                        className={`sortItem ${selectedSort === (option.sortingType ? `${option.mainHeading}: ${option.sortingType}` : option.mainHeading) ? 'active' : ''}`}
-                                                        onClick={() => handleSortSelect(option)}
-                                                    >
-                                                        <span>{option.sortingType ? `${option.mainHeading}:` : option.mainHeading}</span>
-                                                        {option?.sortingType && <span className='min'>({option?.sortingType})</span>}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        ) : type === 'price' ? (
-                                            <>
-                                                <h4>Price (AED)</h4>
-                                                <div className="gridCont">
-                                                    <div className="priceInputCont">
-                                                        <label htmlFor="">Minimum</label>
-                                                        <input
-                                                            placeholder="Enter Amount"
-                                                            type="number"
-                                                            value={priceFilter.min}
-                                                            onChange={(e) => handleInputChange(e, 'min')}
-                                                        />
+                                                    {categoryData.map((item) => (
+                                                        <li
+                                                            key={item.name}
+                                                            className={`categoryItem ${selectedCategory === item.name ? 'active' : ''}`}
+                                                            onClick={() => handleCategorySelect(item.name)}
+                                                        >
+                                                            <span>{item.name}</span>
+                                                            <small>{item.quantity} Cars</small>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            ) : type === 'sort' ? (
+                                                <ul data-lenis-prevent className="sortGrid">
+                                                    {sortOptions.map((option, index) => (
+                                                        <li
+                                                            key={index}
+                                                            className={`sortItem ${selectedSort === (option.sortingType ? `${option.mainHeading}: ${option.sortingType}` : option.mainHeading) ? 'active' : ''}`}
+                                                            onClick={() => handleSortSelect(option)}
+                                                        >
+                                                            <span>{option.sortingType ? `${option.mainHeading}:` : option.mainHeading}</span>
+                                                            {option?.sortingType && <span className='min'>({option?.sortingType})</span>}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            ) : type === 'price' ? (
+                                                <>
+                                                    <h4>Price (AED)</h4>
+                                                    <div className="gridCont">
+                                                        <div className="priceInputCont">
+                                                            <label htmlFor="">Minimum</label>
+                                                            <input
+                                                                placeholder="Enter Amount"
+                                                                type="number"
+                                                                value={priceFilter.min}
+                                                                onChange={(e) => handleInputChange(e, 'min')}
+                                                            />
+                                                        </div>
+                                                        <div className="priceInputCont">
+                                                            <label htmlFor="">Maximum</label>
+                                                            <input
+                                                                placeholder="Enter Amount"
+                                                                type="number"
+                                                                value={priceFilter.max}
+                                                                onChange={(e) => handleInputChange(e, 'max')}
+                                                            />
+                                                        </div>
+                                                        <div className="priceInputCont">
+                                                            <button onClick={handleReset}>Reset</button>
+                                                        </div>
+                                                        <div className="priceInputCont">
+                                                            <button className="transparent" onClick={handlePriceFilterSubmit}>
+                                                                Done
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                    <div className="priceInputCont">
-                                                        <label htmlFor="">Maximum</label>
-                                                        <input
-                                                            placeholder="Enter Amount"
-                                                            type="number"
-                                                            value={priceFilter.max}
-                                                            onChange={(e) => handleInputChange(e, 'max')}
-                                                        />
-                                                    </div>
-                                                    <div className="priceInputCont">
-                                                        <button onClick={handleReset}>Reset</button>
-                                                    </div>
-                                                    <div className="priceInputCont">
-                                                        <button className="transparent" onClick={handlePriceFilterSubmit}>
-                                                            Done
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </>
-                                        ) : null}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    <div className="dropdownCont">
-                        <button className="placeholder">
-                            <i className="far fa-sliders-h" />
-                            <div>
-                                <span>More Filters</span>
-                            </div>
-                        </button>
+                                                </>
+                                            ) : null}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        <div className="dropdownCont">
+                            <button className="placeholder">
+                                <i className="far fa-sliders-h" />
+                                <div>
+                                    <span>More Filters</span>
+                                </div>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div className="filtersCont">
+                
+            </div>
+        </>
     );
 }
 

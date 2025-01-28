@@ -17,60 +17,64 @@ function VendorSidebar() {
 
   // Define sidebar menu items with dividers
   const menuItems = [
-    // { path: "/", label: "Go To Website", icon: "fas fa-globe-asia" },
     { path: "/vendor", label: "Dashboard", icon: "fas fa-home" },
     { path: "/vendor/license", label: "Trade License", icon: "fas fa-id-badge" },
     { path: "/vendor/leads", label: "Leads Management", icon: "fas fa-file-alt" },
-    // { path: "/vendor/inquiry-forms", label: "Inquiry Forms", icon: "fas fa-phone-alt" },
     { path: "/vendor/fleet", label: "My Fleet", icon: "fas fa-car" },
-    { path: "/vendor/my-fleet-with-driver", label: "My Fleet With Driver", icon: "fas fa-taxi" },
+    { path: "/vendor/car-with-driver", label: "My Fleet With Driver", icon: "fas fa-taxi" },
     { path: "/vendor/manage-car-offers", label: "Manage Car Offers", icon: "fas fa-percentage" },
-    
+    {
+      path: "", label: "Settings", icon: "fas fa-cogs", isExpandable: true,
+      subMenu: [
+        { path: "/vendor/profile", label: "Profile", icon: "far fa-user" },
+        { path: "/vendor/company", label: "company", icon: "fas fa-building" },
+        { path: "/vendor/brand", label: "brand", icon: "far fa-lock" },
+        { path: "/vendor/notifications", label: "Notifications", icon: "far fa-bell" },
+      ],
+    },
   ];
+
   return (
     <div className="vendorSidebar">
       <ul>
         {menuItems.map((item, index) => {
-          // Check if the item is a divider
           if (item.type === "divider") {
             return (
               <li key={index} className="divider">
                 <h4>{item?.label}</h4>
               </li>
-            ); // You can style the divider with CSS
+            );
           }
 
-          // Check if the current route starts with the menu item's path
-          const vendorPath = pathName.split("/")[2]
-            ? `/vendor/${pathName.split("/")[2]}`
-            : "/vendor";
-          const isActive = item.path === vendorPath;
+          const vendorPath = pathName;
+          let isActive = "";
+          if (!item?.subMenu) {
+            isActive = item.path === vendorPath;
+          }
 
           return item.isExpandable ? (
             <li key={index} onClick={toggleSubMenu}>
               <span>
                 <i className={`${item.icon}`}></i>
                 <span>{item.label}</span>
-                <i
-                  className={`fal fa-angle-${isExpanded ? "down" : "right"}`}
-                />
+                <i className={`fal fa-angle-${isExpanded ? "down" : "right"}`} />
               </span>
               {isExpanded && (
                 <div className="vendorSubMenu expanded">
                   <ul>
-                    {item.subMenu.map((subItem, subIndex) => (
-                      <li
-                        key={subIndex}
-                        className={
-                          pathName.startsWith(subItem.path) ? "active" : ""
-                        }
-                      >
-                        <Link href={subItem.path}>
-                          <i className={subItem.icon}></i>
-                          <span>{subItem.label}</span>
-                        </Link>
-                      </li>
-                    ))}
+                    {item.subMenu.map((subItem, subIndex) => {
+                      const isSubItemActive = subItem.path === vendorPath;
+                      return (
+                        <li key={subIndex}>
+                          <Link
+                            className={isSubItemActive ? "active" : ""}
+                            href={subItem.path}>
+                            <i className={subItem.icon}></i>
+                            <span>{subItem.label}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}

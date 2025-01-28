@@ -113,14 +113,14 @@ const AdminDataTable = (props) => {
         },
       };
 
-      setColDefs([
-        {
-          headerName: "Sr No.",
-          valueGetter: "node.rowIndex + 1",
-        },
-        ...dynamicFields,
-        ...(showAction ? [actionColumn] : []),
-      ]);
+        setColDefs([
+          {
+            headerName: "Sr No.",
+            valueGetter: "node.rowIndex + 1",
+          },
+          ...dynamicFields,
+          ...(showAction ? [actionColumn] : []),
+        ]);
     }
   }, [rowData, showAction, pathName]); // Added pathName to the dependency array
 

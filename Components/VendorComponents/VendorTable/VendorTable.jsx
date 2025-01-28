@@ -20,7 +20,7 @@ function VendorTable(props) {
     useEffect(() => {
         if (rowData.length > 0) {
             console.log("rowData is not empty. Processing dynamic fields...");
-            
+
             const dynamicFields = Object.keys(rowData[0])
                 .filter((key) => key !== "slug" && key !== "id" && key !== "Action")
                 .map((key) => {
@@ -65,7 +65,7 @@ function VendorTable(props) {
                             ),
                         };
                     }
-    
+
                     if (key === "Date") {
                         console.log("Adding Date field with custom comparator.");
                         return {
@@ -88,16 +88,16 @@ function VendorTable(props) {
                             },
                         };
                     }
-    
+
                     return {
                         field: key,
                         headerName: formattedKey.charAt(0).toUpperCase() + formattedKey.slice(1),
                     };
                 });
-    
+
             // Check if the "Action" key exists in the data
             const hasActionKey = Object.keys(rowData[0]).includes("Action");
-    
+
             const actionColumn = hasActionKey
                 ? [
                     {
@@ -106,21 +106,21 @@ function VendorTable(props) {
                         cellRenderer: (params) => {
                             const id = params.data?.id;
                             const currentStatus = statusMap[id] || params.data.status || 'inactive';
-    
+
                             const toggleStatus = () => {
                                 const newStatus = currentStatus === 'inactive' ? 'active' : 'inactive';
                                 setStatusMap((prevStatusMap) => ({
                                     ...prevStatusMap,
                                     [id]: newStatus,
                                 }));
-    
+
                                 const updatedRowData = localRowData.map((row) =>
                                     row.id === id ? { ...row, status: newStatus } : row
                                 );
                                 console.log("Updated rowData:", updatedRowData);
                                 setLocalRowData(updatedRowData);
                             };
-    
+
                             return (
                                 <div className="btnCont">
                                     <button
@@ -143,7 +143,7 @@ function VendorTable(props) {
                     },
                 ]
                 : []; // If "Action" key is not present, exclude the column
-    
+
             setColDefs([
                 {
                     headerName: "Sr No.",
@@ -152,12 +152,12 @@ function VendorTable(props) {
                 ...dynamicFields,
                 ...actionColumn, // Conditionally add the "Action" column
             ]);
-    
-        } 
+
+        }
     }, [rowData, statusMap, localRowData]);
-        
-    
-    
+
+
+
 
     const defaultColDef = useMemo(() => {
         return {

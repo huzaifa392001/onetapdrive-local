@@ -1,5 +1,5 @@
 .imgCropModal {
-    @apply fixed inset-0 w-full h-full bg-[#0003] backdrop-blur z-10;
+    @apply fixed inset-0 w-full h-full bg-[#0003] backdrop-blur z-50;
 
     .modalContent {
         @apply absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 max-h-[500px] max-w-[500px] w-full h-full bg-[var(--white)] border rounded-xl overflow-hidden;
@@ -9,12 +9,12 @@
         }
 
         .btnCont {
-            @apply flex flex-row gap-x-3 w-full px-3 py-2;
+            @apply flex flex-row gap-x-3 w-full px-3 py-2 h-[10%] mt-0;
 
             button {
-                @apply w-full;
+                @apply w-full h-full  text-[1.125rem] py-0;
                 &.cancel {
-                    @apply bg-red-500 text-[var(--white)] text-[1.125rem] py-0;
+                    @apply bg-red-500 text-[var(--white)];
 
                     &:hover {
                         @apply bg-red-700;

@@ -1,7 +1,7 @@
 .mainSec {
     @apply h-full w-full p-0;
     figure {
-        @apply relative h-[400px] w-screen overflow-hidden;
+        @apply relative h-[150px] sm:h-[250px] lg:h-[400px] w-screen overflow-hidden;
         img {
             @apply w-full h-full object-cover object-bottom;
         }

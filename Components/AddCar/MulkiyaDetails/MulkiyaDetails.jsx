@@ -1,31 +1,34 @@
 import SecHeading from '@/Components/SecHeading/SecHeading'
 import Image from 'next/image';
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
-function MulkiyaDetails({ register, setValue, errors }) {
+function MulkiyaDetails({ register, setValue, errors, edit }) {
     const [mulkiyaFrontPreview, setMulkiyaFrontPreview] = useState(null);
     const [mulkiyaBackPreview, setMulkiyaBackPreview] = useState(null);
 
     const handleImageChange = (e, setPreview, fieldName) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result); // Set the preview image
-            };
-            reader.readAsDataURL(file);
-            setValue(fieldName, file, { shouldValidate: true }); // Manually set the value for the file input
+            // Convert the file to a blob and create a URL
+            const blob = new Blob([file], { type: file.type });
+            const url = URL.createObjectURL(blob);
+
+            // Set the preview image as the URL of the Blob
+            setPreview(url);
+
+            // Manually set the value for the file input as a Blob
+            setValue(fieldName, blob, { shouldValidate: true });
         }
     };
 
     return (
         <div className="mulkiyaDetails">
             <div className="headingCont">
-                <SecHeading heading={"Mulkiya Details"} />
+                <SecHeading heading={edit ? "Update Mulkiya Details" : "Mulkiya Details"} />
             </div>
             <div className="inputContainer">
                 <div className={`inputCont img ${errors?.daily && errors.daily_km ? "error" : ""}`}>
-                    <label htmlFor="mulkiya_front">Upload Registration Card (Mulkiya) Front</label>
+                    <label htmlFor="mulkiya_front">Upload Registration Card (Mulkiya) Front*</label>
                     <div className="imgInput">
                         {mulkiyaFrontPreview ? (
                             <div className='imgBox'>
@@ -45,7 +48,7 @@ function MulkiyaDetails({ register, setValue, errors }) {
                                     type="file"
                                     name=""
                                     id="mulkiya_front"
-                                    onChange={(e) => handleImageChange(e, setMulkiyaFrontPreview)}
+                                    onChange={(e) => handleImageChange(e, setMulkiyaFrontPreview, "mulkiya_front")}
                                 />
                             </label>
                         )}
@@ -53,7 +56,7 @@ function MulkiyaDetails({ register, setValue, errors }) {
                     {errors?.mulkiya_front && (<p className='errorText'>{errors?.mulkiya_front?.message}</p>)}
                 </div>
                 <div className={`inputCont img ${errors?.daily && errors.daily_km ? "error" : ""}`}>
-                    <label htmlFor="mulkiya_back">Upload Registration Card (Mulkiya) Back</label>
+                    <label htmlFor="mulkiya_back">Upload Registration Card (Mulkiya) Back*</label>
                     <div className="imgInput">
                         {mulkiyaBackPreview ? (
                             <div className='imgBox'>
@@ -73,7 +76,7 @@ function MulkiyaDetails({ register, setValue, errors }) {
                                     type="file"
                                     name=""
                                     id="mulkiya_back"
-                                    onChange={(e) => handleImageChange(e, setMulkiyaBackPreview)}
+                                    onChange={(e) => handleImageChange(e, setMulkiyaBackPreview, "mulkiya_back")}
                                 />
                             </label>
                         )}
@@ -82,7 +85,7 @@ function MulkiyaDetails({ register, setValue, errors }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default MulkiyaDetails;
+export default memo(MulkiyaDetails);

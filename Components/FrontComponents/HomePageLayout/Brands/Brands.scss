@@ -1,8 +1,8 @@
 .brandsSec {
-    @apply pb-0;
+    @apply pb-0 lg:py-20 sm:py-10 py-5;
     .brandsSwiper {
         @apply mt-10;
-        
+
         .brandCard {
             @apply block;
             figure {

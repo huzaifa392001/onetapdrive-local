@@ -20,9 +20,6 @@ html {
 
     @include respond-to($breakpoint-sm) {
         font-size: 13px !important; // sm
-        section {
-            @apply py-6 px-4;
-        }
     }
 
     @include respond-to($breakpoint-xs) {
@@ -105,17 +102,25 @@ input[type="number"] {
     }
 
     &.delete {
-        @apply bg-red-500 text-[var(--white)] hover:bg-red-700;
+        @apply bg-red-500 border-red-500 text-[var(--white)] hover:bg-red-700;
+    }
+
+    &.secondary {
+        @apply bg-[var(--secondary-color)] text-[var(--white)] hover:bg-[var(--theme-color)];
+    }
+
+    &.large {
+        @apply py-2 px-12 text-[16px];
     }
 }
 
 section {
     position: relative;
-    padding: 5rem 0;
+    @apply lg:py-20 py-10;
 }
 
 .customContainer {
-    @apply container mx-auto;
+    @apply container mx-auto md:px-0 px-2;
 }
 
 .swiper {
@@ -215,6 +220,10 @@ section {
     label {
         @apply text-[1.125rem] font-medium block mb-1;
 
+        .small {
+            @apply font-normal text-[13px];
+        }
+
         &:has(+ p) {
             @apply mb-0;
         }
@@ -226,7 +235,7 @@ section {
     input:not([type="file"]),
     textarea,
     select {
-        @apply min-w-[350px] w-full rounded-md border min-h-10 block px-2;
+        @apply w-full rounded-md border min-h-10 block px-2 outline-none;
 
         &::placeholder {
         }
@@ -294,8 +303,38 @@ section {
             }
         }
     }
+
+    .errorInput {
+        @apply border-red-500;
+    }
+
+    .inputWrap {
+        @apply relative min-h-10 w-full overflow-hidden rounded-md border;
+        > i {
+            @apply absolute top-0 left-0 w-8 h-full flex items-center justify-center bg-gray-300;
+        }
+
+        input,
+        select,
+        textarea {
+            @apply pl-9 h-full rounded-none border-none w-full;
+        }
+        .showPassBtn {
+            @apply absolute top-0 right-0 h-full w-8 flex items-center justify-center;
+        }
+
+        &.errorInput {
+            > i {
+                @apply bg-red-400 text-[var(--white)];
+            }
+        }
+    }
 }
 
 .errorText {
-    @apply text-red-500;
+    @apply text-red-500 text-[13px] font-normal text-left;
+    color: #ef4444 !important;
+    font-size: 13px !important;
+    font-weight: normal !important;
+    text-align: left !important;
 }

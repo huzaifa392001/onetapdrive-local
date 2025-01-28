@@ -67,7 +67,7 @@
         h3 {
             @apply text-[var(--black)] font-bold text-[1.25rem];
             span {
-                @apply text-[14px] font-normal ml-1;
+                @apply text-[14px] ml-1 text-[var(--grey-color)] font-normal;
             }
         }
 

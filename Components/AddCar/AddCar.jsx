@@ -12,9 +12,10 @@ import MulkiyaDetails from './MulkiyaDetails/MulkiyaDetails';
 import CarSpecs from './CarSpecs/CarSpecs';
 import CarFeatures from './CarFeatures/CarFeatures';
 
-function AddCar() {
+function AddCar({ edit }) {
     const [carImages, setCarImages] = useState([]); // Store uploaded images
     const [imageError, setImageError] = useState(''); // Store image upload errors
+    const [oldImages, setOldImages] = useState([])
 
     // Default form schema values
     const defaultValues = {
@@ -39,8 +40,8 @@ function AddCar() {
     const {
         register,
         handleSubmit,
-        watch,
         setValue,
+        watch,
         setError,
         clearErrors,
         formState: { errors },
@@ -50,18 +51,13 @@ function AddCar() {
 
     // Update images from child component
     const handleCarImages = (images) => {
-        setCarImages(images); // Update parent state with images
+        // Ensure that images passed in are valid File objects and set them to state
+        const validImages = images.filter(image => image instanceof File); // Filter only valid File objects
+        setCarImages(validImages); // Set valid images to state
     };
-
     // Form submission handler
     const onSubmit = (data) => {
-        console.log('data=> ', data)
-        if (carImages.length < 5) {
-            setImageError('Please upload at least 5 images.');
-            return; // Prevent submission if validation fails
-        }
-
-        setImageError(''); // Clear any previous image errors
+        console.log('data=> ', data);
 
         // Create a FormData object
         const formData = new FormData();
@@ -78,64 +74,72 @@ function AddCar() {
             }
         }
 
-        // Append car images to FormData
-        carImages.forEach((image, index) => {
-            formData.append(`carImages[${index}]`, image.src); // Use `image.src` for the blob URL
-        });
+        // // Append car images to FormData (make sure these are actual file objects)
+        // carImages.forEach((image, index) => {
+        //     formData.append(`carImages[${index}]`, image); // Append the actual file object
+        // });
 
         console.log('FormData prepared for submission');
     };
-
 
     return (
         <div className="fleetWrapper">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="carRow">
                     <CarImages
+                        oldImages={oldImages}
                         carImages={handleCarImages}
                         register={register}
                         setError={setError}
                         clearErrors={clearErrors}
                         errors={errors}
+                        edit={edit}
                     />
                     <CarDetails
                         register={register}
-                        watch={watch}
                         setValue={setValue}
                         errors={errors}
+                        watch={watch}
+                        edit={edit}
                     />
                     <CarPricing
                         register={register}
                         errors={errors}
+                        edit={edit}
                     />
                     <CarColors
                         register={register}
                         errors={errors}
+                        edit={edit}
                     />
                     <RentalTerms
                         register={register}
                         errors={errors}
+                        edit={edit}
                     />
                     <MulkiyaDetails
                         register={register}
                         setValue={setValue}
                         errors={errors}
+                        edit={edit}
                     />
                     <CarSpecs
                         register={register}
                         errors={errors}
+                        edit={edit}
                     />
                     <CarFeatures
                         register={register}
                         errors={errors}
+                        edit={edit}
                     />
                 </div>
 
                 {imageError && <p className="errorText">{imageError}</p>} {/* Show image validation error */}
 
-                <div class="btnCont">
+                <div className="btnCont">
                     <button type="submit" className="themeBtn">
-                        Submit
+                        {edit ? "Update" : "Submit"}
                     </button>
                 </div>
             </form>

@@ -66,3 +66,33 @@
         }
     }
 }
+.dataTable {
+    @apply w-full h-full overflow-x-auto;
+    .ag-theme-alpine {
+        @apply min-w-full;
+    }
+
+    .ag-header {
+        @apply overflow-x-auto;
+    }
+    .ag-row {
+        .ag-cell {
+            @apply flex items-center px-3;
+            .tableImgCol {
+                @apply flex items-center justify-start gap-x-2 py-2 max-h-[100px] overflow-hidden w-full;
+            }
+            .btnCont {
+                @apply flex items-center justify-center w-full gap-x-2;
+                .themeBtn {
+                    @apply block w-full py-0;
+                }
+            }
+            .title {
+                @apply text-[1rem] font-normal text-center;
+                &.heavy {
+                    @apply font-medium;
+                }
+            }
+        }
+    }
+}

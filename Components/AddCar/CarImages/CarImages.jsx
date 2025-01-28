@@ -44,24 +44,35 @@ function SortableItem({ id, image, index }) {
     );
 }
 
-function CarImages({ carImages, register, setError, clearErrors, errors }) {
+function CarImages({ carImages, setError, clearErrors, errors, oldImages, edit }) {
     const [images, setImages] = useState([]); // Final cropped images
     const [queue, setQueue] = useState([]); // Queue of images for cropping
     const [currentImage, setCurrentImage] = useState(null); // Image currently being cropped
 
+    // Inside the handleImageUpload, consider validating the file type and size
     const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files); // Convert FileList to Array
-        const newImages = files.map((file) => ({
-            id: `${file.name}-${Date.now()}`, // Generate a unique ID for each file
-            src: URL.createObjectURL(file),
-        }));
+        if (e.target.files.length > 20) {
+            setError('carImages', {
+                type: 'manual',
+                message: 'You can upload a maximum of 20 images.',
+            });
+        }
+        else {
+            const files = Array.from(e.target.files);
+            console.log(e.target.files)
+            const validImages = files.filter((file) => file.type.startsWith('image/') && file.size <= 5000000); // Max 5MB
 
-        console.log('newImages=> ', newImages); // Log newly uploaded images
-        setQueue((prev) => [...prev, ...newImages]); // Add new images to the queue
+            const newImages = validImages.map((file) => ({
+                id: `${file.name}-${Date.now()}`,
+                src: URL.createObjectURL(file),
+            }));
 
-        if (!currentImage) {
-            setCurrentImage(newImages[0].src); // Start cropping if no image is currently being cropped
-            setQueue((prev) => prev.slice(1)); // Remove first image from the queue
+            setQueue((prev) => [...prev, ...newImages]);
+
+            if (!currentImage) {
+                setCurrentImage(newImages[0].src);
+                setQueue((prev) => prev.slice(1));
+            }
         }
     };
 
@@ -113,12 +124,12 @@ function CarImages({ carImages, register, setError, clearErrors, errors }) {
         }
     };
 
+    // In the useEffect for validation
     useEffect(() => {
-        // Debounce the carImages callback
         const debouncedCallback = debounce(carImages, 500);
         debouncedCallback(images);
 
-        // Validate only when images are updated
+        // Check if images length is sufficient
         if (images.length < 5) {
             setError('carImages', {
                 type: 'manual',
@@ -127,7 +138,7 @@ function CarImages({ carImages, register, setError, clearErrors, errors }) {
         } else {
             clearErrors('carImages');
         }
-    }, [images]); // Trigger only when `images` changes
+    }, [images]);
 
     return (
         <>
@@ -167,7 +178,7 @@ function CarImages({ carImages, register, setError, clearErrors, errors }) {
 
                 <div className="uploadImg">
                     <div className="headingCont">
-                        <SecHeading heading="Upload Car Images" />
+                        <SecHeading heading={edit ? "Update Car Images" : "Upload Car Images"} />
                         {images?.length > 0 && (
                             <>
                                 <label className='themeBtn' htmlFor="#imageUpload">

@@ -1,8 +1,7 @@
-
 .vendorWrapper {
     @apply h-full overflow-hidden;
-    min-height: 100dvh; 
-    .vendorContentLayout{
+    min-height: 100dvh;
+    .vendorContentLayout {
         @apply flex flex-wrap;
         height: calc(100dvh - 6rem);
     }
@@ -11,5 +10,9 @@
         flex: 1;
         @apply p-8 overflow-y-auto;
         height: 100%;
+
+        &:has(.settingsSection) {
+            @apply p-0;
+        }
     }
 }

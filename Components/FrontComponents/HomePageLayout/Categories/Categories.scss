@@ -1,6 +1,10 @@
 .categoriesSec {
+    @apply lg:py-20 sm:py-10 py-5;
+    .categorySwiper {
+        @apply mt-6;
+    }
     .catRow {
-        @apply grid grid-cols-4 gap-y-4;
+        @apply grid grid-cols-4 gap-y-4 pt-6;
         .catCol {
             @apply px-2;
         }

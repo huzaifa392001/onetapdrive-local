@@ -98,9 +98,9 @@
         }
 
         .brandCont {
-            @apply flex items-center;
+            @apply flex items-center gap-x-2 justify-between;
             .brand {
-                @apply w-[100px] h-[60px] overflow-hidden relative;
+                @apply lg:w-[100px] lg:h-[60px] w-[50px] h-[60px] overflow-hidden relative;
                 img {
                     @apply w-full h-full object-contain object-left;
                 }
@@ -110,7 +110,7 @@
                     li {
                         @apply flex items-center gap-x-2;
                         p {
-                            @apply text-[13px] font-medium capitalize;
+                            @apply text-[13px] font-normal capitalize;
                         }
                     }
                 }

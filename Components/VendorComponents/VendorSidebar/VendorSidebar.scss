@@ -9,7 +9,7 @@
         li {
             > a,
             > span {
-                @apply py-3 px-2 text-[1rem] font-[500] transition-all duration-100 flex items-center justify-start cursor-pointer text-[var(--white)] gap-x-2;
+                @apply py-3 px-2 text-[1rem] font-[500] transition-all duration-100 flex items-center justify-start cursor-pointer text-[var(--white)] gap-x-2 capitalize;
                 &:hover,
                 &.active {
                     @apply bg-[var(--white)] text-[var(--vendor-bg)] rounded-[10px];
@@ -30,6 +30,16 @@
                 @apply mt-5;
                 &:has(h4) {
                     @apply mt-5;
+                }
+            }
+            .vendorSubMenu {
+                ul {
+                    @apply mt-5;
+                    li {
+                        & + li {
+                            @apply mt-2;
+                        }
+                    }
                 }
             }
         }

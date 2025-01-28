@@ -1,0 +1,50 @@
+.joinNow {
+  .contentRow {
+    @apply grid grid-cols-12 gap-x-8 items-center;
+    .contentCol {
+      @apply col-span-6;
+      .content {
+        p {
+          @apply my-5 font-normal leading-6;
+        }
+        ul {
+          li {
+            @apply flex items-center gap-[1rem] py-3;
+          }
+        }
+      }
+      .listForm {
+        @apply p-5 border shadow-lg rounded-lg border-[#bdbdbd];
+        .inputCont {
+          label {
+            @apply mt-4 text-[1rem] font-normal;
+          }
+          .required {
+            @apply text-red-600 pl-1;
+          }
+          input:not([type="file"]),
+          textarea,
+          select {
+            @apply min-w-full w-full rounded-md border min-h-10 block px-2;
+          }
+        }
+        .btnCont {
+          @apply mt-5 flex items-center justify-center;
+        }
+      }
+    }
+  }
+}
+.gallerySec {
+    .imagesGrid {
+        @apply flex items-center justify-center flex-wrap gap-5;
+        figure {
+            @apply relative h-[400px] w-full rounded-[20px] overflow-hidden;
+            flex: 0 1 30%;
+            width: 20%;
+            img {
+                @apply w-full h-full object-cover;
+            }
+        }
+    }
+}

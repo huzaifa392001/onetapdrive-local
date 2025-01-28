@@ -6,15 +6,15 @@ import Image from 'next/image';
 
 function Page() {
     // State variables for form fields
-    const [brandTitle, setBrandTitle] = useState('');
-    const [brandImage, setBrandImage] = useState(null);
+    const [categoryTitle, setCategoryTitle] = useState('');
+    const [categoryImage, setCategoryImage] = useState(null);
     const [pageHeading, setPageHeading] = useState('');
     const [pageDescription, setPageDescription] = useState('');
 
     // Handler for file input
     const handleFileChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            setBrandImage(URL.createObjectURL(e.target.files[0]));
+            setCategoryImage(URL.createObjectURL(e.target.files[0]));
         }
     };
 
@@ -26,30 +26,30 @@ function Page() {
             <div className="formWrapper">
                 <form>
                     <div className="inputCont">
-                        <label htmlFor="brandTitle">Brand Title</label>
+                        <label htmlFor="categoryTitle">Category Title</label>
                         <input
-                            id="brandTitle"
-                            placeholder="Enter Brand Title"
+                            id="categoryTitle"
+                            placeholder="Enter Category Title"
                             type="text"
-                            value={brandTitle}
-                            onChange={(e) => setBrandTitle(e.target.value)}
+                            value={categoryTitle}
+                            onChange={(e) => setCategoryTitle(e.target.value)}
                         />
                     </div>
                     <div className="inputCont">
-                        <label htmlFor="brandImage">Brand Image</label>
+                        <label htmlFor="categoryImage">Category Image</label>
                         <input
-                            id="brandImage"
+                            id="categoryImage"
                             type="file"
                             onChange={handleFileChange}
                         />
                     </div>
                     <div className="divider" />
-                    <h3>Brand Page</h3>
+                    <h3>Category Page</h3>
                     <div className="inputCont">
                         <label htmlFor="pageHeading">Page Heading</label>
                         <input
                             id="pageHeading"
-                            placeholder="Enter Brand's Page heading"
+                            placeholder="Enter Category's Page heading"
                             type="text"
                             value={pageHeading}
                             onChange={(e) => setPageHeading(e.target.value)}
@@ -59,7 +59,7 @@ function Page() {
                         <label htmlFor="pageDescription">Page Description</label>
                         <textarea
                             id="pageDescription"
-                            placeholder="Enter Brand's Page Description"
+                            placeholder="Enter Category's Page Description"
                             type="text"
                             value={pageDescription}
                             onChange={(e) => setPageDescription(e.target.value)}
@@ -79,16 +79,16 @@ function Page() {
                     <h2>Preview</h2>
                     <div className="previewBox">
                         <figure>
-                            {brandImage ? (
-                                <Image src={brandImage} alt="Brand Image" fill />
+                            {categoryImage ? (
+                                <Image src={categoryImage} alt="Category Image" fill />
                             ) : (
                                 <p>No Image Selected</p>
                             )}
                         </figure>
-                        <h2>{brandTitle || 'Brand Name'}</h2>
+                        <h2>{categoryTitle || 'Category Name'}</h2>
                         <div className="headingLayout">
-                            <h3>{pageHeading || "Brand's Page Heading"}</h3>
-                            <p>{pageDescription || "Brand's Page Description"}</p>
+                            <h3>{pageHeading || "Category's Page Heading"}</h3>
+                            <p>{pageDescription || "Category's Page Description"}</p>
                         </div>
                     </div>
                 </div>

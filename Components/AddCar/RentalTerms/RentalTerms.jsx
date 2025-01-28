@@ -1,16 +1,15 @@
 import SecHeading from '@/Components/SecHeading/SecHeading'
 import React from 'react'
 
-function RentalTerms({ register, errors }) {
+function RentalTerms({ register, errors, edit }) {
     return (
         <div className="carRentalTerms">
             <div className="headingCont">
-                <SecHeading heading={"Rental Terms"} />
+                <SecHeading heading={edit ? "Update Rental Terms" : "Rental Terms"} />
             </div>
             <div className="inputContainer">
                 <div className={`inputCont ${errors?.security_deposit ? "error" : ''}`}>
-                    <label htmlFor="security_deposit">Security Deposit</label>
-                    <p class="small">Default Deposit is set to 0</p>
+                    {/* <label htmlFor="security_deposit">Security Deposit*</label> */}
                     <input
                         id="security_deposit"
                         type="number"
@@ -20,19 +19,20 @@ function RentalTerms({ register, errors }) {
                             required: "Security Deposit is Required."
                         })}
                     />
+                    <p className="small">Default Deposit is set to 0</p>
                     {errors?.security_deposit && (
                         <p className='errorText'>{errors.security_deposit.message}</p>
                     )}
                 </div>
                 <div className={`inputCont ${errors?.delivery_charges ? "error" : ''}`}>
-                    <label htmlFor="delivery_charges">Delivery & Pick up Charges</label>
+                    {/* <label htmlFor="delivery_charges">Delivery & Pick up Charges*</label> */}
                     <select
                         id="delivery_charges"
                         {...register('delivery_charges', {
                             required: 'Delivery & Pickup charges are required',
                         })}
                     >
-                        <option value="" selected disabled>Select Deliver & Pickup Charges</option>
+                        <option value="" selected disabled>Select Deliver & Pickup Charges*</option>
                         <option value="free_always">
                             Free Always
                         </option>

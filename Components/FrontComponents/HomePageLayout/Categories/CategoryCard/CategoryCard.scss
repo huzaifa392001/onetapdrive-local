@@ -1,13 +1,13 @@
 .categoryCard {
-    @apply shadow-xl h-full bg-[var(--white)] rounded-xl block transition-all duration-300 border-2 border-transparent;
+    @apply shadow-xl h-full bg-[var(--white)] rounded-xl block transition-all duration-300 border-2 border;
     figure {
-        @apply w-full h-[200px] relative p-8;
+        @apply w-full lg:h-[200px] h-[100px] relative lg:p-8 p-2;
         img {
             @apply object-contain w-full h-full aspect-square transition-all duration-300;
         }
     }
     .content {
-        @apply flex items-center justify-between px-5 py-3;
+        @apply flex items-center justify-between px-5 py-3 lg:flex-row flex-col;
         h3 {
             @apply text-[var(--text-color)] font-medium text-[1.375rem];
         }

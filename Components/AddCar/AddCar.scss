@@ -1,4 +1,5 @@
 .fleetWrapper {
+    @apply pb-5;
     .carRow {
         @apply grid grid-cols-2 gap-8;
 
@@ -34,6 +35,9 @@
         }
     }
     .btnCont {
-        @apply mt-4 flex items-center justify-end;
+        @apply mt-4 flex items-center justify-center;
+        .themeBtn {
+            @apply text-[1.25rem] px-16 text-[var(--white)] uppercase;
+        }
     }
 }

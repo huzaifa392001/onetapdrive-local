@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchBar from './SearchBar/SearchBar'
 import Advertisement from './Advertisement/Advertisement'
 import BreadCrumb from '../BreadCrumb/BreadCrumb'
@@ -11,12 +11,12 @@ import SecHeading from '@/Components/SecHeading/SecHeading'
 
 function CarsPageLayout() {
     const currentCity = useSelector((state) => state.general.currentLocation)
-    const route = usePathname().split('/');
+    const route = usePathname().split("/").filter(Boolean);
     const activeRoute = route[route.length - 1];
     const categories = useSelector((state) => state.general.categories)
 
-    const [showAll, setShowAll] = useState(false); // State to toggle category visibility
-    const [faqToggle, setFaqToggle] = useState({}); // State to toggle FAQ visibility
+    const [showAll, setShowAll] = useState(false);
+    const [faqToggle, setFaqToggle] = useState({});
 
     const toggleShowAll = () => {
         setShowAll((prev) => !prev);
@@ -36,7 +36,7 @@ function CarsPageLayout() {
                 <div className="customContainer">
                     <BreadCrumb
                         city={currentCity}
-                        route={activeRoute}
+                        route={route}
                     />
                     <div className="productGrid">
                         <div className="filteredCars">
@@ -82,10 +82,10 @@ function CarsPageLayout() {
                                     question: 'How to get the Best Deal',
                                     answers: [
                                         'Compare offers from over 50 rent a car companies in the UAE, filter based on your location, budget and requirement.',
-                                        'Narrow down with your preferences: саr sрeсs, mileаgе limit, insurаnсе included, cаr features and so on.',
-                                        'Short-list the bеst offеrs by the саr rеntаl рrоvidеr and соntact them directly via phone, WhatsApp or request a cаll back.',
-                                        'Be sure to ask for the actual pictures and specs of the саr before finalizing the deal.',
-                                        'Bооk directly, frее of markups!',
+                                        'Narrow down with your preferences: car specs, mileage limit, insurance included, car features and so on.',
+                                        'Short-list the best offers by the car rental provider and contact them directly via phone, WhatsApp or request a call back.',
+                                        'Be sure to ask for the actual pictures and specs of the car before finalizing the deal.',
+                                        'Book directly, free of markups!',
                                     ],
                                 },
                                 {

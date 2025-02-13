@@ -2,13 +2,22 @@ import React, { useState } from "react";
 import "./VendorHeader.scss";
 import Link from "next/link";
 import Image from "next/image";
-import { VendorServices } from "@/Services/VendorServices/VendorServices";
+import { useMutation } from "@tanstack/react-query";
+import { vendorLogout } from "@/Services/VendorServices/VendorServices";
 
 function VendorHeader() {
-  const handleLogout = () => {
-    VendorServices.logout();
-  };
   const [isOpen, setIsOpen] = useState(false);
+
+  const logoutMutation = useMutation({
+    mutationFn: vendorLogout,
+    onSuccess: () => {
+      toast.success("Logout Successfully")
+    }
+  })
+
+  const handleLogout = () => {
+    logoutMutation.mutate()
+  }
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);

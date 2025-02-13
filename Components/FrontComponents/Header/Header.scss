@@ -238,7 +238,7 @@
             }
         }
         .backDropBg {
-            @apply fixed inset-0 w-screen h-screen bg-[#00000075] z-0 transition-all duration-300 opacity-0 invisible;
+            @apply fixed inset-0 w-screen h-screen bg-[#0009] backdrop-blur-sm z-0 transition-all duration-300 opacity-0 invisible;
         }
 
         .menuCont {

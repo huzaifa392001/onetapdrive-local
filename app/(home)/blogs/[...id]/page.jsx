@@ -1,8 +1,9 @@
+import SingleBlogLayout from '@/Components/FrontComponents/SingleBlogLayout/SingleBlogLayout'
 import React from 'react'
 
 function page() {
   return (
-    <div>page</div>
+    <SingleBlogLayout />
   )
 }
 

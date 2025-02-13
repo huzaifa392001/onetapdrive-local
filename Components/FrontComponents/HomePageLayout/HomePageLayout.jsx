@@ -19,7 +19,7 @@ function HomePageLayout() {
             heading: "For UAE Residents",
             list: ["Driving License", "Emirates ID"],
             note: "(Residential Visa may be acceptable)",
-            img: "/images/uae-resident.png",
+            img: "/images/uae-resident.webp",
         },
         {
             heading: "For Tourists visiting the UAE",
@@ -29,7 +29,7 @@ function HomePageLayout() {
                 "Home Country Driving License",
                 "International Driving Permit (IDP)",
             ],
-            img: "/images/uae-tourist.png",
+            img: "/images/uae-tourist.webp",
         },
     ];
 
@@ -121,7 +121,7 @@ function HomePageLayout() {
 
             <section
                 className="docSec"
-                style={{ backgroundImage: "url('/images/doc-sec-bg.jpg')" }}
+                style={{ backgroundImage: "url('/images/doc-sec-bg.webp')" }}
             >
                 <div className="customContainer">
                     <div className="contentWrapper">
@@ -177,7 +177,7 @@ function HomePageLayout() {
                 </div>
             </section>
             <CarsSection secHeading={"Car with driver"} data={productsData} />
-            <section className="benefitSec" style={{ backgroundImage: "url('/images/benefits-sec-bg.jfif')" }}>
+            <section className="benefitSec" style={{ backgroundImage: "url('/images/benefits-sec-bg.webp')" }}>
                 <div className="customContainer">
                     <SecHeading
                         heading={"Top Benefits to Rent a Car with Driver in Dubai"}
@@ -205,7 +205,7 @@ function HomePageLayout() {
                     <div className="bestCarRow">
                         <figure>
                             <Image
-                                src={"/images/rent-vector.jfif"}
+                                src={"/images/rent-vector.webp"}
                                 width={550}
                                 height={350}
                                 alt="Car Image"

@@ -248,9 +248,99 @@
                 @apply mt-1;
             }
         }
-        
+
         & + p {
             @apply mt-3;
+        }
+    }
+}
+
+.filtersCont {
+    @apply fixed inset-0 h-screen w-full z-50 select-none pointer-events-none;
+
+    &.active {
+        @apply pointer-events-auto select-auto;
+        .backDrop {
+            @apply opacity-100 visible;
+        }
+        .filterMenu {
+            @apply right-0;
+        }
+    }
+
+    .backDrop {
+        @apply fixed inset-0 bg-[#0005] backdrop-blur-sm opacity-0 invisible transition-all duration-300 ease-linear;
+    }
+    .filterMenu {
+        @apply bg-[var(--white)] absolute right-[-450px] top-0 max-w-[450px] w-full h-screen overflow-y-auto transition-all duration-300 ease-linear flex flex-col;
+
+        .filterHeader {
+            @apply flex items-center justify-between pl-3 py-0 border-b-2;
+            h3 {
+                @apply text-[1.25rem] font-semibold;
+            }
+            button {
+                @apply w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full my-2 mr-2 transition-all duration-200;
+
+                &:hover {
+                    @apply bg-[var(--theme-color)];
+                }
+            }
+        }
+        .filterBody {
+            @apply pb-28;
+            ul {
+                li {
+                    @apply border-b py-4;
+
+                    > button {
+                        @apply text-[14px] px-4 w-full flex items-center justify-between capitalize cursor-pointer transition-all duration-300;
+
+                        span {
+                            @apply transition-all duration-200;
+                        }
+
+                        &:hover {
+                            span {
+                                @apply text-[var(--theme-color)];
+                            }
+                        }
+                    }
+                    .menuContainer {
+                        @apply w-full pt-2 px-4;
+                        .inputCont {
+                            label {
+                                @apply text-[12px];
+                            }
+                            input,
+                            select,
+                            textarea {
+                                @apply text-[12px] mt-2;
+                            }
+
+                            & + .inputCont {
+                                @apply mt-5;
+                            }
+
+                            &.checkbox {
+                                span {
+                                    @apply text-[12px];
+                                }
+                            }
+                        }
+
+                        &:has(> .checkbox) {
+                            @apply mt-3;
+                        }
+                    }
+                }
+            }
+        }
+        .filterFooter {
+            @apply fixed w-full px-4 py-6 border-t bottom-0 bg-[var(--white)] max-w-[450px];
+            .btnCont {
+                @apply flex items-center justify-between gap-x-2;
+            }
         }
     }
 }

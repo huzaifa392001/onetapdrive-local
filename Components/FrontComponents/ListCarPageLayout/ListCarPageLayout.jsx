@@ -4,7 +4,7 @@ import "./ListCarPageLayout.scss";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import SecHeading from "@/Components/SecHeading/SecHeading";
-
+import { VendorServices } from "@/Services/VendorServices/VendorServices";
 
 function ListCarPageLayout() {
   const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
@@ -46,7 +46,8 @@ function ListCarPageLayout() {
   } = useForm({
     defaultValues, // Passing default values
   });
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data) => {
     console.log("Form data received from React Hook Form: ", data); // Log the raw data object
 
     // Create a FormData object
@@ -64,12 +65,7 @@ function ListCarPageLayout() {
       }
     }
 
-    // Log the contents of FormData
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-
-    console.log("FormData prepared for submission");
+    await VendorServices.signup()
   };
 
   const images = new Array(12).fill(""); // Array with 12 empty elements (you can replace "" with actual image sources if available)

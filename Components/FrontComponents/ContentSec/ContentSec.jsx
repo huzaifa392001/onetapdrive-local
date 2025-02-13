@@ -7,7 +7,7 @@ import Link from 'next/link'
 function ContentSec(props) {
     return (
         <section className={`contentSec ${props?.sectionClass}`}>
-            <div className="customContainer">
+            <div className="largeContainer">
                 {props?.secHeading && <SecHeading className={`mainSecHeading ${props?.secHeadingClass}`} heading={props?.secHeading} />}
                 <div className={`contentRow ${props?.rowClass}`}>
                     <div className={`contentCol ${props?.contentSize}`}>

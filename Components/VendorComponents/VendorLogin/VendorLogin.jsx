@@ -1,21 +1,38 @@
+'use client'
 import React, { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./VendorLogin.scss";
 import Image from "next/image";
 import Link from "next/link";
 import SecHeading from "@/Components/SecHeading/SecHeading";
-import { VendorServices } from "@/Services/VendorServices/VendorServices";
+import { vendorLogin } from "@/Services/VendorServices/VendorServices";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import Spinner from "@/Components/Spinner/Spinner";
 
 function VendorLogin() {
+    const router = useRouter()
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const loginMutation = useMutation({
+        mutationFn: vendorLogin,
+        onSuccess: () => {
+            toast.success('Login Successfully!');
+            router.push("/vendor");
+        },
+        onError: (error) => {
+            toast.error(error.message || "Login failed! Please try again.");
+        }
+    });
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState);
     };
 
-    const onSubmit = (data) => {
-        VendorServices.login(data);
+    const onSubmit = async (data) => {
+        loginMutation.mutate(data);
     };
 
     return (
@@ -49,7 +66,7 @@ function VendorLogin() {
                                     <input
                                         type="email"
                                         placeholder="Email Address"
-                                        {...register("email", {
+                                        {...register("identifier", {
                                             required: "Email is required",
                                             pattern: {
                                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
@@ -87,7 +104,7 @@ function VendorLogin() {
 
                             <div className="btnCont">
                                 <button type="submit" className="themeBtn">
-                                    Sign In
+                                    {loginMutation.isPending ? <Spinner /> : "Sign In"}
                                 </button>
                             </div>
                         </form>

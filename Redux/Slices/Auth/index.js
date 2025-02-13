@@ -5,7 +5,8 @@ const authSlice = createSlice({
     initialState: {
         isVendor: false,
         isAdmin: false,
-        isUser: false
+        isUser: false,
+        accessToken: ''
     },
     reducers: {
         SET_IS_VENDOR(state, action) {
@@ -16,6 +17,9 @@ const authSlice = createSlice({
         },
         SET_IS_USER(state, action) {
             state.isUser = action.payload;
+        },
+        SET_ACCESS_TOKEN(state, action) {
+            state.accessToken = action.payload
         }
     },
 });
@@ -23,7 +27,8 @@ const authSlice = createSlice({
 export const {
     SET_IS_VENDOR,
     SET_IS_ADMIN,
-    SET_IS_USER
+    SET_IS_USER,
+    SET_ACCESS_TOKEN
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,6 +1,6 @@
 .blogsSec {
     .blogsRow {
-        @apply grid grid-cols-3 gap-5;
+        @apply grid sm:grid-cols-2 md:grid-cols-3 gap-5;
     }
 
     .pagination {

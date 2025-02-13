@@ -6,14 +6,17 @@ import { usePathname, useRouter } from 'next/navigation';
 import { store } from '@/Redux/Store';
 import { SET_SEARCH_PARAMS } from '@/Redux/Slices/Search';
 import { useSelector } from 'react-redux';
+import Filter from './Filter/Filter';
 
 function SearchBar({ activeCategory }) {
     const path = usePathname();
+    const currentCategory = useSelector((state) => state?.search?.searchParam?.category);
     const [searchFilters, setSearchFilters] = useState(useSelector((state) => state.search.searchParam));
-    const [activeDropdown, setActiveDropdown] = useState(''); // Manage active dropdown
-    const [selectedCategory, setSelectedCategory] = useState(activeCategory || ''); // Default category
-    const [selectedSort, setSelectedSort] = useState('Daily: High to Low'); // Default sort option
-    const [priceFilter, setPriceFilter] = useState({ min: '', max: '' }); // Manage price inputs
+    const [activeDropdown, setActiveDropdown] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState();
+    const [selectedSort, setSelectedSort] = useState('Daily: High to Low');
+    const [priceFilter, setPriceFilter] = useState({ min: '', max: '' });
+    const [isFilterVisible, setIsFilterVisible] = useState(false)
     const Router = useRouter();
 
     const handleDropdownToggle = (type) => {
@@ -26,10 +29,6 @@ function SearchBar({ activeCategory }) {
 
     const handleReset = () => {
         setPriceFilter({ min: '', max: '' }); // Reset inputs
-    };
-
-    const handleDone = () => {
-        setActiveDropdown(''); // Close dropdown on 'Done'
     };
 
     const handleCategorySelect = (category) => {
@@ -85,10 +84,17 @@ function SearchBar({ activeCategory }) {
 
     useEffect(() => {
         // Initialize Redux state with props if available
-        if (activeCategory) {
-            setSelectedCategory(activeCategory);
+        if (currentCategory) {
+            setSelectedCategory(currentCategory);
         }
-    }, [activeCategory]);
+        else {
+            setSelectedCategory("all");
+        }
+    }, [currentCategory]);
+
+    const handleFilter = (filterState) => {
+        setIsFilterVisible(filterState);
+    };
 
     return (
         <>
@@ -193,7 +199,7 @@ function SearchBar({ activeCategory }) {
                                 </div>
                             ))}
                         <div className="dropdownCont">
-                            <button className="placeholder">
+                            <button onClick={() => handleFilter(true)} className="placeholder">
                                 <i className="far fa-sliders-h" />
                                 <div>
                                     <span>More Filters</span>
@@ -203,9 +209,7 @@ function SearchBar({ activeCategory }) {
                     </div>
                 </div>
             </div>
-            <div className="filtersCont">
-                
-            </div>
+            <Filter handle={handleFilter} filterState={isFilterVisible} />
         </>
     );
 }

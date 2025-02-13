@@ -284,7 +284,7 @@ function Header() {
                                     </button>
                                     <ul>
                                         <li>
-                                            <Link href={"/cars/all"}>Home</Link>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/all"}>Home</Link>
                                         </li>
                                         <li>
                                             <button onClick={() => handleMouseEnter('cat')}>
@@ -299,19 +299,19 @@ function Header() {
                                             </button>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/all"}>Cars with Driver</Link>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/all"}>Cars with Driver</Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/all"}>About Us</Link>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/about-us/"}>About Us</Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/all"}>Blogs</Link>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/blogs"}>Blogs</Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/all"}>FAQs</Link>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/faqs"}>FAQs</Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/all"}>Contact Us</Link>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/contact"}>Contact Us</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -325,32 +325,32 @@ function Header() {
                                     <h4>Popular Categories</h4>
                                     <ul>
                                         <li>
-                                            <Link href={"/cars/economy"}>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/economy"}>
                                                 <span>Economy Cars</span>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/luxury"}>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/luxury"}>
                                                 <span>Luxury Car Rental Dubai</span>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/sports"}>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/sports"}>
                                                 <span>Sports Car Rental Dubai</span>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/special"}>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/special"}>
                                                 <span>Special Edition</span>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/muscle"}>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/muscle"}>
                                                 <span>Muscle Cars</span>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/electric"}>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/cars/electric"}>
                                                 <span>Electric Cars</span>
                                             </Link>
                                         </li>
@@ -358,12 +358,12 @@ function Header() {
                                     <h4>Others</h4>
                                     <ul>
                                         <li>
-                                            <Link href={"/list-your-rental-cars"}>
+                                            <Link onClick={() => handleMouseLeave('')} href={"/list-your-rental-cars"}>
                                                 <span>List your cars</span>
                                             </Link>
                                         </li>
                                         {/* <li>
-                                    <Link href={""}>
+                                    <Link onClick={() => handleMouseLeave('')} href={""}>
                                         <span>Directory</span>
                                     </Link>
                                 </li> */}
@@ -372,7 +372,7 @@ function Header() {
                                     <ul>
                                         {categoryData?.map((item, index) => (
                                             <li key={index}>
-                                                <Link href={`/cars/${item?.url}`}>{item?.name}</Link>
+                                                <Link onClick={() => handleMouseLeave('')} href={`/cars/${item?.url}`}>{item?.name}</Link>
                                             </li>
                                         ))}
                                     </ul>
@@ -388,7 +388,7 @@ function Header() {
                                         {brandsData &&
                                             brandsData.map((brand, index) => (
                                                 <li key={index}>
-                                                    <Link href={`/cars/${brand?.url}`} className="brandCont">
+                                                    <Link onClick={() => handleMouseLeave('')} href={`/cars/${brand?.url}`} className="brandCont">
                                                         <h6>{brand?.name}</h6>
                                                         <figure>
                                                             <Image src={brand?.img} width={50} height={50} alt="" />

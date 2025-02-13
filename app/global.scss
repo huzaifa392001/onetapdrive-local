@@ -47,6 +47,7 @@ html {
 
     body {
         overflow-x: clip;
+        background-color: var(--background);
     }
 }
 
@@ -73,7 +74,7 @@ input[type="number"] {
 }
 
 .themeBtn {
-    @apply block text-center bg-[var(--theme-color)] py-2 px-4 rounded-lg text-[var(--secondary-color)] font-semibold text-[14px] border border-transparent transition-all duration-200 capitalize;
+    @apply relative block text-center bg-[var(--theme-color)] py-2 px-4 rounded-lg text-[var(--secondary-color)] font-semibold text-[14px] border border-transparent transition-all duration-200 capitalize;
 
     &:hover {
         @apply bg-[var(--secondary-color)] text-[var(--theme-color)] border-[var(--theme-color)];
@@ -121,6 +122,10 @@ section {
 
 .customContainer {
     @apply container mx-auto md:px-0 px-2;
+}
+
+.largeContainer {
+    @apply lg:container lg:px-0 px-2;
 }
 
 .swiper {
@@ -329,6 +334,40 @@ section {
             }
         }
     }
+
+    &.checkbox {
+        .checkBoxCont {
+            @apply flex items-center gap-x-3;
+            .checkBoxHolder {
+                @apply relative w-5 h-5 border border-[var(--grey-color)] rounded-sm m-0;
+
+                input {
+                    @apply absolute inset-0 w-full h-full opacity-0 m-0 p-0 min-h-max transition-all duration-200;
+                    margin: 0 !important;
+                }
+
+                i {
+                    @apply absolute inset-0 w-full h-full flex items-center justify-center opacity-0 text-[var(--white)] transition-all duration-200;
+                }
+
+                &:has(input:checked) {
+                    @apply border-[var(--theme-color)] bg-[var(--theme-color)];
+                    i {
+                        @apply opacity-100;
+                    }
+                }
+            }
+            label:not(.checkBoxHolder) {
+                @apply m-0 cursor-pointer;
+            }
+
+            &:hover {
+                label {
+                    @apply border-[var(--theme-color)] text-[var(--theme-color)];
+                }
+            }
+        }
+    }
 }
 
 .errorText {
@@ -337,4 +376,18 @@ section {
     font-size: 13px !important;
     font-weight: normal !important;
     text-align: left !important;
+}
+
+.priceInputRow {
+    @apply flex items-center gap-x-3;
+
+    .inputCont {
+        @apply w-full;
+        & + .inputCont {
+            margin: 0 !important;
+        }
+        .themeBtn {
+            @apply w-auto text-[12px] rounded-full px-4 py-1 ml-auto mt-1;
+        }
+    }
 }

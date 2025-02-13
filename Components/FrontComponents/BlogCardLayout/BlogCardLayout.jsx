@@ -7,8 +7,13 @@ import { formatDate } from '@/Utils/Utils'
 function BlogCardLayout(props) {
     const updatedDate = formatDate(props?.item?.date_posted)
     return (
-        <Link className='blogCard' href={""}>
+        <Link className='blogCard' href={`/blogs/${props?.item?.slug}`}>
             <figure>
+                <div class="imgTags">
+                    <span class="tag">
+                        Technology
+                    </span>
+                </div>
                 <Image src={'/images/cars/6.webp'} fill alt={`${props?.item?.title}`} />
             </figure>
             <div className="content">

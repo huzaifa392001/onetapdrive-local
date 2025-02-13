@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 
 function BreadCrumb(props) {
-
+    const states = props?.route;
     return (
         <div className="breadCrumb">
             <ul>
@@ -18,7 +18,25 @@ function BreadCrumb(props) {
                         </Link>
                     </li>
                 )}
-                {props?.brand && (
+                {states?.map((state, index) => {
+                    const isLast = index === states.length - 1;
+                    return (
+                        <>
+                            {isLast ? (
+                                <li key={index}>
+                                    {state}
+                                </li>
+                            ) : (
+                                <li key={index}>
+                                    <Link href={`/cars/${state}`}>
+                                        {state}
+                                    </Link>
+                                </li>
+                            )}
+                        </>
+                    );
+                })}
+                {/* {props?.brand && (
                     <li>
                         <Link href={`/cars/${props?.brand}`}>
                             {props?.brand}
@@ -34,7 +52,7 @@ function BreadCrumb(props) {
                     <li>
                         {props?.model.replace("-", " ")}
                     </li>
-                )}
+                )} */}
             </ul>
         </div>
     )

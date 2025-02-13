@@ -28,9 +28,9 @@ function page() {
 
     return (
         <>
-            <section className='mainSec'>
+            <section className='aboutMainSec'>
                 <figure>
-                    <Image quality={100} loading='eager' src={'/images/hero_bg.jpg'} alt='Home Banner' width={1922} height={762} />
+                    <Image quality={100} loading='eager' src={'/images/hero_bg.jpg'} alt='Home Banner'fill />
                 </figure>
                 <div className="content">
                     <h1>
@@ -57,7 +57,7 @@ function page() {
                 imgSize={'col5'}
             />
             <section className="apartSec">
-                <div className="customContainer">
+                <div className="largeContainer">
                     <SecHeading className={"center"} heading={"What Makes Us Unique"} />
                     <div className="apartRow">
                         {apartData.map((item, index) => (
@@ -133,7 +133,7 @@ function page() {
                 sectionClass={"topAligned"}
             />
             <section className="howToSec">
-                <div className="customContainer">
+                <div className="largeContainer">
                     <div className="howToRow">
                         <div className="content">
                             <SecHeading heading="How to Rent a car" />

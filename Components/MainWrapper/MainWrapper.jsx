@@ -1,16 +1,22 @@
 "use client"
 import { persistor, store } from '@/Redux/Store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
 
 function MainWrapper({ children }) {
+    const queryClient = new QueryClient()
     return (
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                {children}
-            </PersistGate>
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    {children}
+                </PersistGate>
+            </Provider>
+            <ToastContainer />
+        </QueryClientProvider>
     );
 }
 

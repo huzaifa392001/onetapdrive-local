@@ -1,13 +1,13 @@
-.mainSec {
+.aboutMainSec {
     @apply h-full w-full p-0;
     figure {
-        @apply relative h-[762px] w-screen overflow-hidden;
+        @apply min-h-[450px] md:min-h-[768px] relative w-screen overflow-hidden h-full;
         img {
             @apply w-full h-full object-cover;
         }
     }
     .content {
-        @apply absolute top-[20%] -translate-y-[20%] left-2/4 -translate-x-2/4 text-center;
+        @apply absolute top-[20%] -translate-y-[20%] left-2/4 -translate-x-2/4 text-center md:w-auto w-full md:px-0 sm:px-14 px-2;
 
         h1 {
             @apply text-[4rem] font-black mb-6 leading-none text-[var(--text-color)] capitalize;
@@ -27,18 +27,22 @@
         @apply mb-20;
     }
     .apartRow {
-        @apply grid grid-cols-3 gap-x-8;
+        @apply grid grid-cols-12 gap-8;
         .apartBox {
-            @apply border border-[#0005] rounded-2xl p-4 text-center relative;
+            @apply col-span-12 sm:col-span-6 md:col-span-4 border border-[#0005] rounded-2xl p-4 text-center relative;
+
+            &:last-child {
+                @apply col-span-12 sm:col-span-12 md:col-span-4;
+            }
 
             figure {
                 img,
                 i {
-                    @apply mx-auto w-[80px] h-[80px] object-contain -translate-y-[50px] transition-all duration-500 text-[4rem];
+                    @apply relative mx-auto w-[80px] h-[80px] object-contain md:-translate-y-[50px] transition-all duration-500 text-[4rem];
                 }
             }
             .content {
-                @apply -translate-y-[50px] transition-all duration-500 px-4 mt-4;
+                @apply relative md:-translate-y-[50px] transition-all duration-500 px-4 mt-4;
 
                 h4 {
                     @apply text-[1.75rem] font-bold text-[var(--theme-color)] mb-2;
@@ -50,7 +54,7 @@
 
             &::before {
                 content: "";
-                @apply absolute w-[120px] h-[120px] bg-[#ddd] rounded-[100%] top-2/4 -translate-y-2/4 left-2/4 transition-all duration-500;
+                @apply absolute w-[120px] h-[120px] bg-[#ddd] rounded-[100%] top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 md:-translate-x-0 transition-all duration-500;
             }
 
             &:hover {
@@ -70,10 +74,10 @@
 
 .howToSec {
     .howToRow {
-        @apply grid grid-cols-2;
+        @apply grid md:grid-cols-2;
         .content {
             ul {
-                @apply mt-6;
+                @apply ml-2 md:ml-0 mt-6;
                 li {
                     @apply block border-0 relative pb-8 pl-4;
 
@@ -100,9 +104,19 @@
     .imagesGrid {
         @apply flex items-center justify-center flex-wrap gap-5;
         figure {
-            @apply relative h-[400px] w-full rounded-[20px] overflow-hidden;
+            @apply relative h-[200px] md:h-[250px] lg:h-[400px] w-full rounded-[20px] overflow-hidden;
             flex: 0 1 30%;
             width: 20%;
+
+            @include respond-to($breakpoint-md) {
+                flex: 0 1 48%;
+                width: 48%;
+            }
+
+            @include respond-to($breakpoint-sm) {
+                flex: 0 1 95%;
+                width: 95%;
+            }
             img {
                 @apply w-full h-full object-cover;
             }

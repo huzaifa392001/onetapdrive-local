@@ -1,18 +1,20 @@
-'use client';
-import React, { memo, useEffect, useState, Suspense, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import Lenis from 'lenis';
-import './HomeWrapper.scss';
-import Loading from '@/app/(home)/loading';
-import { GeneralServices } from '@/Services/FrontServices/GeneralServices';
-import LoginModal from '../LoginModal/LoginModal';
+"use client";
+import React, { memo, useEffect, useState, Suspense, useCallback } from "react";
+import { usePathname } from "next/navigation"; // ✅ Correct hook
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import Lenis from "lenis";
+import "./HomeWrapper.scss";
+import Loading from "@/app/(home)/loading";
+import { GeneralServices } from "@/Services/FrontServices/GeneralServices";
+import LoginModal from "../LoginModal/LoginModal";
 
 function HomeWrapper({ children }) {
     const [lenis, setLenis] = useState(null);
-    const [isLenisEnabled, setIsLenisEnabled] = useState(window.innerWidth >= 768); // Initial check
-    const router = useRouter();
+    const [isLenisEnabled, setIsLenisEnabled] = useState(
+        typeof window !== "undefined" && window.innerWidth >= 768
+    ); // ✅ Fix: Ensure window is defined
+    const pathname = usePathname(); // ✅ Detect route changes
 
     const lenisSetup = useCallback(() => {
         if (isLenisEnabled) {
@@ -32,9 +34,9 @@ function HomeWrapper({ children }) {
             requestAnimationFrame(raf);
 
             document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-                anchor.addEventListener('click', function (e) {
+                anchor.addEventListener("click", function (e) {
                     e.preventDefault();
-                    lenisInstance.scrollTo(this.getAttribute('href'));
+                    lenisInstance.scrollTo(this.getAttribute("href"));
                 });
             });
         }
@@ -43,6 +45,8 @@ function HomeWrapper({ children }) {
     const scrollToTop = useCallback(() => {
         if (lenis) {
             lenis.scrollTo(0);
+        } else {
+            window.scrollTo({ top: 0, behavior: "smooth" }); // ✅ Fallback for non-Lenis users
         }
     }, [lenis]);
 
@@ -52,14 +56,14 @@ function HomeWrapper({ children }) {
             setIsLenisEnabled(isEnabled);
 
             if (!isEnabled && lenis) {
-                lenis.destroy(); // Disable Lenis on smaller screens
+                lenis.destroy();
                 setLenis(null);
             }
         };
 
-        handleResize(); // Initial check
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, [lenis]);
 
     useEffect(() => {
@@ -71,15 +75,8 @@ function HomeWrapper({ children }) {
     }, [lenisSetup, isLenisEnabled]);
 
     useEffect(() => {
-        const handleRouteChangeComplete = () => {
-            scrollToTop();
-        };
-        router.events?.on?.('routeChangeComplete', handleRouteChangeComplete);
-
-        return () => {
-            router.events?.off?.('routeChangeComplete', handleRouteChangeComplete);
-        };
-    }, [router, scrollToTop]);
+        scrollToTop(); // ✅ Scroll to top on route change
+    }, [pathname, scrollToTop]);
 
     return (
         <main className="wrapper">

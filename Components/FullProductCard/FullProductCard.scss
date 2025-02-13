@@ -1,13 +1,20 @@
 .fullProductCard {
-    @apply bg-[var(--white)] shadow-md rounded-2xl overflow-hidden border transition-all duration-300 flex cursor-pointer;
+    @apply bg-[var(--white)] shadow-md rounded-2xl overflow-hidden border transition-all duration-300 flex md:flex-row flex-col cursor-pointer;
 
     a {
         @apply block;
     }
 
     .productImg {
-        @apply relative overflow-hidden min-h-[300px] w-[400px] h-full;
+        @apply relative overflow-hidden xl:h-[400px] xl:w-[400px] lg:h-[300px] lg:w-[300px] md:h-[250px] md:w-[250px] h-[250px] w-full aspect-square;
         flex: 0 1 400px;
+        @include respond-to($breakpoint-lg) {
+            flex: 0 1 300px;
+        }
+        @include respond-to($breakpoint-md) {
+            flex: 0 1 250px;
+        }
+
         .imgTag {
             @apply absolute top-2 left-2 z-10 text-[12px] font-semibold text-[var(--black)] bg-[var(--white)] rounded-[30px] px-3 py-1 flex items-center gap-x-1;
             i {
@@ -64,32 +71,57 @@
         width: calc(100% - 400px);
         flex: 0 1 calc(100% - 400px);
 
+        @include respond-to($breakpoint-xl) {
+            width: calc(100% - 300px);
+            flex: 0 1 calc(100% - 300px);
+        }
+
+        @include respond-to($breakpoint-lg) {
+            width: calc(100% - 250px);
+            flex: 0 1 calc(100% - 250px);
+        }
+
+        @include respond-to($breakpoint-md) {
+            width: 100%;
+            flex: 0 1 100%;
+        }
+
         h3 {
             @apply text-[var(--black)] font-bold text-[1.25rem];
             span {
-                @apply text-[14px] ml-1 text-[var(--grey-color)] font-normal;
+                @apply text-[14px] md:ml-1 text-[var(--grey-color)] font-normal md:inline block line-clamp-2;
             }
         }
 
         .carInfo {
-            @apply flex pt-3 border-t;
+            @apply md:flex pt-3 border-t;
 
             .leftArea {
                 width: 65%;
                 flex: 0 1 65%;
-                @apply pr-2 flex flex-col justify-between h-full;
+                @apply md:pr-2 flex flex-col justify-between md:h-full;
+
+                @include respond-to($breakpoint-md) {
+                    width: 100%;
+                    flex: 0 1 100%;
+                }
             }
 
             .rightArea {
                 width: 35%;
                 flex: 0 1 35%;
-                @apply pl-2 flex flex-col justify-between h-full;
+                @apply md:pl-2 flex flex-col justify-between md:h-full;
+
+                @include respond-to($breakpoint-md) {
+                    width: 100%;
+                    flex: 0 1 100%;
+                }
             }
 
             .tags {
                 @apply flex items-center gap-x-2 mb-4;
                 .tag {
-                    @apply flex items-center justify-center px-3 border rounded-[30px] gap-x-1 border-[var(--grey-color)] text-[13px];
+                    @apply flex items-center justify-center px-3 border rounded-[30px] gap-x-1 border-[var(--grey-color)] text-[13px] md:w-fit w-full;
                 }
             }
 
@@ -105,7 +137,7 @@
             }
 
             .priceCont {
-                @apply flex flex-col justify-between gap-y-4;
+                @apply flex md:flex-col justify-between gap-y-4 md:mt-0 mt-3;
                 .priceBox {
                     @apply flex flex-col justify-end;
 
@@ -135,6 +167,10 @@
 
                 svg {
                     @apply transition-all duration-300;
+                }
+
+                span {
+                    @apply md:block hidden;
                 }
 
                 &.call {

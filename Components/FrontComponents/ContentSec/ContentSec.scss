@@ -55,11 +55,11 @@
             }
 
             &.col7 {
-                @apply col-span-12 md:col-span-7;
+                @apply col-span-12 lg:col-span-7 md:order-2;
             }
 
             &.col5 {
-                @apply col-span-12 md:col-span-5;
+                @apply col-span-12 lg:col-span-5 md:order-1;
             }
         }
 

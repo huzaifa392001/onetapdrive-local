@@ -64,7 +64,7 @@
         }
 
         .tags {
-            @apply flex items-center gap-x-2 mt-3;
+            @apply flex items-center gap-x-2 mt-3 md:flex-wrap md:gap-y-2;
             .tag {
                 @apply flex items-center justify-center px-3 border rounded-md gap-x-1 border-[var(--grey-color)] text-[13px];
             }
@@ -89,7 +89,7 @@
                     }
 
                     & + p {
-                        @apply flex items-center gap-x-2 text-[14px] text-[var(--grey-color)] font-normal;
+                        @apply flex items-center gap-x-2 lg:text-[14px] md:text-[12px] text-[var(--grey-color)] font-normal;
                         i {
                         }
                     }
@@ -98,7 +98,7 @@
         }
 
         .brandCont {
-            @apply flex items-center gap-x-2 justify-between;
+            @apply flex items-center gap-x-2 justify-between md:flex-col lg:flex-row lg:gap-y-0 md:gap-y-2;
             .brand {
                 @apply lg:w-[100px] lg:h-[60px] w-[50px] h-[60px] overflow-hidden relative;
                 img {
@@ -110,7 +110,7 @@
                     li {
                         @apply flex items-center gap-x-2;
                         p {
-                            @apply text-[13px] font-normal capitalize;
+                            @apply lg:text-[13px] lg:text-[12px] font-normal capitalize;
                         }
                     }
                 }

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import carFeatures from "@/DummyData/CarFeatures.json"
 import carColors from "@/DummyData/CarColors.json"
 
-function Filter({ handle, filterState }) {
+function Filter({ handle, filterState, brands, setFilters }) {
     const [filterActive, setFilterActive] = useState(false);
     const [activeAccordions, setActiveAccordions] = useState([]);
+    const [localBrands, setLocalBrands] = useState()
 
     useEffect(() => {
         setFilterActive(filterState);
@@ -14,6 +15,10 @@ function Filter({ handle, filterState }) {
         setFilterActive(state);
         handle(state);
     };
+
+    useEffect(() => {
+        setLocalBrands(brands)
+    }, [brands])
 
     useEffect(() => {
         const html = document?.querySelector("html");
@@ -194,6 +199,11 @@ function Filter({ handle, filterState }) {
 
                                         <select name="" id="">
                                             <option selected disabled value="">Select Car Brand</option>
+                                            {localBrands?.map((item, index) => (
+                                                <option key={index}>
+                                                    {item?.name}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
                                     <div class="inputCont">

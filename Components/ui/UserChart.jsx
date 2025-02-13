@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/Components/ui/card";
+} from "@/components/ui/card";
 
 const chartData = [
   { month: "January", vendors: 186, users: 80 },

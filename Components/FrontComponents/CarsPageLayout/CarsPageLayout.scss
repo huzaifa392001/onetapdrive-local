@@ -1,10 +1,7 @@
 .searchBar {
-    @apply bg-[var(--secondary-color)] p-4 sticky top-0 z-20;
-    .customContainer {
-        @apply flex gap-x-4;
-    }
+    @apply bg-[var(--secondary-color)] xl:px-4 py-4 sticky top-0 z-20;
     .searchCont {
-        @apply max-w-[500px] h-[50px] w-full flex items-center border rounded-lg px-3 gap-x-2;
+        @apply max-w-[100%] md:max-w-[500px] h-[50px] w-full flex items-center border rounded-lg px-3 gap-x-2;
         input {
             @apply h-full w-full outline-none border-none bg-transparent text-[var(--white)];
 
@@ -14,10 +11,11 @@
         }
     }
     .sortBar {
-        @apply flex gap-x-4 ms-auto relative;
+        @apply flex gap-x-4 ms-auto relative w-full md:w-2/4;
         .dropdownCont {
+            @apply w-full;
             .placeholder {
-                @apply border border-[var(--white)] text-[var(--white)] flex items-center h-full px-3 rounded-lg gap-x-6 text-[14px] capitalize text-left;
+                @apply w-full border border-[var(--white)] text-[var(--white)] flex items-center h-full md:py-0 py-2 px-3 rounded-lg gap-x-4 text-[14px] capitalize text-left justify-center;
                 .min {
                     @apply text-[12px] block;
                 }
@@ -104,15 +102,43 @@
                     }
                 }
             }
+
+            &:first-child {
+                @apply sm:flex hidden;
+            }
         }
     }
 }
 
 .addGrid {
     @apply grid grid-cols-3 gap-6 border-b pb-2;
+
     .adImg {
         img {
             @apply w-full aspect-video h-[150px] object-contain;
+        }
+    }
+
+    @media (max-width: 768px) {
+        @apply hidden;
+    }
+}
+
+.addSlider {
+    @apply border-b pb-2;
+
+    .swiper {
+        @apply w-full;
+        padding-bottom: 0 !important;
+
+        .swiper-slide {
+            @apply w-full;
+
+            .adImg {
+                img {
+                    @apply w-full aspect-video h-[150px] object-contain;
+                }
+            }
         }
     }
 }
@@ -120,9 +146,9 @@
 .listingSec {
     @apply pt-0;
     .productGrid {
-        @apply grid grid-cols-10 gap-6;
+        @apply grid grid-cols-12 gap-6;
         .filteredCars {
-            @apply col-span-8;
+            @apply md:col-span-9 col-span-12;
             .pageHeader {
                 @apply border-b pb-2 pt-8 mb-2;
                 h1 {
@@ -134,7 +160,7 @@
             }
         }
         .sider {
-            @apply col-span-2 h-full pt-10;
+            @apply col-span-3 h-full pt-10 md:block hidden;
 
             .categoryDrawer {
                 @apply bg-[var(--white)] shadow-md border rounded-[10px] py-6 px-3;
@@ -341,6 +367,27 @@
             .btnCont {
                 @apply flex items-center justify-between gap-x-2;
             }
+        }
+    }
+}
+
+.carsContainer {
+    @apply xl:container mx-auto xl:px-0 px-3;
+}
+
+body:has(.carsContainer) {
+    header {
+        .headerContainer {
+            @apply xl:container mx-auto xl:px-0 px-3;
+
+            @include respond-to($breakpoint-xl) {
+                max-width: 100% !important;
+            }
+        }
+    }
+    .searchBar {
+        .searchContainer {
+            @apply xl:container mx-auto xl:px-0 px-3 flex items-center md:justify-between gap-4 md:flex-row flex-col justify-center;
         }
     }
 }

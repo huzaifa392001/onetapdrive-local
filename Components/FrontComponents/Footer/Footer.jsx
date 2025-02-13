@@ -136,7 +136,7 @@ function Footer() {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="footerCol col3">
+                            <div className="footerCol col3 footerAddress">
                                 <h4>Address</h4>
                                 <ul className="footerList full">
                                     <li>

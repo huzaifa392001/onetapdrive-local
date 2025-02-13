@@ -3,7 +3,7 @@
     header {
         @apply bg-[var(--secondary-color)] relative z-20;
         .headerContainer {
-            @apply container;
+            @apply container md:px-2 lg:px-0;
         }
         .topHeader {
             @apply bg-[var(--black)] py-2;

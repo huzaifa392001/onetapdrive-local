@@ -6,12 +6,12 @@
     }
 
     .catRow {
-        @apply grid grid-cols-3 md:grid-cols-4 gap-y-4 pt-6;
+        @apply grid grid-cols-2 md:grid-cols-4 gap-y-4 pt-6;
         .catCol {
             @apply px-2;
 
             &.cwd {
-                @apply col-span-3 md:col-span-1;
+                @apply col-span-2 md:col-span-1;
             }
         }
     }

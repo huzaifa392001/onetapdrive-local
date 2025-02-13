@@ -27,13 +27,16 @@
             @apply grid gap-x-6 grid-cols-12;
             .footerCol {
                 &.col2 {
-                    @apply col-span-2;
+                    @apply lg:col-span-2 md:col-span-3;
                 }
                 &.col3 {
-                    @apply col-span-3;
+                    @apply lg:col-span-3 md:col-span-4;
                 }
                 &.col4 {
-                    @apply col-span-4;
+                    @apply lg:col-span-4 md:col-span-5;
+                }
+                &.footerAddress{
+                    @apply lg:col-span-3 col-span-12 lg:mt-0 mt-2;
                 }
                 .logoCont {
                     figure {

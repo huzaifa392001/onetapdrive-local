@@ -7,6 +7,7 @@ import { store } from '@/Redux/Store';
 import { SET_SEARCH_PARAMS } from '@/Redux/Slices/Search';
 import { useSelector } from 'react-redux';
 import Filter from './Filter/Filter';
+import brandsData from "@/DummyData/brands.json"
 
 function SearchBar({ activeCategory }) {
     const path = usePathname();
@@ -99,7 +100,7 @@ function SearchBar({ activeCategory }) {
     return (
         <>
             <div className="searchBar">
-                <div className="customContainer">
+                <div className="searchContainer">
                     <div className="searchCont">
                         <input placeholder="Search" type="text" />
                         <button className="themeBtn">Search</button>
@@ -209,7 +210,7 @@ function SearchBar({ activeCategory }) {
                     </div>
                 </div>
             </div>
-            <Filter handle={handleFilter} filterState={isFilterVisible} />
+            <Filter setFilters={setSearchFilters} brands={brandsData} handle={handleFilter} filterState={isFilterVisible} />
         </>
     );
 }

@@ -118,10 +118,14 @@ input[type="number"] {
 section {
     position: relative;
     @apply lg:py-20 py-10;
+
+    &.Toastify {
+        padding: 0 !important;
+    }
 }
 
 .customContainer {
-    @apply container mx-auto md:px-0 px-2;
+    @apply container mx-auto md:px-1 sm:px-0 px-2;
 }
 
 .largeContainer {
@@ -240,7 +244,7 @@ section {
     input:not([type="file"]),
     textarea,
     select {
-        @apply w-full rounded-md border min-h-10 block px-2 outline-none;
+        @apply w-full rounded-md border min-h-10 block px-2 outline-none text-[#000];
 
         &::placeholder {
         }

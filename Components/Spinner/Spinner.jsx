@@ -2,10 +2,10 @@ import React from 'react'
 import "./Spinner.scss"
 
 function Spinner() {
-    return <span class="loader" >
-        <div class="dot" />
-        <div class="dot" />
-        <div class="dot" />
+    return <span className="loader" >
+        <div className="dot" />
+        <div className="dot" />
+        <div className="dot" />
     </span>
 }
 

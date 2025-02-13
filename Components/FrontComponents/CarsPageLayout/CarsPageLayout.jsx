@@ -33,7 +33,7 @@ function CarsPageLayout() {
         <>
             <section className="listingSec">
                 <SearchBar activeCategory={activeRoute} />
-                <div className="customContainer">
+                <div className="carsContainer">
                     <BreadCrumb
                         city={currentCity}
                         route={route}
@@ -136,7 +136,7 @@ function CarsPageLayout() {
                 </div>
             </section>
             <section className="contentSec">
-                <div className="customContainer">
+                <div className="carsContainer">
                     <div className="content">
                         <SecHeading heading={"Lorem Ipsum"} />
                         <p>

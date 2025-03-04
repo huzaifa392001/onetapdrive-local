@@ -49,7 +49,7 @@ export const GeneralServices = {
 
             store.dispatch(SET_CURRENT_LOCATION(city));
         } catch (e) {
-            console.error("Error fetching location:", e);
+            console.error ("Error fetching location:", e);
         }
     },
 };

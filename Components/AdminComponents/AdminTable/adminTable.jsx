@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import Image from "next/image";
@@ -7,6 +7,8 @@ import "./adminTable.scss";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { formatDate } from "@/Utils/Utils";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -15,35 +17,43 @@ const AdminDataTable = (props) => {
   const showAction = props?.showAction || false;
   const pathName = usePathname();
 
+  const deleteMutation = useMutation({
+    mutationFn: props?.deleteFunc,
+    onSuccess: () => {
+      toast.success("Deleted Successfully!");
+      props.refetchData(); // ✅ Ensure refetchData is called correctly
+    },
+    onError: (e) => {
+      toast.error(`An error Occurred: ${e}`);
+    },
+  });
+
+  const handleDelete = async (id) => {
+    deleteMutation.mutate(id)
+  };
+
   const [colDefs, setColDefs] = useState([]);
 
   useEffect(() => {
     if (rowData.length > 0) {
       const dynamicFields = Object.keys(rowData[0])
-        .filter((key) => key !== "slug" && key !== "id") // Exclude "slug" and "id"
+        .filter((key) => key !== "slug" && key !== "id")
         .map((key) => {
-          if (key === "images") {
+          if (key === "image") {
             return {
               field: key,
-              flex: 2,
+              flex: 1,
               headerName: "Images",
               cellRenderer: (params) => {
-                const imagePaths = Array.isArray(params.value)
-                  ? params.value
-                  : params.value.split(",");
-
                 return (
                   <div className="tableImgCol">
-                    {imagePaths.map((src, index) => (
-                      <Image
-                        key={index}
-                        src={src.trim()}
-                        alt={`Image ${index + 1}`}
-                        width={100}
-                        height={50}
-                        style={{ objectFit: "cover", borderRadius: "5px" }}
-                      />
-                    ))}
+                    <Image
+                      src={params.value || "/images/noImage.jpg"}
+                      alt={`Category Image`}
+                      width={100}
+                      height={50}
+                      style={{ objectFit: "cover", borderRadius: "5px" }}
+                    />
                   </div>
                 );
               },
@@ -85,11 +95,13 @@ const AdminDataTable = (props) => {
           };
         });
 
+      // ✅ Fix: `actionColumn` ko function call kar ke pass karein
       const actionColumn = {
         headerName: "Action",
         flex: 1,
         cellRenderer: (params) => {
           const slug = params.data?.slug;
+          const id = params.data?.id;
 
           if (!showAction) {
             return null;
@@ -97,15 +109,10 @@ const AdminDataTable = (props) => {
 
           return (
             <div className="btnCont">
-              <Link className="themeBtn" href={`${pathName}/edit/${slug}`}>
+              <Link className="themeBtn" href={`${pathName}/edit/${params.data?.id}`}>
                 Edit
               </Link>
-              <button
-                className="themeBtn"
-                onClick={() =>
-                  alert(`Delete clicked for row: ${params.node.rowIndex + 1}`)
-                }
-              >
+              <button className="themeBtn" onClick={() => handleDelete(params.data?.id)}>
                 Delete
               </button>
             </div>
@@ -113,23 +120,13 @@ const AdminDataTable = (props) => {
         },
       };
 
-        setColDefs([
-          {
-            headerName: "Sr No.",
-            valueGetter: "node.rowIndex + 1",
-          },
-          ...dynamicFields,
-          ...(showAction ? [actionColumn] : []),
-        ]);
+      setColDefs([
+        { headerName: "Sr No.", valueGetter: "node.rowIndex + 1" },
+        ...dynamicFields,
+        ...(showAction ? [actionColumn] : []), // ✅ Fix: `actionColumn` ko array mein call karein
+      ]);
     }
-  }, [rowData, showAction, pathName]); // Added pathName to the dependency array
-
-  const defaultColDef = useMemo(() => {
-    return {
-      floatingFilter: false,
-      resizable: false,
-    };
-  }, []);
+  }, [rowData, showAction, pathName]); // ✅ Fix: `onDelete` ko dependencies mein add karein
 
   return (
     <div className="dataTable ag-theme-alpine">
@@ -139,7 +136,7 @@ const AdminDataTable = (props) => {
         domLayout="normal" // Allows horizontal scrolling
         columnDefs={colDefs}
         pagination={true}
-        defaultColDef={defaultColDef}
+        defaultColDef={setColDefs}
         paginationPageSize={10}
         headerHeight={80}
         suppressCellFocus={true}

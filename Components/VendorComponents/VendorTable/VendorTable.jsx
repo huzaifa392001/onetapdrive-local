@@ -28,7 +28,7 @@ function VendorTable(props) {
                     if (key === "images") {
                         return {
                             field: key,
-                            flex: 2,
+                            flex: 1, // Use flex to allow this column to grow
                             headerName: "Images",
                             cellRenderer: (params) => {
                                 const imagePaths = Array.isArray(params.value)
@@ -42,7 +42,7 @@ function VendorTable(props) {
                                                 key={index}
                                                 src={src.trim()}
                                                 alt={`Image ${index + 1}`}
-                                                width={150}
+                                                width={100} // Reduced width for better fit
                                                 height={50}
                                                 style={{ objectFit: "cover", borderRadius: "5px" }}
                                             />
@@ -59,7 +59,7 @@ function VendorTable(props) {
                             headerName: formattedKey.charAt(0).toUpperCase() + formattedKey.slice(1),
                             sortable: true,
                             filter: true,
-                            flex: 1,
+                            flex: 1, // Use flex to allow this column to grow
                             cellRenderer: (params) => (
                                 <h6 className="title">{params.value}</h6>
                             ),
@@ -73,6 +73,7 @@ function VendorTable(props) {
                             headerName: formattedKey.charAt(0).toUpperCase() + formattedKey.slice(1),
                             filter: 'agDateColumnFilter', // Enable date filter
                             sortable: true,
+                            width: 150, // Fixed width for date column
                             filterParams: {
                                 comparator: (filterDate, cellValue) => {
                                     console.log("Comparing dates: filterDate =", filterDate, "cellValue =", cellValue);
@@ -92,6 +93,7 @@ function VendorTable(props) {
                     return {
                         field: key,
                         headerName: formattedKey.charAt(0).toUpperCase() + formattedKey.slice(1),
+                        flex: 1, // Use flex to allow this column to grow
                     };
                 });
 
@@ -102,7 +104,7 @@ function VendorTable(props) {
                 ? [
                     {
                         headerName: "Action",
-                        flex: 1,
+                        width: 200, // Fixed width for action column
                         cellRenderer: (params) => {
                             const id = params.data?.id;
                             const currentStatus = statusMap[id] || params.data.status || 'inactive';
@@ -128,14 +130,15 @@ function VendorTable(props) {
                                         onClick={toggleStatus}
                                     >
                                         <i className={`fas fa-power-off ${currentStatus === 'active' ? 'active' : 'inactive'}`} />
-                                        {currentStatus === 'active' ? 'Active' : 'Inactive'}
+                                        {/* {currentStatus === 'active' ? 'Active' : 'Inactive'} */}
                                     </button>
                                     <button className="themeBtn iconBtn">
                                         <i className="fas fa-rocket" />
-                                        Boost
+                                        {/* Boost */}
                                     </button>
                                     <Link className="themeBtn" href={`${pathName}/edit/${id}`}>
-                                        Edit
+                                    <i className="fas fa-pencil" />
+                                        {/* Edit */}
                                     </Link>
                                 </div>
                             );
@@ -148,6 +151,7 @@ function VendorTable(props) {
                 {
                     headerName: "Sr No.",
                     valueGetter: "node.rowIndex + 1",
+                    width: 100, // Fixed width for serial number column
                 },
                 ...dynamicFields,
                 ...actionColumn, // Conditionally add the "Action" column
@@ -156,13 +160,11 @@ function VendorTable(props) {
         }
     }, [rowData, statusMap, localRowData]);
 
-
-
-
     const defaultColDef = useMemo(() => {
         return {
             floatingFilter: false,
-            resizable: false,
+            resizable: true, // Allow columns to be resized
+            suppressSizeToFit: false, // Ensure columns fit the screen
         };
     }, []);
 
@@ -170,13 +172,15 @@ function VendorTable(props) {
         <div className="dataTable ag-theme-alpine">
             <AgGridReact
                 rowData={localRowData} // Use localRowData instead of props.rowData
-                rowHeight={120}
+                rowHeight={80} // Reduced row height for better fit
                 columnDefs={colDefs}
                 pagination={true}
                 defaultColDef={defaultColDef}
                 paginationPageSize={10}
-                headerHeight={80}
+                headerHeight={50} // Reduced header height
                 suppressCellFocus={true}
+                domLayout="autoHeight" // Adjust table height dynamically
+                suppressHorizontalScroll={false} // Enable horizontal scrolling
             />
         </div>
     );

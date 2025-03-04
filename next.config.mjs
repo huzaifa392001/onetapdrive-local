@@ -9,6 +9,22 @@ const nextConfig = {
             @use "@/public/css/fonts.scss" as *;
         `,
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+                port: '5000',
+                pathname: '/static/images/**',
+            },
+            {
+                protocol: 'http',
+                hostname: '35.154.240.227',
+                port: '5000',
+                pathname: '/static/images/**',
+            },
+        ],
+    },
 };
 
 export default nextConfig;

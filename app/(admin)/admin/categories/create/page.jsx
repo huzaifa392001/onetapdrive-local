@@ -1,49 +1,121 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import SecHeading from '@/Components/SecHeading/SecHeading';
 import { pageName } from '@/Utils/Utils';
-import Image from 'next/image';
+import FormGroup from '@/Components/FormGroup';
+import { useMutation } from '@tanstack/react-query';
+import { addCategory } from '@/Services/AdminServices/AdminCategories';
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { requiredValidation } from '@/Utils/validation';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 function Page() {
-    // State variables for form fields
-    const [categoryTitle, setCategoryTitle] = useState('');
-    const [categoryImage, setCategoryImage] = useState(null);
-    const [pageHeading, setPageHeading] = useState('');
-    const [pageDescription, setPageDescription] = useState('');
-
-    // Handler for file input
-    const handleFileChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            setCategoryImage(URL.createObjectURL(e.target.files[0]));
-        }
+    const router = useRouter()
+    const init = {
+        categoryImage: null, // ✅ File field should be null initially
+        categoryTitle: "",
     };
+
+
+    const schema = yup
+        .object({
+            categoryImage: yup.string().required(requiredValidation),
+            categoryTitle: yup.string().required(requiredValidation),
+        })
+        .required();
+
+    const categoryMutation = useMutation({
+        mutationFn: addCategory,
+        onSuccess: (res) => {
+            toast.success(res?.message)
+            // router.back()
+        },
+        onError: (error) => {
+            toast.error(`Failed to add category: ${error}`);
+        }
+    })
+
+    const fields = [
+        {
+            type: "file",
+            name: "categoryImage",
+            multiple: false,
+            accept: {
+                "image/jpeg": [],
+                "image/png": [],
+                "image/webp": [],
+            },
+            uploadLabel: "Upload Category Image",
+        },
+        {
+            type: "input",
+            name: "categoryTitle",
+            placeholder: "Enter Category Title",
+            label: "Category Title",
+            inputtype: "text",
+            req: true,
+        },
+    ];
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors, isValid },
+        watch,
+    } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: init,
+    });
+
+    const formValues = watch();
+
+    useEffect(() => {
+        if (formValues.profilePic && formValues.profilePic instanceof File) {
+            const updatedFormData = new FormData();
+            updatedFormData.append("profile_picture", formValues.profilePic);
+            setFormData(updatedFormData);
+        }
+    }, [formValues.profilePic]); // 👈 Only update when profilePic changes
+
+    const onSubmit = async (data) => {
+        const formData = new FormData();
+
+        formData.append("name", data.categoryTitle);
+        formData.append("titles", data.categoryTitle);
+        formData.append("description", data.categoryTitle);
+
+        if (data.categoryImage && data.categoryImage[0]) {
+            formData.append("categoryImage", data.categoryImage[0]); // File object pass karna zaroori hai
+        } else {
+            toast.error("Category Image is required");
+            return;
+        }
+
+        console.log("Submitting Data: ", Object.fromEntries(formData.entries()));
+        categoryMutation.mutate(formData);
+    };
+
+
 
     return (
         <>
-            <div className="headingCont">
-                <SecHeading heading={`${pageName()}`} />
-            </div>
             <div className="formWrapper">
-                <form>
-                    <div className="inputCont">
-                        <label htmlFor="categoryTitle">Category Title</label>
-                        <input
-                            id="categoryTitle"
-                            placeholder="Enter Category Title"
-                            type="text"
-                            value={categoryTitle}
-                            onChange={(e) => setCategoryTitle(e.target.value)}
-                        />
+                <form className='formContainer' onSubmit={handleSubmit(onSubmit)}>
+                    <div className="headingCont">
+                        <SecHeading heading={`${pageName()}`} />
                     </div>
-                    <div className="inputCont">
-                        <label htmlFor="categoryImage">Category Image</label>
-                        <input
-                            id="categoryImage"
-                            type="file"
-                            onChange={handleFileChange}
+                    {fields?.map((item, i) => (
+                        <FormGroup
+                            key={i}
+                            item={item}
+                            control={control}
+                            errors={errors}
                         />
-                    </div>
-                    <div className="divider" />
+                    ))}
+                    {/* <div className="divider" />
                     <h3>Category Page</h3>
                     <div className="inputCont">
                         <label htmlFor="pageHeading">Page Heading</label>
@@ -51,33 +123,29 @@ function Page() {
                             id="pageHeading"
                             placeholder="Enter Category's Page heading"
                             type="text"
-                            value={pageHeading}
-                            onChange={(e) => setPageHeading(e.target.value)}
+                            {...register('pageHeading', { required: true })}
                         />
+                        {errors.pageHeading && <span>This field is required</span>}
                     </div>
                     <div className="inputCont">
                         <label htmlFor="pageDescription">Page Description</label>
                         <textarea
                             id="pageDescription"
                             placeholder="Enter Category's Page Description"
-                            type="text"
-                            value={pageDescription}
-                            onChange={(e) => setPageDescription(e.target.value)}
+                            {...register('pageDescription', { required: true })}
                             rows={7}
                         />
-                    </div>
+                        {errors.pageDescription && <span>This field is required</span>}
+                    </div> */}
                     <div className="inputCont btnCont">
-                        <button type="button" className="themeBtn altr">
-                            Update
-                        </button>
-                        <button type="button" className="themeBtn altr">
-                            Delete
+                        <button disabled={!isValid} type="submit" className={`themeBtn ${!isValid ? "disabled" : ""}`}>
+                            Submit
                         </button>
                     </div>
                 </form>
-                <div className="preview">
-                    <h2>Preview</h2>
+                {/* <div className="preview">
                     <div className="previewBox">
+                        <h2 className='heading'>Preview</h2>
                         <figure>
                             {categoryImage ? (
                                 <Image src={categoryImage} alt="Category Image" fill />
@@ -85,13 +153,13 @@ function Page() {
                                 <p>No Image Selected</p>
                             )}
                         </figure>
-                        <h2>{categoryTitle || 'Category Name'}</h2>
+                        <h2>{watch('categoryTitle') || 'Category Name'}</h2>
                         <div className="headingLayout">
-                            <h3>{pageHeading || "Category's Page Heading"}</h3>
-                            <p>{pageDescription || "Category's Page Description"}</p>
+                            <h3>{watch('pageHeading') || "Category's Page Heading"}</h3>
+                            <p>{watch('pageDescription') || "Category's Page Description"}</p>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     );

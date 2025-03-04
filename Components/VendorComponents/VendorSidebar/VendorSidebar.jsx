@@ -5,6 +5,7 @@ import "./VendorSidebar.scss";
 
 function VendorSidebar() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const pathName = usePathname();
 
   useEffect(() => {
@@ -13,6 +14,10 @@ function VendorSidebar() {
 
   const toggleSubMenu = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
   };
 
   // Define sidebar menu items with dividers
@@ -35,61 +40,69 @@ function VendorSidebar() {
   ];
 
   return (
-    <div className="vendorSidebar">
-      <ul>
-        {menuItems.map((item, index) => {
-          if (item.type === "divider") {
-            return (
-              <li key={index} className="divider">
-                <h4>{item?.label}</h4>
+    <>
+      {/* Toggle Button for Mobile/Tablet */}
+      <button className="vendor-sidebar-toggle" onClick={toggleSidebar}>
+        <i className={`fas ${isSidebarVisible ? "fa-times" : "fa-bars"}`}></i>
+      </button>
+
+      {/* Sidebar */}
+      <div className={`vendor-sidebar ${isSidebarVisible ? "visible" : ""}`}>
+        <ul>
+          {menuItems.map((item, index) => {
+            if (item.type === "divider") {
+              return (
+                <li key={index} className="divider">
+                  <h4>{item?.label}</h4>
+                </li>
+              );
+            }
+
+            const vendorPath = pathName;
+            let isActive = "";
+            if (!item?.subMenu) {
+              isActive = item.path === vendorPath;
+            }
+
+            return item.isExpandable ? (
+              <li key={index} onClick={toggleSubMenu}>
+                <span>
+                  <i className={`${item.icon}`}></i>
+                  <span>{item.label}</span>
+                  <i className={`fal fa-angle-${isExpanded ? "down" : "right"}`} />
+                </span>
+                {isExpanded && (
+                  <div className="vendor-sub-menu expanded">
+                    <ul>
+                      {item.subMenu.map((subItem, subIndex) => {
+                        const isSubItemActive = subItem.path === vendorPath;
+                        return (
+                          <li key={subIndex}>
+                            <Link
+                              className={isSubItemActive ? "active" : ""}
+                              href={subItem.path}>
+                              <i className={subItem.icon}></i>
+                              <span>{subItem.label}</span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </li>
+            ) : (
+              <li key={index}>
+                <Link href={item.path} className={isActive ? "active" : ""}>
+                  <i className={`${item.icon} fa-lg`}></i>
+                  <span>{item.label}</span>
+                </Link>
               </li>
             );
-          }
-
-          const vendorPath = pathName;
-          let isActive = "";
-          if (!item?.subMenu) {
-            isActive = item.path === vendorPath;
-          }
-
-          return item.isExpandable ? (
-            <li key={index} onClick={toggleSubMenu}>
-              <span>
-                <i className={`${item.icon}`}></i>
-                <span>{item.label}</span>
-                <i className={`fal fa-angle-${isExpanded ? "down" : "right"}`} />
-              </span>
-              {isExpanded && (
-                <div className="vendorSubMenu expanded">
-                  <ul>
-                    {item.subMenu.map((subItem, subIndex) => {
-                      const isSubItemActive = subItem.path === vendorPath;
-                      return (
-                        <li key={subIndex}>
-                          <Link
-                            className={isSubItemActive ? "active" : ""}
-                            href={subItem.path}>
-                            <i className={subItem.icon}></i>
-                            <span>{subItem.label}</span>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-            </li>
-          ) : (
-            <li key={index}>
-              <Link href={item.path} className={isActive ? "active" : ""}>
-                <i className={`${item.icon} fa-lg`}></i>
-                <span>{item.label}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+          })}
+        </ul>
+      </div>
+    </>
   );
 }
 

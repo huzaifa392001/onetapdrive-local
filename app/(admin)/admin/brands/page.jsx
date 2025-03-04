@@ -1,41 +1,40 @@
-"use client";
-
-import React, { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+"use client"
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import AdminDataTable from "@/Components/AdminComponents/AdminTable/adminTable";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import API from "@/Services/Constants/api";
-import { getBrands } from "@/Services/AdminServices/AdminServices";
+import { deleteBrand, getBrands } from "@/Services/AdminServices/AdminBrand";
 
-const fetchBrands = async () => {
-    return await API
-        .get("/brands")
-        .then((res) => {
-            return res.data?.data || [];
-        });
-}
 
 function Page() {
-    const { data, error, isLoading } = useQuery({
+    const queryClient = useQueryClient();
+
+    const { data: brands } = useQuery({
         queryKey: ["brands"],
         queryFn: getBrands,
     });
 
-    if (isLoading) return <p>Loading brands...</p>;
-    if (error) return <p>Error fetching brands: {error.message}</p>;
+    // Function to refetch brands after delete
+    const refetchBrands = () => {
+        queryClient.invalidateQueries(["brands"]);
+    };
+
 
     return (
         <>
             <div className="headingCont">
-                <SecHeading heading="Brands" />
-                <Link href="brands/create" className="themeBtn">
+                <SecHeading heading="brands" />
+                <Link href="brands/create" className='themeBtn'>
                     Create
                 </Link>
             </div>
-            <AdminDataTable data={data} showAction={true} />
+
+            <AdminDataTable
+                refetchData={refetchBrands}
+                deleteFunc={deleteBrand}
+                data={brands?.data}
+                showAction={true}
+            />
         </>
     );
 }

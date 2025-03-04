@@ -1,5 +1,5 @@
 .imgCont {
-    @apply grid grid-cols-2 col-span-2 gap-8;
+    @apply grid grid-cols-1 md:grid-cols-2 col-span-2 gap-8;
 
     .imgPreview {
         .noImgFound {

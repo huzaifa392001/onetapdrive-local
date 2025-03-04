@@ -1,81 +1,67 @@
 .tradeLicense {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem;
-  
-    .formContainer {
-      display: flex;
-      width: 100%;
-      gap: 2rem;
-  
-      .uploadSection {
-        flex: 1;
-  
-        label {
-          font-size: 1rem;
-          font-weight: bold;
-          color: #333;
-          margin-bottom: 0.5rem;
-          display: block;
-        }
-  
-        .uploadLicenseDiv {
-          @apply flex items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100;
-          margin-bottom: 1rem;
-  
-          .dropzoneLabel {
-            @apply flex flex-col items-center justify-center w-full h-full;
-  
-            .uploadIcon {
-              @apply text-4xl mb-4 text-gray-500;
-            }
-  
-            .uploadText {
-              @apply mb-2 text-sm text-gray-600;
-            }
-  
-            .fileSizeText {
-              @apply text-xs text-gray-500;
-            }
-          }
-        }
+  @apply flex justify-center items-start p-8;
+
+  .formContainer {
+    @apply flex w-full gap-8 flex-col-reverse md:flex-row flex-wrap;
+
+    .uploadSection {
+      @apply flex-auto lg:flex-1;
+
+      label {
+        @apply text-base font-bold text-gray-700 mb-2 block;
       }
-  
-      .previewSection {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-  
-        .previewHeading {
-          font-size: 1.2rem;
-          font-weight: bold;
-          color: #333;
-        }
-  
-        .filePreview {
-          @apply flex justify-center items-center border border-gray-300 rounded-lg p-4;
-  
-          .previewImage {
-            @apply w-full h-auto max-h-96 object-contain;
+
+      .uploadLicenseDiv {
+        @apply flex items-center justify-center w-full h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 mb-4;
+
+        .dropzoneLabel {
+          @apply flex flex-col items-center justify-center w-full h-full;
+
+          .uploadIcon {
+            @apply text-4xl mb-4 text-gray-500;
           }
-  
-          .pdfPreview {
-            @apply w-full min-h-96 border rounded-md;
+
+          .uploadText {
+            @apply mb-2 text-sm text-gray-600;
           }
-  
-          .fileLink {
-            @apply text-blue-500 underline;
-          }
-  
-          .noFileText {
-            @apply text-gray-500 text-sm;
+
+          .fileSizeText {
+            @apply text-xs text-gray-500;
           }
         }
-      }
-      .expiryDateInput{
-        @apply my-4 text-gray-500 dark:text-gray-400 block w-full rounded-md border-solid border-2 border-gray-300 px-3 py-2;
       }
     }
+
+    .previewSection {
+      @apply flex-1 flex flex-col;
+
+      .previewHeading {
+        @apply text-xl font-bold text-gray-700;
+      }
+
+      .filePreview {
+        @apply flex justify-center items-center border border-gray-300 rounded-lg p-4;
+
+        .previewImage {
+          @apply w-full h-auto max-h-96 object-contain;
+        }
+
+        .pdfPreview {
+          @apply w-full min-h-96 border rounded-md;
+        }
+
+        .fileLink {
+          @apply text-blue-500 underline;
+        }
+
+        .noFileText {
+          @apply text-gray-500 text-sm;
+        }
+      }
+    }
+
+    .expiryDateInput {
+      @apply my-4 text-gray-500 dark:text-gray-400 block w-full rounded-md border-2 border-gray-300 px-3 py-2;
+    }
   }
-  
+}

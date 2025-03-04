@@ -1,7 +1,8 @@
+import { store } from "@/Redux/Store";
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://0d77-39-38-112-90.ngrok-free.app",
+    baseURL: "http://35.154.240.227:5000",
     headers: {
         "Content-Type": "application/json",
     },
@@ -9,7 +10,7 @@ const API = axios.create({
 
 API.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("accessToken");
+        const token = store.getState().auth.accessToken;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

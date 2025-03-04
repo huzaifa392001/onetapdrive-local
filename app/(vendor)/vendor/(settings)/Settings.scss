@@ -14,7 +14,10 @@
         }
 
         .formGrid {
-            @apply grid grid-cols-2 gap-x-10 gap-y-8;
+            @apply md:grid md:grid-cols-2 gap-x-10 gap-y-8;
+            .inputCont{
+                @apply mb-5 md:mb-0;
+            }
         }
 
         .btnCont {

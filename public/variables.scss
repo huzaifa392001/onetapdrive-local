@@ -6,9 +6,37 @@ $breakpoint-md: 767.98px;
 $breakpoint-sm: 575.98px;
 $breakpoint-xs: 320.98px;
 
+// Transitions
+$transition: all 0.25s ease-in-out;
+$transitionSlow: all 0.5s ease-in-out;
+
+:root {
+  // primary colors
+  --theme-color-100: #ffd972;
+  --theme-color-200: #ffd35c;
+  --theme-color-300: #ffcd46;
+  --theme-color-400: #ffc425;
+  --theme-color-500: #ffba00;
+  --theme-color-600: #f9a80c;
+  --theme-color-700: #e79801;
+  --theme-color-800: #db9000;
+  --theme-color-900: #db9000;
+
+  // secondary colors
+  --secondary-color-100: #9eb4cc;
+  --secondary-color-200: #829dbb;
+  --secondary-color-300: #6291c9;
+  --secondary-color-400: #366996;
+  --secondary-color-500: #1f487e;
+  --secondary-color-600: #0a3e82;
+  --secondary-color-700: #002f6c;
+  --secondary-color-800: #0c294f;
+  --secondary-color-900: #05603a;
+}
+
 :root {
   --background: #fafafa;
-  --theme-color: #ffba00;
+  --theme-color: var(--theme-color-500);
   --secondary-color: #212121;
   --text-color: #444444;
   --white: #ffffff;
@@ -16,6 +44,7 @@ $breakpoint-xs: 320.98px;
   --grey-color: #757575;
   --vendor-bg: #343a40;
   --doc-card-bg: #8b8b8b;
+  --danger-color: #ff3b30;
 }
 
 .dark:root {
@@ -29,3 +58,4 @@ $breakpoint-xs: 320.98px;
     @content;
   }
 }
+@import "./css/form.scss";

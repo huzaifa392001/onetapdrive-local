@@ -1,3 +1,5 @@
+"use client"
+
 import React, { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./AdminLogin.scss";
@@ -6,17 +8,57 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Spinner from "@/Components/Spinner/Spinner";
-import { useSelector } from "react-redux";
+import * as yup from "yup";
 import { login } from "@/Services/AuthService/AuthService";
+import FormGroup from "@/Components/FormGroup";
+import { requiredValidation } from "@/Utils/validation";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 function AdminLogin() {
     const router = useRouter();
-    const [showPassword, setShowPassword] = useState(false);
+
+    const init = {
+        email: "",
+        password: ""
+    }
+
+    const fields = [
+        {
+            type: "input",
+            name: "email",
+            placeholder: "Enter your Email Address",
+            label: "Email Address",
+            inputtype: "email",
+            req: true,
+            colWidth: "col_md_6",
+        },
+        {
+            type: "input",
+            name: "password",
+            placeholder: "Enter your password",
+            label: "Password",
+            inputtype: "password",
+            req: true,
+            eye: true,
+        },
+    ];
+
+    const schema = yup
+        .object({
+            email: yup.string().email().required(requiredValidation),
+            password: yup.string().required(requiredValidation),
+        })
+        .required();
+
     const {
-        register,
+        control,
         handleSubmit,
-        formState: { errors },
-    } = useForm();
+        formState: { errors, isValid },
+        watch,
+    } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: init,
+    });
 
     const loginMutation = useMutation({
         mutationFn: login,
@@ -29,12 +71,13 @@ function AdminLogin() {
         },
     });
 
-    const togglePasswordVisibility = () => {
-        setShowPassword((prevState) => !prevState);
-    };
 
-    const onSubmit = async (data) => {
-        loginMutation.mutate(data);
+    const onSubmit = async (val) => {
+        const body = {
+            identifier: val?.email,
+            password: val?.password
+        }
+        loginMutation.mutate(body)
     };
 
     return (
@@ -53,76 +96,16 @@ function AdminLogin() {
                 </div>
 
                 <form id="loginForm" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="inputCont">
-                        <div
-                            className={
-                                errors.email
-                                    ? "inputWrap errorInput"
-                                    : "inputWrap"
-                            }
-                        >
-                            <input
-                                type="email"
-                                placeholder="Email Address"
-                                {...register("identifier", {
-                                    required: "Email is required",
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                        message: "Invalid email address",
-                                    },
-                                })}
-                            />
-                            <i className="fas fa-envelope" />
-                        </div>
-                        {errors.email && (
-                            <p className="errorText">{errors.email.message}</p>
-                        )}
-                    </div>
-
-                    <div className="inputCont">
-                        <div
-                            className={
-                                errors.password
-                                    ? "inputWrap errorInput"
-                                    : "inputWrap"
-                            }
-                        >
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Password"
-                                {...register("password", {
-                                    required: "Password is required",
-                                    minLength: {
-                                        value: 6,
-                                        message:
-                                            "Password must be at least 6 characters",
-                                    },
-                                })}
-                            />
-                            <i className="fas fa-lock" />
-                            <button
-                                type="button"
-                                className="showPassBtn"
-                                onClick={togglePasswordVisibility}
-                            >
-                                <i
-                                    className={
-                                        showPassword
-                                            ? "fas fa-eye-slash"
-                                            : "fas fa-eye"
-                                    }
-                                />
-                            </button>
-                        </div>
-                        {errors.password && (
-                            <p className="errorText">
-                                {errors.password.message}
-                            </p>
-                        )}
-                    </div>
-
+                    {fields?.map((item, i) => (
+                        <FormGroup
+                            key={i}
+                            item={item}
+                            control={control}
+                            errors={errors}
+                        />
+                    ))}
                     <div className="btnCont">
-                        <button type="submit" className="themeBtn">
+                        <button type="submit" className="themeBtn full">
                             {loginMutation.isPending ? <Spinner /> : "Sign In"}
                         </button>
                     </div>

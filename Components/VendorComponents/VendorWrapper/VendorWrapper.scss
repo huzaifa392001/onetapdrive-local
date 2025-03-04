@@ -8,7 +8,7 @@
     .vendorContentWrap {
         width: calc(100% - 300px);
         flex: 1;
-        @apply p-8 overflow-y-auto;
+        @apply p-8 lg:p-4 xl:p-8 overflow-y-auto;
         height: 100%;
 
         &:has(.settingsSection) {

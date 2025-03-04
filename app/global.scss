@@ -74,10 +74,12 @@ input[type="number"] {
 }
 
 .themeBtn {
-    @apply relative block text-center bg-[var(--theme-color)] py-2 px-4 rounded-lg text-[var(--secondary-color)] font-semibold text-[14px] border border-transparent transition-all duration-200 capitalize;
+    @apply relative block text-center bg-[var(--theme-color-100)] py-2 px-4 rounded-lg text-[var(--black)] font-semibold text-[14px] border border-[var(--theme-color-500)] transition-all duration-200 capitalize select-auto pointer-events-auto;
 
-    &:hover {
-        @apply bg-[var(--secondary-color)] text-[var(--theme-color)] border-[var(--theme-color)];
+    &:not(.disabled) {
+        &:hover {
+            @apply bg-[var(--theme-color-500)] text-[var(--white)];
+        }
     }
 
     &.small {
@@ -112,6 +114,14 @@ input[type="number"] {
 
     &.large {
         @apply py-2 px-12 text-[16px];
+    }
+
+    &.full {
+        @apply w-full;
+    }
+
+    &.disabled {
+        @apply bg-[var(--secondary-color-100)] border-[var(--secondary-color-100)] cursor-not-allowed;
     }
 }
 

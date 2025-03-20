@@ -1,7 +1,7 @@
 import SecHeading from '@/Components/SecHeading/SecHeading'
-import React from 'react'
+import React, { memo } from 'react'
 
-function RentalTerms({ register, errors, edit }) {
+const RentalTerms = memo(function RentalTerms({ register, errors, edit }) {
     return (
         <div className="carRentalTerms">
             <div className="headingCont">
@@ -56,6 +56,6 @@ function RentalTerms({ register, errors, edit }) {
             </div>
         </div>
     )
-}
+})
 
 export default RentalTerms

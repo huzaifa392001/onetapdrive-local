@@ -1,11 +1,13 @@
-import categoriesData from "@/DummyData/Categories.json";
 import { SET_CATEGORIES, SET_CURRENT_LOCATION } from "@/Redux/Slices/General";
 import { store } from "@/Redux/Store";
+import API from "../Constants/api";
 
 export const GeneralServices = {
     setCategories: async () => {
         try {
-            store.dispatch(SET_CATEGORIES(categoriesData));
+            const res = await API.get("/categories");
+            console.log("categories=>", res?.data?.data)
+            store.dispatch(SET_CATEGORIES(res?.data?.data));
         } catch (e) {
             console.error("Error setting categories:", e);
         }
@@ -49,7 +51,7 @@ export const GeneralServices = {
 
             store.dispatch(SET_CURRENT_LOCATION(city));
         } catch (e) {
-            console.error ("Error fetching location:", e);
+            console.error("Error fetching location:", e);
         }
     },
 };

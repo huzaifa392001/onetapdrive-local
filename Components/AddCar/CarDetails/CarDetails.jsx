@@ -1,15 +1,15 @@
 import SecHeading from '@/Components/SecHeading/SecHeading';
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import carData from '@/DummyData/carBrandsModels.json'; // Import carData from JSON
 import carCategories from "@/DummyData/Categories.json"
 
-function CarDetails({ register, watch, setValue, errors, edit }) {
+const CarDetails = memo(function CarDetails({ register, watch, setValue, errors, edit }) {
     const selectedBrand = watch('car_brand');
 
-    const handleBrandChange = (e) => {
+    const handleBrandChange = useCallback((e) => {
         setValue('car_brand', e.target.value); // Update the selected brand
         setValue('car_model', ''); // Reset model field
-    };
+    }, [setValue]);
 
     return (
         <div className="carDetails">
@@ -137,6 +137,6 @@ function CarDetails({ register, watch, setValue, errors, edit }) {
             </div>
         </div>
     );
-}
+});
 
 export default CarDetails;

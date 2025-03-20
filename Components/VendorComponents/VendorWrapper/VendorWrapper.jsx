@@ -7,6 +7,7 @@ import VendorSidebar from "../VendorSidebar/VendorSidebar";
 import "./VendorWrapper.scss";
 
 function VendorWrapper({ children }) {
+
   const isVendor = useSelector((state) => state.auth.isVendor);
   const router = useRouter();
 

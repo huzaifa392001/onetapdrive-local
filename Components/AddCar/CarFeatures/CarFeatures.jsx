@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 import carFeatures from "@/DummyData/CarFeatures.json"
 import SecHeading from '@/Components/SecHeading/SecHeading'
 
-function CarFeatures({ errors, register, edit }) {
+const CarFeatures = memo(function CarFeatures({ errors, register, edit }) {
     const [showAll, setShowAll] = useState(false);
 
-    const handleShowAll = () => {
+    const handleShowAll = useCallback(() => {
         setShowAll((prev) => !prev);
-    };
+    }, []);
 
-    const handleShowAllLi = () => {
+    const handleShowAllLi = useCallback(() => {
         setShowAll(true);
-    };
+    }, []);
     return (
         <div className="carFeatures">
             <div className="headingCont">
@@ -55,6 +55,6 @@ function CarFeatures({ errors, register, edit }) {
             </div>
         </div>
     )
-}
+})
 
 export default CarFeatures

@@ -1,8 +1,8 @@
 import SecHeading from '@/Components/SecHeading/SecHeading'
-import React from 'react'
+import React, { memo } from 'react'
 import carColors from "@/DummyData/CarColors.json"
 
-function CarColors({ register, errors, edit }) {
+const CarColors = memo(function CarColors({ register, errors, edit }) {
     return (
         <div className="carColors">
             <div className="headingCont">
@@ -46,6 +46,6 @@ function CarColors({ register, errors, edit }) {
             </div>
         </div>
     )
-}
+})
 
 export default CarColors

@@ -79,7 +79,7 @@ function Footer() {
                                 List your cars with the UAE&apos;s Biggest Car Rental & Learning
                                 Marketplace Today!
                             </h4>
-                            <button className="themeBtn">Sign up now</button>
+                            <Link href={"/list-your-rental-cars"} className="themeBtn">Sign up now</Link>
                         </div>
                     </div>
                 </div>

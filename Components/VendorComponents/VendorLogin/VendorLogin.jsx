@@ -5,11 +5,13 @@ import "./VendorLogin.scss";
 import Image from "next/image";
 import Link from "next/link";
 import SecHeading from "@/Components/SecHeading/SecHeading";
-import { vendorLogin } from "@/Services/VendorServices/VendorServices";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Spinner from "@/Components/Spinner/Spinner";
+import { login } from "@/Services/AuthService/AuthService";
+import { store } from "@/Redux/Store";
+import { SET_ACCESS_TOKEN, SET_IS_VENDOR, SET_USER_DETAILS } from "@/Redux/Slices/Auth";
 
 function VendorLogin() {
     const router = useRouter()
@@ -17,9 +19,14 @@ function VendorLogin() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const loginMutation = useMutation({
-        mutationFn: vendorLogin,
-        onSuccess: () => {
+        mutationFn: login,
+        onSuccess: (res) => {
+            console.log("res=> ", res)
             toast.success('Login Successfully!');
+            store.dispatch(SET_ACCESS_TOKEN(res?.data?.access_token));
+            store.dispatch(SET_IS_VENDOR(true));
+            store.dispatch(SET_USER_DETAILS(res?.data?.user_details))
+            // TODO: Redirect to vendor dashboard
             router.push("/vendor");
         },
         onError: (error) => {

@@ -3,7 +3,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./AdminLogin.scss";
-import { AdminServices } from "@/Services/AdminServices/AdminServices";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -13,8 +12,10 @@ import { login } from "@/Services/AuthService/AuthService";
 import FormGroup from "@/Components/FormGroup";
 import { requiredValidation } from "@/Utils/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { useSelector } from "react-redux";
 function AdminLogin() {
+    const { isAdmin } = useSelector((state) => state.auth.isAdmin)
+    const [admin, setAdmin] = useState(isAdmin)
     const router = useRouter();
 
     const init = {
@@ -62,7 +63,7 @@ function AdminLogin() {
 
     const loginMutation = useMutation({
         mutationFn: login,
-        onSuccess: () => {
+        onSuccess: (res) => {
             toast.success("Login Successfully!");
             router.push("/admin");
         },
@@ -79,6 +80,17 @@ function AdminLogin() {
         }
         loginMutation.mutate(body)
     };
+
+    useEffect(() => {
+        setAdmin(isAdmin)
+    }, [isAdmin])
+
+    useEffect(() => {
+        console.log("admin=> ", admin)
+        if (admin) {
+            router.push("/admin")
+        }
+    }, [admin])
 
     return (
         <section className="adminLoginSec">

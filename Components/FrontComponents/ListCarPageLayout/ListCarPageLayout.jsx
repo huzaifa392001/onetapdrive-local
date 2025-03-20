@@ -1,72 +1,189 @@
 "use client";
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./ListCarPageLayout.scss";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import SecHeading from "@/Components/SecHeading/SecHeading";
-import { VendorServices } from "@/Services/VendorServices/VendorServices";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@tanstack/react-query";
+import { vendorSignup } from "@/Services/AuthService/AuthService";
+import { toast } from "react-toastify";
 
 function ListCarPageLayout() {
     const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
     const [companyLicensePreview, setCompanyLicensePreview] = useState(null);
-    const handleImageChange = (e, setPreview, fieldName) => {
+    const [companyLogoFile, setCompanyLogoFile] = useState(null);
+    const [companyLicenseFile, setCompanyLicenseFile] = useState(null);
+
+    const handleImageChange = (e, setPreview, setFile, fieldName) => {
         const file = e.target.files[0];
         if (file) {
-
             const blob = new Blob([file], { type: file.type });
             const url = URL.createObjectURL(blob);
-
-
             setPreview(url);
-
-
-            setValue(fieldName, blob, { shouldValidate: true });
+            setFile(file);
+            setValue(fieldName, file);
         }
     };
-    const defaultValues = {
-        name: "",
-        company_name: "",
-        job_title: "",
-        fleet_size: "",
-        contact_no: "",
-        email_address: "",
-        country: "",
-        city: "",
-        company_license_expiry: "",
-        service_type: "",
+
+    const handleDeleteImage = (setPreview, setFile, fieldName) => {
+        setPreview("");
+        setFile(null);
+        setValue(fieldName, null);
     };
+
+    const signupMutation = useMutation({
+        mutationFn: vendorSignup,
+        onSuccess: (data) => {
+            console.log("data=> ", data)
+            toast.success(data?.message);
+            // Reset form
+            reset();
+            setCompanyLogoFile()
+            setCompanyLicenseFile()
+            // Redirect will be handled in the service
+            router.push("/vendor-login");
+        },
+        onError: (error) => {
+            if (error.errors && Array.isArray(error.errors)) {
+                error.errors.forEach((errObj) => {
+                    Object.values(errObj).forEach((errMessage) => {
+                        toast.error(errMessage);
+                    });
+                });
+            } else {
+                toast.error(error.message || "Something went wrong");
+            }
+        }
+    });
+
+    const defaultValues = {
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        whatsappNumber: "",
+        password: "",
+        confirmPassword: "",
+        companyName: "",
+        companyType: "",
+        jobTitle: "",
+        companyLogo: null,
+        companyLicense: null,
+        licenseExpiryDate: "",
+        countryId: "United Arab Emirates",
+        cityId: "",
+    };
+
+    const schema = yup.object().shape({
+        fullName: yup.string().required("Full Name is required"),
+        email: yup.string().email("Invalid email format").required("Email is required"),
+        phoneNumber: yup.string().required("Phone Number is required"),
+        whatsappNumber: yup.string().required("WhatsApp Number is required"),
+        password: yup.string().required("Password is required"),
+        confirmPassword: yup.string()
+            .oneOf([yup.ref('password')], 'Passwords must match')
+            .required("Confirm Password is required"),
+        companyName: yup.string().required("Company Name is required"),
+        companyType: yup.string().required("Company Type is required"),
+        jobTitle: yup.string().required("Job Title is required"),
+        companyLogo: yup.mixed().required("Company Logo is required"),
+        companyLicense: yup.mixed().required("Company License is required"),
+        licenseExpiryDate: yup.string().required("License Expiry Date is required"),
+        countryId: yup.string().required("Country is required"),
+        cityId: yup.string().required("City is required"),
+    });
+
     const {
         register,
         handleSubmit,
         setValue,
-        watch,
-        setError,
-        clearErrors,
         formState: { errors },
+        watch,
+        reset
     } = useForm({
         defaultValues,
+        resolver: yupResolver(schema),
+        mode: "onChange"
     });
+
+    const companyLogo = watch('companyLogo');
+    const companyLicense = watch('companyLicense');
+
+    useEffect(() => {
+        if (companyLogo && companyLogo[0]) {
+            const url = URL.createObjectURL(companyLogo[0]);
+            setCompanyLogoPreview(url);
+        }
+    }, [companyLogo]);
+
+    useEffect(() => {
+        if (companyLicense && companyLicense[0]) {
+            const url = URL.createObjectURL(companyLicense[0]);
+            setCompanyLicensePreview(url);
+        }
+    }, [companyLicense]);
 
     const onSubmit = async (data) => {
         console.log("Form data received from React Hook Form: ", data);
-
+        const firstName = data.fullName.split(' ')[0].toLowerCase();
+        const carTerms = ['driver', 'rider', 'wheels', 'cars', 'auto', 'drive'];
+        const randomCarTerm = carTerms[Math.floor(Math.random() * carTerms.length)];
+        const randomNum = Math.floor(Math.random() * 900) + 100;
+        const username = `${firstName}${randomCarTerm}${randomNum}`;
 
         const formData = new FormData();
+        formData.append("firstName", data.fullName);
+        formData.append("username", username);
+        formData.append("email", data.email);
+        formData.append("phoneNumber", data.phoneNumber);
+        formData.append("password", data.password);
+        formData.append("whatsappNumber", data.whatsappNumber);
+        formData.append("companyName", data.companyName);
+        formData.append("companyType", data.companyType);
+        formData.append("jobTitle", data.jobTitle);
 
-
-        for (const key in data) {
-            if (typeof data[key] === "object" && !Array.isArray(data[key])) {
-
-                for (const nestedKey in data[key]) {
-                    formData.append(`${key}[${nestedKey}]`, data[key][nestedKey]);
-                }
-            } else {
-                formData.append(key, data[key]);
-            }
+        // Handle file objects
+        if (companyLogoFile) {
+            formData.append("companyLogo", companyLogoFile);
         }
+        if (companyLicenseFile) {
+            formData.append("tradeLicense", companyLicenseFile);
+        }
+
+        formData.append("licenseExpiryDate", data.licenseExpiryDate);
+        formData.append("countryId", 1);
+        formData.append("cityId", 2);
+
+        signupMutation.mutate(formData);
     };
 
     const images = new Array(12).fill("");
+
+    // Add this to check if all required fields are filled
+    const isFormValid = () => {
+        const requiredFields = [
+            'fullName',
+            'email',
+            'phoneNumber',
+            'whatsappNumber',
+            'password',
+            'confirmPassword',
+            'companyName',
+            'companyType',
+            'jobTitle',
+            'companyLogo',
+            'companyLicense',
+            'licenseExpiryDate',
+            'countryId',
+            'cityId'
+        ];
+
+        return requiredFields.every(field => {
+            const value = watch(field);
+            return value !== null && value !== undefined && value !== '';
+        });
+    };
 
     return (
         <>
@@ -108,216 +225,192 @@ function ListCarPageLayout() {
                             <form className="listForm" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="contentRow">
                                     <div className="contentCol">
-                                        <div
-                                            className={`inputCont full ${errors?.name ? "error" : ""
-                                                }`}
-                                        >
-                                            <label htmlFor="name">
-                                                Your Name<span className="required">*</span>
+                                        <div className={`inputCont full ${errors?.fullName ? "error" : ""}`}>
+                                            <label htmlFor="fullName">
+                                                Full Name<span className="required">*</span>
                                             </label>
                                             <input
-                                                className={`${errors?.name ? "errorInput" : ""}`}
-                                                {...register("name", {
-                                                    required: "Your name is required.",
-                                                })}
+                                                className={`${errors?.fullName ? "errorInput" : ""}`}
+                                                {...register("fullName")}
                                                 type="text"
-                                                placeholder="Enter Your Name"
-                                                id="name"
+                                                placeholder="Enter Your Full Name"
+                                                id="fullName"
                                             />
-
-                                            {errors?.name ? (
-                                                <p className="errorText">{errors.name.message}</p>
-                                            ) : (
-                                                ""
+                                            {errors?.fullName && (
+                                                <p className="errorText">{errors.fullName.message}</p>
                                             )}
                                         </div>
                                     </div>
                                     <div className="contentCol">
-                                        <div
-                                            className={`inputCont full ${errors?.company_name ? "error" : ""
-                                                }`}
-                                        >
-                                            <label htmlFor="company_name">
-                                                Company Name<span className="required">*</span>
-                                            </label>
-                                            <input
-                                                className={`${errors?.company_name ? "errorInput" : ""
-                                                    }`}
-                                                {...register("company_name", {
-                                                    required: "Company Name is required.",
-                                                })}
-                                                type="text"
-                                                placeholder="Enter Your Company Name"
-                                                id="company_name"
-                                            />
-
-                                            {errors?.company_name ? (
-                                                <p className="errorText">
-                                                    {errors.company_name.message}
-                                                </p>
-                                            ) : (
-                                                ""
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="contentCol">
-                                        <div
-                                            className={`inputCont full ${errors?.job_title ? "error" : ""
-                                                }`}
-                                        >
-                                            <label htmlFor="job_title">
-                                                Job Title<span className="required">*</span>
-                                            </label>
-                                            <input
-                                                className={`${errors?.job_title ? "errorInput" : ""}`}
-                                                {...register("job_title", {
-                                                    required: "Job Title is required.",
-                                                })}
-                                                type="text"
-                                                placeholder="Enter Job Title"
-                                                id="job_title"
-                                            />
-
-                                            {errors?.job_title ? (
-                                                <p className="errorText">{errors.job_title.message}</p>
-                                            ) : (
-                                                ""
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="contentCol">
-                                        <div
-                                            className={`inputCont ${errors?.fleet_size ? "error" : ""
-                                                }`}
-                                        >
-                                            <label htmlFor="fleet_size">
-                                                Fleet Size<span className="required">*</span>
-                                            </label>
-                                            <select
-                                                id="fleet_size"
-                                                {...register("fleet_size", {
-                                                    required: "Fleet Size is required",
-                                                })}
-                                            >
-                                                <option value="" disabled>
-                                                    Select Fleet Size
-                                                </option>
-                                                <option value="5-10 cars">5-10 cars</option>
-                                                <option value="Upto to 50 cars">Upto to 50 cars</option>
-                                                <option value="Upto to 100 cars">
-                                                    Upto to 100 cars
-                                                </option>
-                                                <option value="Upto to 500 cars">
-                                                    Upto to 500 cars
-                                                </option>
-                                                <option value="500+ cars">500+ cars</option>
-                                            </select>
-                                            {errors.fleet_size && (
-                                                <p className="errorText">{errors.fleet_size.message}</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="contentCol">
-                                        <div
-                                            className={`inputCont full ${errors?.contact_no ? "error" : ""
-                                                }`}
-                                        >
-                                            <label htmlFor="contact_no">
-                                                Contact No.<span className="required">*</span>
-                                            </label>
-                                            <input
-                                                className={`${errors?.contact_no ? "errorInput" : ""}`}
-                                                {...register("contact_no", {
-                                                    required: "Contact No. is required.",
-                                                })}
-                                                type="number"
-                                                placeholder="Enter Contact No."
-                                                id="contact_no"
-                                            />
-
-                                            {errors?.contact_no ? (
-                                                <p className="errorText">{errors.contact_no.message}</p>
-                                            ) : (
-                                                ""
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="contentCol">
-                                        <div
-                                            className={`inputCont full ${errors?.email_address ? "error" : ""
-                                                }`}
-                                        >
-                                            <label htmlFor="email_address">
+                                        <div className={`inputCont full ${errors?.email ? "error" : ""}`}>
+                                            <label htmlFor="email">
                                                 Email Address<span className="required">*</span>
                                             </label>
                                             <input
-                                                className={`${errors?.email_address ? "errorInput" : ""
-                                                    }`}
-                                                {...register("email_address", {
-                                                    required: "Email Address is required.",
-                                                })}
+                                                className={`${errors?.email ? "errorInput" : ""}`}
+                                                {...register("email")}
                                                 type="email"
                                                 placeholder="Enter Email Address"
-                                                id="email_address"
+                                                id="email"
                                             />
-
-                                            {errors?.email_address ? (
-                                                <p className="errorText">
-                                                    {errors.email_address.message}
-                                                </p>
-                                            ) : (
-                                                ""
+                                            {errors?.email && (
+                                                <p className="errorText">{errors.email.message}</p>
                                             )}
                                         </div>
                                     </div>
                                     <div className="contentCol">
-                                        <div className={`inputCont full`}>
-                                            <label htmlFor="country">
-                                                Country<span className="required">*</span>
+                                        <div className={`inputCont full ${errors?.phoneNumber ? "error" : ""}`}>
+                                            <label htmlFor="phoneNumber">
+                                                Phone Number<span className="required">*</span>
                                             </label>
                                             <input
-                                                {...register("country")}
-                                                type="text"
-                                                id="country"
-                                                value={"United Arab Emirates"}
-                                                disabled
+                                                className={`${errors?.phoneNumber ? "errorInput" : ""}`}
+                                                {...register("phoneNumber")}
+                                                type="tel"
+                                                placeholder="Enter Phone Number"
+                                                id="phoneNumber"
                                             />
+                                            {errors?.phoneNumber && (
+                                                <p className="errorText">{errors.phoneNumber.message}</p>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="contentCol">
-                                        <div className={`inputCont ${errors?.city ? "error" : ""}`}>
-                                            <label htmlFor="city">
+                                        <div className={`inputCont full ${errors?.whatsappNumber ? "error" : ""}`}>
+                                            <label htmlFor="whatsappNumber">
+                                                WhatsApp Number<span className="required">*</span>
+                                            </label>
+                                            <input
+                                                className={`${errors?.whatsappNumber ? "errorInput" : ""}`}
+                                                {...register("whatsappNumber")}
+                                                type="tel"
+                                                placeholder="Enter WhatsApp Number"
+                                                id="whatsappNumber"
+                                            />
+                                            {errors?.whatsappNumber && (
+                                                <p className="errorText">{errors.whatsappNumber.message}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="contentCol">
+                                        <div className={`inputCont full ${errors?.password ? "error" : ""}`}>
+                                            <label htmlFor="password">
+                                                Password<span className="required">*</span>
+                                            </label>
+                                            <input
+                                                className={`${errors?.password ? "errorInput" : ""}`}
+                                                {...register("password")}
+                                                type="password"
+                                                placeholder="Enter Password"
+                                                id="password"
+                                            />
+                                            {errors?.password && (
+                                                <p className="errorText">{errors.password.message}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="contentCol">
+                                        <div className={`inputCont full ${errors?.confirmPassword ? "error" : ""}`}>
+                                            <label htmlFor="confirmPassword">
+                                                Confirm Password<span className="required">*</span>
+                                            </label>
+                                            <input
+                                                className={`${errors?.confirmPassword ? "errorInput" : ""}`}
+                                                {...register("confirmPassword")}
+                                                type="password"
+                                                placeholder="Confirm Password"
+                                                id="confirmPassword"
+                                            />
+                                            {errors?.confirmPassword && (
+                                                <p className="errorText">{errors.confirmPassword.message}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="contentCol">
+                                        <div className={`inputCont full ${errors?.companyName ? "error" : ""}`}>
+                                            <label htmlFor="companyName">
+                                                Company Name<span className="required">*</span>
+                                            </label>
+                                            <input
+                                                className={`${errors?.companyName ? "errorInput" : ""}`}
+                                                {...register("companyName")}
+                                                type="text"
+                                                placeholder="Enter Company Name"
+                                                id="companyName"
+                                            />
+                                            {errors?.companyName && (
+                                                <p className="errorText">{errors.companyName.message}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="contentCol">
+                                        <div className={`inputCont ${errors?.companyType ? "error" : ""}`}>
+                                            <label htmlFor="companyType">
+                                                Company Type<span className="required">*</span>
+                                            </label>
+                                            <select
+                                                id="companyType"
+                                                {...register("companyType")}
+                                                className={`${errors?.companyType ? "errorInput" : ""}`}
+                                            >
+                                                <option value="">Select Company Type</option>
+                                                <option value="rental_service">Rental Service</option>
+                                                <option value="car_with_driver">Car with Driver Service</option>
+                                            </select>
+                                            {errors?.companyType && (
+                                                <p className="errorText">{errors.companyType.message}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="contentCol">
+                                        <div className={`inputCont ${errors?.countryId ? "error" : ""}`}>
+                                            <label htmlFor="countryId">
+                                                Country<span className="required">*</span>
+                                            </label>
+                                            <select
+                                                id="countryId"
+                                                {...register("countryId")}
+                                                className={`${errors?.countryId ? "errorInput" : ""}`}
+                                                disabled
+                                            >
+                                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                            </select>
+                                            {errors?.countryId && (
+                                                <p className="errorText">{errors.countryId.message}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="contentCol">
+                                        <div className={`inputCont ${errors?.cityId ? "error" : ""}`}>
+                                            <label htmlFor="cityId">
                                                 City<span className="required">*</span>
                                             </label>
                                             <select
-                                                id="city"
-                                                {...register("city", {
-                                                    required: "City is required",
-                                                })}
+                                                id="cityId"
+                                                {...register("cityId")}
+                                                className={`${errors?.cityId ? "errorInput" : ""}`}
                                             >
-                                                <option value="" disabled>
-                                                    Select City
-                                                </option>
+                                                <option value="">Select City</option>
                                                 <option value="Dubai">Dubai</option>
                                                 <option value="Abu Dhabi">Abu Dhabi</option>
-                                                <option value="Fujairah">Fujairah</option>
-                                                <option value="Ajman">Ajman</option>
-                                                <option value="Al Ain">Al Ain</option>
                                                 <option value="Sharjah">Sharjah</option>
+                                                <option value="Ajman">Ajman</option>
                                                 <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                                                <option value="Umm Al Qwain">Umm Al Qwain</option>
+                                                <option value="Fujairah">Fujairah</option>
+                                                <option value="Umm Al Quwain">Umm Al Quwain</option>
+                                                <option value="Al Ain">Al Ain</option>
                                             </select>
-                                            {errors.city && (
-                                                <p className="errorText">{errors.city.message}</p>
+                                            {errors?.cityId && (
+                                                <p className="errorText">{errors.cityId.message}</p>
                                             )}
                                         </div>
                                     </div>
                                     <div className="contentCol">
                                         <div
-                                            className={`inputCont img ${errors?.company_logo ? "error" : ""
+                                            className={`inputCont img ${errors?.companyLogo ? "error" : ""
                                                 }`}
                                         >
-                                            <label htmlFor="company_logo">
+                                            <label htmlFor="companyLogo">
                                                 Company Logo<span className="required">*</span>
                                             </label>
                                             <div className="imgInput">
@@ -330,48 +423,49 @@ function ListCarPageLayout() {
                                                             alt="Company Logo"
                                                         />
                                                         <div className="actions">
-                                                            <button onClick={() => setCompanyLogoPreview("")}>
+                                                            <button onClick={() => handleDeleteImage(setCompanyLogoPreview, setCompanyLogoFile, "companyLogo")}>
                                                                 <i className="fas fa-trash" />
                                                             </button>
                                                         </div>
                                                     </div>
                                                 ) : (
-                                                    <label htmlFor="company_logo">
+                                                    <label htmlFor="companyLogo">
                                                         Click to Upload
                                                         <input
-                                                            {...register("company_logo", {
-                                                                required: "Company Logo is Required",
+                                                            {...register("companyLogo", {
+                                                                required: "Company Logo is Required"
                                                             })}
                                                             type="file"
-                                                            name=""
-                                                            id="company_logo"
+                                                            accept="image/png,image/jpeg,image/jpg,application/pdf"
+                                                            id="companyLogo"
                                                             onChange={(e) =>
                                                                 handleImageChange(
                                                                     e,
                                                                     setCompanyLogoPreview,
-                                                                    "company_logo"
+                                                                    setCompanyLogoFile,
+                                                                    "companyLogo"
                                                                 )
                                                             }
                                                         />
                                                     </label>
                                                 )}
                                             </div>
-                                            <p className="small">
-                                                Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
-                                            </p>
-                                            {errors?.company_logo && (
-                                                <p className="errorText">
-                                                    {errors?.company_logo?.message}
-                                                </p>
-                                            )}
                                         </div>
+                                        <p className="small">
+                                            Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
+                                        </p>
+                                        {errors?.companyLogo && (
+                                            <p className="errorText">
+                                                {errors?.companyLogo?.message}
+                                            </p>
+                                        )}
                                     </div>
                                     <div className="contentCol">
                                         <div
-                                            className={`inputCont img ${errors?.company_license ? "error" : ""
+                                            className={`inputCont img ${errors?.companyLicense ? "error" : ""
                                                 }`}
                                         >
-                                            <label htmlFor="company_license">
+                                            <label htmlFor="companyLicense">
                                                 Company License<span className="required">*</span>
                                             </label>
                                             <div className="imgInput">
@@ -384,104 +478,95 @@ function ListCarPageLayout() {
                                                             alt="Company License"
                                                         />
                                                         <div className="actions">
-                                                            <button
-                                                                onClick={() => setCompanyLicensePreview("")}
-                                                            >
+                                                            <button onClick={() => handleDeleteImage(setCompanyLicensePreview, setCompanyLicenseFile, "companyLicense")}>
                                                                 <i className="fas fa-trash" />
                                                             </button>
                                                         </div>
                                                     </div>
                                                 ) : (
-                                                    <label htmlFor="company_license">
+                                                    <label htmlFor="companyLicense">
                                                         Click to Upload
                                                         <input
-                                                            {...register("company_license", {
-                                                                required: "Company License is Required",
+                                                            {...register("companyLicense", {
+                                                                required: "Company License is Required"
                                                             })}
                                                             type="file"
-                                                            name=""
-                                                            id="company_license"
+                                                            accept="image/png,image/jpeg,image/jpg,application/pdf"
+                                                            id="companyLicense"
                                                             onChange={(e) =>
                                                                 handleImageChange(
                                                                     e,
                                                                     setCompanyLicensePreview,
-                                                                    "company_license"
+                                                                    setCompanyLicenseFile,
+                                                                    "companyLicense"
                                                                 )
                                                             }
                                                         />
                                                     </label>
                                                 )}
                                             </div>
-                                            <p className="small">
-                                                Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
+                                        </div>
+                                        <p className="small">
+                                            Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
+                                        </p>
+                                        {errors?.companyLicense && (
+                                            <p className="errorText">
+                                                {errors?.companyLicense?.message}
                                             </p>
-                                            {errors?.company_license && (
-                                                <p className="errorText">
-                                                    {errors?.company_license?.message}
-                                                </p>
+                                        )}
+                                    </div>
+                                    <div className="contentCol">
+                                        <div className={`inputCont full ${errors?.jobTitle ? "error" : ""}`}>
+                                            <label htmlFor="jobTitle">
+                                                Job Title<span className="required">*</span>
+                                            </label>
+                                            <input
+                                                className={`${errors?.jobTitle ? "errorInput" : ""}`}
+                                                {...register("jobTitle")}
+                                                type="text"
+                                                placeholder="Enter Job Title"
+                                                id="jobTitle"
+                                            />
+                                            {errors?.jobTitle && (
+                                                <p className="errorText">{errors.jobTitle.message}</p>
                                             )}
                                         </div>
                                     </div>
                                     <div className="contentCol">
                                         <div
-                                            className={`inputCont full ${errors?.company_license_expiry ? "error" : ""
+                                            className={`inputCont full ${errors?.licenseExpiryDate ? "error" : ""
                                                 }`}
                                         >
-                                            <label htmlFor="company_license_expiry">
-                                                Company License Expiry
+                                            <label htmlFor="licenseExpiryDate">
+                                                License Expiry Date
                                                 <span className="required">*</span>
                                             </label>
                                             <input
-                                                className={`${errors?.company_license_expiry ? "errorInput" : ""
+                                                className={`${errors?.licenseExpiryDate ? "errorInput" : ""
                                                     }`}
-                                                {...register("company_license_expiry", {
-                                                    required: "Company License Expiry is required.",
+                                                {...register("licenseExpiryDate", {
+                                                    required: "License Expiry Date is required.",
                                                 })}
                                                 type="date"
-                                                id="company_license_expiry"
+                                                id="licenseExpiryDate"
                                             />
 
-                                            {errors?.company_license_expiry ? (
+                                            {errors?.licenseExpiryDate ? (
                                                 <p className="errorText">
-                                                    {errors.company_license_expiry.message}
+                                                    {errors.licenseExpiryDate.message}
                                                 </p>
                                             ) : (
                                                 ""
                                             )}
                                         </div>
                                     </div>
-                                    <div className="contentCol">
-                                        <div
-                                            className={`inputCont ${errors?.service_type ? "error" : ""
-                                                }`}
-                                        >
-                                            <label htmlFor="service_type">
-                                                Service Type<span className="required">*</span>
-                                            </label>
-                                            <select
-                                                id="service_type"
-                                                {...register("service_type", {
-                                                    required: "Service Type is required",
-                                                })}
-                                            >
-                                                <option value="" disabled>
-                                                    Select Service Type
-                                                </option>
-                                                <option value="Rental Services">Rental Services</option>
-                                                <option value="Limousine Services">
-                                                    Limousine Services
-                                                </option>
-                                            </select>
-                                            {errors.service_type && (
-                                                <p className="errorText">
-                                                    {errors.service_type.message}
-                                                </p>
-                                            )}
-                                        </div>
-                                    </div>
                                 </div>
                                 <div className="btnCont">
-                                    <button type="submit" className="themeBtn large">
+                                    <button
+                                        type="submit"
+                                        disabled={!isFormValid()}
+                                        className={`themeBtn large ${!isFormValid() ? "disabled" : ""}`}
+                                    >
                                         Submit
                                     </button>
                                 </div>

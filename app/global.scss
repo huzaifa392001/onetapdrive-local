@@ -256,6 +256,10 @@ section {
     select {
         @apply w-full rounded-md border min-h-10 block px-2 outline-none text-[#000];
 
+        &:focus {
+            @apply border-[var(--theme-color)];
+        }
+
         &::placeholder {
         }
     }
@@ -280,6 +284,9 @@ section {
             @apply h-[80px] w-full border rounded-md flex items-center justify-center relative;
             input {
                 @apply absolute inset-0 cursor-pointer opacity-0;
+            }
+            &:has(input:focus) {
+                @apply border-[var(--theme-color)];
             }
         }
         .imgBox {

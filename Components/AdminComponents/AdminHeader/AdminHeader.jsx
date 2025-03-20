@@ -2,12 +2,12 @@ import React from 'react';
 import "./AdminHeader.scss";
 import Image from 'next/image';
 import { useMutation } from "@tanstack/react-query";
-import { logout } from '@/Services/AuthService/AuthService';
+import { adminLogout } from '@/Services/AuthService/AuthService';
 import { toast } from 'react-toastify';
 
 function AdminHeader() {
   const logoutMutation = useMutation({
-    mutationFn: logout,
+    mutationFn: adminLogout,
     onSuccess: () => {
       toast.success("Logout Successfully");
     },

@@ -1,7 +1,7 @@
 import SecHeading from '@/Components/SecHeading/SecHeading'
-import React from 'react'
+import React, { memo } from 'react'
 
-function CarSpecs({ errors, register, edit }) {
+const CarSpecs = memo(function CarSpecs({ errors, register, edit }) {
     return (
         <div className="carColors">
             <div className="headingCont">
@@ -114,6 +114,6 @@ function CarSpecs({ errors, register, edit }) {
             </div>
         </div>
     )
-}
+})
 
 export default CarSpecs

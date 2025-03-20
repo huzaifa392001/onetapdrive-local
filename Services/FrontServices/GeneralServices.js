@@ -1,4 +1,4 @@
-import { SET_CATEGORIES, SET_CURRENT_LOCATION } from "@/Redux/Slices/General";
+import { SET_BRANDS, SET_CATEGORIES, SET_CURRENT_LOCATION } from "@/Redux/Slices/General";
 import { store } from "@/Redux/Store";
 import API from "../Constants/api";
 
@@ -6,7 +6,6 @@ export const GeneralServices = {
     setCategories: async () => {
         try {
             const res = await API.get("/categories");
-            console.log("categories=>", res?.data?.data)
             store.dispatch(SET_CATEGORIES(res?.data?.data));
         } catch (e) {
             console.error("Error setting categories:", e);
@@ -54,4 +53,14 @@ export const GeneralServices = {
             console.error("Error fetching location:", e);
         }
     },
+
+    setBrands: async () => {
+        try {
+            const res = await API.get("/brands");
+            store.dispatch(SET_BRANDS(res?.data?.data));
+        } catch (error) {
+            console.error("Error setting brands:", error);
+
+        }
+    }
 };

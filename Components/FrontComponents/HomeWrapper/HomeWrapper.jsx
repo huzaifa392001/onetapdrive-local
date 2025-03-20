@@ -70,9 +70,13 @@ function HomeWrapper({ children }) {
         if (isLenisEnabled) {
             lenisSetup();
         }
+    }, [lenisSetup, isLenisEnabled]);
+
+    useEffect(() => {
         GeneralServices.setCategories();
         GeneralServices.setLocation();
-    }, [lenisSetup, isLenisEnabled]);
+        GeneralServices.setBrands();
+    }, [])
 
     useEffect(() => {
         scrollToTop(); // ✅ Scroll to top on route change

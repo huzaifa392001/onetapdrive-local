@@ -1,16 +1,20 @@
 'use client'
 import SecHeading from '@/Components/SecHeading/SecHeading'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './Brands.scss'
 
 import { Pagination, Autoplay } from 'swiper/modules';
-import brandsData from '@/DummyData/brands.json'
 import BrandCard from './BrandCard/BrandCard';
+import { useSelector } from 'react-redux';
 
 function Brands() {
+    const brandsData = useSelector((state) => state.general.brands);
+    useEffect(() => {
+        console.log("brandsData=>", brandsData)
+    }, [brandsData])
     return (
         <section className="brandsSec">
             <div className="customContainer">

@@ -5,9 +5,9 @@ import React from 'react'
 function BrandCard(props) {
     const brand = props?.data;
     return (
-        <Link href={brand?.url} className="brandCard">
+        <Link href={brand?.slug} className="brandCard">
             <figure>
-                <Image src={brand?.img} alt='' width={80} height={80} />
+                <Image src={brand?.image} alt='' width={80} height={80} />
             </figure>
             <div className="content">
                 <h3>

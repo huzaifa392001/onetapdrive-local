@@ -5,6 +5,7 @@ const generalSlice = createSlice({
     initialState: {
         downloadPopup: false, // Default value
         categories: [],
+        cities: [],
         brands: [],
         currentLocation: "", // Stores city name or user-provided location
         userModalStatus: false
@@ -22,6 +23,9 @@ const generalSlice = createSlice({
         SET_USER_MODAL_STATUS(state, action) {
             state.userModalStatus = action.payload;
         },
+        SET_CITIES(state, action) {
+            state.cities = action.payload;
+        },
         SET_BRANDS(state, action) {
             state.brands = action.payload;
         }
@@ -33,6 +37,7 @@ export const {
     SET_CATEGORIES,
     SET_CURRENT_LOCATION,
     SET_USER_MODAL_STATUS,
+    SET_CITIES,
     SET_BRANDS
 } = generalSlice.actions;
 export default generalSlice.reducer;

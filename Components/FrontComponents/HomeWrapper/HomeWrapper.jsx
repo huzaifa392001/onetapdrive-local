@@ -6,14 +6,20 @@ import Footer from "../Footer/Footer";
 import Lenis from "lenis";
 import "./HomeWrapper.scss";
 import Loading from "@/app/(home)/loading";
-import { GeneralServices } from "@/Services/FrontServices/GeneralServices";
+import {
+    GeneralServices,
+    getBrands,
+    getCategories,
+    getCities,
+    setLocations
+} from "@/Services/FrontServices/GeneralServices";
 import LoginModal from "../LoginModal/LoginModal";
-
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { store } from "@/Redux/Store";
+import { SET_BRANDS, SET_CATEGORIES, SET_CITIES } from "@/Redux/Slices/General";
 function HomeWrapper({ children }) {
     const [lenis, setLenis] = useState(null);
-    const [isLenisEnabled, setIsLenisEnabled] = useState(
-        typeof window !== "undefined" && window.innerWidth >= 768
-    ); // ✅ Fix: Ensure window is defined
+    const [isLenisEnabled, setIsLenisEnabled] = useState(typeof window !== "undefined" && window.innerWidth >= 768); // ✅ Fix: Ensure window is defined
     const pathname = usePathname(); // ✅ Detect route changes
 
     const lenisSetup = useCallback(() => {
@@ -22,7 +28,7 @@ function HomeWrapper({ children }) {
                 duration: 1.5,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                 smooth: true,
-                mouseMultiplier: 1,
+                mouseMultiplier: 1
             });
             setLenis(lenisInstance);
 
@@ -72,15 +78,36 @@ function HomeWrapper({ children }) {
         }
     }, [lenisSetup, isLenisEnabled]);
 
-    useEffect(() => {
-        GeneralServices.setCategories();
-        GeneralServices.setLocation();
-        GeneralServices.setBrands();
-    }, [])
+    const queries = useQueries({
+        queries: [
+            {
+                queryKey: ["categories"],
+                queryFn: () => getCategories()
+            },
+            {
+                queryKey: ["brands"],
+                queryFn: () => getBrands()
+            },
+            {
+                queryKey: ["cities"],
+                queryFn: () => getCities()
+            }
+        ]
+    });
+
+    const categoriesData = queries[0]?.data?.data;
+    const brandsData = queries[1]?.data?.data;
+    const citiesData = queries[2]?.data?.data;
 
     useEffect(() => {
         scrollToTop(); // ✅ Scroll to top on route change
     }, [pathname, scrollToTop]);
+
+    useEffect(() => {
+        store.dispatch(SET_CATEGORIES(categoriesData));
+        store.dispatch(SET_BRANDS(brandsData));
+        store.dispatch(SET_CITIES(citiesData));
+    }, [categoriesData, brandsData, citiesData]);
 
     return (
         <main className="wrapper">

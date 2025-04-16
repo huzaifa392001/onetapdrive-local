@@ -1,30 +1,42 @@
-"use client"
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+"use client";
+import { useQuery } from "@tanstack/react-query";
 import AdminDataTable from "@/Components/AdminComponents/AdminTable/adminTable";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
 import { deleteBrand, getBrands } from "@/Services/AdminServices/AdminBrand";
-
+import { useEffect, useState } from "react";
 
 function Page() {
-    const queryClient = useQueryClient();
 
-    const { data: brands } = useQuery({
+    const [brandsData, setbrandsData] = useState([])
+
+    const { data: brands, refetch } = useQuery({
         queryKey: ["brands"],
-        queryFn: getBrands,
+        queryFn: getBrands
     });
 
     // Function to refetch brands after delete
     const refetchBrands = () => {
-        queryClient.invalidateQueries(["brands"]);
+        refetch()
     };
 
+    useEffect(() => {
+        setbrandsData([])
+        brands?.data?.map((item) => {
+            const updatedItem = {
+                id: item?.brand_id,
+                name: item?.brand_name,
+                image: item?.brand_image
+            }
+            setbrandsData((prev) => ([...prev, updatedItem]))
+        })
+    }, [brands]);
 
     return (
         <>
             <div className="headingCont">
                 <SecHeading heading="brands" />
-                <Link href="brands/create" className='themeBtn'>
+                <Link href="/admin/brands/create" className="themeBtn">
                     Create
                 </Link>
             </div>
@@ -32,7 +44,7 @@ function Page() {
             <AdminDataTable
                 refetchData={refetchBrands}
                 deleteFunc={deleteBrand}
-                data={brands?.data}
+                data={brandsData}
                 showAction={true}
             />
         </>

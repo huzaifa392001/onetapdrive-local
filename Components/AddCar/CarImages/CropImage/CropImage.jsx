@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import Cropper from 'react-easy-crop';
 import './CropImage.scss';
 import getCroppedImg from './GetCroppedImage';
@@ -6,19 +6,17 @@ import getCroppedImg from './GetCroppedImage';
 function CropImage({ image, onCropComplete, onCancel }) {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
-    const [rotation, setRotation] = useState(0); // Add rotation state if needed
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-    const [croppedImage, setCroppedImage] = useState(null);
 
     const onCropCompleteHandler = (croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+        e.preventDefault();
         if (croppedAreaPixels) {
             try {
-                const croppedImg = await getCroppedImg(image, croppedAreaPixels, rotation); // Apply cropping
-                setCroppedImage(croppedImg); // Set the cropped image
+                const croppedImg = await getCroppedImg(image, croppedAreaPixels); // Apply cropping
                 onCropComplete(croppedImg); // Pass cropped image back to parent
             } catch (error) {
                 console.error("Error cropping image", error);
@@ -53,4 +51,4 @@ function CropImage({ image, onCropComplete, onCancel }) {
     );
 }
 
-export default CropImage;
+export default memo(CropImage);

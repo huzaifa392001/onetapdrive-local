@@ -18,6 +18,7 @@ function AdminSidebar() {
 
     { type: "divider", label: "Website" },
     { path: "/admin/brands", label: "Brands", icon: "fad fa-star" },
+    { path: "/admin/models", label: "Models", icon: "fad fa-star" },
     { path: "/admin/categories", label: "Categories", icon: "fas fa-clipboard-list" },
     { path: "/admin/blogs", label: "Blogs", icon: "far fa-books" },
     // { path: "/admin/packages", label: "Packages Orders", icon: "fas fa-car" },

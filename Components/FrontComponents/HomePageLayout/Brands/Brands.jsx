@@ -1,20 +1,18 @@
-'use client'
-import SecHeading from '@/Components/SecHeading/SecHeading'
-import React, { useEffect } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './Brands.scss'
+"use client";
+import SecHeading from "@/Components/SecHeading/SecHeading";
+import React, { useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./Brands.scss";
 
-import { Pagination, Autoplay } from 'swiper/modules';
-import BrandCard from './BrandCard/BrandCard';
-import { useSelector } from 'react-redux';
+import { Pagination, Autoplay } from "swiper/modules";
+import BrandCard from "./BrandCard/BrandCard";
+import { useSelector } from "react-redux";
 
 function Brands() {
     const brandsData = useSelector((state) => state.general.brands);
-    useEffect(() => {
-        console.log("brandsData=>", brandsData)
-    }, [brandsData])
+    
     return (
         <section className="brandsSec">
             <div className="customContainer">
@@ -24,7 +22,7 @@ function Brands() {
                 />
                 <Swiper
                     pagination={{
-                        dynamicBullets: true,
+                        dynamicBullets: true
                     }}
                     modules={[Pagination, Autoplay]}
                     className="brandsSwiper"
@@ -33,24 +31,24 @@ function Brands() {
                     spaceBetween={10}
                     autoplay={{
                         delay: 1500,
-                        disableOnInteraction: true,
+                        disableOnInteraction: true
                     }}
                     breakpoints={{
                         575: {
-                            slidesPerView: 4.5,
+                            slidesPerView: 4.5
                         },
                         767: {
-                            slidesPerView: 5.5,
+                            slidesPerView: 5.5
                         },
                         991: {
-                            slidesPerView: 7.75,
+                            slidesPerView: 7.75
                         },
                         1199: {
-                            slidesPerView: 7,
+                            slidesPerView: 7
                         },
                         1366: {
-                            slidesPerView: 10,
-                        },
+                            slidesPerView: 10
+                        }
                     }}
                 >
                     {brandsData?.map((brand, index) => (
@@ -61,7 +59,7 @@ function Brands() {
                 </Swiper>
             </div>
         </section>
-    )
+    );
 }
 
-export default Brands
+export default Brands;

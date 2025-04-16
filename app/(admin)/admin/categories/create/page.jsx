@@ -11,11 +11,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { requiredValidation } from '@/Utils/validation';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import Spinner from '@/Components/Spinner/Spinner';
 
 function Page() {
     const router = useRouter()
+    const [formData, setFormData] = useState(new FormData());
     const init = {
-        categoryImage: null, // ✅ File field should be null initially
+        categoryImage: null,
         categoryTitle: "",
     };
 
@@ -31,7 +33,7 @@ function Page() {
         mutationFn: addCategory,
         onSuccess: (res) => {
             toast.success(res?.message)
-            // router.back()
+            router.push("/admin/categories")
         },
         onError: (error) => {
             toast.error(`Failed to add category: ${error}`);
@@ -73,32 +75,23 @@ function Page() {
     const formValues = watch();
 
     useEffect(() => {
-        if (formValues.profilePic && formValues.profilePic instanceof File) {
+        if (formValues.categoryImage && formValues.categoryImage instanceof File) {
             const updatedFormData = new FormData();
-            updatedFormData.append("profile_picture", formValues.profilePic);
+            updatedFormData.append("file", formValues.categoryImage);
             setFormData(updatedFormData);
         }
-    }, [formValues.profilePic]); // 👈 Only update when profilePic changes
+    }, [formValues.categoryImage]);
 
     const onSubmit = async (data) => {
-        const formData = new FormData();
 
+        // Append other fields
         formData.append("name", data.categoryTitle);
         formData.append("titles", data.categoryTitle);
         formData.append("description", data.categoryTitle);
 
-        if (data.categoryImage && data.categoryImage[0]) {
-            formData.append("categoryImage", data.categoryImage[0]); // File object pass karna zaroori hai
-        } else {
-            toast.error("Category Image is required");
-            return;
-        }
-
         console.log("Submitting Data: ", Object.fromEntries(formData.entries()));
         categoryMutation.mutate(formData);
     };
-
-
 
     return (
         <>
@@ -115,51 +108,13 @@ function Page() {
                             errors={errors}
                         />
                     ))}
-                    {/* <div className="divider" />
-                    <h3>Category Page</h3>
-                    <div className="inputCont">
-                        <label htmlFor="pageHeading">Page Heading</label>
-                        <input
-                            id="pageHeading"
-                            placeholder="Enter Category's Page heading"
-                            type="text"
-                            {...register('pageHeading', { required: true })}
-                        />
-                        {errors.pageHeading && <span>This field is required</span>}
-                    </div>
-                    <div className="inputCont">
-                        <label htmlFor="pageDescription">Page Description</label>
-                        <textarea
-                            id="pageDescription"
-                            placeholder="Enter Category's Page Description"
-                            {...register('pageDescription', { required: true })}
-                            rows={7}
-                        />
-                        {errors.pageDescription && <span>This field is required</span>}
-                    </div> */}
+
                     <div className="inputCont btnCont">
-                        <button disabled={!isValid} type="submit" className={`themeBtn ${!isValid ? "disabled" : ""}`}>
-                            Submit
+                        <button disabled={!isValid || categoryMutation.isPending} type="submit" className={`themeBtn ${!isValid ? "disabled" : ""} ${categoryMutation.isPending ? "disabled" : ""}`}>
+                            {categoryMutation.isPending ? <Spinner /> : "Submit"}
                         </button>
                     </div>
                 </form>
-                {/* <div className="preview">
-                    <div className="previewBox">
-                        <h2 className='heading'>Preview</h2>
-                        <figure>
-                            {categoryImage ? (
-                                <Image src={categoryImage} alt="Category Image" fill />
-                            ) : (
-                                <p>No Image Selected</p>
-                            )}
-                        </figure>
-                        <h2>{watch('categoryTitle') || 'Category Name'}</h2>
-                        <div className="headingLayout">
-                            <h3>{watch('pageHeading') || "Category's Page Heading"}</h3>
-                            <p>{watch('pageDescription') || "Category's Page Description"}</p>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </>
     );

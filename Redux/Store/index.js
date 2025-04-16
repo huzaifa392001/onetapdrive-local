@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import searchReducer from "@/Redux/Slices/Search";
 import generalReducer from "@/Redux/Slices/General";
 import authReducer from "@/Redux/Slices/Auth";
+import carReducer from "@/Redux/Slices/Car";
 
 const persistConfig = {
     key: "oneTapDrive",
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     search: searchReducer,
     general: generalReducer,
     auth: authReducer,
+    car: carReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

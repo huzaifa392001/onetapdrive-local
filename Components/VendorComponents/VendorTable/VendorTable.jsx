@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { usePathname } from "next/navigation";
@@ -19,6 +19,14 @@ function VendorTable(props) {
 
     useEffect(() => {
         if (rowData.length > 0) {
+            console.log("Row Data: ", rowData);
+            console.log("Column Definitions: ", colDefs);
+            // your existing logic
+        }
+    }, [rowData, colDefs]);
+
+    useEffect(() => {
+        if (rowData.length > 0) {
             console.log("rowData is not empty. Processing dynamic fields...");
 
             const dynamicFields = Object.keys(rowData[0])
@@ -31,9 +39,7 @@ function VendorTable(props) {
                             flex: 1, // Use flex to allow this column to grow
                             headerName: "Images",
                             cellRenderer: (params) => {
-                                const imagePaths = Array.isArray(params.value)
-                                    ? params.value
-                                    : params.value.split(",");
+                                const imagePaths = Array.isArray(params.value) ? params.value : params.value.split(",");
 
                                 return (
                                     <div className="tableImgCol">
@@ -49,7 +55,7 @@ function VendorTable(props) {
                                         ))}
                                     </div>
                                 );
-                            },
+                            }
                         };
                     }
 
@@ -60,9 +66,7 @@ function VendorTable(props) {
                             sortable: true,
                             filter: true,
                             flex: 1, // Use flex to allow this column to grow
-                            cellRenderer: (params) => (
-                                <h6 className="title">{params.value}</h6>
-                            ),
+                            cellRenderer: (params) => <h6 className="title">{params.value}</h6>
                         };
                     }
 
@@ -71,7 +75,7 @@ function VendorTable(props) {
                         return {
                             field: key,
                             headerName: formattedKey.charAt(0).toUpperCase() + formattedKey.slice(1),
-                            filter: 'agDateColumnFilter', // Enable date filter
+                            filter: "agDateColumnFilter", // Enable date filter
                             sortable: true,
                             width: 150, // Fixed width for date column
                             filterParams: {
@@ -85,15 +89,15 @@ function VendorTable(props) {
                                     }
                                     return 0;
                                 },
-                                browserDatePicker: true, // Use the browser's date picker
-                            },
+                                browserDatePicker: true // Use the browser's date picker
+                            }
                         };
                     }
 
                     return {
                         field: key,
                         headerName: formattedKey.charAt(0).toUpperCase() + formattedKey.slice(1),
-                        flex: 1, // Use flex to allow this column to grow
+                        flex: 1 // Use flex to allow this column to grow
                     };
                 });
 
@@ -102,85 +106,89 @@ function VendorTable(props) {
 
             const actionColumn = hasActionKey
                 ? [
-                    {
-                        headerName: "Action",
-                        width: 200, // Fixed width for action column
-                        cellRenderer: (params) => {
-                            const id = params.data?.id;
-                            const currentStatus = statusMap[id] || params.data.status || 'inactive';
+                      {
+                          headerName: "Action",
+                          width: 200, // Fixed width for action column
+                          cellRenderer: (params) => {
+                              const id = params.data?.id;
+                              const currentStatus = statusMap[id] || params.data.status || "inactive";
 
-                            const toggleStatus = () => {
-                                const newStatus = currentStatus === 'inactive' ? 'active' : 'inactive';
-                                setStatusMap((prevStatusMap) => ({
-                                    ...prevStatusMap,
-                                    [id]: newStatus,
-                                }));
+                              const toggleStatus = () => {
+                                  const newStatus = currentStatus === "inactive" ? "active" : "inactive";
+                                  setStatusMap((prevStatusMap) => ({
+                                      ...prevStatusMap,
+                                      [id]: newStatus
+                                  }));
 
-                                const updatedRowData = localRowData.map((row) =>
-                                    row.id === id ? { ...row, status: newStatus } : row
-                                );
-                                console.log("Updated rowData:", updatedRowData);
-                                setLocalRowData(updatedRowData);
-                            };
+                                  const updatedRowData = localRowData.map((row) =>
+                                      row.id === id ? { ...row, status: newStatus } : row
+                                  );
+                                  console.log("Updated rowData:", updatedRowData);
+                                  setLocalRowData(updatedRowData);
+                              };
 
-                            return (
-                                <div className="btnCont">
-                                    <button
-                                        className={`themeBtn statusBtn iconBtn ${currentStatus === 'active' ? 'active' : 'inactive'}`}
-                                        onClick={toggleStatus}
-                                    >
-                                        <i className={`fas fa-power-off ${currentStatus === 'active' ? 'active' : 'inactive'}`} />
-                                        {/* {currentStatus === 'active' ? 'Active' : 'Inactive'} */}
-                                    </button>
-                                    <button className="themeBtn iconBtn">
-                                        <i className="fas fa-rocket" />
-                                        {/* Boost */}
-                                    </button>
-                                    <Link className="themeBtn" href={`${pathName}/edit/${id}`}>
-                                    <i className="fas fa-pencil" />
-                                        {/* Edit */}
-                                    </Link>
-                                </div>
-                            );
-                        },
-                    },
-                ]
+                              return (
+                                  <div className="btnCont">
+                                      <button
+                                          className={`themeBtn statusBtn iconBtn ${
+                                              currentStatus === "active" ? "active" : "inactive"
+                                          }`}
+                                          onClick={toggleStatus}
+                                      >
+                                          <i
+                                              className={`fas fa-power-off ${
+                                                  currentStatus === "active" ? "active" : "inactive"
+                                              }`}
+                                          />
+                                          {/* {currentStatus === 'active' ? 'Active' : 'Inactive'} */}
+                                      </button>
+                                      <button className="themeBtn iconBtn">
+                                          <i className="fas fa-rocket" />
+                                          {/* Boost */}
+                                      </button>
+                                      <Link className="themeBtn" href={`${pathName}/edit/${id}`}>
+                                          <i className="fas fa-pencil" />
+                                          {/* Edit */}
+                                      </Link>
+                                  </div>
+                              );
+                          }
+                      }
+                  ]
                 : []; // If "Action" key is not present, exclude the column
 
             setColDefs([
                 {
                     headerName: "Sr No.",
                     valueGetter: "node.rowIndex + 1",
-                    width: 100, // Fixed width for serial number column
+                    width: 100 // Fixed width for serial number column
                 },
                 ...dynamicFields,
-                ...actionColumn, // Conditionally add the "Action" column
+                ...actionColumn // Conditionally add the "Action" column
             ]);
-
         }
-    }, [rowData, statusMap, localRowData]);
+    }, [rowData, statusMap, localRowData, props?.data]);
 
     const defaultColDef = useMemo(() => {
         return {
             floatingFilter: false,
             resizable: true, // Allow columns to be resized
-            suppressSizeToFit: false, // Ensure columns fit the screen
+            suppressSizeToFit: false // Ensure columns fit the screen
         };
     }, []);
 
     return (
         <div className="dataTable ag-theme-alpine">
             <AgGridReact
-                rowData={localRowData} // Use localRowData instead of props.rowData
-                rowHeight={80} // Reduced row height for better fit
+                rowData={rowData}
                 columnDefs={colDefs}
                 pagination={true}
                 defaultColDef={defaultColDef}
                 paginationPageSize={10}
-                headerHeight={50} // Reduced header height
+                rowHeight={80}
+                headerHeight={50}
                 suppressCellFocus={true}
-                domLayout="autoHeight" // Adjust table height dynamically
-                suppressHorizontalScroll={false} // Enable horizontal scrolling
+                domLayout="autoHeight"
             />
         </div>
     );

@@ -1,224 +1,198 @@
-'use client';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import CarImages from './CarImages/CarImages';
-import CarDetails from './CarDetails/CarDetails';
-import './AddCar.scss';
-import CarPricing from './CarPricing/CarPricing';
-import CarColors from './CarColors/CarColors';
-import RentalTerms from './RentalTerms/RentalTerms';
-import MulkiyaDetails from './MulkiyaDetails/MulkiyaDetails';
-import CarSpecs from './CarSpecs/CarSpecs';
-import CarFeatures from './CarFeatures/CarFeatures';
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+"use client";
+import React, { useEffect } from "react";
+import CarImages from "./CarImages/CarImages";
+import CarDetails from "./CarDetails/CarDetails";
+import "./AddCar.scss";
+import CarPricing from "./CarPricing/CarPricing";
+import CarColors from "./CarColors/CarColors";
+import RentalTerms from "./RentalTerms/RentalTerms";
+import MulkiyaDetails from "./MulkiyaDetails/MulkiyaDetails";
+import CarSpecs from "./CarSpecs/CarSpecs";
+import CarFeatures from "./CarFeatures/CarFeatures";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
+import { createCar } from "@/Services/VendorServices/VendorAddCarServices";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 function AddCar({ edit }) {
-    const [carImages, setCarImages] = useState([]);
-    const [imageError, setImageError] = useState('');
-    const [oldImages, setOldImages] = useState([]);
+    const validationSchema = Yup.object({
+        name: Yup.string().required("Car name is required"),
+        cityId: Yup.string().required("City is required"),
+        securityDeposit: Yup.boolean().required("Security deposit is required"),
+        securityDepositAmount: Yup.number()
+            .min(0, "Amount must be positive")
+            .required("Security deposit amount is required"),
+        specialNoteForCustomer: Yup.string().required("Special note for customer is required"),
+        registrationCardFront: Yup.mixed().required("Registration card front is required"),
+        registrationCardBack: Yup.mixed().required("Registration card back is required"),
+        registrationCardExpiryDate: Yup.date()
+            .required("Registration card expiry date is required")
+            .min(new Date(), "Expiry date cannot be in the past"),
+        interiorColor: Yup.string().required("Interior color is required"),
+        description: Yup.string().required("Description is required"),
+        isCarWithDriver: Yup.boolean().required("Car with driver status is required"),
+        status: Yup.boolean().required("Car status is required"),
+        active: Yup.boolean().required("Active status is required"),
+        transmissionId: Yup.string().required("Transmission type is required"),
+        modelId: Yup.string().required("Car model is required"),
+        categoryId: Yup.string().required("Car category is required"),
+        featureIds: Yup.array().min(1, "At least one feature is required").required("Features are required"),
+        seatingCapacityId: Yup.string().required("Seating capacity is required"),
+        deliveryPickupCharge: Yup.string().required("Delivery pickup charge is required"),
+        specId: Yup.string().required("Specification ID is required"),
+        doorId: Yup.string().required("Door ID is required"),
+        bagFitId: Yup.string().required("Bag fit ID is required"),
+        colorId: Yup.string().required("Color ID is required"),
+        fuelTypeId: Yup.string().required("Fuel type ID is required"),
+        makeYearId: Yup.string().required("Make year ID is required"),
+        images: Yup.array().min(5, "At least five images are required").required("Images are required"),
+        prices: Yup.array()
+            .of(
+                Yup.object({
+                    price: Yup.number().min(0, "Price must be positive").required("Price is required"),
+                    kilometers: Yup.number().min(0, "Kilometers must be positive").required("Kilometers are required")
+                })
+            )
+            .required("Price details are required")
+    }).required();
 
-    useEffect(() => {
-        console.log('carImages=> ', carImages)
-    }, [carImages])
-
-    // Form validation schema
-    const schema = yup.object().shape({
-        car_brand: yup.string().required("Car brand is required"),
-        car_model: yup.string().required("Car model is required"),
-        car_year: yup.string().required("Car year is required"),
-        car_category: yup.string().required("Car category is required"),
-        city: yup.string().required("City is required"),
-        daily_price: yup.string().required("Daily price is required"),
-        daily_milleage: yup.string().required("Daily mileage is required"),
-        weekly_price: yup.string().required("Weekly price is required"),
-        weekly_milleage: yup.string().required("Weekly mileage is required"),
-        monthly_price: yup.string().required("Monthly price is required"),
-        monthly_milleage: yup.string().required("Monthly mileage is required"),
-        colors: yup.object().shape({
-            exterior: yup.string().required("Exterior color is required"),
-            interior: yup.string().required("Interior color is required"),
-        }),
-        features: yup.array().min(1, "At least one feature is required"),
-    });
-
-    // Default form values
-    const defaultValues = {
-        car_brand: "",
-        car_model: "",
-        car_year: "",
-        car_category: "",
-        city: "",
-        daily_price: "",
-        daily_milleage: "",
-        weekly_price: "",
-        weekly_milleage: "",
-        monthly_price: "",
-        monthly_milleage: "",
-        colors: {
-            exterior: "",
-            interior: "",
-        },
-        features: [],
+    const defaultCarFormValues = {
+        name: "",
+        cityId: "",
+        securityDeposit: true,
+        securityDepositAmount: 0,
+        specialNoteForCustomer: "",
+        registrationCardFront: "",
+        registrationCardBack: "",
+        registrationCardExpiryDate: null, // format as YYYY-MM-DD
+        interiorColor: "",
+        description: "",
+        isCarWithDriver: false,
+        status: false,
+        active: false,
+        transmissionId: "",
+        modelId: "",
+        categoryId: "",
+        featureIds: [],
+        seatingCapacityId: "",
+        deliveryPickupCharge: "",
+        specId: "",
+        doorId: "",
+        bagFitId: "",
+        colorId: "",
+        fuelTypeId: "",
+        makeYearId: "",
+        images: [],
+        prices: [
+            { priceType: "daily", price: null, kilometers: null },
+            { priceType: "weekly", price: null, kilometers: null },
+            { priceType: "monthly", price: null, kilometers: null }
+        ]
     };
 
-    // React Hook Form initialization
     const {
-        register,
         handleSubmit,
+        control,
         setValue,
-        watch,
-        setError,
-        clearErrors,
         reset,
-        formState: { errors },
+        formState: { errors, isValid }
     } = useForm({
-        defaultValues,
-        resolver: yupResolver(schema),
+        defaultValues: defaultCarFormValues,
+        resolver: yupResolver(validationSchema) // Enable the yupResolver
     });
-
-    // Handle car images update
-    const handleCarImages = (images) => {
-        const validImages = images.filter(image => image instanceof File);
-        if (validImages.length === 0) {
-            setImageError('Please upload at least one valid image');
-            return;
-        }
-        if (validImages.length > 10) {
-            setImageError('Maximum 10 images allowed');
-            return;
-        }
-        setImageError('');
-        setCarImages(validImages);
-    };
 
     // API mutation
     const addCarMutation = useMutation({
-        mutationFn: async (data) => {
-            // Your API call here
-            // return await addCar(data);
-        },
+        mutationFn: createCar,
         onSuccess: () => {
             toast.success(edit ? "Car updated successfully" : "Car added successfully");
             reset();
-            setCarImages([]);
-            setOldImages([]);
         },
         onError: (error) => {
-            toast.error(error.message || "Something went wrong");
+            toast.error(error.response?.data?.message || "Something went wrong");
         }
     });
 
+    useEffect(() => {
+        console.log("errors=> ", errors);
+    }, [errors]);
+
     // Form submission handler
-    const onSubmit = async (data) => {
-        console.log("data=> ", data)
-        // try {
-        //     if (carImages.length === 0 && !edit) {
-        //         setImageError('Please upload at least one image');
-        //         return;
-        //     }
-
-        //     const formData = new FormData();
-
-        //     // Append basic car details
-        //     Object.keys(data).forEach(key => {
-        //         if (key !== 'colors' && key !== 'mulkiya_details' && key !== 'specifications' && key !== 'features' && key !== 'rental_terms') {
-        //             formData.append(key, data[key]);
-        //         }
-        //     });
-
-        //     // Append nested objects
-        //     formData.append('colors', JSON.stringify(data.colors));
-        //     formData.append('mulkiya_details', JSON.stringify(data.mulkiya_details));
-        //     formData.append('specifications', JSON.stringify(data.specifications));
-        //     formData.append('features', JSON.stringify(data.features));
-        //     formData.append('rental_terms', JSON.stringify(data.rental_terms));
-
-        //     // Append images
-        //     carImages.forEach((image, index) => {
-        //         formData.append(`car_images`, image);
-        //     });
-
-        //     // If editing, append old images
-        //     if (edit) {
-        //         formData.append('old_images', JSON.stringify(oldImages));
-        //     }
-
-        //     // Submit form
-        //     await addCarMutation.mutateAsync(formData);
-
-        // } catch (error) {
-        //     console.error('Form submission error:', error);
-        //     toast.error(error.message || "Something went wrong during submission");
-        // }
+    const onSubmit = (data) => {
+        console.log("data=> ", data);
+        addCarMutation.mutate(data);
     };
 
-    useEffect(() => {
-        console.log("errors=> ", errors)
-    }, [errors])
+    // Update form values when child components change
+    const handleCarImagesChange = (images) => {
+        setValue("images", images);
+    };
+
+    const handleCarDetailsChange = (details) => {
+        Object.entries(details).forEach(([key, value]) => {
+            setValue(key, value);
+        });
+    };
+
+    const handleCarPricingChange = (pricing) => {
+        setValue("prices", pricing);
+    };
+
+    const handleCarColorsChange = (colorId, interiorColor) => {
+        setValue("colorId", colorId);
+        setValue("interiorColor", interiorColor);
+    };
+
+    const handleRentalTermsChange = (terms) => {
+        Object.entries(terms).forEach(([key, value]) => {
+            setValue(key, value);
+        });
+    };
+
+    const handleMulkiyaDetailsChange = (details) => {
+        Object.entries(details).forEach(([key, value]) => {
+            if ((key === "registrationCardFront" || key === "registrationCardBack") && value instanceof File) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    setValue(key, e.target.result);
+                };
+                reader.readAsDataURL(value);
+            } else {
+                setValue(key, value);
+            }
+        });
+    };
+
+    const handleCarSpecsChange = (specs) => {
+        Object.entries(specs).forEach(([key, value]) => {
+            setValue(key, value);
+        });
+    };
+
+    const handleCarFeaturesChange = (features) => {
+        setValue("featureIds", features);
+    };
 
     return (
         <div className="fleetWrapper">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="carRow">
-                    <CarImages
-                        oldImages={oldImages}
-                        carImages={handleCarImages}
-                        register={register}
-                        setError={setError}
-                        clearErrors={clearErrors}
-                        errors={errors}
-                        edit={edit}
-                    />
-                    <CarDetails
-                        register={register}
-                        setValue={setValue}
-                        errors={errors}
-                        watch={watch}
-                        edit={edit}
-                    />
-                    <CarPricing
-                        register={register}
-                        errors={errors}
-                        edit={edit}
-                    />
-                    <CarColors
-                        register={register}
-                        errors={errors}
-                        edit={edit}
-                    />
-                    <RentalTerms
-                        register={register}
-                        errors={errors}
-                        edit={edit}
-                    />
-                    <MulkiyaDetails
-                        register={register}
-                        setValue={setValue}
-                        errors={errors}
-                        edit={edit}
-                    />
-                    <CarSpecs
-                        register={register}
-                        errors={errors}
-                        edit={edit}
-                    />
-                    <CarFeatures
-                        register={register}
-                        errors={errors}
-                        edit={edit}
-                    />
-                </div>
-
+            <form onSubmit={handleSubmit(onSubmit)} className="carRow">
+                <CarImages carImages={handleCarImagesChange} control={control} errors={errors} />
+                <CarDetails setCarDetails={handleCarDetailsChange} control={control} errors={errors} />
+                <CarPricing control={control} errors={errors} onChange={handleCarPricingChange} />
+                <CarColors control={control} errors={errors} onChange={handleCarColorsChange} />
+                <RentalTerms control={control} errors={errors} onChange={handleRentalTermsChange} />
+                <MulkiyaDetails control={control} errors={errors} onChange={handleMulkiyaDetailsChange} />
+                <CarSpecs control={control} errors={errors} onChange={handleCarSpecsChange} />
+                <CarFeatures control={control} errors={errors} onChange={handleCarFeaturesChange} />
                 <div className="btnCont">
                     <button
                         type="submit"
-                        className="themeBtn"
-                    // disabled={addCarMutation.isPending}
+                        className={`themeBtn  `}
+                        // disabled={addCarMutation.isPending || !isValid}
                     >
-                        {addCarMutation.isPending ? "Loading..." : (edit ? "Update" : "Submit")}
+                        {addCarMutation.isPending ? "Loading..." : edit ? "Update" : "Submit"}
                     </button>
                 </div>
             </form>

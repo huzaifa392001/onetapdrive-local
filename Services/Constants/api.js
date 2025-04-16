@@ -3,7 +3,7 @@ import axios from "axios";
 import https from 'https';
 
 const API = axios.create({
-    baseURL: "http://35.154.240.227:5000",
+    baseURL: "https://onetapdrive.com/api/",
     headers: {
         "Content-Type": "application/json",
     },

@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import React, { useEffect } from 'react'
+import Link from "next/link";
+import React, { useEffect } from "react";
 
 function BreadCrumb(props) {
     const states = props?.route;
@@ -7,15 +7,21 @@ function BreadCrumb(props) {
         <div className="breadCrumb">
             <ul>
                 <li>
-                    <Link href={'/'}>
-                        Home
-                    </Link>
+                    <Link href={"/"}>Home</Link>
                 </li>
                 {props?.city && (
                     <li>
-                        <Link href={`/cars/${props?.city}`}>
-                            {props?.city}
-                        </Link>
+                        <Link href={`/cars/${props?.city}`}>{props?.city}</Link>
+                    </li>
+                )}
+                {props?.brand && (
+                    <li>
+                        <Link href={`/cars/${props?.brand}`}>{props?.brand}</Link>
+                    </li>
+                )}
+                {props?.model && (
+                    <li>
+                        <Link href={`/cars/${props?.model}`}>{props?.model}</Link>
                     </li>
                 )}
                 {states?.map((state, index) => {
@@ -23,14 +29,10 @@ function BreadCrumb(props) {
                     return (
                         <>
                             {isLast ? (
-                                <li key={index}>
-                                    {state}
-                                </li>
+                                <li key={index}>{state}</li>
                             ) : (
                                 <li key={index}>
-                                    <Link href={`/cars/${state}`}>
-                                        {state}
-                                    </Link>
+                                    <Link href={`/cars/${state}`}>{state}</Link>
                                 </li>
                             )}
                         </>
@@ -55,7 +57,7 @@ function BreadCrumb(props) {
                 )} */}
             </ul>
         </div>
-    )
+    );
 }
 
-export default React.memo(BreadCrumb)
+export default React.memo(BreadCrumb);

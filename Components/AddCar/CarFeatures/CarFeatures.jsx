@@ -1,60 +1,75 @@
-import React, { useState, memo, useCallback } from 'react'
-import carFeatures from "@/DummyData/CarFeatures.json"
-import SecHeading from '@/Components/SecHeading/SecHeading'
+import React, { useState, memo, useCallback } from "react";
+import SecHeading from "@/Components/SecHeading/SecHeading";
+import { useSelector } from "react-redux";
+import { Controller } from "react-hook-form";
 
-const CarFeatures = memo(function CarFeatures({ errors, register, edit }) {
+const CarFeatures = memo(function CarFeatures({ control, errors }) {
+    const features = useSelector((state) => state.car.features);
     const [showAll, setShowAll] = useState(false);
 
     const handleShowAll = useCallback(() => {
         setShowAll((prev) => !prev);
     }, []);
 
-    const handleShowAllLi = useCallback(() => {
-        setShowAll(true);
-    }, []);
     return (
         <div className="carFeatures">
             <div className="headingCont">
-                <SecHeading heading={edit ? "Update Car Features" : "Car Features*"} />
+                <SecHeading heading="Car Features*" />
             </div>
             <div className="inputContainer full">
-                <div className={`inputCont full ${errors?.car_features ? "error" : ''}`}>
-                    {/* <label htmlFor="car_features">Car Features*</label> */}
-                    <ul className="featuresList">
-                        {carFeatures.slice(0, showAll ? carFeatures.length : 5).map((features) => (
-                            <li onClick={handleShowAllLi} className={`${errors?.car_features ? "errorInput" : ""}`} key={features}>
-                                <input
-                                    type="checkbox"
-                                    id={features}
-                                    value={features}
-                                    className="btn-check clip-hidden"
-                                    {...register("features", {
-                                        validate: (value) =>
-                                            value.length > 0 ||
-                                            "Please select at least one car feature",
+                <div className={`inputCont full ${errors?.features ? "error" : ""}`}>
+                    <Controller
+                        name="featureIds"
+                        control={control}
+                        defaultValue={[]}
+                        rules={{ 
+                            required: "At least one feature is required",
+                            validate: value => value.length > 0 || "Please select at least one feature" 
+                        }}
+                        render={({ field: { value, onChange } }) => (
+                            <>
+                                <ul className="featuresList">
+                                    {features.slice(0, showAll ? features.length : 5).map((feature) => {
+                                        const isChecked = value?.includes(feature.id);
+                                        return (
+                                            <li key={feature.id}>
+                                                <input
+                                                    type="checkbox"
+                                                    id={feature.id}
+                                                    value={feature.id}
+                                                    className="btn-check clip-hidden"
+                                                    checked={isChecked}
+                                                    onChange={() => {
+                                                        const updated = isChecked
+                                                            ? value.filter((id) => id !== feature.id)
+                                                            : [...(value || []), feature.id];
+                                                        onChange(updated);
+                                                    }}
+                                                />
+                                                <label htmlFor={feature.id} className="btn-label">
+                                                    {feature.name}
+                                                </label>
+                                            </li>
+                                        );
                                     })}
-
-                                />
-                                <label htmlFor={features} className="btn-label">
-                                    {features}
-                                </label>
-                            </li>
-                        ))}
-
-                        {!showAll && (
-                            <li> <button onClick={handleShowAll} className="showAllButton">Show All</button></li>
+                                    {features.length > 5 && (
+                                        <li>
+                                            <button onClick={handleShowAll} className="showAllButton" type="button">
+                                                {showAll ? "Hide All" : "Show All"}
+                                            </button>
+                                        </li>
+                                    )}
+                                </ul>
+                                {errors?.features && (
+                                    <p className="error-message">{errors.features.message}</p>
+                                )}
+                            </>
                         )}
-                        {showAll && (
-                            <li> <button onClick={handleShowAll} className="showAllButton">Hide All</button></li>
-                        )}
-                    </ul>
-                    {errors?.car_features && (
-                        <p className='errorText'>{errors.car_features.message}</p>
-                    )}
+                    />
                 </div>
             </div>
         </div>
-    )
-})
+    );
+});
 
-export default CarFeatures
+export default CarFeatures;

@@ -9,8 +9,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { vendorSignup } from "@/Services/AuthService/AuthService";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 function ListCarPageLayout() {
+    const router = useRouter()
     const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
     const [companyLicensePreview, setCompanyLicensePreview] = useState(null);
     const [companyLogoFile, setCompanyLogoFile] = useState(null);
@@ -125,7 +127,6 @@ function ListCarPageLayout() {
     }, [companyLicense]);
 
     const onSubmit = async (data) => {
-        console.log("Form data received from React Hook Form: ", data);
         const firstName = data.fullName.split(' ')[0].toLowerCase();
         const carTerms = ['driver', 'rider', 'wheels', 'cars', 'auto', 'drive'];
         const randomCarTerm = carTerms[Math.floor(Math.random() * carTerms.length)];

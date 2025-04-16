@@ -6,7 +6,7 @@
     }
 
     .productImg {
-        @apply relative overflow-hidden xl:h-[400px] xl:w-[400px] lg:h-[300px] lg:w-[300px] md:h-[250px] md:w-[250px] h-[250px] w-full aspect-square;
+        @apply relative overflow-hidden xl:h-[300px] xl:w-[400px] lg:h-[300px] lg:w-[300px] md:h-[250px] md:w-[250px] h-[250px] w-full aspect-square;
         flex: 0 1 400px;
         @include respond-to($breakpoint-lg) {
             flex: 0 1 300px;

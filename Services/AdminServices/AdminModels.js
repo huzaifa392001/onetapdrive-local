@@ -1,18 +1,17 @@
-import API from "../Constants/api"
+import API from "../Constants/api";
 
-export const getBrands = async () => {
+export const getModels = async () => {
     try {
-        const response = await API.get("/brands")
-        return response?.data
-    }
-    catch (e) {
+        const response = await API.get("/models");
+        return response?.data;
+    } catch (e) {
         return e;
     }
 }
 
-export const addBrand = async (body) => {
+export const addModel = async (body) => {
     try {
-        const response = await API.post("/brands", body, {
+        const response = await API.post("/models", body, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
@@ -27,9 +26,9 @@ export const addBrand = async (body) => {
     }
 };
 
-export const deleteBrand = async (id) => {
+export const deleteModel = async (id) => {
     try {
-        const response = await API.delete(`/brands/${id}`);
+        const response = await API.delete(`/models/${id}`);
         return response
     }
     catch (e) {

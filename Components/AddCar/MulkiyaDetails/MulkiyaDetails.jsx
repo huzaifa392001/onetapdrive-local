@@ -1,23 +1,18 @@
-import SecHeading from '@/Components/SecHeading/SecHeading'
-import Image from 'next/image';
-import React, { memo, useState } from 'react'
+import SecHeading from "@/Components/SecHeading/SecHeading";
+import Image from "next/image";
+import React, { memo, useState } from "react";
+import { Controller } from "react-hook-form";
 
-function MulkiyaDetails({ register, setValue, errors, edit }) {
+const MulkiyaDetails = memo(function MulkiyaDetails({ edit, control, errors }) {
     const [mulkiyaFrontPreview, setMulkiyaFrontPreview] = useState(null);
     const [mulkiyaBackPreview, setMulkiyaBackPreview] = useState(null);
 
-    const handleImageChange = (e, setPreview, fieldName) => {
+    const handleImageChange = (e, setPreview, setFile) => {
         const file = e.target.files[0];
         if (file) {
-            // Convert the file to a blob and create a URL
-            const blob = new Blob([file], { type: file.type });
-            const url = URL.createObjectURL(blob);
-
-            // Set the preview image as the URL of the Blob
+            const url = URL.createObjectURL(file);
             setPreview(url);
-
-            // Manually set the value for the file input as a Blob
-            setValue(fieldName, blob, { shouldValidate: true });
+            setFile(file); // Store the actual file
         }
     };
 
@@ -26,38 +21,104 @@ function MulkiyaDetails({ register, setValue, errors, edit }) {
             <div className="headingCont">
                 <SecHeading heading={edit ? "Update Mulkiya Details" : "Mulkiya Details"} />
             </div>
+
             <div className="inputContainer">
                 <label htmlFor="mulkiyaFront">Mulkiya Front</label>
-                <input
-                    type="file"
-                    id="mulkiyaFront"
-                    {...register("mulkiyaFront", { required: "Mulkiya Front is required" })}
-                    onChange={(e) => handleImageChange(e, setMulkiyaFrontPreview, "mulkiyaFront")}
+                <Controller
+                    name="registrationCardFront"
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                        <>
+                            <input
+                                type="file"
+                                id="mulkiyaFront"
+                                onChange={(e) => {
+                                    handleImageChange(e, setMulkiyaFrontPreview, onChange); // Set the actual file
+                                }}
+                            />
+                            {mulkiyaFrontPreview && (
+                                <div className="imagePreview">
+                                    <Image
+                                        src={mulkiyaFrontPreview}
+                                        alt="Mulkiya Front Preview"
+                                        width={100}
+                                        height={100}
+                                    />
+                                </div>
+                            )}
+                        </>
+                    )}
                 />
-                {errors.mulkiyaFront && <p className="errorText">{errors.mulkiyaFront.message}</p>}
-                {mulkiyaFrontPreview && (
-                    <div className="imagePreview">
-                        <Image src={mulkiyaFrontPreview} alt="Mulkiya Front Preview" width={100} height={100} />
-                    </div>
-                )}
             </div>
+
             <div className="inputContainer">
                 <label htmlFor="mulkiyaBack">Mulkiya Back</label>
-                <input
-                    type="file"
-                    id="mulkiyaBack"
-                    {...register("mulkiyaBack", { required: "Mulkiya Back is required" })}
-                    onChange={(e) => handleImageChange(e, setMulkiyaBackPreview, "mulkiyaBack")}
+                <Controller
+                    name="registrationCardBack"
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                        <>
+                            <input
+                                type="file"
+                                id="mulkiyaBack"
+                                onChange={(e) => {
+                                    handleImageChange(e, setMulkiyaBackPreview, onChange); // Set the actual file
+                                }}
+                            />
+                            {mulkiyaBackPreview && (
+                                <div className="imagePreview">
+                                    <Image
+                                        src={mulkiyaBackPreview}
+                                        alt="Mulkiya Back Preview"
+                                        width={100}
+                                        height={100}
+                                    />
+                                </div>
+                            )}
+                        </>
+                    )}
                 />
-                {errors.mulkiyaBack && <p className="errorText">{errors.mulkiyaBack.message}</p>}
-                {mulkiyaBackPreview && (
-                    <div className="imagePreview">
-                        <Image src={mulkiyaBackPreview} alt="Mulkiya Back Preview" width={100} height={100} />
-                    </div>
+            </div>
+
+            <div className={`inputCont ${errors?.registrationCardExpiryDate ? "error" : ""}`}>
+                <Controller
+                    name="registrationCardExpiryDate"
+                    control={control}
+                    rules={{
+                        required: "Mulkiya Expiry Date is required",
+                        validate: value => {
+                            const selectedDate = new Date(value);
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0); // Reset time to start of day for proper comparison
+
+                            return selectedDate >= today || "Expiry date cannot be in the past";
+                        }
+                    }}
+                    render={({ field }) => {
+                        // Get today's date in YYYY-MM-DD format to use as min attribute
+                        const today = new Date();
+                        const yyyy = today.getFullYear();
+                        const mm = String(today.getMonth() + 1).padStart(2, '0');
+                        const dd = String(today.getDate()).padStart(2, '0');
+                        const minDate = `${yyyy}-${mm}-${dd}`;
+
+                        return (
+                            <input
+                                {...field}
+                                type="date"
+                                placeholder="Mulkiya Expiry Date*"
+                                min={minDate}
+                            />
+                        );
+                    }}
+                />
+                {errors?.registrationCardExpiryDate && (
+                    <p className="error-message">{errors.registrationCardExpiryDate.message}</p>
                 )}
             </div>
+
         </div>
     );
-}
+});
 
-export default memo(MulkiyaDetails);
+export default MulkiyaDetails;

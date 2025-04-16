@@ -23,8 +23,19 @@ const nextConfig = {
                 port: '5000',
                 pathname: '/static/images/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'onetapdrive.com',
+                pathname: '/static/images/**', // <- Added this line
+            },
+            {
+                protocol: 'https',
+                hostname: 'onetapdrive.com',
+                pathname: '/staging/static/images/**',
+            },
         ],
-    },
+    }
+
 };
 
 export default nextConfig;

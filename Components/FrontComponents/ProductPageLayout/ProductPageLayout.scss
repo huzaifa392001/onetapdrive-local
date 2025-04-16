@@ -177,7 +177,7 @@
               .priceTitle {
                 @apply flex items-center justify-between cursor-pointer py-1;
                 h3 {
-                  @apply font-semibold text-[1rem] transition-all duration-200;
+                  @apply font-semibold text-[1rem] transition-all duration-200 capitalize;
                 }
               }
               .priceDetails {
@@ -185,8 +185,8 @@
                 .priceMileage {
                   @apply flex items-center justify-between text-[15px] mb-3 border-b pb-2 border-b-[#bdbdbd];
                 }
-                p{
-                  &:not(.priceMileage){
+                p {
+                  &:not(.priceMileage) {
                     @apply mt-4 text-[14px];
                   }
                 }
@@ -245,12 +245,12 @@
 }
 
 .sideModal {
-  @apply fixed inset-0 z-[99999] min-h-screen overflow-hidden invisible select-none opacity-0 transition-all duration-300 overflow-y-auto;
+  @apply fixed inset-0 z-[99999] h-screen invisible select-none opacity-0 transition-all duration-300 overflow-hidden;
   .backdrop {
-    @apply absolute inset-0 bg-[#0005] backdrop-blur transition-all duration-300 opacity-0 invisible h-full;
+    @apply absolute inset-0 bg-[#0005]  backdrop-blur transition-all duration-300 opacity-0 invisible h-full;
   }
   .modalContent {
-    @apply absolute min-h-screen max-w-[500px] w-full bg-[var(--white)] top-0 z-10 -right-full transition-all duration-300;
+    @apply absolute h-screen max-w-[500px] w-full bg-[var(--white)] top-0 z-10 -right-full transition-all duration-300 overflow-y-auto;
     .modalHeader {
       @apply flex items-center justify-between border-b py-2 px-3;
       h2 {

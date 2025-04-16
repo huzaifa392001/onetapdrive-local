@@ -1,119 +1,156 @@
-import SecHeading from '@/Components/SecHeading/SecHeading'
-import React, { memo } from 'react'
+import SecHeading from "@/Components/SecHeading/SecHeading";
+import React, { memo } from "react";
+import { useSelector } from "react-redux";
+import { Controller } from "react-hook-form";
 
-const CarSpecs = memo(function CarSpecs({ errors, register, edit }) {
+const CarSpecs = memo(function CarSpecs({ control, errors }) {
+    const doorsData = useSelector((state) => state.car.doors);
+    const transmissionData = useSelector((state) => state.car.transmission);
+    const bagsData = useSelector((state) => state.car.bags);
+    const fuelTypeData = useSelector((state) => state.car.fuelType);
+    const specsData = useSelector((state) => state.car.specs);
+    const seatingData = useSelector((state) => state.car.seating);
+
     return (
         <div className="carColors">
             <div className="headingCont">
-                <SecHeading heading={edit ? "Update Car Specs" : "Car Specs"} />
+                <SecHeading heading="Car Specs" />
             </div>
             <div className="inputContainer">
-                <div className={`inputCont ${errors?.car_doors ? "error" : ''}`}>
-                    {/* <label htmlFor="car_doors">Car Doors*</label> */}
-                    <select
-                        id="car_doors"
-                        {...register('car_doors', {
-                            required: 'Car Doors are required',
-                        })}
-                    >
-                        <option disabled selected value="">Select Car Doors*</option>
-                        <option value="2">2 Doors</option>
-                        <option value="4">4 Doors</option>
-                    </select>
-                    {errors?.car_doors && (
-                        <p className='errorText'>{errors.car_doors.message}</p>
-                    )}
+                {/* Car Doors */}
+                <div className={`inputCont ${errors?.doorId ? "error" : ""}`}>
+                    <Controller
+                        name="doorId"
+                        control={control}
+                        rules={{ required: "Door specification is required" }}
+                        render={({ field }) => (
+                            <select {...field} id="car_doors">
+                                <option value="">
+                                    Select Car Doors*
+                                </option>
+                                {doorsData?.map((item, index) => (
+                                    <option key={index} value={item?.id}>
+                                        {item?.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    />
+                    {errors?.doorId && <p className="error-message">{errors.doorId.message}</p>}
                 </div>
-                <div className={`inputCont ${errors?.car_transmission ? "error" : ''}`}>
-                    {/* <label htmlFor="car_transmission">Car Transmission*</label> */}
-                    <select
-                        id="car_transmission"
-                        {...register('car_transmission', {
-                            required: 'Car Transmission is required',
-                        })}
-                    >
-                        <option disabled selected value="">Select Car Transmission*</option>
-                        <option value="manual">Manual</option>
-                        <option value="automatic">Automatic</option>
-                    </select>
-                    {errors?.car_transmission && (
-                        <p className='errorText'>{errors.car_transmission.message}</p>
-                    )}
+
+                {/* Transmission */}
+                <div className={`inputCont ${errors?.transmissionId ? "error" : ""}`}>
+                    <Controller
+                        name="transmissionId"
+                        control={control}
+                        rules={{ required: "Transmission type is required" }}
+                        render={({ field }) => (
+                            <select {...field} id="car_transmission">
+                                <option value="">
+                                    Select Car Transmission*
+                                </option>
+                                {transmissionData?.map((item, index) => (
+                                    <option key={index} value={item?.id}>
+                                        {item?.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    />
+                    {errors?.transmissionId && <p className="error-message">{errors.transmissionId.message}</p>}
                 </div>
-                <div className={`inputCont ${errors?.bags_fit ? "error" : ''}`}>
-                    {/* <label htmlFor="bags_fit">Bags Fit*</label> */}
-                    <select
-                        id="bags_fit"
-                        {...register('bags_fit', {
-                            required: 'Bag(s) Fits is required',
-                        })}
-                    >
-                        <option disabled selected value="">Select Bags Limit*</option>
-                        <option value="1">1 Bag</option>
-                        <option value="2">3 Bags</option>
-                        <option value="3">5 Bags</option>
-                    </select>
-                    {errors?.bags_fit && (
-                        <p className='errorText'>{errors.bags_fit.message}</p>
-                    )}
+
+                {/* Bags */}
+                <div className={`inputCont ${errors?.bagFitId ? "error" : ""}`}>
+                    <Controller
+                        name="bagFitId"
+                        control={control}
+                        rules={{ required: "Bag fit specification is required" }}
+                        render={({ field }) => (
+                            <select {...field} id="bags_fit">
+                                <option value="">
+                                    Select Bags Limit*
+                                </option>
+                                {bagsData?.map((item, index) => (
+                                    <option key={index} value={item?.id}>
+                                        {item?.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    />
+                    {errors?.bagFitId && <p className="error-message">{errors.bagFitId.message}</p>}
                 </div>
-                <div className={`inputCont ${errors?.fuel_type ? "error" : ''}`}>
-                    {/* <label htmlFor="fuel_type">Fuel Type*</label> */}
-                    <select
-                        id="fuel_type"
-                        {...register('fuel_type', {
-                            required: 'Fuel Type is required',
-                        })}
-                    >
-                        <option disabled selected value="">Select Fuel Type*</option>
-                        <option value="petrol">Petrol</option>
-                        <option value="diesel">Diesel</option>
-                        <option value="electric">Electric</option>
-                        <option value="hybrid">Hybrid</option>
-                    </select>
-                    {errors?.fuel_type && (
-                        <p className='errorText'>{errors.fuel_type.message}</p>
-                    )}
+
+                {/* Fuel Type */}
+                <div className={`inputCont ${errors?.fuelTypeId ? "error" : ""}`}>
+                    <Controller
+                        name="fuelTypeId"
+                        control={control}
+                        rules={{ required: "Fuel type is required" }}
+                        render={({ field }) => (
+                            <select {...field} id="fuel_type">
+                                <option value="">
+                                    Select Fuel Type*
+                                </option>
+                                {fuelTypeData?.map((item, index) => (
+                                    <option key={index} value={item?.id}>
+                                        {item?.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    />
+                    {errors?.fuelTypeId && <p className="error-message">{errors.fuelTypeId.message}</p>}
                 </div>
-                <div className={`inputCont ${errors?.seating_capacity ? "error" : ''}`}>
-                    {/* <label htmlFor="seating_capacity">Seating Capacity*</label> */}
-                    <select
-                        id="seating_capacity"
-                        {...register('seating_capacity', {
-                            required: 'Seating Capacity is required',
-                        })}
-                    >
-                        <option disabled selected value="">Select Seating Capacity*</option>
-                        <option value="2">2 Seats</option>
-                        <option value="4">4 Seats</option>
-                        <option value="5">5 Seats</option>
-                        <option value="7">7 Seats</option>
-                    </select>
-                    {errors?.seating_capacity && (
-                        <p className='errorText'>{errors.seating_capacity.message}</p>
-                    )}
+
+                {/* Seating Capacity */}
+                <div className={`inputCont ${errors?.seatingCapacityId ? "error" : ""}`}>
+                    <Controller
+                        name="seatingCapacityId"
+                        control={control}
+                        rules={{ required: "Seating capacity is required" }}
+                        render={({ field }) => (
+                            <select {...field} id="seating_capacity">
+                                <option value="">
+                                    Select Seating Capacity*
+                                </option>
+                                {seatingData?.map((item, index) => (
+                                    <option key={index} value={item?.id}>
+                                        {item?.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    />
+                    {errors?.seatingCapacityId && <p className="error-message">{errors.seatingCapacityId.message}</p>}
                 </div>
-                <div className={`inputCont ${errors?.car_specs ? "error" : ''}`}>
-                    {/* <label htmlFor="car_specs">Car Specs*</label> */}
-                    <select
-                        id="car_specs"
-                        {...register('car_specs', {
-                            required: 'Car Specs are required',
-                        })}
-                    >
-                        <option disabled selected value="">Select Car Specs*</option>
-                        <option value="american">American Specs</option>
-                        <option value="asia">Asia Specs</option>
-                        <option value="europe">Europe Specs</option>
-                        <option value="gcc">GCC Specs</option>
-                    </select>
-                    {errors?.car_specs && (
-                        <p className='errorText'>{errors.car_specs.message}</p>
-                    )}
+
+                {/* Car Specs */}
+                <div className={`inputCont ${errors?.specId ? "error" : ""}`}>
+                    <Controller
+                        name="specId"
+                        control={control}
+                        rules={{ required: "Car specification is required" }}
+                        render={({ field }) => (
+                            <select {...field} id="car_specs">
+                                <option value="">
+                                    Select Car Specs*
+                                </option>
+                                {specsData?.map((item, index) => (
+                                    <option key={index} value={item?.id}>
+                                        {item?.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    />
+                    {errors?.specId && <p className="error-message">{errors.specId.message}</p>}
                 </div>
             </div>
         </div>
-    )
-})
+    );
+});
 
-export default CarSpecs
+export default CarSpecs;

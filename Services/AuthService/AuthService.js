@@ -1,4 +1,4 @@
-import { SET_ACCESS_TOKEN, SET_ADMIN_DETAILS, SET_IS_ADMIN } from "@/Redux/Slices/Auth";
+import { SET_ACCESS_TOKEN, SET_ADMIN_DETAILS, SET_IS_ADMIN, SET_IS_VENDOR } from "@/Redux/Slices/Auth";
 import { store } from "@/Redux/Store";
 import API from "../Constants/api";
 

@@ -1,27 +1,28 @@
-import React from 'react'
-import './CategoryCard.scss'
-import Image from 'next/image'
-import Link from 'next/link';
+import React from "react";
+import "./CategoryCard.scss";
+import Image from "next/image";
+import Link from "next/link";
 
 function CategoryCard(props) {
-
     const category = props.data;
 
     return (
-        <Link href={`/cars/${category?.url}`} className="categoryCard">
+        <Link href={`/cars/${category?.category_slug}`} className="categoryCard">
             <figure>
-                <Image src={category?.img} width={200} height={200} quantity={100} alt={`${category?.name}'s Picture`} />
+                <Image
+                    src={category?.category_image || category?.img || ""}
+                    width={200}
+                    height={200}
+                    quantity={100}
+                    alt={`${category?.name}'s Picture`}
+                />
             </figure>
-            <div className='content'>
-                <h3>
-                    {category?.name}
-                </h3>
-                <span>
-                    {category?.quantity} Cars
-                </span>
+            <div className="content">
+                <h3>{category?.category_name}</h3>
+                <span>{category?.cars ? `${category?.cars} Cars` : "No Cars Available"}</span>
             </div>
         </Link>
-    )
+    );
 }
 
-export default React.memo(CategoryCard)
+export default React.memo(CategoryCard);

@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 function VendorHeader() {
     const [isOpen, setIsOpen] = useState(false);
-    const user = useSelector((state) => state.auth.userDetails);
+    const vendor = useSelector((state) => state.auth.vendorDetails);
 
     const logoutMutation = useMutation({
         mutationFn: vendorLogout,
@@ -16,10 +16,6 @@ function VendorHeader() {
             toast.success("Logout Successfully");
         }
     });
-
-    useEffect(() => {
-        console.log("user=> ", user);
-    }, [user]);
 
     const handleLogout = () => {
         vendorLogout();
@@ -32,6 +28,7 @@ function VendorHeader() {
     const closeDropdown = () => {
         setIsOpen(false);
     };
+
     return (
         <div className="vendorHeader">
             <figure className="logoCont">
@@ -39,8 +36,8 @@ function VendorHeader() {
             </figure>
             <div className="customDropdown">
                 <button type="button" onClick={toggleDropdown} className="dropdownButton">
-                    <Image src={"/images/logo.webp"} width={35} height={35} alt="Company Logo"></Image>
-                    Drift Car Rental
+                    <Image src={vendor?.companyLogo} width={35} height={35} alt="Company Logo"></Image>
+                    {vendor?.companyName}
                     <i className="fas fa-chevron-down"></i>
                 </button>
 

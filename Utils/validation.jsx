@@ -4,7 +4,7 @@ import Image from "next/image";
 export const requiredValidation = (
     <>
         <span>
-            <i class="fal fa-exclamation-circle" />
+            <i className="fal fa-exclamation-circle" />
         </span>
         <span>This is a required field. </span>
     </>
@@ -13,7 +13,7 @@ export const requiredValidation = (
 export const emailValidation = (
     <>
         <span>
-            <i class="fal fa-exclamation-circle" />
+            <i className="fal fa-exclamation-circle" />
         </span>
         <span>Please enter valid email</span>
     </>
@@ -22,7 +22,7 @@ export const emailValidation = (
 export const passwordMatchValidation = (
     <>
         <span>
-            <i class="fal fa-exclamation-circle" />
+            <i className="fal fa-exclamation-circle" />
         </span>
         <span>Passwords do not match. Please try again.</span>
     </>
@@ -31,7 +31,7 @@ export const passwordMatchValidation = (
 export const primaryEmailValidation = (
     <>
         <span>
-            <i class="fal fa-exclamation-circle" />
+            <i className="fal fa-exclamation-circle" />
         </span>
         <span>Both Emails must be different</span>
     </>
@@ -57,4 +57,3 @@ export const useDebounce = (value, delay = 500) => {
 
     return debouncedValue;
 };
-

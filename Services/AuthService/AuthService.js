@@ -5,9 +5,6 @@ import API from "../Constants/api";
 export const login = async (data) => {
     try {
         const res = await API.post("/auth/login", data);
-        store.dispatch(SET_ADMIN_DETAILS(res?.data?.data?.user_details));
-        store.dispatch(SET_ACCESS_TOKEN(res?.data?.data?.access_token));
-        store.dispatch(SET_IS_ADMIN(true));
         return res.data; // Return response data
     } catch (e) {
         console.error(`Error making Request: ${e}`);

@@ -20,12 +20,8 @@ const FormGroup = (props) => {
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
                     <div className="relative field-container">
                         <div
-                            className={`form-group ${
-                                item.extraSpace ? "mb-50-mob" : ""
-                            } ${props.modifier || ""} ${
-                                errors[`${item.name}`] || item.hasError
-                                    ? "border-red"
-                                    : ""
+                            className={`form-group ${item.extraSpace ? "mb-50-mob" : ""} ${props.modifier || ""} ${
+                                errors[`${item.name}`] || item.hasError ? "border-red" : ""
                             } ${item.hidden ? "hidden-input" : ""}`}
                         >
                             <InputField
@@ -42,18 +38,11 @@ const FormGroup = (props) => {
                                 isFieldDisabled={item.isFieldDisabled}
                                 onChange={item.onChange}
                             />
-                            {errors[`${item.name}`] && (
-                                <span className="error">
-                                    {errors[`${item.name}`]?.message}
-                                </span>
-                            )}
+                            {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                         </div>
                         {item.bottomAnchor && (
                             <div className="anchorWrapper d-flex justify-end mt-11">
-                                <Link
-                                    href={item.bottomAnchorLink}
-                                    className="black-col"
-                                >
+                                <Link href={item.bottomAnchorLink} className="black-col">
                                     {item.bottomAnchor}
                                 </Link>
                             </div>
@@ -63,11 +52,7 @@ const FormGroup = (props) => {
             )}
             {item.type == "tel" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
-                    <div
-                        className={`form-group ${props.modifier || ""} ${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        }`}
-                    >
+                    <div className={`form-group ${props.modifier || ""} ${errors[`${item.name}`] ? "border-red" : ""}`}>
                         <InputPhone
                             name={item.name}
                             control={control}
@@ -81,21 +66,13 @@ const FormGroup = (props) => {
                             disableDropdown={item.isFieldDisabled}
                         />
 
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}
             {item.type == "textarea" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
-                    <div
-                        className={`form-group ${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        } `}
-                    >
+                    <div className={`form-group ${errors[`${item.name}`] ? "border-red" : ""} `}>
                         <TextAreaField
                             name={item.name}
                             control={control}
@@ -108,21 +85,13 @@ const FormGroup = (props) => {
                             req={item.req}
                             isFieldDisabled={item.isFieldDisabled}
                         />
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}
             {item.type == "file" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
-                    <div
-                        className={`${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        } form-group`}
-                    >
+                    <div className={`${errors[`${item.name}`] ? "border-red" : ""} form-group`}>
                         <DropzoneField
                             name={item.name}
                             multiple={item.multiple}
@@ -145,11 +114,7 @@ const FormGroup = (props) => {
                             defaultValue={item?.defaultValue}
                         />
 
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}
@@ -166,20 +131,12 @@ const FormGroup = (props) => {
                         req={item.req}
                         readOnly={item.readOnly}
                     />
-                    {errors[`${item.name}`] && (
-                        <span className="error">
-                            {errors[`${item.name}`]?.message}
-                        </span>
-                    )}
+                    {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                 </div>
             )}
             {item.type == "select" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
-                    <div
-                        className={`form-group ${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        } `}
-                    >
+                    <div className={`form-group ${errors[`${item.name}`] ? "border-red" : ""} `}>
                         <SelectField
                             name={item.name}
                             control={control}
@@ -191,11 +148,8 @@ const FormGroup = (props) => {
                                 Array.isArray(item?.options)
                                     ? item.options.map((x) => {
                                           return {
-                                              label:
-                                                  x.name ||
-                                                  x.locationName ||
-                                                  x.timeZoneName,
-                                              value: x.id || x.recId || x.recId,
+                                              label: x.name || x.locationName || x.timeZoneName,
+                                              value: x.id || x.recId || x.recId
                                           };
                                       })
                                     : []
@@ -205,24 +159,17 @@ const FormGroup = (props) => {
                             isFieldDisabled={item.isFieldDisabled}
                             onChange={item.onChange}
                             multiSelect={item.multiSelect}
+                            search={item?.search}
                             req={item.req}
                         />
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}
 
             {item.type == "country" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
-                    <div
-                        className={`form-group ${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        } `}
-                    >
+                    <div className={`form-group ${errors[`${item.name}`] ? "border-red" : ""} `}>
                         <CountryField
                             name={item.name}
                             control={control}
@@ -231,22 +178,14 @@ const FormGroup = (props) => {
                             req={item.req}
                             error={errors[`${item.name}`]}
                         />
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}
 
             {item.type == "date" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
-                    <div
-                        className={`form-group ${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        } `}
-                    >
+                    <div className={`form-group ${errors[`${item.name}`] ? "border-red" : ""} `}>
                         <DateTimeField
                             name={item.name}
                             control={control}
@@ -263,41 +202,28 @@ const FormGroup = (props) => {
                             readOnly={item.readOnly}
                             checked={item.checked}
                         />
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}
             {item.type == "checkboxGroup" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
                     <div
-                        className={`${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        } form-group ${item.tabs ? "tabbed-checkboxes" : ""}`}
+                        className={`${errors[`${item.name}`] ? "border-red" : ""} form-group ${
+                            item.tabs ? "tabbed-checkboxes" : ""
+                        }`}
                     >
-                        <CheckboxGroup
-                            name={item.name}
-                            control={control}
-                            options={item.options}
-                            label={item.label}
-                        />
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        <CheckboxGroup name={item.name} control={control} options={item.options} label={item.label} />
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}
             {item.type == "checkboxSingle" && (
                 <div className={`${item.colWidth ? item.colWidth : ""} col_12`}>
                     <div
-                        className={`form-group ${
-                            errors[`${item.name}`] ? "border-red" : ""
-                        } ${item.modifier ? item.modifier : ""}`}
+                        className={`form-group ${errors[`${item.name}`] ? "border-red" : ""} ${
+                            item.modifier ? item.modifier : ""
+                        }`}
                     >
                         <CheckboxSingle
                             name={item.name}
@@ -305,11 +231,7 @@ const FormGroup = (props) => {
                             label={item.label}
                             isFieldDisabled={item.isFieldDisabled}
                         />
-                        {errors[`${item.name}`] && (
-                            <span className="error">
-                                {errors[`${item.name}`]?.message}
-                            </span>
-                        )}
+                        {errors[`${item.name}`] && <span className="error">{errors[`${item.name}`]?.message}</span>}
                     </div>
                 </div>
             )}

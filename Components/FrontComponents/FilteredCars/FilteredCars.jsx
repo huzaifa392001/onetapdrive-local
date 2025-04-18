@@ -41,20 +41,23 @@ function FilteredCars(props) {
                 )}
             </Swiper> */}
             <div className="resultRow">
-                {props?.carsData?.data && (
-                    <>
-                        {props?.carsData?.data?.map((item, index) => (
-                            <FullProductCard data={item} featured key={index} />
-                        ))}
-                    </>
+                {props?.carsData?.data?.length > 0 ? (
+                    props?.carsData?.data.map((item, index) => <FullProductCard data={item} featured key={index} />)
+                ) : (
+                    <div className="noResult">
+                        <p>No cars found.</p>
+                    </div>
                 )}
             </div>
-            <div className="totalResult">
-                <p>
-                    Showing <span>1</span> - <span>{props?.carsData?.perPage || props?.carsData?.totalItems}</span> of{" "}
-                    <span>{props?.carsData?.totalItems}</span> Cars
-                </p>
-            </div>
+
+            {props?.carsData?.data?.length > 0 && (
+                <div className="totalResult">
+                    <p>
+                        Showing <span>1</span> - <span>{props?.carsData?.perPage || props?.carsData?.totalItems}</span>{" "}
+                        of <span>{props?.carsData?.totalItems}</span> Cars
+                    </p>
+                </div>
+            )}
         </div>
     );
 }

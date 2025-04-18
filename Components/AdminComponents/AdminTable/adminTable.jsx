@@ -99,9 +99,6 @@ const AdminDataTable = (props) => {
                 headerName: "Action",
                 flex: 1,
                 cellRenderer: (params) => {
-                    const slug = params.data?.slug;
-                    const id = params.data?.id;
-
                     if (!showAction) {
                         return null;
                     }

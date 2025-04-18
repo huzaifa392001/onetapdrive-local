@@ -11,16 +11,6 @@ function ProductCard(props) {
         ? [{ name: product?.thumbnail }, ...product?.images?.slice(0, 3)] // Thumbnail + 3 images
         : [...product?.images?.slice(0, 4)]; // 4 images if no thumbnail
 
-    // Function to fix image URL format
-    const fixImageUrl = (url) => {
-        if (!url) return "";
-        // Check if URL contains "5000static" without a slash and fix it
-        if (url.includes("5000static")) {
-            return url.replace("5000static", "5000/static");
-        }
-        return url;
-    };
-
     return (
         <div onMouseLeave={() => setActiveImageIndex(0)} className={`productCard ${props?.className}`}>
             {!props?.premium && (
@@ -38,7 +28,7 @@ function ProductCard(props) {
                                 Featured
                             </span>
                         )}
-                        <Image src={fixImageUrl(product?.images[0]?.image)} fill alt="" />
+                        <Image src={product?.images[0]?.image || "/images/noImage.jpg"} fill alt="" />
                     </figure>
                 </Link>
             )}
@@ -186,8 +176,8 @@ function ProductCard(props) {
                 </div>
                 <div className="divider" />
                 <div className="brandCont">
-                    <Link title={product?.vendorProfile[0]?.companyName} href={``} className="brand">
-                        <Image src={product?.vendorProfile[0]?.companyLogo} fill alt="" />
+                    <Link title={product?.user?.vendorProfile[0]?.companyName} href={``} className="brand">
+                        <Image src={product?.user?.vendorProfile[0]?.companyLogo} fill alt="" />
                     </Link>
                     <div className="detail">
                         <ul>

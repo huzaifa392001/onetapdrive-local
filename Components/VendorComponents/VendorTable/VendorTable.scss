@@ -11,6 +11,11 @@
         .themeBtn {
           @apply block w-full py-0;
 
+          &.iconBtn {
+            i {
+              @apply m-0;
+            }
+          }
           &.statusBtn {
             &.active {
               @apply text-[var(--white)] bg-green-600;

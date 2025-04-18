@@ -7,8 +7,6 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
-import CarsSection from "../CarsSection/CarsSection";
-import relatedCars from "@/DummyData/Products.json";
 import Head from "next/head";
 import { useQuery } from "@tanstack/react-query";
 import { getSingleCar } from "@/Services/FrontServices/GeneralServices";
@@ -248,7 +246,7 @@ function ProductPageLayout() {
                             <Link href={``} className="brand">
                                 <figure>
                                     <Image
-                                        src={`/images/brands/${product?.brand?.image}`}
+                                        src={`/images/brands/${product?.brand?.image}` || "/images/noImage.jpg"}
                                         alt=""
                                         width={50}
                                         height={50}
@@ -301,11 +299,7 @@ function ProductPageLayout() {
         setActiveModal(option); // Set the active modal to the clicked option
     };
 
-    const {
-        data: carData,
-        refetch,
-        isPending
-    } = useQuery({
+    const { data: carData, isPending } = useQuery({
         queryKey: ["Car"],
         queryFn: () => getSingleCar(route)
     });
@@ -314,6 +308,7 @@ function ProductPageLayout() {
         setData(carData?.data);
         setUser(carData?.data?.user);
         setVendor(carData?.data?.user?.vendorProfile[0]);
+        console.log("carData=>", carData);
     }, [carData]);
 
     if (isPending) return <Loading />;
@@ -339,69 +334,80 @@ function ProductPageLayout() {
 
                     <div className="headingContainer">
                         <figure>
-                            <Image src={`/images/brands/${product?.brand?.image}`} alt="" fill />
+                            <Image src={data?.model?.brand?.image || "/images/noImage.jpg"} alt="" fill />
                         </figure>
                         <div className="heading">
                             <h1>{data?.name}</h1>
                             <h3>
                                 Hire in {data?.city?.name}: {data?.color?.name} {data?.category?.name},{" "}
-                                {product?.passengers} Seats with {product?.car_features.replaceAll(",", ", ")}
+                                {data?.seatingCapacity?.name} with{" "}
+                                {data?.features?.slice(0, 3)?.map((item) => `${item?.name}, `)}
                             </h3>
                         </div>
                     </div>
 
                     <div className="imagesRow">
+                        {/* Main Image */}
                         <figure>
                             <Image
-                                src={data?.images[0]?.image} // Adjust the path as per your directory structure
-                                alt={`Car Thumbnail Image`}
+                                src={data?.images?.[0]?.image || "/images/noImage.jpg"}
+                                alt="Car Thumbnail Image"
                                 width={500}
                                 height={500}
                             />
                         </figure>
-                        {data?.images?.slice(1, 5).map((image, index) => {
-                            if (index === 1) {
-                                // Render index 2 and 3 in the same figure
+
+                        {/* Remaining Images */}
+                        {(data?.images?.length > 1 ? data.images.slice(1, 5) : [null, null, null]).map(
+                            (image, index) => {
+                                if (index === 1) {
+                                    return (
+                                        <figure key={index} className="multiImage">
+                                            <Image
+                                                src={data?.images?.[2]?.image || "/images/noImage.jpg"}
+                                                alt={`Car image ${index + 1}`}
+                                                width={250}
+                                                height={250}
+                                            />
+                                            <Image
+                                                src={data?.images?.[3]?.image || "/images/noImage.jpg"}
+                                                alt={`Car image ${index + 2}`}
+                                                width={250}
+                                                height={250}
+                                            />
+                                        </figure>
+                                    );
+                                }
+
+                                if (index === 2) return null; // skip image at index 2, already included above
+
                                 return (
-                                    <figure key={index} className="multiImage">
+                                    <figure key={index}>
                                         <Image
-                                            src={data?.images[1]?.image} // Image at index 2
+                                            src={image?.image || "/images/noImage.jpg"}
                                             alt={`Car image ${index + 1}`}
-                                            width={250}
-                                            height={250}
-                                        />
-                                        <Image
-                                            src={data?.images[2]?.image} // Image at index 3
-                                            alt={`Car image ${index + 2}`}
-                                            width={250}
-                                            height={250}
+                                            width={500}
+                                            height={500}
                                         />
                                     </figure>
                                 );
                             }
-                            // Skip index 3 since it's already included with index 2
-                            if (index === 2) return null;
+                        )}
 
-                            // Render all other images normally
-                            return (
-                                <figure key={index}>
-                                    <Image src={image?.image} alt={`Car image ${index + 1}`} width={500} height={500} />
-                                </figure>
-                            );
-                        })}
+                        {/* Tags + Buttons */}
                         <div className="imgTags">
                             {renderTags()}
-
                             <div className="btnCont">
-                                <Link href={""}>
+                                <Link href="">
                                     <i className="fal fa-share-alt" />
                                 </Link>
-                                <Link href={""}>
+                                <Link href="">
                                     <i className="fal fa-heart" />
                                 </Link>
                             </div>
                         </div>
-                        <Link href={""} className="showAllBtn">
+
+                        <Link href="" className="showAllBtn">
                             <i className="fas fa-images" />
                             View All Photos
                         </Link>
@@ -496,7 +502,7 @@ function ProductPageLayout() {
                                 <h4>Disclaimer:</h4>
                                 <p>
                                     By using this website, you agree to our{" "}
-                                    <Link href={"/terms-and-condition"}>Terms and Conditions</Link> and{" "}
+                                    <Link href={"/terms-and-conditions"}>Terms and Conditions</Link> and{" "}
                                     <Link href={"/privacy-policy"}>Privacy Policy</Link>, and disclaim{" "}
                                     <Link href={"/"}>Onetapdrive.com</Link> from any incorrect information provided by
                                     car rental companies or us.
@@ -544,10 +550,10 @@ function ProductPageLayout() {
                                         <span>Features & Specs</span>
                                         <i className="fas fa-chevron-right" />
                                     </li>
-                                    <li onClick={() => handleOptionClick("supplier")}>
+                                    {/* <li onClick={() => handleOptionClick("supplier")}>
                                         <span>Supplier Details</span>
                                         <i className="fas fa-chevron-right" />
-                                    </li>
+                                    </li> */}
                                     <li onClick={() => handleOptionClick("requirements")}>
                                         <span>Requirements</span>
                                         <i className="fas fa-chevron-right" />
@@ -568,7 +574,7 @@ function ProductPageLayout() {
                                 <div className="company">
                                     <figure>
                                         <Image
-                                            title={vendor?.companyName}
+                                            title={vendor?.companyName || "/images/noImage.jpg"}
                                             src={vendor?.companyLogo}
                                             width={80}
                                             height={80}
@@ -621,45 +627,42 @@ function ProductPageLayout() {
                                                     />
                                                 </div>
 
-                                                {activePrice === index && ( // Only show details if this section is active
-                                                    <div className="priceDetails">
-                                                        <p className="priceMileage">
-                                                            <strong>Price:</strong> {price?.price}
-                                                        </p>
-                                                        <p className="priceMileage">
-                                                            <strong>Included mileage limit:</strong> {price?.kilometers}
-                                                        </p>
-                                                        {/* <p className="priceMileage">
+                                                <div className="priceDetails">
+                                                    <p className="priceMileage">
+                                                        <strong>Price:</strong> {price?.price}
+                                                    </p>
+                                                    <p className="priceMileage">
+                                                        <strong>Included mileage limit:</strong> {price?.kilometers}
+                                                    </p>
+                                                    {/* <p className="priceMileage">
                                                             <strong>Additional mileage charge:</strong>{" "}
                                                             {price.details.additionalMileage}
                                                         </p> */}
 
-                                                        {/* Show Insurance for Weekly */}
-                                                        {price?.details?.insurance && (
-                                                            <p className="priceMileage">
-                                                                <strong>Insurance:</strong> {price?.details?.insurance}
-                                                            </p>
-                                                        )}
+                                                    {/* Show Insurance for Weekly */}
+                                                    {price?.details?.insurance && (
+                                                        <p className="priceMileage">
+                                                            <strong>Insurance:</strong> {price?.details?.insurance}
+                                                        </p>
+                                                    )}
 
-                                                        {/* Show Monthly Detail for Monthly */}
-                                                        {price?.details?.monthly && (
-                                                            <p className="priceMileage">
-                                                                <strong>Monthly:</strong> {price?.details?.monthly}
-                                                            </p>
-                                                        )}
-                                                        {price?.details?.supplierNote && (
-                                                            <p>
-                                                                <strong>Supplier Note:</strong>{" "}
-                                                                {price?.details?.supplierNote}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                )}
+                                                    {/* Show Monthly Detail for Monthly */}
+                                                    {price?.details?.monthly && (
+                                                        <p className="priceMileage">
+                                                            <strong>Monthly:</strong> {price?.details?.monthly}
+                                                        </p>
+                                                    )}
+                                                    {/* {data?.specialNoteForCustomer && (
+                                                        <p>
+                                                            <strong>Supplier Note:</strong>{" "}
+                                                            {data?.specialNoteForCustomer}
+                                                        </p>
+                                                    )} */}
+                                                </div>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                                <div className="priceCont"></div>
                             </div>
                         </div>
                     </div>
@@ -668,7 +671,7 @@ function ProductPageLayout() {
 
             {/* <CarsSection secHeading={"More Like This"} limited data={relatedCars} /> */}
 
-            <div className={`sideModal ${activeModal === "faq" ? "active" : ""}`}>
+            <div data-lenis-prevent className={`sideModal ${activeModal === "faq" ? "active" : ""}`}>
                 <div className="backdrop" onClick={() => handleOptionClick()} />
                 <div className="modalContent">
                     <div className="modalHeader">
@@ -701,7 +704,7 @@ function ProductPageLayout() {
                 </div>
             </div>
 
-            <div className={`sideModal ${activeModal === "requirements" ? "active" : ""}`}>
+            <div data-lenis-prevent className={`sideModal ${activeModal === "requirements" ? "active" : ""}`}>
                 <div className="backdrop" onClick={() => handleOptionClick()} />
                 <div className="modalContent">
                     <div className="modalHeader">
@@ -727,12 +730,12 @@ function ProductPageLayout() {
                                 </li>
                                 <li>
                                     <h4>Security Deposit</h4>
-                                    <h3>AED 5000</h3>
+                                    <h3>AED {data?.securityDepositAmount}</h3>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <h4>Refunded in</h4>
                                     <h3>30 days</h3>
-                                </li>
+                                </li> */}
                             </ul>
                             <h3>For UAE Residents</h3>
                             <ul>
@@ -831,108 +834,15 @@ function ProductPageLayout() {
                             </ul>
                             <h3>Car Features</h3>
                             <ul className="carSpecs">
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Cruise Control
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Memory Front Seats
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Reverse Camera
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Parking Sensors
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Day-time Running Lights
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Touchscreen LCD
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    LCD Screens
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Air Suspension
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Push Button Ignition
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    SRS Airbags
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Front Air Bags
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Bluetooth
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Premium Audio
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Rear AC
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Power Mirrors
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Power Windows
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Seat Belt Reminder
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Fabric Seats
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Alloy Wheels
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    USB
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Foldable Armrest
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Fog Lights
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Climate Control
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    FM Radio
-                                </li>
-                                <li>
-                                    <i className="far fa-car"></i>
-                                    Stereo MP3 / CD
-                                </li>
+                                {data?.features &&
+                                    data?.features?.map((item, index) => (
+                                        <li key={index}>
+                                            <i className="far fa-car"></i>
+                                            {item?.name}
+                                        </li>
+                                    ))}
                             </ul>
-                            <h3>Listed in</h3>
+                            {/* <h3>Listed in</h3>
                             <ul className="listedIn">
                                 <li>
                                     <a href="{}">Sedan Car Rentals in Dubai</a>
@@ -946,7 +856,7 @@ function ProductPageLayout() {
                                     <a href="{}">Economy Car Rentals in Dubai</a>
                                     <i className="fas fa-arrow-right"></i>
                                 </li>
-                            </ul>
+                            </ul> */}
                         </div>
                     </div>
                 </div>
@@ -966,9 +876,14 @@ function ProductPageLayout() {
                             <div className="logoSec">
                                 <Link href={``} className="brand">
                                     <figure>
-                                        <Image src={vendor?.companyLogo} alt="" width={50} height={50} />
+                                        <Image
+                                            src={vendor?.companyLogo || "/images/noImage.jpg"}
+                                            alt=""
+                                            width={50}
+                                            height={50}
+                                        />
                                     </figure>
-                                    Top Elegant Car Rental LLC
+                                    {vendor?.companyName}
                                 </Link>
                             </div>
                             <div className="openTime">

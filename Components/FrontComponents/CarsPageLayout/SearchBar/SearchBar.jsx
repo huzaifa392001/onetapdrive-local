@@ -91,13 +91,15 @@ function SearchBar({ activeCategory }) {
     ];
 
     useEffect(() => {
-        // Initialize Redux state with props if available
-        if (currentCategory) {
-            setSelectedCategory(currentCategory);
+        if (activeCategory && categoryData?.length > 0) {
+            const foundCategory = categoryData.find(
+                (item) => item.category_name.toLowerCase() === activeCategory.toLowerCase()
+            );
+            setSelectedCategory(foundCategory ? foundCategory.category_name : "all");
         } else {
             setSelectedCategory("all");
         }
-    }, [currentCategory]);
+    }, [activeCategory, categoryData]);
 
     const handleFilter = (filterState) => {
         setIsFilterVisible(filterState);
@@ -116,8 +118,8 @@ function SearchBar({ activeCategory }) {
                             { label: selectedCategory, type: "category" },
                             { label: selectedSort, type: "sort" },
                             { label: "Price", type: "price" }
-                        ].map(({ label, type }) => (
-                            <div className={`dropdownCont ${activeDropdown === type ? "active" : ""}`} key={type}>
+                        ].map(({ label, type }, index) => (
+                            <div className={`dropdownCont ${activeDropdown === type ? "active" : ""}`} key={index}>
                                 {type !== "sort" && (
                                     <button className="placeholder" onClick={() => handleDropdownToggle(type)}>
                                         <div>

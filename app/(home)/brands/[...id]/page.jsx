@@ -1,13 +1,13 @@
-import React from 'react'
-import "../brands.scss"
-import CarsPageLayout from '@/Components/FrontComponents/CarsPageLayout/CarsPageLayout'
+import React from "react";
+import "../brands.scss";
+import CarsPageLayout from "@/Components/FrontComponents/CarsPageLayout/CarsPageLayout";
 
 function page() {
     return (
         <>
-            <CarsPageLayout />
+            <CarsPageLayout brands />
         </>
-    )
+    );
 }
 
-export default page
+export default page;

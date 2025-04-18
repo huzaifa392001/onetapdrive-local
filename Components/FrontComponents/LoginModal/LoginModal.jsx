@@ -10,12 +10,12 @@ import { useRouter } from "next/navigation";
 import { SET_IS_USER } from "@/Redux/Slices/Auth";
 
 function LoginModal() {
-    const visibility = useSelector((state) => state.general.userModalStatus)
+    const visibility = useSelector((state) => state.general.userModalStatus);
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState(["", "", "", ""]);
     const otpInputs = useRef([]); // Array of refs for OTP inputs
-    const router = useRouter()
+    const router = useRouter();
 
     const handleSendOTP = () => {
         if (email) {
@@ -42,9 +42,9 @@ function LoginModal() {
         const enteredOTP = otp.join("");
         if (enteredOTP === "1234") {
             alert("OTP verified successfully!");
-            router.push("/user/dashboard")
-            store.dispatch(SET_USER_MODAL_STATUS(false))
-            store.dispatch(SET_IS_USER(true))
+            router.push("/user/dashboard");
+            store.dispatch(SET_USER_MODAL_STATUS(false));
+            store.dispatch(SET_IS_USER(true));
             // Add logic to handle successful verification
         } else {
             alert("Invalid OTP. Please try again.");
@@ -52,8 +52,8 @@ function LoginModal() {
     };
 
     const handleModalVisible = () => {
-        store.dispatch(SET_USER_MODAL_STATUS(false))
-    }
+        store.dispatch(SET_USER_MODAL_STATUS(false));
+    };
 
     return (
         <div className={`modal ${visibility == true ? "visible" : ""}`}>
@@ -68,17 +68,11 @@ function LoginModal() {
                 <div className="modalBody">
                     <div className="content">
                         <figure>
-                            <Image
-                                src={"/images/login-img.webp"}
-                                width={400}
-                                height={400}
-                                alt="login thumb img"
-                            />
+                            <Image src={"/images/login-img.webp"} width={400} height={400} alt="login thumb img" />
                         </figure>
                         <h6>
-                            Ease your car rental search across the world Access exclusive
-                            features with a free account View saved cars, contacted listings
-                            and more
+                            Ease your car rental search across the world Access exclusive features with a free account
+                            View saved cars, contacted listings and more
                         </h6>
                     </div>
                     <div className="formWrap">
@@ -101,7 +95,6 @@ function LoginModal() {
                                         <CustomInput
                                             placeholder="Email"
                                             inputType="email"
-                                            leftIcon="fa-envelope"
                                             required
                                             onChange={(e) => setEmail(e.target.value)}
                                             value={email}
@@ -113,8 +106,7 @@ function LoginModal() {
                                             <i className="fas fa-check" />
                                         </div>
                                         <label>
-                                            By continuing, you agree to our{" "}
-                                            <Link href="">Terms Of Service</Link> and{" "}
+                                            By continuing, you agree to our <Link href="">Terms Of Service</Link> and{" "}
                                             <Link href={""}>Privacy Policy</Link>.
                                         </label>
                                     </div>
@@ -149,9 +141,7 @@ function LoginModal() {
                                                     type="number"
                                                     value={digit}
                                                     maxLength={1}
-                                                    onChange={(e) =>
-                                                        handleOTPChange(e.target.value, index)
-                                                    }
+                                                    onChange={(e) => handleOTPChange(e.target.value, index)}
                                                 />
                                             ))}
                                         </div>

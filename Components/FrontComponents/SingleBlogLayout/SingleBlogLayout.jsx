@@ -66,50 +66,50 @@ function SingleBlogLayout() {
                             </div>
                         </div>
                         <div className="sider">
-                            <div class="socialCard card">
+                            <div className="socialCard card">
                                 <h3>Social Networks</h3>
-                                <div class="tags">
-                                    <button class="tag fb">
-                                        <i class="fab fa-facebook" />
+                                <div className="tags">
+                                    <button className="tag fb">
+                                        <i className="fab fa-facebook" />
                                         <span>Facebook</span>
                                     </button>
-                                    <button class="tag insta">
-                                        <i class="fab fa-instagram" />
+                                    <button className="tag insta">
+                                        <i className="fab fa-instagram" />
                                         <span>Instagram</span>
                                     </button>
-                                    <button class="tag twitter">
-                                        <i class="fab fa-twitter" />
+                                    <button className="tag twitter">
+                                        <i className="fab fa-twitter" />
                                         <span>Twitter</span>
                                     </button>
-                                    <button class="tag linkedin">
-                                        <i class="fab fa-linkedin-in" />
+                                    <button className="tag linkedin">
+                                        <i className="fab fa-linkedin-in" />
                                         <span>LinkedIn</span>
                                     </button>
                                 </div>
                             </div>
-                            <div class="categoryCard card">
+                            <div className="categoryCard card">
                                 <h3>Category</h3>
-                                <Link href={""} class="categoryTag">
+                                <Link href={""} className="categoryTag">
                                     <Image src={"/images/blogCatBg.jpg"} alt fill />
-                                    <div class="content">
+                                    <div className="content">
                                         <h2>Technology</h2>
                                     </div>
                                 </Link>
-                                <Link href={""} class="categoryTag">
+                                <Link href={""} className="categoryTag">
                                     <Image src={"/images/blogCatBg.jpg"} alt fill />
-                                    <div class="content">
+                                    <div className="content">
                                         <h2>LifeStyle</h2>
                                     </div>
                                 </Link>
-                                <Link href={""} class="categoryTag">
+                                <Link href={""} className="categoryTag">
                                     <Image src={"/images/blogCatBg.jpg"} alt fill />
-                                    <div class="content">
+                                    <div className="content">
                                         <h2>Cars</h2>
                                     </div>
                                 </Link>
-                                <Link href={""} class="categoryTag">
+                                <Link href={""} className="categoryTag">
                                     <Image src={"/images/blogCatBg.jpg"} alt fill />
-                                    <div class="content">
+                                    <div className="content">
                                         <h2>Life In Dubai</h2>
                                     </div>
                                 </Link>
@@ -120,14 +120,14 @@ function SingleBlogLayout() {
             </section>
 
             {blogsData && (
-                <section class="relatedBlogs">
-                    <div class="customContainer">
+                <section className="relatedBlogs">
+                    <div className="customContainer">
                         <div className="headingCont">
                             <SecHeading heading="Related Blogs" />
                         </div>
-                        <div class="blogsRow">
+                        <div className="blogsRow">
                             {blogsData?.slice(0, 3)?.map((blog, index) => (
-                                <div class="blogCol" key={index}>
+                                <div className="blogCol" key={index}>
                                     <BlogCardLayout item={blog} />
                                 </div>
                             ))}

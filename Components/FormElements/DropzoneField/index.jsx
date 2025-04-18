@@ -186,7 +186,7 @@ const Dropzone = ({
                                             className={'removeItem'}
                                             onClick={() => remove(i)}
                                         >
-                                            <i class="fas fa-trash" />
+                                            <i className="fas fa-trash" />
                                         </button>
                                     </li>
                                 </Fragment>

@@ -31,7 +31,7 @@ const CheckboxSingle = (props) => {
                                         }
                                     />
                                     <div className={`custom-checkbox`}>
-                                        <i class="fas fa-check" />
+                                        <i className="fas fa-check" />
                                     </div>
                                 </div>
                                 <p>{props.label}</p>

@@ -7,7 +7,7 @@ import Select from "react-select";
 const DropdownIndicator = () => {
     return (
         <>
-            <i class="fas fa-chevron-down" />
+            <i className="fas fa-chevron-down" />
         </>
     );
 };

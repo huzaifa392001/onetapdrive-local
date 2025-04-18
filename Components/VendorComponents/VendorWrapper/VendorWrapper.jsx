@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"; // ✅ Import useRouter
 import VendorHeader from "../VendorHeader/VendorHeader";
 import VendorSidebar from "../VendorSidebar/VendorSidebar";
 import "./VendorWrapper.scss";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import {
     getBags,
     getCarBodyTypes,
@@ -23,10 +23,18 @@ import {
     getSpecs,
     getTransmission
 } from "@/Services/VendorServices/VendorAddCarServices";
+import { getCurrentVendor } from "@/Services/VendorServices/VendorServices";
+import { store } from "@/Redux/Store";
+import { SET_VENDOR_DETAILS } from "@/Redux/Slices/Auth";
 
 function VendorWrapper({ children }) {
     const isVendor = useSelector((state) => state.auth.isVendor);
     const router = useRouter();
+
+    const { data: vendorData } = useQuery({
+        queryKey: ["vendorProfile"],
+        queryFn: getCurrentVendor
+    });
 
     useEffect(() => {
         if (!isVendor) {
@@ -53,6 +61,11 @@ function VendorWrapper({ children }) {
             { queryKey: ["service"], queryFn: getService }
         ]
     });
+
+    useEffect(() => {
+        console.log("vendorData=> ", vendorData);
+        store.dispatch(SET_VENDOR_DETAILS(vendorData?.data));
+    }, [vendorData]);
 
     if (!isVendor) return null; // ✅ Prevent rendering anything before redirect
 

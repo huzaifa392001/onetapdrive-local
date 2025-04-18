@@ -38,7 +38,7 @@ function SortableItem({ id, image, index }) {
     );
 }
 
-function CarImages({ carImages, oldImages, edit }) {
+function CarImages({ carImages, oldImages, edit, errors }) {
     const [images, setImages] = useState([]); // Final cropped images
     const [queue, setQueue] = useState([]); // Queue of images for cropping
     const [currentImage, setCurrentImage] = useState(null); // Image currently being cropped
@@ -70,25 +70,28 @@ function CarImages({ carImages, oldImages, edit }) {
         }
     };
 
-    const handleCropComplete = useCallback(async (croppedImage) => {
-        try {
-            const response = await fetch(croppedImage);
-            const blob = await response.blob();
-            const file = new File([blob], `cropped-image-${Date.now()}.png`, { type: blob.type });
+    const handleCropComplete = useCallback(
+        async (croppedImage) => {
+            try {
+                const response = await fetch(croppedImage);
+                const blob = await response.blob();
+                const file = new File([blob], `cropped-image-${Date.now()}.png`, { type: blob.type });
 
-            const croppedImageWithId = { id: `${Date.now()}`, src: URL.createObjectURL(file), file };
-            setImages((prev) => [...prev, croppedImageWithId]); // Add converted file to state
+                const croppedImageWithId = { id: `${Date.now()}`, src: URL.createObjectURL(file), file };
+                setImages((prev) => [...prev, croppedImageWithId]); // Add converted file to state
 
-            if (queue.length > 0) {
-                setCurrentImage(queue[0]?.src || null);
-                setQueue((prev) => prev.slice(1)); // Remove the first image from the queue
-            } else {
-                setCurrentImage(null); // Close the cropper if the queue is empty
+                if (queue.length > 0) {
+                    setCurrentImage(queue[0]?.src || null);
+                    setQueue((prev) => prev.slice(1)); // Remove the first image from the queue
+                } else {
+                    setCurrentImage(null); // Close the cropper if the queue is empty
+                }
+            } catch (error) {
+                console.error("Error converting blob to file:", error);
             }
-        } catch (error) {
-            console.error("Error converting blob to file:", error);
-        }
-    }, [queue]);
+        },
+        [queue]
+    );
 
     const handleCancelCrop = useCallback(() => {
         if (queue.length > 0) {
@@ -149,7 +152,7 @@ function CarImages({ carImages, oldImages, edit }) {
                         <SecHeading heading="Car Images Preview" />
                     </div>
                     {images.length > 0 ? (
-                        <div className="imagesCont">
+                        <div className="imagesCont ">
                             {/* Main Slider */}
                             <Swiper
                                 modules={[Pagination, Autoplay, Controller]}
@@ -228,7 +231,7 @@ function CarImages({ carImages, oldImages, edit }) {
                             /> */}
                         </div>
                     ) : (
-                        <div className={`uploader`}>
+                        <div className={`uploader ${errors?.images ? "error" : null}`}>
                             <i className="fad fa-images" />
                             <h3>Click to Upload Images</h3>
                             <input

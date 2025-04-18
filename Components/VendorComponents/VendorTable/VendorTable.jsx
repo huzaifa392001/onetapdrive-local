@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import "./VendorTable.scss";
+import { toast } from "react-toastify";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -16,14 +17,6 @@ function VendorTable(props) {
     const [colDefs, setColDefs] = useState([]);
     const [statusMap, setStatusMap] = useState({}); // Store status for each row by id
     const [localRowData, setLocalRowData] = useState(rowData); // Local state to manage rowData
-
-    useEffect(() => {
-        if (rowData.length > 0) {
-            console.log("Row Data: ", rowData);
-            console.log("Column Definitions: ", colDefs);
-            // your existing logic
-        }
-    }, [rowData, colDefs]);
 
     useEffect(() => {
         if (rowData.length > 0) {
@@ -113,18 +106,27 @@ function VendorTable(props) {
                               const id = params.data?.id;
                               const currentStatus = statusMap[id] || params.data.status || "inactive";
 
-                              const toggleStatus = () => {
+                              const toggleStatus = async () => {
                                   const newStatus = currentStatus === "inactive" ? "active" : "inactive";
-                                  setStatusMap((prevStatusMap) => ({
-                                      ...prevStatusMap,
-                                      [id]: newStatus
-                                  }));
 
-                                  const updatedRowData = localRowData.map((row) =>
-                                      row.id === id ? { ...row, status: newStatus } : row
-                                  );
-                                  console.log("Updated rowData:", updatedRowData);
-                                  setLocalRowData(updatedRowData);
+                                  try {
+                                      //   await updateCarStatus(id, newStatus); // API call to update backend
+                                      toast.success("Status updated successfully");
+                                      // Update frontend status on success
+                                      setStatusMap((prevStatusMap) => ({
+                                          ...prevStatusMap,
+                                          [id]: newStatus
+                                      }));
+
+                                      const updatedRowData = localRowData.map((row) =>
+                                          row.id === id ? { ...row, status: newStatus } : row
+                                      );
+                                      setLocalRowData(updatedRowData);
+                                  } catch (error) {
+                                      toast.error("Failed to update status");
+                                      console.error("Failed to update status:", error);
+                                      // Optionally show error toast here
+                                  }
                               };
 
                               return (

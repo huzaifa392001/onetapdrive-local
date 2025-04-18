@@ -9,9 +9,11 @@ import FilteredCars from "../FilteredCars/FilteredCars";
 import Image from "next/image";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCars } from "@/Services/FrontServices/GeneralServices";
+import { getAllCars, getBrandsCars, getCategorizedCars } from "@/Services/FrontServices/GeneralServices";
+import Loading from "@/Components/Loading/Loading";
+import Link from "next/link";
 
-function CarsPageLayout() {
+function CarsPageLayout({ brands }) {
     const currentCity = useSelector((state) => state.general.currentLocation);
     const route = usePathname().split("/").filter(Boolean);
     const activeRoute = route[route.length - 1];
@@ -31,12 +33,18 @@ function CarsPageLayout() {
         }));
     };
 
-    const { data: carsData } = useQuery({
-        queryKey: ["cars"],
-        queryFn: () => getAllCars()
+    const { data: carsData, isPending } = useQuery({
+        queryKey: ["cars", brands ? "brand" : "category", activeRoute],
+        queryFn: () =>
+            activeRoute === "all"
+                ? getAllCars()
+                : brands
+                ? getBrandsCars({ brand: activeRoute || "" })
+                : getCategorizedCars({ category: activeRoute || "" }),
+        enabled: true
     });
 
-    console.log("carsData=> ", carsData);
+    if (isPending) return <Loading />;
 
     return (
         <>
@@ -63,10 +71,10 @@ function CarsPageLayout() {
                                 </figure>
                                 <div className="categoriesDrawerCont">
                                     {(showAll ? categories : categories?.slice(0, 4))?.map((item, index) => (
-                                        <div className="categoryTab" key={index}>
+                                        <Link href={`/cars/${item?.category_slug}`} className="categoryTab" key={index}>
                                             <span>{item?.category_name}</span>
                                             <i className="fas fa-caret-right" />
-                                        </div>
+                                        </Link>
                                     ))}
                                     {categories?.length > 4 && (
                                         <button className="showMoreBtn" onClick={toggleShowAll}>

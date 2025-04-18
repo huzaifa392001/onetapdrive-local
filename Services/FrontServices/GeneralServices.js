@@ -46,6 +46,42 @@ export const getAllCars = async () => {
     }
 };
 
+export const getCategorizedCars = async ({ category }) => {
+    try {
+        const res = await API.get(`/cars/category/${category}`);
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting all cars:", e);
+    }
+};
+
+export const getBrandsCars = async ({ brand }) => {
+    try {
+        const res = await API.get(`/cars/brand/${brand}`);
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting all cars:", e);
+    }
+};
+
+export const getViewedCars = async () => {
+    try {
+        const res = await API.get("/cars");
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting all cars:", e);
+    }
+};
+
+export const getWishlistedCars = async () => {
+    try {
+        const res = await API.get("/cars");
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting all cars:", e);
+    }
+};
+
 export const getSingleCar = async (carId) => {
     try {
         const res = await API.get(`/cars/${carId}`);

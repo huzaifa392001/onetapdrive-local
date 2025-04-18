@@ -15,8 +15,10 @@ import { createCar } from "@/Services/VendorServices/VendorAddCarServices";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
 
 function AddCar({ edit }) {
+    const router = useRouter();
     const validationSchema = Yup.object({
         name: Yup.string().required("Car name is required"),
         cityId: Yup.string().required("City is required"),
@@ -51,11 +53,26 @@ function AddCar({ edit }) {
         prices: Yup.array()
             .of(
                 Yup.object({
-                    price: Yup.number().min(0, "Price must be positive").required("Price is required"),
-                    kilometers: Yup.number().min(0, "Kilometers must be positive").required("Kilometers are required")
+                    priceType: Yup.string().required(),
+                    price: Yup.number()
+                        .min(0, "Price must be positive")
+                        .when("priceType", {
+                            is: "daily",
+                            then: (schema) => schema.required("Daily price is required"),
+                            otherwise: (schema) => schema.notRequired()
+                        }),
+                    kilometers: Yup.number()
+                        .min(0, "Kilometers must be positive")
+                        .when("priceType", {
+                            is: "daily",
+                            then: (schema) => schema.required("Daily kilometers are required"),
+                            otherwise: (schema) => schema.notRequired()
+                        })
                 })
             )
-            .required("Price details are required")
+            .test("has-daily", "Daily pricing is required", (prices) => {
+                return prices.some((item) => item.priceType === "daily" && item.price && item.kilometers);
+            })
     }).required();
 
     const defaultCarFormValues = {
@@ -64,8 +81,8 @@ function AddCar({ edit }) {
         securityDeposit: true,
         securityDepositAmount: 0,
         specialNoteForCustomer: "",
-        registrationCardFront: "",
-        registrationCardBack: "",
+        registrationCardFront: null,
+        registrationCardBack: null,
         registrationCardExpiryDate: null, // format as YYYY-MM-DD
         interiorColor: "",
         description: "",
@@ -109,6 +126,7 @@ function AddCar({ edit }) {
         onSuccess: () => {
             toast.success(edit ? "Car updated successfully" : "Car added successfully");
             reset();
+            router.back();
         },
         onError: (error) => {
             toast.error(error.response?.data?.message || "Something went wrong");
@@ -121,7 +139,6 @@ function AddCar({ edit }) {
 
     // Form submission handler
     const onSubmit = (data) => {
-        console.log("data=> ", data);
         addCarMutation.mutate(data);
     };
 

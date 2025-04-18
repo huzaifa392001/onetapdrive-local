@@ -1,13 +1,13 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import SecHeading from '@/Components/SecHeading/SecHeading';
-import CategoryCard from './CategoryCard/CategoryCard';
-import { useSelector } from 'react-redux';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './Categories.scss';
+"use client";
+import React, { useEffect, useState } from "react";
+import SecHeading from "@/Components/SecHeading/SecHeading";
+import CategoryCard from "./CategoryCard/CategoryCard";
+import { useSelector } from "react-redux";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./Categories.scss";
 
 function Categories() {
     const [windowWidth, setWindowWidth] = useState(0);
@@ -15,9 +15,9 @@ function Categories() {
     const categoriesData = useSelector((state) => state.general.categories);
     const [totalCat, setTotalCat] = useState(0);
     const carWithDriver = {
-        name: "Car With Driver",
+        category_name: "Car With Driver",
         img: "/images/categories/Car-With-Driver.webp",
-        quantity: 9
+        cars: 0
     };
 
     // Ensure functionality only triggers when there are at least 8 categories

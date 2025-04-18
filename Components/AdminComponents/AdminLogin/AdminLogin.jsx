@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,15 +13,17 @@ import FormGroup from "@/Components/FormGroup";
 import { requiredValidation } from "@/Utils/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector } from "react-redux";
+import { SET_IS_ADMIN } from "@/Redux/Slices/Auth";
+import { store } from "@/Redux/Store";
 function AdminLogin() {
-    const { isAdmin } = useSelector((state) => state.auth.isAdmin)
-    const [admin, setAdmin] = useState(isAdmin)
+    const { isAdmin } = useSelector((state) => state.auth.isAdmin);
+    const [admin, setAdmin] = useState(isAdmin);
     const router = useRouter();
 
     const init = {
         email: "",
         password: ""
-    }
+    };
 
     const fields = [
         {
@@ -31,7 +33,7 @@ function AdminLogin() {
             label: "Email Address",
             inputtype: "email",
             req: true,
-            colWidth: "col_md_6",
+            colWidth: "col_md_6"
         },
         {
             type: "input",
@@ -40,14 +42,14 @@ function AdminLogin() {
             label: "Password",
             inputtype: "password",
             req: true,
-            eye: true,
-        },
+            eye: true
+        }
     ];
 
     const schema = yup
         .object({
             email: yup.string().email().required(requiredValidation),
-            password: yup.string().required(requiredValidation),
+            password: yup.string().required(requiredValidation)
         })
         .required();
 
@@ -55,42 +57,44 @@ function AdminLogin() {
         control,
         handleSubmit,
         formState: { errors, isValid },
-        watch,
+        watch
     } = useForm({
         resolver: yupResolver(schema),
-        defaultValues: init,
+        defaultValues: init
     });
 
     const loginMutation = useMutation({
         mutationFn: login,
         onSuccess: (res) => {
             toast.success("Login Successfully!");
+            store.dispatch(SET_ADMIN_DETAILS(res?.data?.user_details));
+            store.dispatch(SET_ACCESS_TOKEN(res?.data?.access_token));
+            store.dispatch(SET_IS_ADMINN(true));
             router.push("/admin");
         },
         onError: (error) => {
             toast.error(error.message || "Login failed! Please try again.");
-        },
+        }
     });
-
 
     const onSubmit = async (val) => {
         const body = {
             identifier: val?.email,
             password: val?.password
-        }
-        loginMutation.mutate(body)
+        };
+        loginMutation.mutate(body);
     };
 
     useEffect(() => {
-        setAdmin(isAdmin)
-    }, [isAdmin])
+        setAdmin(isAdmin);
+    }, [isAdmin]);
 
     useEffect(() => {
-        console.log("admin=> ", admin)
+        console.log("admin=> ", admin);
         if (admin) {
-            router.push("/admin")
+            router.push("/admin");
         }
-    }, [admin])
+    }, [admin]);
 
     return (
         <section className="adminLoginSec">
@@ -109,12 +113,7 @@ function AdminLogin() {
 
                 <form id="loginForm" onSubmit={handleSubmit(onSubmit)}>
                     {fields?.map((item, i) => (
-                        <FormGroup
-                            key={i}
-                            item={item}
-                            control={control}
-                            errors={errors}
-                        />
+                        <FormGroup key={i} item={item} control={control} errors={errors} />
                     ))}
                     <div className="btnCont">
                         <button type="submit" className="themeBtn full">
@@ -124,7 +123,7 @@ function AdminLogin() {
                 </form>
             </div>
         </section>
-    )
+    );
 }
 
 export default memo(AdminLogin);

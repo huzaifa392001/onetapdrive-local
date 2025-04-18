@@ -17,14 +17,14 @@ const CarFeatures = memo(function CarFeatures({ control, errors }) {
                 <SecHeading heading="Car Features*" />
             </div>
             <div className="inputContainer full">
-                <div className={`inputCont full ${errors?.features ? "error" : ""}`}>
+                <div className={`inputCont full ${errors?.featureIds ? "error" : ""}`}>
                     <Controller
                         name="featureIds"
                         control={control}
                         defaultValue={[]}
-                        rules={{ 
+                        rules={{
                             required: "At least one feature is required",
-                            validate: value => value.length > 0 || "Please select at least one feature" 
+                            validate: (value) => value.length > 0 || "Please select at least one feature"
                         }}
                         render={({ field: { value, onChange } }) => (
                             <>
@@ -60,9 +60,7 @@ const CarFeatures = memo(function CarFeatures({ control, errors }) {
                                         </li>
                                     )}
                                 </ul>
-                                {errors?.features && (
-                                    <p className="error-message">{errors.features.message}</p>
-                                )}
+                                {errors?.features && <p className="error-message">{errors.features.message}</p>}
                             </>
                         )}
                     />

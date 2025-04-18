@@ -171,11 +171,11 @@ function Header() {
                         <div className="brandsCont">
                             {brandsData && brandsData?.length > 0 ? (
                                 brandsData.map((brand, index) => (
-                                    <Link href={`/cars/${brand?.url}`} className="brandCont" key={index}>
+                                    <Link href={`/brands/${brand?.brand_slug}`} className="brandCont" key={index}>
                                         <figure>
-                                            <Image src={brand?.img} width={50} height={50} alt="" />
+                                            <Image src={brand?.brand_image} width={50} height={50} alt="" />
                                         </figure>
-                                        <h6>{brand?.name}</h6>
+                                        <h6>{brand?.brand_name}</h6>
                                     </Link>
                                 ))
                             ) : (
@@ -438,12 +438,12 @@ function Header() {
                                             <li key={index}>
                                                 <Link
                                                     onClick={() => handleMouseLeave("")}
-                                                    href={`/cars/${brand?.url}`}
+                                                    href={`/brands/${brand?.brand_slug}`}
                                                     className="brandCont"
                                                 >
-                                                    <h6>{brand?.name}</h6>
+                                                    <h6>{brand?.brand_name}</h6>
                                                     <figure>
-                                                        <Image src={brand?.img} width={50} height={50} alt="" />
+                                                        <Image src={brand?.brand_image} width={50} height={50} alt="" />
                                                     </figure>
                                                 </Link>
                                             </li>

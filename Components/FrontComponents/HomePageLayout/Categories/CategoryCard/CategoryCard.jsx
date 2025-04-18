@@ -14,7 +14,7 @@ function CategoryCard(props) {
                     width={200}
                     height={200}
                     quantity={100}
-                    alt={`${category?.name}'s Picture`}
+                    alt={`${category?.category_name}'s Picture`}
                 />
             </figure>
             <div className="content">

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { usePathname } from "next/navigation";

@@ -24,9 +24,9 @@
     .imagesRow {
         @apply relative flex items-center overflow-hidden rounded-xl gap-x-2;
         figure {
-            @apply w-full relative lg:h-[250px] xl:h-[350px] max-h-[40vh] overflow-hidden flex flex-col;
+            @apply w-full relative lg:h-[250px] xl:h-[350px] max-h-[80vh] overflow-hidden flex flex-col;
             img {
-                @apply w-full h-full object-cover object-center aspect-square;
+                @apply w-full h-full object-cover object-center aspect-video xl:aspect-square cursor-pointer;
             }
 
             &.multiImage {
@@ -37,7 +37,7 @@
             }
         }
         .imgTags {
-            @apply absolute top-3 w-full px-3 flex items-center justify-start gap-x-3;
+            @apply absolute top-3 w-full px-3 flex items-center justify-start gap-x-3 z-[2];
             .tag {
                 @apply w-fit text-[12px] font-semibold text-[var(--black)] bg-[var(--white)] rounded-md px-3 py-1 flex items-center gap-x-1;
                 i {
@@ -59,8 +59,23 @@
         .showAllBtn {
             @apply absolute bottom-3 right-3 w-fit text-[14px] capitalize font-normal text-[var(--black)] bg-[var(--white)] rounded-md px-3 py-1 flex items-center gap-x-2 transition-all duration-300 shadow-md;
 
+            @apply hidden md:flex;
+
             &:hover {
                 @apply bg-[var(--black)] text-[var(--white)];
+            }
+        }
+
+        @media (max-width: 768px) {
+            .imagesRow {
+                .swiper-slide {
+                    width: 100%;
+                }
+                figure.multiImage {
+                    display: flex;
+                    // flex-direction: column;
+                    gap: 4px;
+                }
             }
         }
     }
@@ -104,7 +119,7 @@
                     flex: 0 1 55%;
 
                     ul {
-                        @apply flex items-center justify-start px-4 gap-x-20;
+                        @apply flex flex-col items-start px-4 gap-y-4 gap-x-0 sm:flex-row sm:items-center sm:gap-x-20 sm:gap-y-0;
 
                         li {
                             @apply flex items-center gap-x-2 font-thin capitalize;
@@ -470,4 +485,8 @@
             @apply right-0;
         }
     }
+}
+
+.fancyboximages {
+    display: none;
 }

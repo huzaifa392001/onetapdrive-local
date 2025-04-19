@@ -23,10 +23,6 @@ function SearchBar({ activeCategory }) {
     // Calculate total quantity
     const totalQuantity = categoryData?.reduce((sum, item) => sum + (parseInt(item.cars) || 0), 0);
 
-    useEffect(() => {
-        console.log("categoryData=> ", categoryData);
-    }, [categoryData]);
-
     const handleDropdownToggle = (type) => {
         setActiveDropdown((prev) => (prev === type ? "" : type)); // Toggle dropdown
     };
@@ -93,9 +89,9 @@ function SearchBar({ activeCategory }) {
     useEffect(() => {
         if (activeCategory && categoryData?.length > 0) {
             const foundCategory = categoryData.find(
-                (item) => item.category_name.toLowerCase() === activeCategory.toLowerCase()
+                (item) => item.name.toLowerCase() === activeCategory.toLowerCase()
             );
-            setSelectedCategory(foundCategory ? foundCategory.category_name : "all");
+            setSelectedCategory(foundCategory ? foundCategory.name : "all");
         } else {
             setSelectedCategory("all");
         }
@@ -158,13 +154,13 @@ function SearchBar({ activeCategory }) {
                                                         key={item.name}
                                                         className={`categoryItem ${
                                                             selectedCategory.toLowerCase() ===
-                                                            item.category_name.toLowerCase()
+                                                            item.name.toLowerCase()
                                                                 ? "active"
                                                                 : ""
                                                         }`}
-                                                        onClick={() => handleCategorySelect(item.category_name)}
+                                                        onClick={() => handleCategorySelect(item.name)}
                                                     >
-                                                        <span>{item.category_name}</span>
+                                                        <span>{item.name}</span>
                                                         <small>{item.cars || 0} Cars</small>
                                                     </li>
                                                 ))}

@@ -15,7 +15,7 @@ function Categories() {
     const categoriesData = useSelector((state) => state.general.categories);
     const [totalCat, setTotalCat] = useState(0);
     const carWithDriver = {
-        category_name: "Car With Driver",
+        name: "Car With Driver",
         img: "/images/categories/Car-With-Driver.webp",
         cars: 0
     };

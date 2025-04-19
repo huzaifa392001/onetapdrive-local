@@ -1,117 +1,116 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import SecHeading from '@/Components/SecHeading/SecHeading';
-import { pageName } from '@/Utils/Utils';
-import FormGroup from '@/Components/FormGroup';
-import { useMutation } from '@tanstack/react-query';
-import { addCategory } from '@/Services/AdminServices/AdminCategories';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import SecHeading from "@/Components/SecHeading/SecHeading";
+import { pageName } from "@/Utils/Utils";
+import FormGroup from "@/Components/FormGroup";
+import { useMutation } from "@tanstack/react-query";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { requiredValidation } from '@/Utils/validation';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
-import Spinner from '@/Components/Spinner/Spinner';
+import { requiredValidation } from "@/Utils/validation";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import Spinner from "@/Components/Spinner/Spinner";
+import { addBodyType } from "@/Services/AdminServices/AdminBodyTypes";
 
 function Page() {
-    const router = useRouter()
+    const router = useRouter();
     const [formData, setFormData] = useState(new FormData());
     const init = {
-        categoryImage: null,
-        categoryTitle: "",
+        bodyTypeImage: null,
+        bodyTypeTitle: ""
     };
-
 
     const schema = yup
         .object({
-            categoryImage: yup.string().required(requiredValidation),
-            categoryTitle: yup.string().required(requiredValidation),
+            bodyTypeImage: yup.string().required(requiredValidation),
+            bodyTypeTitle: yup.string().required(requiredValidation)
         })
         .required();
 
-    const categoryMutation = useMutation({
-        mutationFn: addCategory,
+    const bodyTypeMutation = useMutation({
+        mutationFn: addBodyType,
         onSuccess: (res) => {
-            toast.success(res?.message)
-            router.push("/admin/categories")
+            toast.success(res?.message);
+            router.push("/admin/body-type");
         },
         onError: (error) => {
-            toast.error(`Failed to add category: ${error}`);
+            toast.error(`Failed to add bodyType: ${error}`);
         }
-    })
+    });
 
     const fields = [
         {
             type: "file",
-            name: "categoryImage",
+            name: "bodyTypeImage",
             multiple: false,
             accept: {
                 "image/jpeg": [],
                 "image/png": [],
-                "image/webp": [],
+                "image/webp": []
             },
-            uploadLabel: "Upload Category Image",
+            uploadLabel: "Upload Body Type Image"
         },
         {
             type: "input",
-            name: "categoryTitle",
-            placeholder: "Enter Category Title",
-            label: "Category Title",
+            name: "bodyTypeTitle",
+            placeholder: "Enter Body Type Title",
+            label: "Body Type Title",
             inputtype: "text",
-            req: true,
-        },
+            req: true
+        }
     ];
 
     const {
         control,
         handleSubmit,
         formState: { errors, isValid },
-        watch,
+        watch
     } = useForm({
         resolver: yupResolver(schema),
-        defaultValues: init,
+        defaultValues: init
     });
 
     const formValues = watch();
 
     useEffect(() => {
-        if (formValues.categoryImage && formValues.categoryImage instanceof File) {
+        if (formValues.bodyTypeImage && formValues.bodyTypeImage instanceof File) {
             const updatedFormData = new FormData();
-            updatedFormData.append("file", formValues.categoryImage);
+            updatedFormData.append("file", formValues.bodyTypeImage);
             setFormData(updatedFormData);
         }
-    }, [formValues.categoryImage]);
+    }, [formValues.bodyTypeImage]);
 
     const onSubmit = async (data) => {
-
         // Append other fields
-        formData.append("name", data.categoryTitle);
-        formData.append("titles", data.categoryTitle);
-        formData.append("description", data.categoryTitle);
+        formData.append("name", data.bodyTypeTitle);
+        formData.append("titles", data.bodyTypeTitle);
+        formData.append("description", data.bodyTypeTitle);
 
         console.log("Submitting Data: ", Object.fromEntries(formData.entries()));
-        categoryMutation.mutate(formData);
+        bodyTypeMutation.mutate(formData);
     };
 
     return (
         <>
             <div className="formWrapper">
-                <form className='formContainer' onSubmit={handleSubmit(onSubmit)}>
+                <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
                     <div className="headingCont">
                         <SecHeading heading={`${pageName()}`} />
                     </div>
                     {fields?.map((item, i) => (
-                        <FormGroup
-                            key={i}
-                            item={item}
-                            control={control}
-                            errors={errors}
-                        />
+                        <FormGroup key={i} item={item} control={control} errors={errors} />
                     ))}
 
                     <div className="inputCont btnCont">
-                        <button disabled={!isValid || categoryMutation.isPending} type="submit" className={`themeBtn ${!isValid ? "disabled" : ""} ${categoryMutation.isPending ? "disabled" : ""}`}>
-                            {categoryMutation.isPending ? <Spinner /> : "Submit"}
+                        <button
+                            disabled={!isValid || bodyTypeMutation.isPending}
+                            type="submit"
+                            className={`themeBtn ${!isValid ? "disabled" : ""} ${
+                                bodyTypeMutation.isPending ? "disabled" : ""
+                            }`}
+                        >
+                            {bodyTypeMutation.isPending ? <Spinner /> : "Submit"}
                         </button>
                     </div>
                 </form>

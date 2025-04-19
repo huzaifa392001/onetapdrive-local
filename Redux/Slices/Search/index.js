@@ -41,7 +41,6 @@ const searchSlice = createSlice({
             state.requestedProduct = action.payload;
         },
         SET_SEARCH_PARAMS(state, action) {
-            console.log("action=> ", action.payload);  // Log action payload for debugging
 
             state.searchParam = {
                 ...state.searchParam,  // Keep existing fields

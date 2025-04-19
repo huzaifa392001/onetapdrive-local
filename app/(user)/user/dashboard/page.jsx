@@ -3,7 +3,7 @@
 import FullProductCard from "@/Components/FullProductCard/FullProductCard";
 import { getAllCars, getViewedCars, getWishlistedCars } from "@/Services/FrontServices/GeneralServices";
 import { useQueries } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 
 function Page() {
@@ -27,6 +27,9 @@ function Page() {
     });
 
     const [allCars, viewedCars, wishlistedCars] = results;
+    useEffect(() => {
+        console.log("allCars=> ", results[0]);
+    }, [results]);
 
     const tabs = [
         { label: "Wishlist", key: "wishlist" },
@@ -38,11 +41,11 @@ function Page() {
     const getActiveData = () => {
         switch (activeTab) {
             case "wishlist":
-                return wishlistedCars?.data?.data?.data || [];
+                return wishlistedCars?.data?.data?.cars || [];
             case "viewed":
-                return viewedCars?.data?.data?.data || [];
+                return viewedCars?.data?.data?.cars || [];
             case "contacted":
-                return allCars?.data?.data?.data || []; // Placeholder
+                return allCars?.data?.data?.cars || []; // Placeholder
             default:
                 return [];
         }
@@ -74,12 +77,12 @@ function Page() {
                         ))}
                     </div>
 
-                    <div className="totalResult">
+                    {/* <div className="totalResult">
                         <p>
                             Showing <span>1</span> - <span>{activeData.length}</span> of{" "}
                             <span>{activeData.length}</span> Cars
                         </p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

@@ -13,7 +13,7 @@ import FormGroup from "@/Components/FormGroup";
 import { requiredValidation } from "@/Utils/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector } from "react-redux";
-import { SET_IS_ADMIN } from "@/Redux/Slices/Auth";
+import { SET_ACCESS_TOKEN, SET_ADMIN_DETAILS, SET_IS_ADMIN } from "@/Redux/Slices/Auth";
 import { store } from "@/Redux/Store";
 function AdminLogin() {
     const { isAdmin } = useSelector((state) => state.auth.isAdmin);
@@ -65,11 +65,9 @@ function AdminLogin() {
 
     const loginMutation = useMutation({
         mutationFn: login,
-        onSuccess: (res) => {
+        onSuccess: () => {
             toast.success("Login Successfully!");
-            store.dispatch(SET_ADMIN_DETAILS(res?.data?.user_details));
-            store.dispatch(SET_ACCESS_TOKEN(res?.data?.access_token));
-            store.dispatch(SET_IS_ADMINN(true));
+
             router.push("/admin");
         },
         onError: (error) => {

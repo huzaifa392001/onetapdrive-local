@@ -11,11 +11,18 @@ import Head from "next/head";
 import { useQuery } from "@tanstack/react-query";
 import { getSingleCar } from "@/Services/FrontServices/GeneralServices";
 import Loading from "@/app/(home)/loading";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+import Fancybox from "@/Components/Fancybox/Fancybox";
 
 function ProductPageLayout() {
     const [data, setData] = useState();
     const [user, setUser] = useState({});
     const [vendor, setVendor] = useState({});
+    const [fancyboxIsActive, setFancyboxIsActive] = useState(false);
+
     const faqs = [
         {
             question: "Can I get this car delivered?",
@@ -269,6 +276,18 @@ function ProductPageLayout() {
     const [activePrice, setActivePrice] = useState(null);
     const currentCity = useSelector((state) => state.general.currentLocation);
     const route = usePathname().split("/").pop();
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        handleResize(); // Check initially
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const renderTags = () => {
         const tags = [];
@@ -307,11 +326,22 @@ function ProductPageLayout() {
     useEffect(() => {
         setData(carData?.data);
         setUser(carData?.data?.user);
-        setVendor(carData?.data?.user?.vendorProfile[0]);
-        console.log("carData=>", carData);
+        setVendor(carData?.data?.user?.vendorProfile);
     }, [carData]);
 
-    if (isPending) return <Loading />;
+    const openFancyboxFromIndex = (startIndex = 0) => {
+        if (data?.images?.length) {
+            const slides = data.images.map((item) => ({
+                src: item.image,
+                type: "image"
+            }));
+
+            window.Fancybox?.show(slides, { startIndex });
+            setFancyboxIsActive(true);
+        }
+    };
+
+    if (!data || isPending) return <Loading />;
 
     return (
         <>
@@ -340,61 +370,94 @@ function ProductPageLayout() {
                             <h1>{data?.name}</h1>
                             <h3>
                                 Hire in {data?.city?.name}: {data?.color?.name} {data?.category?.name},{" "}
-                                {data?.seatingCapacity?.name} with{" "}
-                                {data?.features?.slice(0, 3)?.map((item) => `${item?.name}, `)}
+                                {data?.seatingCapacity?.name}{" "}
+                                {data?.features
+                                    ?.slice(0, 3)
+                                    ?.map((item) => `${item?.name ? "with " + item?.name + ", " : ""}`)}
                             </h3>
                         </div>
                     </div>
 
                     <div className="imagesRow">
-                        {/* Main Image */}
-                        <figure>
-                            <Image
-                                src={data?.images?.[0]?.image || "/images/noImage.jpg"}
-                                alt="Car Thumbnail Image"
-                                width={500}
-                                height={500}
-                            />
-                        </figure>
-
-                        {/* Remaining Images */}
-                        {(data?.images?.length > 1 ? data.images.slice(1, 5) : [null, null, null]).map(
-                            (image, index) => {
-                                if (index === 1) {
-                                    return (
-                                        <figure key={index} className="multiImage">
+                        {isMobile ? (
+                            <Swiper
+                                spaceBetween={10}
+                                slidesPerView={1}
+                                pagination={{ clickable: true }}
+                                modules={[Pagination]}
+                                className="mySwiper"
+                            >
+                                {/* Main image */}
+                                {data?.images?.map((item, index) => (
+                                    <SwiperSlide key={index}>
+                                        <figure>
                                             <Image
-                                                src={data?.images?.[2]?.image || "/images/noImage.jpg"}
-                                                alt={`Car image ${index + 1}`}
-                                                width={250}
-                                                height={250}
-                                            />
-                                            <Image
-                                                src={data?.images?.[3]?.image || "/images/noImage.jpg"}
-                                                alt={`Car image ${index + 2}`}
-                                                width={250}
-                                                height={250}
+                                                onClick={() => openFancyboxFromIndex(index)}
+                                                src={item?.image || "/images/noImage.jpg"}
+                                                alt="Car Thumbnail Image"
+                                                width={500}
+                                                height={500}
                                             />
                                         </figure>
-                                    );
-                                }
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        ) : (
+                            // Desktop layout as it is
+                            <>
+                                <figure>
+                                    <Image
+                                        onClick={() => openFancyboxFromIndex(0)}
+                                        src={data?.images?.[0]?.image || "/images/noImage.jpg"}
+                                        alt="Car Thumbnail Image"
+                                        width={500}
+                                        height={500}
+                                    />
+                                </figure>
 
-                                if (index === 2) return null; // skip image at index 2, already included above
+                                {(data?.images?.length > 1 ? data.images.slice(1, 5) : [null, null, null]).map(
+                                    (image, index) => {
+                                        const actualIndex = index + 1; // Because you sliced from index 1
 
-                                return (
-                                    <figure key={index}>
-                                        <Image
-                                            src={image?.image || "/images/noImage.jpg"}
-                                            alt={`Car image ${index + 1}`}
-                                            width={500}
-                                            height={500}
-                                        />
-                                    </figure>
-                                );
-                            }
+                                        if (index === 1) {
+                                            return (
+                                                <figure key={index} className="multiImage">
+                                                    <Image
+                                                        onClick={() => openFancyboxFromIndex(2)}
+                                                        src={data?.images?.[2]?.image || "/images/noImage.jpg"}
+                                                        alt={`Car image ${actualIndex + 0}`}
+                                                        width={250}
+                                                        height={250}
+                                                    />
+                                                    <Image
+                                                        onClick={() => openFancyboxFromIndex(3)}
+                                                        src={data?.images?.[3]?.image || "/images/noImage.jpg"}
+                                                        alt={`Car image ${actualIndex + 1}`}
+                                                        width={250}
+                                                        height={250}
+                                                    />
+                                                </figure>
+                                            );
+                                        }
+
+                                        if (index === 2) return null;
+
+                                        return (
+                                            <figure key={index} onClick={() => openFancyboxFromIndex(actualIndex)}>
+                                                <Image
+                                                    src={image?.image || "/images/noImage.jpg"}
+                                                    alt={`Car image ${actualIndex}`}
+                                                    width={500}
+                                                    height={500}
+                                                />
+                                            </figure>
+                                        );
+                                    }
+                                )}
+                            </>
                         )}
 
-                        {/* Tags + Buttons */}
+                        {/* Tags and Buttons remain outside Swiper */}
                         <div className="imgTags">
                             {renderTags()}
                             <div className="btnCont">
@@ -407,10 +470,10 @@ function ProductPageLayout() {
                             </div>
                         </div>
 
-                        <Link href="" className="showAllBtn">
+                        <button type="button" onClick={() => openFancyboxFromIndex(0)} className="showAllBtn">
                             <i className="fas fa-images" />
                             View All Photos
-                        </Link>
+                        </button>
                     </div>
 
                     <div className="detailLayout">
@@ -574,8 +637,8 @@ function ProductPageLayout() {
                                 <div className="company">
                                     <figure>
                                         <Image
-                                            title={vendor?.companyName || "/images/noImage.jpg"}
-                                            src={vendor?.companyLogo}
+                                            title={vendor?.companyName}
+                                            src={vendor?.companyLogo || "/images/noImage.jpg"}
                                             width={80}
                                             height={80}
                                             alt={`${product?.brand?.name}'s Image`}
@@ -1016,6 +1079,22 @@ function ProductPageLayout() {
                     </div>
                 </div>
             </div>
+
+            <Fancybox
+                options={{
+                    Carousel: {
+                        infinite: false
+                    }
+                }}
+                setFancyboxIsActive={setFancyboxIsActive}
+                fancyboxIsActive={fancyboxIsActive}
+            >
+                {data?.images?.map((item, index) => (
+                    <a className="fancyboximages" data-fancybox="gallery" href={item?.image} key={index}>
+                        <img alt="" src={item?.image} width="200" height="150" />
+                    </a>
+                ))}
+            </Fancybox>
         </>
     );
 }

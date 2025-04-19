@@ -11,6 +11,7 @@ function CarsSection(props) {
     const [total, setTotal] = useState();
 
     useEffect(() => {
+        console.log("props?.data=> ", props?.data);
         setWindowWidth(window.innerWidth);
         windowWidth > 1024
             ? setTotal(8)
@@ -35,8 +36,8 @@ function CarsSection(props) {
                     )}
                 </div>
                 <div className="prodRow col4">
-                    {Array.isArray(props?.data?.data) &&
-                        props?.data?.data?.slice(0, total || 1).map((product, index) => (
+                    {Array.isArray(props?.data) &&
+                        props?.data?.slice(0, total || 1).map((product, index) => (
                             <Suspense key={index} fallback={<ProductCardSkeleton />}>
                                 <ProductCard
                                     featured={props?.isFeatured}

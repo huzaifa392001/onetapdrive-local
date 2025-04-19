@@ -25,8 +25,8 @@ function Page() {
         brands?.data?.map((item) => {
             const updatedItem = {
                 id: item?.brand_id,
-                name: item?.brand_name,
-                image: item?.brand_image
+                name: item?.name,
+                image: item?.image
             }
             setbrandsData((prev) => ([...prev, updatedItem]))
         })

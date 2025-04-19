@@ -99,7 +99,7 @@ function Page() {
             req: true,
             options:
                 brandsData?.data?.map((item) => ({
-                    name: item?.brand_name,
+                    name: item?.name,
                     id: item?.brand_id
                 })) || []
         },
@@ -149,7 +149,7 @@ function Page() {
                 req: true,
                 options:
                     brandsData?.data?.map((item) => ({
-                        name: item?.brand_name,
+                        name: item?.name,
                         id: item?.brand_id
                     })) || []
             },

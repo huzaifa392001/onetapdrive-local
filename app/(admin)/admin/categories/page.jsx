@@ -25,8 +25,8 @@ function Page() {
         categories?.data?.map((item) => {
             const updatedItem = {
                 id: item?.category_id,
-                name: item?.category_name,
-                image: item?.category_image
+                name: item?.name,
+                image: item?.image
             }
             setCategoriesData((prev) => ([...prev, updatedItem]))
         })

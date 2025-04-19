@@ -20,7 +20,7 @@ const CarDetails = memo(function CarDetails({ edit, setCarDetails, control, erro
         const modelObj = models.find((m) => String(m.id) === String(control._formValues.modelId));
         const yearObj = years.find((y) => String(y.id) === String(control._formValues.makeYearId));
 
-        const brandName = brandObj ? brandObj.brand_name : "";
+        const brandName = brandObj ? brandObj.name : "";
         const modelName = modelObj ? modelObj.name : "";
         const yearName = yearObj ? yearObj.name : "";
 
@@ -68,7 +68,7 @@ const CarDetails = memo(function CarDetails({ edit, setCarDetails, control, erro
                         <option value="">Select Car Brand*</option>
                         {brands?.map((item, index) => (
                             <option key={index} value={item?.brand_id}>
-                                {item?.brand_name}
+                                {item?.name}
                             </option>
                         ))}
                     </select>
@@ -118,7 +118,7 @@ const CarDetails = memo(function CarDetails({ edit, setCarDetails, control, erro
                                 <option value="">Select Car Category*</option>
                                 {categories?.map((cat, index) => (
                                     <option key={index} value={cat?.category_id}>
-                                        {cat.category_name}
+                                        {cat.name}
                                     </option>
                                 ))}
                             </select>

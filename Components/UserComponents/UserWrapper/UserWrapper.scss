@@ -1,9 +1,9 @@
 .userWrapper {
     .innerWrap {
-        @apply py-16 grid grid-cols-12 gap-x-6;
+        @apply py-16 grid grid-cols-1 lg:grid-cols-12 gap-x-6;
 
         .sidebar {
-            @apply col-span-3;
+            @apply col-span-12 lg:col-span-3;
             ul {
                 @apply flex flex-col gap-y-5;
                 li {
@@ -43,7 +43,7 @@
         }
 
         .contentWrapper {
-            @apply col-span-9;
+            @apply col-span-12 md:col-span-9 my-8 lg:my-0;
             section {
                 @apply p-0;
             }

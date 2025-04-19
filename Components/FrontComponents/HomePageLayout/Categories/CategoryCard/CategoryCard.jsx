@@ -7,18 +7,18 @@ function CategoryCard(props) {
     const category = props.data;
 
     return (
-        <Link href={`/cars/${category?.category_slug}`} className="categoryCard">
+        <Link href={`/cars/${category?.slug}`} className="categoryCard">
             <figure>
                 <Image
-                    src={category?.category_image || category?.img || ""}
+                    src={category?.image || category?.img || ""}
                     width={200}
                     height={200}
                     quantity={100}
-                    alt={`${category?.category_name}'s Picture`}
+                    alt={`${category?.name}'s Picture`}
                 />
             </figure>
             <div className="content">
-                <h3>{category?.category_name}</h3>
+                <h3>{category?.name}</h3>
                 <span>{category?.cars ? `${category?.cars} Cars` : "No Cars Available"}</span>
             </div>
         </Link>

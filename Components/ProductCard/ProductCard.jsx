@@ -14,7 +14,7 @@ function ProductCard(props) {
     return (
         <div onMouseLeave={() => setActiveImageIndex(0)} className={`productCard ${props?.className}`}>
             {!props?.premium && (
-                <Link href={`/product/${product?.id}`}>
+                <Link href={`/product/${product?.slug}`}>
                     <figure className="imgCont">
                         {props?.premium && (
                             <span className="imgTag">
@@ -28,12 +28,16 @@ function ProductCard(props) {
                                 Featured
                             </span>
                         )}
-                        <Image src={product?.images[0]?.image || "/images/noImage.jpg"} fill alt="" />
+                        <Image
+                            src={product?.images?.find((item) => item?.order === 1)?.image || "/images/noImage.jpg"}
+                            fill
+                            alt=""
+                        />
                     </figure>
                 </Link>
             )}
             {props?.premium && (
-                <Link href={`/product/${product?.id}`}>
+                <Link href={`/product/${product?.slug}`}>
                     <figure className="imgCont">
                         {props?.premium && (
                             <span className="imgTag">
@@ -154,30 +158,30 @@ function ProductCard(props) {
                     </div>
                     <div className="priceBox">
                         {product?.cutPrice && <p>{product?.cutPrice}</p>}
-                        <h6>
-                            <span>
-                                AED{" "}
-                                {product?.carPrices?.map((item) =>
-                                    item?.priceType === "monthly" ? item?.price : null
-                                )}
-                            </span>{" "}
-                            / monthly
-                        </h6>
-                        <p>
-                            <i className="fas fa-road" />
-                            <span>
-                                {product?.carPrices?.map((item) =>
-                                    item?.priceType === "monthly" ? item?.kilometers : null
-                                )}{" "}
-                                KM
-                            </span>
-                        </p>
+
+                        {(() => {
+                            const monthly = product?.carPrices?.find((item) => item?.priceType === "monthly");
+                            const weekly = product?.carPrices?.find((item) => item?.priceType === "weekly");
+                            const fallback = monthly || weekly;
+
+                            return fallback ? (
+                                <>
+                                    <h6>
+                                        <span>AED {fallback.price}</span> / {fallback.priceType}
+                                    </h6>
+                                    <p>
+                                        <i className="fas fa-road" />
+                                        <span>{fallback.kilometers} KM</span>
+                                    </p>
+                                </>
+                            ) : null;
+                        })()}
                     </div>
                 </div>
                 <div className="divider" />
                 <div className="brandCont">
-                    <Link title={product?.user?.vendorProfile[0]?.companyName} href={``} className="brand">
-                        <Image src={product?.user?.vendorProfile[0]?.companyLogo} fill alt="" />
+                    <Link title={product?.user?.vendorProfile?.companyName} href={``} className="brand">
+                        <Image src={product?.user?.vendorProfile?.companyLogo || "/images/noImage.jpg"} fill alt="" />
                     </Link>
                     <div className="detail">
                         <ul>

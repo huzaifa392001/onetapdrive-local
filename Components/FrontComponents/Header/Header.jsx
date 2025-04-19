@@ -171,11 +171,11 @@ function Header() {
                         <div className="brandsCont">
                             {brandsData && brandsData?.length > 0 ? (
                                 brandsData.map((brand, index) => (
-                                    <Link href={`/brands/${brand?.brand_slug}`} className="brandCont" key={index}>
+                                    <Link href={`/brands/${brand?.slug}`} className="brandCont" key={index}>
                                         <figure>
-                                            <Image src={brand?.brand_image} width={50} height={50} alt="" />
+                                            <Image src={brand?.image} width={50} height={50} alt="" />
                                         </figure>
-                                        <h6>{brand?.brand_name}</h6>
+                                        <h6>{brand?.name}</h6>
                                     </Link>
                                 ))
                             ) : (
@@ -244,7 +244,7 @@ function Header() {
                                     <ul>
                                         {categoryData?.map((item, index) => (
                                             <li key={index}>
-                                                <Link href={`/cars/${item?.category_slug}`}>{item?.category_name}</Link>
+                                                <Link href={`/cars/${item?.slug}`}>{item?.name}</Link>
                                             </li>
                                         ))}
                                     </ul>
@@ -313,6 +313,20 @@ function Header() {
                                 <button onClick={() => handleMouseLeave("")} className="closeBtn">
                                     <i className="fas fa-times" />
                                 </button>
+                                <div className="rightNav">
+                                    {!isUser && (
+                                        <button onClick={handleModalVisible} className="login">
+                                            <i className="fas fa-user" />
+                                            <span>Log In / Signup</span>
+                                        </button>
+                                    )}
+                                    {isUser && (
+                                        <Link href={"/user/dashboard"} className="userMenu">
+                                            <h5>Current user</h5>
+                                            <i className="fas fa-chevron-right" />
+                                        </Link>
+                                    )}
+                                </div>
                                 <ul>
                                     <li>
                                         <Link onClick={() => handleMouseLeave("")} href={"/cars/all"}>
@@ -417,9 +431,9 @@ function Header() {
                                         <li key={index}>
                                             <Link
                                                 onClick={() => handleMouseLeave("")}
-                                                href={`/cars/${item?.category_slug}`}
+                                                href={`/cars/${item?.slug}`}
                                             >
-                                                {item?.category_name}
+                                                {item?.name}
                                             </Link>
                                         </li>
                                     ))}
@@ -438,12 +452,12 @@ function Header() {
                                             <li key={index}>
                                                 <Link
                                                     onClick={() => handleMouseLeave("")}
-                                                    href={`/brands/${brand?.brand_slug}`}
+                                                    href={`/brands/${brand?.slug}`}
                                                     className="brandCont"
                                                 >
-                                                    <h6>{brand?.brand_name}</h6>
+                                                    <h6>{brand?.name}</h6>
                                                     <figure>
-                                                        <Image src={brand?.brand_image} width={50} height={50} alt="" />
+                                                        <Image src={brand?.image} width={50} height={50} alt="" />
                                                     </figure>
                                                 </Link>
                                             </li>

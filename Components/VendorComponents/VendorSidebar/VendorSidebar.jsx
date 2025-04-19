@@ -22,7 +22,7 @@ function VendorSidebar() {
         { path: "/vendor/license", label: "Trade License", icon: "fas fa-id-badge" },
         { path: "/vendor/leads", label: "Leads Management", icon: "fas fa-file-alt" },
         { path: "/vendor/fleet", label: "My Fleet", icon: "fas fa-car" },
-        { path: "/vendor/car-with-driver", label: "My Fleet With Driver", icon: "fas fa-taxi" },
+        // { path: "/vendor/car-with-driver", label: "My Fleet With Driver", icon: "fas fa-taxi" },
         { path: "/vendor/manage-car-offers", label: "Manage Car Offers", icon: "fas fa-percentage" },
         {
             path: "",

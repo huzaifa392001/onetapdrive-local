@@ -16,35 +16,6 @@ function AdminSidebar() {
         { path: "/", label: "Go To Website", icon: "fas fa-globe-asia" },
         { path: "/admin", label: "Dashboard", icon: "fas fa-home" },
 
-        { type: "divider", label: "Website" },
-        { path: "/admin/brands", label: "Brands", icon: "fad fa-star" },
-        { path: "/admin/models", label: "Models", icon: "fad fa-stars" },
-        { path: "/admin/body-type", label: "Bodytype", icon: "fad fa-car" },
-        { path: "/admin/categories", label: "Categories", icon: "fas fa-clipboard-list" },
-        { path: "/admin/blogs", label: "Blogs", icon: "far fa-books" },
-        // { path: "/admin/packages", label: "Packages Orders", icon: "fas fa-car" },
-        { path: "/admin/social", label: "Social Links", icon: "fas fa-share-square" },
-        // { path: "/admin/configurations", label: "Configurations", icon: "fas fa-cog" },
-
-        { type: "divider", label: "Mobile App" },
-        { path: "/admin/banners", label: "App Banners", icon: "fas fa-bold" },
-
-        // Divider between general options and car management
-        { type: "divider", label: "Car Management" },
-        {
-            label: "Car Management",
-            icon: "fa fa-car fa-lg",
-            isExpandable: true,
-            subMenu: [
-                //{ path: "/admin/brands", label: "Brand Management", icon: "fad fa-horizontal-rule" },
-                { path: "/admin/models", label: "Car Brands/Models", icon: "fad fa-horizontal-rule" }
-            ]
-        },
-        { path: "/admin/car-listing", label: "Car Listing", icon: "fas fa-car" },
-        { path: "/admin/car-with-driver-listing", label: "Car With Driver Listing", icon: "fas fa-car" },
-        // { path: "/admin/car-active-management", label: "Car Active Management", icon: "fas fa-check-square" },
-        { path: "/admin/car-refresh-management", label: "Car Refresh Management", icon: "fas fa-sync-alt" },
-
         // Divider for other admin options
         { type: "divider", label: "Users Management" },
 
@@ -54,7 +25,35 @@ function AdminSidebar() {
         // { path: "/admin/inquiry-management", label: "Inquiry Management", icon: "fas fa-phone-alt" },
         // { path: "/admin/reviews-management", label: "Reviews Management", icon: "fas fa-comments" },
         { path: "/admin/subscription-email", label: "Subscription Email", icon: "fas fa-envelope" },
-        { path: "/admin/subscription-email", label: "Website Traffic", icon: "fas fa-envelope" }
+        { path: "/admin/subscription-email", label: "Website Traffic", icon: "fas fa-envelope" },
+        // Divider between general options and car management
+        { type: "divider", label: "Car Management" },
+        // {
+        //     label: "Car Management",
+        //     icon: "fa fa-car fa-lg",
+        //     isExpandable: true,
+        //     subMenu: [
+        //         //{ path: "/admin/brands", label: "Brand Management", icon: "fad fa-horizontal-rule" },
+        //         { path: "/admin/models", label: "Car Brands/Models", icon: "fad fa-horizontal-rule" }
+        //     ]
+        // },
+        { path: "/admin/car-listing", label: "Car Listing", icon: "fas fa-car" },
+        { path: "/admin/car-with-driver-listing", label: "Car With Driver Listing", icon: "fas fa-car" },
+        // { path: "/admin/car-active-management", label: "Car Active Management", icon: "fas fa-check-square" },
+        { path: "/admin/car-refresh-management", label: "Car Refresh Management", icon: "fas fa-sync-alt" },
+
+        { type: "divider", label: "Website" },
+        { path: "/admin/brands", label: "Brands", icon: "fad fa-star" },
+        { path: "/admin/models", label: "Models", icon: "fad fa-stars" },
+        { path: "/admin/body-type", label: "Bodytype", icon: "fad fa-car" },
+        { path: "/admin/categories", label: "Categories", icon: "fas fa-clipboard-list" }
+        // { path: "/admin/blogs", label: "Blogs", icon: "far fa-books" },
+        // { path: "/admin/packages", label: "Packages Orders", icon: "fas fa-car" },
+        // { path: "/admin/social", label: "Social Links", icon: "fas fa-share-square" },
+        // { path: "/admin/configurations", label: "Configurations", icon: "fas fa-cog" },
+
+        // { type: "divider", label: "Mobile App" },
+        // { path: "/admin/banners", label: "App Banners", icon: "fas fa-bold" },
     ];
 
     return (

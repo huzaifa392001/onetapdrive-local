@@ -30,11 +30,11 @@ function BrandsPageLayout() {
                 <div className="customContainer">
                     <div className="brandRow">
                         {brands?.map((item, index) => (
-                            <Link href={`/brands/${item?.brand_slug}`} className="brandCard" key={index}>
+                            <Link href={`/brands/${item?.slug}`} className="brandCard" key={index}>
                                 <figure>
-                                    <Image src={item?.brand_image} fill alt={`${item?.brand_name}'s Image`} />
+                                    <Image src={item?.image} fill alt={`${item?.name}'s Image`} />
                                 </figure>
-                                <h3>{item?.brand_name}</h3>
+                                <h3>{item?.name}</h3>
                                 <h6>{item?.cars} Cars Available</h6>
                             </Link>
                         ))}

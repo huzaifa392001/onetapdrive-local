@@ -4,46 +4,46 @@ import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
 import AdminDataTable from "@/Components/AdminComponents/AdminTable/adminTable";
 import { useQuery } from "@tanstack/react-query";
-import { deleteCategory, getCategories } from "@/Services/AdminServices/AdminCategories";
+import { deleteBodyType, getAllBodyTypes } from "@/Services/AdminServices/AdminBodyTypes";
 
 function Page() {
-    const [categoriesData, setCategoriesData] = useState([]);
+    const [bodyTypeData, setBodyTypeData] = useState([]);
 
-    const { data: categories, refetch } = useQuery({
-        queryKey: ["categories"],
-        queryFn: getCategories
+    const { data: bodyType, refetch } = useQuery({
+        queryKey: ["bodyType"],
+        queryFn: getAllBodyTypes
     });
 
-    // Function to refetch categories after delete
-    const refetchCategories = () => {
+    // Function to refetch bodyType after delete
+    const refetchBodyType = () => {
         refetch();
     };
 
     useEffect(() => {
-        setCategoriesData([]);
-        categories?.data?.map((item) => {
+        console.log("bodytypes=> ", bodyType);
+        setBodyTypeData([]);
+        bodyType?.data?.map((item) => {
             const updatedItem = {
-                id: item?.category_id,
-                name: item?.category_name,
-                image: item?.category_image
+                id: item?.bodyType_id,
+                name: item?.bodyType_name
             };
-            setCategoriesData((prev) => [...prev, updatedItem]);
+            setBodyTypeData((prev) => [...prev, updatedItem]);
         });
-    }, [categories]);
+    }, [bodyType]);
 
     return (
         <>
             <div className="headingCont">
-                <SecHeading heading="Categories" />
-                <Link href="categories/create" className="themeBtn">
+                <SecHeading heading="bodyType" />
+                <Link href="body-type/create" className="themeBtn">
                     Create
                 </Link>
             </div>
 
             <AdminDataTable
-                refetchData={refetchCategories}
-                deleteFunc={deleteCategory}
-                data={categoriesData}
+                refetchData={refetchBodyType}
+                deleteFunc={deleteBodyType}
+                data={bodyTypeData}
                 showAction={true}
             />
         </>

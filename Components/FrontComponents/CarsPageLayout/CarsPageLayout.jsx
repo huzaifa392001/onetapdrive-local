@@ -44,6 +44,10 @@ function CarsPageLayout({ brands }) {
         enabled: true
     });
 
+    useEffect(() => {
+        console.log("carsData=> ", carsData);
+    }, [carsData]);
+
     if (isPending) return <Loading />;
 
     return (
@@ -62,7 +66,7 @@ function CarsPageLayout({ brands }) {
                                 </p>
                             </div>
                             <Advertisement />
-                            <FilteredCars carsData={carsData?.data} premium />
+                            <FilteredCars carsData={carsData?.data?.cars} premium />
                         </div>
                         <div className="sider">
                             <div className="categoryDrawer">
@@ -71,8 +75,8 @@ function CarsPageLayout({ brands }) {
                                 </figure>
                                 <div className="categoriesDrawerCont">
                                     {(showAll ? categories : categories?.slice(0, 4))?.map((item, index) => (
-                                        <Link href={`/cars/${item?.category_slug}`} className="categoryTab" key={index}>
-                                            <span>{item?.category_name}</span>
+                                        <Link href={`/cars/${item?.slug}`} className="categoryTab" key={index}>
+                                            <span>{item?.name}</span>
                                             <i className="fas fa-caret-right" />
                                         </Link>
                                     ))}
@@ -147,7 +151,7 @@ function CarsPageLayout({ brands }) {
                     </div>
                 </div>
             </section>
-            <section className="contentSec">
+            {/* <section className="contentSec">
                 <div className="carsContainer">
                     <div className="content">
                         <SecHeading heading={"Lorem Ipsum"} />
@@ -247,7 +251,7 @@ function CarsPageLayout({ brands }) {
                         </p>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </>
     );
 }

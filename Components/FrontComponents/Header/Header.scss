@@ -250,6 +250,22 @@
             .closeBtn {
                 @apply absolute top-0 right-0 cursor-pointer h-12 w-12 flex items-center justify-center text-[1.125rem];
             }
+            .rightNav {
+                @apply flex justify-center my-4;
+                
+                button.login {
+                    @apply bg-[var(--theme-color)] py-2 px-6;
+                    border-radius: 4px;
+                }
+
+                button i {
+                    padding-right: 0.5rem;
+                }
+                .userMenu {
+                    @apply flex items-center gap-3;
+                }
+            }
+
             h4 {
                 @apply text-[var(--grey-color)] text-[1.25rem] text-center py-2 bg-gray-200 font-semibold capitalize;
             }

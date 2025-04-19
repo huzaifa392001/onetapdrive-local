@@ -23,8 +23,8 @@ function HomePageLayout() {
     });
 
     useEffect(() => {
-        console.log("products", products?.data);
-        setProductsData(products?.data);
+        console.log("products", products?.data?.cars);
+        setProductsData(products?.data?.cars);
     }, [products]);
 
     const docData = [

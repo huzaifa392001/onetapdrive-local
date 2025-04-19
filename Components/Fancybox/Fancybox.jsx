@@ -1,25 +1,31 @@
-'use client'
 import React, { useRef, useEffect } from "react";
-
 import { Fancybox as NativeFancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 function Fancybox(props) {
     const containerRef = useRef(null);
+    const { fancyboxIsActive, setFancyboxIsActive, delegate = "[data-fancybox]", options = {} } = props;
 
     useEffect(() => {
         const container = containerRef.current;
 
-        const delegate = props.delegate || "[data-fancybox]";
-        const options = props.options || {};
+        // Allow manual trigger via window
+        window.Fancybox = NativeFancybox;
 
-        NativeFancybox.bind(container, delegate, options);
+        if (fancyboxIsActive) {
+            NativeFancybox.defaults.on = {
+                init: () => setFancyboxIsActive?.(true),
+                close: () => setFancyboxIsActive?.(false)
+            };
+
+            NativeFancybox.bind(container, delegate, options);
+        }
 
         return () => {
             NativeFancybox.unbind(container);
-            NativeFancybox.close();
+            // Don't auto close unless you want all to close on re-render
         };
-    });
+    }, [fancyboxIsActive]);
 
     return <div ref={containerRef}>{props.children}</div>;
 }

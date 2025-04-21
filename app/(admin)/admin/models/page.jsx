@@ -5,11 +5,16 @@ import AdminDataTable from "@/Components/AdminComponents/AdminTable/adminTable";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { deleteModel, getModels } from "@/Services/AdminServices/AdminModels";
+import Loading from "@/Components/Loading/Loading";
 
 function Page() {
     const [modelsData, setmodelsData] = useState([]);
 
-    const { data: models, refetch } = useQuery({
+    const {
+        data: models,
+        refetch,
+        isPending
+    } = useQuery({
         queryKey: ["models"],
         queryFn: getModels
     });
@@ -20,7 +25,6 @@ function Page() {
     };
 
     useEffect(() => {
-        console.log("models=> ", models);
         setmodelsData([]);
         models?.data?.map((item) => {
             const updatedItem = {
@@ -31,6 +35,8 @@ function Page() {
             setmodelsData((prev) => [...prev, updatedItem]);
         });
     }, [models]);
+
+    if (isPending) return <Loading />;
     return (
         <>
             <div className="headingCont">

@@ -163,8 +163,8 @@ function Page() {
                 req: true,
                 options:
                     bodyTypesData?.data?.map((item) => ({
-                        name: item?.bodyType_name,
-                        id: item?.bodyType_id
+                        name: item?.name,
+                        id: item?.id
                     })) || []
             }
         ]);

@@ -45,6 +45,9 @@ body {
             }
 
             .formWrap {
+                h4 {
+                    @apply border-b border-b-[var(--theme-color)] pb-3 mb-3 text-center;
+                }
                 .themeBtn {
                     @apply w-full flex items-center justify-center gap-x-1;
 
@@ -64,6 +67,7 @@ body {
                     }
                 }
                 .inputWrap {
+                    @apply min-w-[300px];
                     + .inputWrap {
                         @apply mt-4;
                     }
@@ -108,6 +112,13 @@ body {
                         button {
                             @apply text-[#0d6efd];
                         }
+                    }
+                }
+
+                p {
+                    @apply mt-auto text-center font-medium mt-3 cursor-pointer;
+                    span {
+                        @apply font-bold text-[var(--theme-color)] underline;
                     }
                 }
 

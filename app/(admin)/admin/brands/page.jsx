@@ -5,11 +5,16 @@ import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
 import { deleteBrand, getBrands } from "@/Services/AdminServices/AdminBrand";
 import { useEffect, useState } from "react";
+import Loading from "@/Components/Loading/Loading";
 
 function Page() {
     const [brandsData, setbrandsData] = useState([]);
 
-    const { data: brands, refetch } = useQuery({
+    const {
+        data: brands,
+        refetch,
+        isPending
+    } = useQuery({
         queryKey: ["brands"],
         queryFn: getBrands
     });
@@ -31,6 +36,7 @@ function Page() {
         });
     }, [brands]);
 
+    if (isPending) return <Loading />;
     return (
         <>
             <div className="headingCont">

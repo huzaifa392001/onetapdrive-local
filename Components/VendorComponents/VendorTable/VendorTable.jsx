@@ -17,19 +17,16 @@ const VendorTable = ({ data = [], refetchData }) => {
     const pathName = usePathname();
     const [colDefs, setColDefs] = useState([]);
     const [localRowData, setLocalRowData] = useState(data);
-    const [togglingStatusId, setTogglingStatusId] = useState(null);
     const statusMutation = useMutation({
         mutationFn: changeCarStatus,
         onSuccess: (_, variables) => {
             const { id, enable } = variables;
             toast.success("Status Updated");
             refetchData?.();
-            setTogglingStatusId(null);
             setLocalRowData((prev) => prev.map((row) => (row.id === id ? { ...row, status: enable } : row)));
         },
         onError: () => {
             toast.error("Failed to update status");
-            setTogglingStatusId(null);
         }
     });
 
@@ -57,6 +54,18 @@ const VendorTable = ({ data = [], refetchData }) => {
         const dynamicFields = Object.keys(data[0])
             .filter((key) => key !== "slug" && key !== "id" && key !== "Action")
             .map((key) => {
+                if (key === "status") {
+                    return {
+                        field: key,
+                        headerName: "Status",
+                        flex: 1,
+                        cellRenderer: (params) => {
+                            const currentStatus = params.data?.status;
+
+                            return <p>{currentStatus ? "Active" : "Inactive"}</p>;
+                        }
+                    };
+                }
                 if (key === "image") {
                     return {
                         field: key,
@@ -105,7 +114,6 @@ const VendorTable = ({ data = [], refetchData }) => {
                                 } ${statusMutation.isPending ? "disabled" : ""}`}
                                 onClick={() => {
                                     statusMutation.mutate({ id, enable: !currentStatus });
-                                    setTogglingStatusId(id);
                                 }}
                                 disabled={statusMutation.isPending}
                             >
@@ -132,7 +140,7 @@ const VendorTable = ({ data = [], refetchData }) => {
             ...dynamicFields,
             ...actionColumn
         ]);
-    }, [data, togglingStatusId]);
+    }, [data]);
 
     const defaultColDef = useMemo(
         () => ({

@@ -906,8 +906,8 @@ function ProductPageLayout() {
                                 </li>
                                 <li>Interior</li>
                                 <li>
-                                    <div className="colorBox" style={{ background: data?.color?.name }}></div>
-                                    {data?.color?.name}
+                                    <div className="colorBox" style={{ background: data?.interiorColor }}></div>
+                                    {data?.interiorColor}
                                 </li>
                             </ul>
                             <h3>Car Features</h3>

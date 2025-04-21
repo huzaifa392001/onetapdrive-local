@@ -26,7 +26,6 @@ const RentalTerms = memo(function RentalTerms({ edit, control, errors }) {
                         <p className="error-message">{errors.securityDepositAmount.message}</p>
                     )}
                 </div>
-
                 <div className={`inputCont ${errors?.deliveryPickupCharge ? "error" : ""}`}>
                     <Controller
                         name="deliveryPickupCharge"
@@ -50,13 +49,59 @@ const RentalTerms = memo(function RentalTerms({ edit, control, errors }) {
                     )}
                 </div>
 
-                <div className={`inputCont ${errors?.insuranceIncluded ? "error" : ""}`}>
+                <div className={`inputCont ${errors?.securityDepositReturn ? "error" : ""}`}>
+                    <Controller
+                        name="securityDepositReturn"
+                        control={control}
+                        rules={{
+                            required: "Security Deposit Return Days are required"
+                        }}
+                        render={({ field }) => (
+                            <input {...field} type="number" placeholder="Security Deposit Return Days*" />
+                        )}
+                    />
+                    {errors?.securityDepositReturn && (
+                        <p className="error-message">{errors.securityDepositReturn.message}</p>
+                    )}
+                </div>
+
+                <div className={`inputCont ${errors?.additionalPricePerKM ? "error" : ""}`}>
+                    <Controller
+                        name="additionalPricePerKM"
+                        control={control}
+                        rules={{
+                            required: "Additional price is required",
+                            min: { value: 0, message: "Price must be positive" }
+                        }}
+                        render={({ field }) => (
+                            <input {...field} type="number" placeholder="Additional Price per KM*" />
+                        )}
+                    />
+                    {errors?.additionalPricePerKM && (
+                        <p className="error-message">{errors.additionalPricePerKM.message}</p>
+                    )}
+                </div>
+
+                <div className={`inputCont ${errors?.minimumRequiredAge ? "error" : ""}`}>
+                    <Controller
+                        name="minimumRequiredAge"
+                        control={control}
+                        render={({ field }) => <input {...field} type="number" placeholder="Minimum Required Age*" />}
+                    />
+                    {errors?.minimumRequiredAge && <p className="error-message">{errors.minimumRequiredAge.message}</p>}
+                </div>
+                <div className={`inputCont checkbox ${errors?.insuranceIncluded ? "error" : ""}`}>
                     <Controller
                         name="insuranceIncluded"
                         control={control}
-                        rules={{ required: "Delivery pickup charge is required" }}
                         render={({ field }) => (
-                            <input {...field} type="checkbox" placeholder="Security Deposit Amount*" />
+                            <div className="checkBoxCont">
+                                <label className="checkBoxHolder">
+                                    <input id="insuranceIncluded" {...field} type="checkbox" />
+                                    <i class="fas fa-check"></i>
+                                </label>
+                                <label htmlFor="insuranceIncluded">Insurance Included</label>
+                            </div>
                         )}
                     />
                     {errors?.insuranceIncluded && <p className="error-message">{errors.insuranceIncluded.message}</p>}

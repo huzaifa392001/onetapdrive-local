@@ -127,7 +127,7 @@ export const setLocations = async (location) => {
 
         const city = data.city || "Unknown Location";
 
-        store.dispatch(SET_CURRENT_LOCATION(city));
+        store.dispatch(SET_CURRENT_LOCATION(city || "Dubai"));
     } catch (e) {
         console.error("Error fetching location:", e);
     }

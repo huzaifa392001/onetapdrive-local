@@ -40,7 +40,7 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                 </div>
 
                 {/* Transmission */}
-                <div className={`inputCont ${errors?.transmissionId ? "error" : ""}`}>
+                <div className={`inputCont  ${errors?.transmissionId ? "error" : ""}`}>
                     <Controller
                         name="transmissionId"
                         control={control}

@@ -89,7 +89,8 @@ export const userLogout = async () => {
 
 export const userSignUp = async (data) => {
     try {
-        const res = await API.post("/auth/login", data);
+        const res = await API.post("/users", data);
+        return res?.data;
     } catch (e) {
         console.error(`Error during Signup: ${e}`);
         throw new Error(e.response?.data?.message || "SignUp failed!");

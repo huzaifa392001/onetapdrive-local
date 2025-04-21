@@ -26,7 +26,7 @@ const MyFleetLayout = () => {
                 id: car.id,
                 name: car.name,
                 category: car.category?.name || "N/A",
-                status: car.status,
+                status: car.active,
                 Action: true
             })) || [];
         setVendorCarData(transformedData);
@@ -45,7 +45,7 @@ const MyFleetLayout = () => {
                     </div>
                     <div className="listingNumbers">
                         <h3>Active Listing</h3>
-                        <h1>{vendorData?.data?.data?.reduce((count, car) => (car.active ? count + 1 : count), 0)}</h1>
+                        <h1>{vendorData?.data?.cars?.reduce((count, car) => (car.active ? count + 1 : count), 0)}</h1>
                     </div>
                 </div>
                 <Link href="fleet/create" className="themeBtn">

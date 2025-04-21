@@ -21,6 +21,9 @@
                             .mapMarker {
                                 @apply text-[var(--theme-color)];
                             }
+                            h4 {
+                                font-size: 1rem;
+                            }
                         }
                         .dropdown {
                             @apply absolute z-10 bg-[var(--white)] min-w-[250px] rounded-2xl shadow-md pt-3 pb-5 max-h-[350px] overflow-auto top-0 opacity-0 invisible select-none pointer-events-none transition-all duration-300;
@@ -66,7 +69,7 @@
                     .userMenu {
                         @apply flex items-center gap-x-2 text-[14px] text-[var(--white)];
                         h5 {
-                            @apply relative;
+                            @apply relative text-[1rem];
 
                             &::before {
                                 content: "";
@@ -252,7 +255,7 @@
             }
             .rightNav {
                 @apply flex justify-center my-4;
-                
+
                 button.login {
                     @apply bg-[var(--theme-color)] py-2 px-6;
                     border-radius: 4px;

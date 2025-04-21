@@ -73,7 +73,12 @@ function AddCar({ edit }) {
             )
             .test("has-daily", "Daily pricing is required", (prices) => {
                 return prices.some((item) => item.priceType === "daily" && item.price && item.kilometers);
-            })
+            }),
+        additionalPricePerKM: Yup.string().required("Additional Price is required"),
+        securityDepositReturn: Yup.string().required("Security Deposit Return is required"),
+        minimumRequiredAge: Yup.number()
+            .required("Minimum Required Age is required")
+            .min(18, "Minimum Required Age is 18")
     }).required();
 
     const defaultCarFormValues = {
@@ -108,7 +113,10 @@ function AddCar({ edit }) {
             { priceType: "weekly", price: null, kilometers: null },
             { priceType: "monthly", price: null, kilometers: null }
         ],
-        insuranceIncluded: false
+        insuranceIncluded: false,
+        additionalPricePerKML: "",
+        minimumRequiredAge: "",
+        securityDepositReturn: ""
     };
 
     const {

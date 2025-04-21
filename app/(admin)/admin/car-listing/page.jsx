@@ -25,10 +25,6 @@ const Page = () => {
         queryFn: getAdminCars
     });
 
-    useEffect(() => {
-        console.log("carsData=> ", carsData);
-    }, [carsData]);
-
     const { mutateAsync: toggleCarStatus } = useMutation({
         mutationFn: ({ id, enable }) => updateCarStatus(id, enable),
         onSuccess: () => {

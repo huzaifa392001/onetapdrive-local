@@ -117,7 +117,7 @@ const CarDetails = memo(function CarDetails({ edit, setCarDetails, control, erro
                             <select {...field} className={`inputCont ${errors?.categoryId ? "error" : ""}`}>
                                 <option value="">Select Car Category*</option>
                                 {categories?.map((cat, index) => (
-                                    <option key={index} value={cat?.category_id}>
+                                    <option key={index} value={cat?.id}>
                                         {cat.name}
                                     </option>
                                 ))}

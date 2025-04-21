@@ -5,11 +5,16 @@ import Link from "next/link";
 import AdminDataTable from "@/Components/AdminComponents/AdminTable/adminTable";
 import { useQuery } from "@tanstack/react-query";
 import { deleteBodyType, getAllBodyTypes } from "@/Services/AdminServices/AdminBodyTypes";
+import Loading from "@/Components/Loading/Loading";
 
 function Page() {
     const [bodyTypeData, setBodyTypeData] = useState([]);
 
-    const { data: bodyType, refetch } = useQuery({
+    const {
+        data: bodyType,
+        refetch,
+        isPending
+    } = useQuery({
         queryKey: ["bodyType"],
         queryFn: getAllBodyTypes
     });
@@ -20,6 +25,7 @@ function Page() {
     };
 
     useEffect(() => {
+        console.log("bodyType> ", bodyType);
         setBodyTypeData([]);
         bodyType?.data?.map((item) => {
             const updatedItem = {
@@ -30,6 +36,7 @@ function Page() {
         });
     }, [bodyType]);
 
+    if (isPending) return <Loading />;
     return (
         <>
             <div className="headingCont">

@@ -11,7 +11,6 @@ function CarsSection(props) {
     const [total, setTotal] = useState();
 
     useEffect(() => {
-        console.log("props?.data=> ", props?.data);
         setWindowWidth(window.innerWidth);
         windowWidth > 1024
             ? setTotal(8)

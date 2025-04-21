@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 function ListCarPageLayout() {
-    const router = useRouter()
+    const router = useRouter();
     const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
     const [companyLicensePreview, setCompanyLicensePreview] = useState(null);
     const [companyLogoFile, setCompanyLogoFile] = useState(null);
@@ -38,12 +38,12 @@ function ListCarPageLayout() {
     const signupMutation = useMutation({
         mutationFn: vendorSignup,
         onSuccess: (data) => {
-            console.log("data=> ", data)
+            console.log("data=> ", data);
             toast.success(data?.message);
             // Reset form
             reset();
-            setCompanyLogoFile()
-            setCompanyLicenseFile()
+            setCompanyLogoFile();
+            setCompanyLicenseFile();
             // Redirect will be handled in the service
             router.push("/vendor-login");
         },
@@ -74,7 +74,7 @@ function ListCarPageLayout() {
         companyLicense: null,
         licenseExpiryDate: "",
         countryId: "United Arab Emirates",
-        cityId: "",
+        cityId: ""
     };
 
     const schema = yup.object().shape({
@@ -83,8 +83,9 @@ function ListCarPageLayout() {
         phoneNumber: yup.string().required("Phone Number is required"),
         whatsappNumber: yup.string().required("WhatsApp Number is required"),
         password: yup.string().required("Password is required"),
-        confirmPassword: yup.string()
-            .oneOf([yup.ref('password')], 'Passwords must match')
+        confirmPassword: yup
+            .string()
+            .oneOf([yup.ref("password")], "Passwords must match")
             .required("Confirm Password is required"),
         companyName: yup.string().required("Company Name is required"),
         companyType: yup.string().required("Company Type is required"),
@@ -93,7 +94,7 @@ function ListCarPageLayout() {
         companyLicense: yup.mixed().required("Company License is required"),
         licenseExpiryDate: yup.string().required("License Expiry Date is required"),
         countryId: yup.string().required("Country is required"),
-        cityId: yup.string().required("City is required"),
+        cityId: yup.string().required("City is required")
     });
 
     const {
@@ -109,8 +110,8 @@ function ListCarPageLayout() {
         mode: "onChange"
     });
 
-    const companyLogo = watch('companyLogo');
-    const companyLicense = watch('companyLicense');
+    const companyLogo = watch("companyLogo");
+    const companyLicense = watch("companyLicense");
 
     useEffect(() => {
         if (companyLogo && companyLogo[0]) {
@@ -127,8 +128,8 @@ function ListCarPageLayout() {
     }, [companyLicense]);
 
     const onSubmit = async (data) => {
-        const firstName = data.fullName.split(' ')[0].toLowerCase();
-        const carTerms = ['driver', 'rider', 'wheels', 'cars', 'auto', 'drive'];
+        const firstName = data.fullName.split(" ")[0].toLowerCase();
+        const carTerms = ["driver", "rider", "wheels", "cars", "auto", "drive"];
         const randomCarTerm = carTerms[Math.floor(Math.random() * carTerms.length)];
         const randomNum = Math.floor(Math.random() * 900) + 100;
         const username = `${firstName}${randomCarTerm}${randomNum}`;
@@ -164,25 +165,25 @@ function ListCarPageLayout() {
     // Add this to check if all required fields are filled
     const isFormValid = () => {
         const requiredFields = [
-            'fullName',
-            'email',
-            'phoneNumber',
-            'whatsappNumber',
-            'password',
-            'confirmPassword',
-            'companyName',
-            'companyType',
-            'jobTitle',
-            'companyLogo',
-            'companyLicense',
-            'licenseExpiryDate',
-            'countryId',
-            'cityId'
+            "fullName",
+            "email",
+            "phoneNumber",
+            "whatsappNumber",
+            "password",
+            "confirmPassword",
+            "companyName",
+            "companyType",
+            "jobTitle",
+            "companyLogo",
+            "companyLicense",
+            "licenseExpiryDate",
+            "countryId",
+            "cityId"
         ];
 
-        return requiredFields.every(field => {
+        return requiredFields.every((field) => {
             const value = watch(field);
-            return value !== null && value !== undefined && value !== '';
+            return value !== null && value !== undefined && value !== "";
         });
     };
 
@@ -195,26 +196,24 @@ function ListCarPageLayout() {
                             <div className="content">
                                 <SecHeading heading="JOIN NOW" />
                                 <p>
-                                    Join OneTapDrive to profit from over 1 million page views
-                                    every month, with more than 50,000 quality leads sent to car
-                                    rental companies and brokers all across the world.
+                                    Join OneTapDrive to profit from over 1 million page views every month, with more
+                                    than 50,000 quality leads sent to car rental companies and brokers all across the
+                                    world.
                                 </p>
                                 <ul>
                                     <li>
-                                        <i className="fas fa-check"></i> Get direct leads via phone,
-                                        SMS and emails.
+                                        <i className="fas fa-check"></i> Get direct leads via phone, SMS and emails.
                                     </li>
                                     <li>
-                                        <i className="fas fa-check"></i> Full training provided for
-                                        your staff to use the CMS.
+                                        <i className="fas fa-check"></i> Full training provided for your staff to use
+                                        the CMS.
                                     </li>
                                     <li>
-                                        <i className="fas fa-check"></i> Assistance from your
-                                        dedicated Account Manager.
+                                        <i className="fas fa-check"></i> Assistance from your dedicated Account Manager.
                                     </li>
                                     <li>
-                                        <i className="fas fa-check"></i> Tools and resources to plan
-                                        your marketing strategy.
+                                        <i className="fas fa-check"></i> Tools and resources to plan your marketing
+                                        strategy.
                                     </li>
                                     <li>
                                         <i className="fas fa-check"></i> Exclusive member benefits
@@ -237,9 +236,7 @@ function ListCarPageLayout() {
                                                 placeholder="Enter Your Full Name"
                                                 id="fullName"
                                             />
-                                            {errors?.fullName && (
-                                                <p className="errorText">{errors.fullName.message}</p>
-                                            )}
+                                            {errors?.fullName && <p className="errorText">{errors.fullName.message}</p>}
                                         </div>
                                     </div>
                                     <div className="contentCol">
@@ -254,9 +251,7 @@ function ListCarPageLayout() {
                                                 placeholder="Enter Email Address"
                                                 id="email"
                                             />
-                                            {errors?.email && (
-                                                <p className="errorText">{errors.email.message}</p>
-                                            )}
+                                            {errors?.email && <p className="errorText">{errors.email.message}</p>}
                                         </div>
                                     </div>
                                     <div className="contentCol">
@@ -305,9 +300,7 @@ function ListCarPageLayout() {
                                                 placeholder="Enter Password"
                                                 id="password"
                                             />
-                                            {errors?.password && (
-                                                <p className="errorText">{errors.password.message}</p>
-                                            )}
+                                            {errors?.password && <p className="errorText">{errors.password.message}</p>}
                                         </div>
                                     </div>
                                     <div className="contentCol">
@@ -401,16 +394,11 @@ function ListCarPageLayout() {
                                                 <option value="Umm Al Quwain">Umm Al Quwain</option>
                                                 <option value="Al Ain">Al Ain</option>
                                             </select>
-                                            {errors?.cityId && (
-                                                <p className="errorText">{errors.cityId.message}</p>
-                                            )}
+                                            {errors?.cityId && <p className="errorText">{errors.cityId.message}</p>}
                                         </div>
                                     </div>
                                     <div className="contentCol">
-                                        <div
-                                            className={`inputCont img ${errors?.companyLogo ? "error" : ""
-                                                }`}
-                                        >
+                                        <div className={`inputCont img ${errors?.companyLogo ? "error" : ""}`}>
                                             <label htmlFor="companyLogo">
                                                 Company Logo<span className="required">*</span>
                                             </label>
@@ -418,13 +406,21 @@ function ListCarPageLayout() {
                                                 {companyLogoPreview ? (
                                                     <div className="imgBox">
                                                         <Image
-                                                            src={companyLogoPreview}
+                                                            src={companyLogoPreview || "/images/noImage.jpg"}
                                                             width={300}
                                                             height={80}
                                                             alt="Company Logo"
                                                         />
                                                         <div className="actions">
-                                                            <button onClick={() => handleDeleteImage(setCompanyLogoPreview, setCompanyLogoFile, "companyLogo")}>
+                                                            <button
+                                                                onClick={() =>
+                                                                    handleDeleteImage(
+                                                                        setCompanyLogoPreview,
+                                                                        setCompanyLogoFile,
+                                                                        "companyLogo"
+                                                                    )
+                                                                }
+                                                            >
                                                                 <i className="fas fa-trash" />
                                                             </button>
                                                         </div>
@@ -452,20 +448,13 @@ function ListCarPageLayout() {
                                                 )}
                                             </div>
                                         </div>
-                                        <p className="small">
-                                            Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
-                                        </p>
+                                        <p className="small">Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted</p>
                                         {errors?.companyLogo && (
-                                            <p className="errorText">
-                                                {errors?.companyLogo?.message}
-                                            </p>
+                                            <p className="errorText">{errors?.companyLogo?.message}</p>
                                         )}
                                     </div>
                                     <div className="contentCol">
-                                        <div
-                                            className={`inputCont img ${errors?.companyLicense ? "error" : ""
-                                                }`}
-                                        >
+                                        <div className={`inputCont img ${errors?.companyLicense ? "error" : ""}`}>
                                             <label htmlFor="companyLicense">
                                                 Company License<span className="required">*</span>
                                             </label>
@@ -479,7 +468,15 @@ function ListCarPageLayout() {
                                                             alt="Company License"
                                                         />
                                                         <div className="actions">
-                                                            <button onClick={() => handleDeleteImage(setCompanyLicensePreview, setCompanyLicenseFile, "companyLicense")}>
+                                                            <button
+                                                                onClick={() =>
+                                                                    handleDeleteImage(
+                                                                        setCompanyLicensePreview,
+                                                                        setCompanyLicenseFile,
+                                                                        "companyLicense"
+                                                                    )
+                                                                }
+                                                            >
                                                                 <i className="fas fa-trash" />
                                                             </button>
                                                         </div>
@@ -507,13 +504,9 @@ function ListCarPageLayout() {
                                                 )}
                                             </div>
                                         </div>
-                                        <p className="small">
-                                            Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted
-                                        </p>
+                                        <p className="small">Only &quot;PNG, JPG, JPEG, and PDF&quot; are accepted</p>
                                         {errors?.companyLicense && (
-                                            <p className="errorText">
-                                                {errors?.companyLicense?.message}
-                                            </p>
+                                            <p className="errorText">{errors?.companyLicense?.message}</p>
                                         )}
                                     </div>
                                     <div className="contentCol">
@@ -528,34 +521,26 @@ function ListCarPageLayout() {
                                                 placeholder="Enter Job Title"
                                                 id="jobTitle"
                                             />
-                                            {errors?.jobTitle && (
-                                                <p className="errorText">{errors.jobTitle.message}</p>
-                                            )}
+                                            {errors?.jobTitle && <p className="errorText">{errors.jobTitle.message}</p>}
                                         </div>
                                     </div>
                                     <div className="contentCol">
-                                        <div
-                                            className={`inputCont full ${errors?.licenseExpiryDate ? "error" : ""
-                                                }`}
-                                        >
+                                        <div className={`inputCont full ${errors?.licenseExpiryDate ? "error" : ""}`}>
                                             <label htmlFor="licenseExpiryDate">
                                                 License Expiry Date
                                                 <span className="required">*</span>
                                             </label>
                                             <input
-                                                className={`${errors?.licenseExpiryDate ? "errorInput" : ""
-                                                    }`}
+                                                className={`${errors?.licenseExpiryDate ? "errorInput" : ""}`}
                                                 {...register("licenseExpiryDate", {
-                                                    required: "License Expiry Date is required.",
+                                                    required: "License Expiry Date is required."
                                                 })}
                                                 type="date"
                                                 id="licenseExpiryDate"
                                             />
 
                                             {errors?.licenseExpiryDate ? (
-                                                <p className="errorText">
-                                                    {errors.licenseExpiryDate.message}
-                                                </p>
+                                                <p className="errorText">{errors.licenseExpiryDate.message}</p>
                                             ) : (
                                                 ""
                                             )}
@@ -580,11 +565,7 @@ function ListCarPageLayout() {
                 <div className="imagesGrid">
                     {images.map((_, index) => (
                         <figure key={index}>
-                            <Image
-                                src={`/images/cars/${index + 1}.webp`}
-                                alt={`gallery image ${index + 1}`}
-                                fill
-                            />
+                            <Image src={`/images/cars/${index + 1}.webp`} alt={`gallery image ${index + 1}`} fill />
                         </figure>
                     ))}
                 </div>

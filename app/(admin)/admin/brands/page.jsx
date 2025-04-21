@@ -7,8 +7,7 @@ import { deleteBrand, getBrands } from "@/Services/AdminServices/AdminBrand";
 import { useEffect, useState } from "react";
 
 function Page() {
-
-    const [brandsData, setbrandsData] = useState([])
+    const [brandsData, setbrandsData] = useState([]);
 
     const { data: brands, refetch } = useQuery({
         queryKey: ["brands"],
@@ -17,19 +16,19 @@ function Page() {
 
     // Function to refetch brands after delete
     const refetchBrands = () => {
-        refetch()
+        refetch();
     };
 
     useEffect(() => {
-        setbrandsData([])
+        setbrandsData([]);
         brands?.data?.map((item) => {
             const updatedItem = {
-                id: item?.brand_id,
+                id: item?.id,
                 name: item?.name,
                 image: item?.image
-            }
-            setbrandsData((prev) => ([...prev, updatedItem]))
-        })
+            };
+            setbrandsData((prev) => [...prev, updatedItem]);
+        });
     }, [brands]);
 
     return (
@@ -41,12 +40,7 @@ function Page() {
                 </Link>
             </div>
 
-            <AdminDataTable
-                refetchData={refetchBrands}
-                deleteFunc={deleteBrand}
-                data={brandsData}
-                showAction={true}
-            />
+            <AdminDataTable refetchData={refetchBrands} deleteFunc={deleteBrand} data={brandsData} showAction={true} />
         </>
     );
 }

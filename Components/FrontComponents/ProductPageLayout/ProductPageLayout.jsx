@@ -25,16 +25,24 @@ function ProductPageLayout() {
 
     const faqs = [
         {
-            question: "Can I get this car delivered?",
-            answer: "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+            question: `What is the daily and monthly rate of renting a ${data?.name}?`,
+            answer: `The daily price for the ${data?.name} is AED ${data?.carPrices?.map((item) =>
+                item?.priceType === "daily" ? item?.price : null
+            )} per day and AED  ${data?.carPrices?.map((item) =>
+                item?.priceType === "monthly" ? item?.price : null
+            )} per month. Rate may vary depending on the length of time renting and season.`
         },
         {
-            question: "Can I get this car delivered?",
-            answer: "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+            question: "What is the mileage limit for this rental?",
+            answer: `Rentals have a standard mileage limit of ${data?.carPrices?.map((item) =>
+                item?.priceType === "daily" ? item?.kilometers : null
+            )} km/day.`
         },
         {
-            question: "Can I get this car delivered?",
-            answer: "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+            question: `Are there any unique features that come with the ${data?.name}?`,
+            answer: `There are features that come with ${data?.name} like ${data?.features?.map((item) => {
+                return item?.name;
+            })} that will allow you to have an enjoyable and comfortable ride.`
         },
         {
             question: "Can I get this car delivered?",
@@ -578,26 +586,33 @@ function ProductPageLayout() {
                                     Description & Highlights:
                                 </h4>
                                 <p>
-                                    Rent and drive this <strong>{data?.name}-model</strong> in Dubai, UAE for AED{" "}
+                                    Drive the <strong>{data?.name}</strong> in Dubai for AED{" "}
                                     <strong>
                                         {data?.carPrices?.map((item) =>
                                             item?.priceType === "daily" ? item?.price : null
                                         )}
-                                    </strong>
-                                    /day & AED{" "}
-                                    {data?.carPrices?.map((item) =>
-                                        item?.priceType === "monthly" ? item?.price : null
-                                    )}
-                                    /month. Rental cost includes basic comprehensive insurance and standard mileage
-                                    limit of{" "}
-                                    {data?.carPrices?.map((item) =>
-                                        item?.priceType === "daily" ? item?.kilometers : null
-                                    )}{" "}
-                                    km/day
-                                    {/* (AED 25 per additional km applicable) */}. Security deposit of AED{" "}
-                                    {data?.securityDepositAmount} is required. Contact{" "}
-                                    <strong>{vendor?.companyName}</strong> directly for bookings and inquiries.
-                                    {/* {data?.description} */}
+                                    </strong>{" "}
+                                    per day or AED{" "}
+                                    <strong>
+                                        {data?.carPrices?.map((item) =>
+                                            item?.priceType === "monthly" ? item?.price : null
+                                        )}
+                                    </strong>{" "}
+                                    per month. The rental includes comprehensive insurance and comes with a mileage
+                                    allowance of{" "}
+                                    <strong>
+                                        {data?.carPrices?.map((item) =>
+                                            item?.priceType === "daily" ? item?.kilometers : null
+                                        )}
+                                    </strong>{" "}
+                                    km per day.
+                                </p>
+                                <p>
+                                    A security deposit of AED <strong>{data?.securityDepositAmount}</strong> is required
+                                    at the time of booking and this is fully refundable.
+                                </p>
+                                <p>
+                                    For availability and bookings, contact <strong>{vendor?.companyName}</strong> today.
                                 </p>
                                 <button
                                     className="themeBtn themeBtnAlt"

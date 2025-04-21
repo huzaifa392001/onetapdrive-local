@@ -4,18 +4,28 @@ import API from "../Constants/api";
 
 export const login = async (data) => {
     try {
-        console.log("logindata=> ", data)
         const res = await API.post("/auth/login", data);
-        console.log("logindata=> ", res?.data)
         if (res?.data?.data?.user_details?.role?.name === "superadmin") {
             store.dispatch(SET_ADMIN_DETAILS(res?.data?.user_details));
             store.dispatch(SET_IS_ADMIN(true));
             store.dispatch(SET_VENDOR_DETAILS(null));
             store.dispatch(SET_IS_VENDOR(false));
+            store.dispatch(SET_USER_DETAILS(null));
+            store.dispatch(SET_IS_USER(false));
         }
         else if (res?.data?.data?.user_details?.role?.name === "vendor") {
             store.dispatch(SET_VENDOR_DETAILS(res?.data?.user_details));
             store.dispatch(SET_IS_VENDOR(true));
+            store.dispatch(SET_ADMIN_DETAILS(null));
+            store.dispatch(SET_IS_ADMIN(false));
+            store.dispatch(SET_USER_DETAILS(null));
+            store.dispatch(SET_IS_USER(false));
+        }
+        else if (res?.data?.data?.user_details?.role?.name === "user") {
+            store.dispatch(SET_USER_DETAILS(res?.data?.user_details));
+            store.dispatch(SET_IS_USER(true));
+            store.dispatch(SET_VENDOR_DETAILS(null));
+            store.dispatch(SET_IS_VENDOR(false));
             store.dispatch(SET_ADMIN_DETAILS(null));
             store.dispatch(SET_IS_ADMIN(false));
         }
@@ -74,5 +84,14 @@ export const userLogout = async () => {
     } catch (e) {
         console.error(`Error during logout: ${e}`);
         throw new Error(e.response?.data?.message || "Logout failed!");
+    }
+}
+
+export const userSignUp = async (data) => {
+    try {
+        const res = await API.post("/auth/login", data);
+    } catch (e) {
+        console.error(`Error during Signup: ${e}`);
+        throw new Error(e.response?.data?.message || "SignUp failed!");
     }
 }

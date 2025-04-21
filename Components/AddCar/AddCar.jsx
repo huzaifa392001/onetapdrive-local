@@ -35,6 +35,7 @@ function AddCar({ edit }) {
         interiorColor: Yup.string().required("Interior color is required"),
         description: Yup.string().required("Description is required"),
         isCarWithDriver: Yup.boolean().required("Car with driver status is required"),
+        insuranceIncluded: Yup.boolean().required("Car with driver status is required"),
         status: Yup.boolean().required("Car status is required"),
         active: Yup.boolean().required("Active status is required"),
         transmissionId: Yup.string().required("Transmission type is required"),
@@ -106,7 +107,8 @@ function AddCar({ edit }) {
             { priceType: "daily", price: null, kilometers: null },
             { priceType: "weekly", price: null, kilometers: null },
             { priceType: "monthly", price: null, kilometers: null }
-        ]
+        ],
+        insuranceIncluded: false
     };
 
     const {

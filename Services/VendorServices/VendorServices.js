@@ -31,3 +31,13 @@ export const changeCarStatus = async ({ id, enable }) => {
         throw error;
     }
 };
+
+export const boostCar = async (id) => {
+    try {
+        const response = await API.put(`/cars/car-refresh/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error toggling car status:", error);
+        throw error;
+    }
+}

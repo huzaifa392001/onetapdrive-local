@@ -5,7 +5,7 @@ import https from 'https';
 const API = axios.create({
     baseURL: "https://onetapdrive.com/api/",
     headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", "Cache-Control": "no-cache, no-store, must-revalidate"
     },
     httpsAgent: new https.Agent({
         rejectUnauthorized: false

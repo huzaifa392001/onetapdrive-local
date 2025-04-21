@@ -100,7 +100,7 @@ function Page() {
             options:
                 brandsData?.data?.map((item) => ({
                     name: item?.name,
-                    id: item?.brand_id
+                    id: item?.id
                 })) || []
         },
         {
@@ -150,7 +150,7 @@ function Page() {
                 options:
                     brandsData?.data?.map((item) => ({
                         name: item?.name,
-                        id: item?.brand_id
+                        id: item?.id
                     })) || []
             },
             {

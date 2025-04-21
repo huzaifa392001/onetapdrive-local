@@ -36,7 +36,12 @@ function VendorHeader() {
             </figure>
             <div className="customDropdown">
                 <button type="button" onClick={toggleDropdown} className="dropdownButton">
-                    <Image src={vendor?.companyLogo} width={35} height={35} alt="Company Logo"></Image>
+                    <Image
+                        src={vendor?.companyLogo || "/images/noImage.jpg"}
+                        width={35}
+                        height={35}
+                        alt="Company Logo"
+                    ></Image>
                     {vendor?.companyName}
                     <i className="fas fa-chevron-down"></i>
                 </button>

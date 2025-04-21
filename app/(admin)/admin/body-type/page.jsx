@@ -20,12 +20,11 @@ function Page() {
     };
 
     useEffect(() => {
-        console.log("bodytypes=> ", bodyType);
         setBodyTypeData([]);
         bodyType?.data?.map((item) => {
             const updatedItem = {
-                id: item?.bodyType_id,
-                name: item?.bodyType_name
+                id: item?.id,
+                name: item?.name
             };
             setBodyTypeData((prev) => [...prev, updatedItem]);
         });

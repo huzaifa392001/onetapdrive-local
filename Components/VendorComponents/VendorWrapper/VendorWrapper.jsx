@@ -63,7 +63,6 @@ function VendorWrapper({ children }) {
     });
 
     useEffect(() => {
-        console.log("vendorData=> ", vendorData);
         store.dispatch(SET_VENDOR_DETAILS(vendorData?.data));
     }, [vendorData]);
 

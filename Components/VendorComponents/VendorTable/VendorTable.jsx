@@ -8,7 +8,7 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import "./VendorTable.scss";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
-import { changeCarStatus } from "@/Services/VendorServices/VendorServices";
+import { boostCar, changeCarStatus } from "@/Services/VendorServices/VendorServices";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -18,23 +18,34 @@ const VendorTable = ({ data = [], refetchData }) => {
     const [colDefs, setColDefs] = useState([]);
     const [localRowData, setLocalRowData] = useState(data);
     const [togglingStatusId, setTogglingStatusId] = useState(null);
+    const statusMutation = useMutation({
+        mutationFn: changeCarStatus,
+        onSuccess: (_, variables) => {
+            const { id, enable } = variables;
+            toast.success("Status Updated");
+            refetchData?.();
+            setTogglingStatusId(null);
+            setLocalRowData((prev) => prev.map((row) => (row.id === id ? { ...row, status: enable } : row)));
+        },
+        onError: () => {
+            toast.error("Failed to update status");
+            setTogglingStatusId(null);
+        }
+    });
+
+    const refreshCar = useMutation({
+        mutationFn: boostCar,
+        onSuccess: () => {
+            toast.success("Car Boosted");
+        },
+        onError: () => {
+            toast.error("Failed to Boost Car");
+        }
+    });
 
     useEffect(() => {
         setLocalRowData(data);
     }, [data]);
-
-    const statusMutation = useMutation({
-        mutationFn: changeCarStatus,
-        onSuccess: () => {
-            toast.success("Status Updated");
-            refetchData?.();
-            setTogglingStatusId(null); // Re-enable the toggle button
-        },
-        onError: () => {
-            toast.error("Failed to update status");
-            setTogglingStatusId(null); // Re-enable the toggle button
-        }
-    });
 
     const onGridReady = (params) => {
         gridRef.current = params.api;
@@ -56,7 +67,7 @@ const VendorTable = ({ data = [], refetchData }) => {
                             return (
                                 <div className="tableImgCol">
                                     <Image
-                                        src={imageSrc || null}
+                                        src={imageSrc || "/images/noImage.jpg"}
                                         alt="Car Image"
                                         width={100}
                                         height={50}
@@ -85,23 +96,22 @@ const VendorTable = ({ data = [], refetchData }) => {
                     const id = params.data?.id;
                     const currentStatus = params.data?.status;
 
-                    const toggleStatus = () => {
-                        const newStatus = !currentStatus;
-                        setTogglingStatusId(id); // Disable the button
-                        statusMutation.mutate({ id: id, enable: newStatus });
-                    };
-
                     return (
                         <div className="btnCont">
                             <button
                                 title="Toggle Status"
-                                className={`themeBtn statusBtn iconBtn ${currentStatus ? "Active" : "Inactive"}`}
-                                onClick={toggleStatus}
-                                disabled={togglingStatusId === id}
+                                className={`themeBtn statusBtn iconBtn ${
+                                    currentStatus === true ? "active" : "inactive"
+                                } ${statusMutation.isPending ? "disabled" : ""}`}
+                                onClick={() => {
+                                    statusMutation.mutate({ id, enable: !currentStatus });
+                                    setTogglingStatusId(id);
+                                }}
+                                disabled={statusMutation.isPending}
                             >
-                                <i className={`fas fa-power-off ${currentStatus ? "Active" : "Inactive"}`} />
+                                <i className="fas fa-power-off" />
                             </button>
-                            <button title="Refresh" className="themeBtn iconBtn">
+                            <button title="Refresh" onClick={() => refreshCar.mutate(id)} className="themeBtn iconBtn">
                                 <i className="fas fa-rocket" />
                             </button>
                             <Link title="Edit" className="themeBtn" href={`${pathName}/edit/${id}`}>

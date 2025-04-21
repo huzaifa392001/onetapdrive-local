@@ -88,7 +88,6 @@ function AdminLogin() {
     }, [isAdmin]);
 
     useEffect(() => {
-        console.log("admin=> ", admin);
         if (admin) {
             router.push("/admin");
         }

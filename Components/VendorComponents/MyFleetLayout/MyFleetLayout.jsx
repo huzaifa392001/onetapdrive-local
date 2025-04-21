@@ -6,26 +6,33 @@ import Link from "next/link";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import { useQuery } from "@tanstack/react-query";
 import { getVendorCars } from "@/Services/VendorServices/VendorServices";
+import Loading from "@/Components/Loading/Loading";
 
 const MyFleetLayout = () => {
     const [vendorCarData, setVendorCarData] = useState([]);
 
-    const { data: vendorData, refetch } = useQuery({
+    const {
+        data: vendorData,
+        refetch,
+        isPending
+    } = useQuery({
         queryKey: ["cars"],
         queryFn: getVendorCars
     });
 
     useEffect(() => {
         const transformedData =
-            vendorData?.data?.data?.map((car) => ({
+            vendorData?.data?.cars?.map((car) => ({
                 id: car.id,
                 name: car.name,
                 category: car.category?.name || "N/A",
-                status: car.active ? "active" : "inactive",
+                status: car.status,
                 Action: true
             })) || [];
         setVendorCarData(transformedData);
     }, [vendorData]);
+
+    if (isPending) return <Loading />;
 
     return (
         <>
@@ -34,7 +41,7 @@ const MyFleetLayout = () => {
                 <div className="listingNumbersFlex">
                     <div className="listingNumbers">
                         <h3>Total Listing</h3>
-                        <h1>{vendorData?.data?.data?.length || 0}</h1>
+                        <h1>{vendorData?.data?.cars?.length || 0}</h1>
                     </div>
                     <div className="listingNumbers">
                         <h3>Active Listing</h3>

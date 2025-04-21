@@ -13,16 +13,12 @@ const RentalTerms = memo(function RentalTerms({ edit, control, errors }) {
                     <Controller
                         name="securityDepositAmount"
                         control={control}
-                        rules={{ 
+                        rules={{
                             required: "Security deposit amount is required",
                             min: { value: 0, message: "Amount must be positive" }
                         }}
                         render={({ field }) => (
-                            <input 
-                                {...field} 
-                                type="number" 
-                                placeholder="Security Deposit Amount*" 
-                            />
+                            <input {...field} type="number" placeholder="Security Deposit Amount*" />
                         )}
                     />
                     <p className="small">Default Deposit is set to 0</p>
@@ -38,9 +34,7 @@ const RentalTerms = memo(function RentalTerms({ edit, control, errors }) {
                         rules={{ required: "Delivery pickup charge is required" }}
                         render={({ field }) => (
                             <select id="delivery_charges" {...field}>
-                                <option value="">
-                                    Select Delivery & Pickup Charges*
-                                </option>
+                                <option value="">Select Delivery & Pickup Charges*</option>
                                 <option value="100">100</option>
                                 <option value="200">200</option>
                                 <option value="300">300</option>
@@ -54,6 +48,18 @@ const RentalTerms = memo(function RentalTerms({ edit, control, errors }) {
                     {errors?.deliveryPickupCharge && (
                         <p className="error-message">{errors.deliveryPickupCharge.message}</p>
                     )}
+                </div>
+
+                <div className={`inputCont ${errors?.insuranceIncluded ? "error" : ""}`}>
+                    <Controller
+                        name="insuranceIncluded"
+                        control={control}
+                        rules={{ required: "Delivery pickup charge is required" }}
+                        render={({ field }) => (
+                            <input {...field} type="checkbox" placeholder="Security Deposit Amount*" />
+                        )}
+                    />
+                    {errors?.insuranceIncluded && <p className="error-message">{errors.insuranceIncluded.message}</p>}
                 </div>
             </div>
         </div>

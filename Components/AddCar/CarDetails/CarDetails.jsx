@@ -16,7 +16,7 @@ const CarDetails = memo(function CarDetails({ edit, setCarDetails, control, erro
     const generateCarName = () => {
         if (!brands || !models || !years) return "";
 
-        const brandObj = brands.find((b) => String(b.brand_id) === String(carBrand));
+        const brandObj = brands.find((b) => String(b.id) === String(carBrand));
         const modelObj = models.find((m) => String(m.id) === String(control._formValues.modelId));
         const yearObj = years.find((y) => String(y.id) === String(control._formValues.makeYearId));
 
@@ -67,7 +67,7 @@ const CarDetails = memo(function CarDetails({ edit, setCarDetails, control, erro
                     >
                         <option value="">Select Car Brand*</option>
                         {brands?.map((item, index) => (
-                            <option key={index} value={item?.brand_id}>
+                            <option key={index} value={item?.id}>
                                 {item?.name}
                             </option>
                         ))}
@@ -186,11 +186,8 @@ const CarDetails = memo(function CarDetails({ edit, setCarDetails, control, erro
                             <textarea {...field} rows={5} placeholder="Enter Car Description"></textarea>
                         )}
                     />
-                    {errors?.description && (
-                        <p className="error">{errors?.description.message}</p>
-                    )}
+                    {errors?.description && <p className="error">{errors?.description.message}</p>}
                 </div>
-
             </div>
         </div>
     );

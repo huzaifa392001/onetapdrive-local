@@ -72,6 +72,74 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+h1,
+.h1 {
+    font-size: 3em; // 48px
+    font-weight: 600;
+    margin: 0 0 0.5em 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+
+    &.display-l {
+        font-size: 3.25em; // 52px
+        letter-spacing: -1px;
+    }
+
+    &.display-xl {
+        font-size: 3.75em; // 60px
+        letter-spacing: -1px;
+    }
+
+    &.display-2xl {
+        font-size: 4.75em; // 76px
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-bottom: 0.27em;
+    }
+}
+
+h2,
+.h2 {
+    font-size: 2.5em; // 40px
+    font-weight: 600;
+    margin: 0 0 0.35em 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+h3,
+.h3 {
+    font-size: 2em; //32px
+    font-weight: 600;
+    margin: 0 0 0.5em 0;
+    line-height: 1.375em;
+    letter-spacing: -0.5px;
+}
+
+h4,
+.h4 {
+    font-size: 1.75em; // 28px
+    font-weight: 600;
+    margin: 0 0 0.6em 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+h5,
+.h5 {
+    font-size: 1.5em; // 24px
+    font-weight: 600;
+    margin: 0 0 0.6818em 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+h6,
+.h6 {
+    font-size: 1.25em; // 20px
+    font-weight: 400;
+    margin: 0 0 0.75em 0;
+}
 
 .themeBtn {
     @apply relative block text-center bg-[var(--theme-color-100)] py-2 px-4 rounded-lg text-[var(--black)] font-semibold text-[14px] border border-[var(--theme-color-500)] transition-all duration-200 capitalize select-auto pointer-events-auto;

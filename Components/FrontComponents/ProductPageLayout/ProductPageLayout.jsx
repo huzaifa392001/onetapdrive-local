@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import Head from "next/head";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getSingleCar } from "@/Services/FrontServices/GeneralServices";
 import Loading from "@/app/(home)/loading";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,12 +16,25 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Fancybox from "@/Components/Fancybox/Fancybox";
+import { toggleWishlist } from "@/Services/UserServices/UserServices";
+import { toast } from "react-toastify";
+import { store } from "@/Redux/Store";
+import { SET_OTP_MODAL_STATUS, SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
 
 function ProductPageLayout() {
     const [data, setData] = useState();
     const [user, setUser] = useState({});
     const [vendor, setVendor] = useState({});
     const [fancyboxIsActive, setFancyboxIsActive] = useState(false);
+    const [isWishlisted, setIsWishlisted] = useState();
+    const [activeAccordion, setActiveAccordion] = useState(null); // Track active accordion
+    const [activeFaq, setActiveFaq] = useState(null); // Track the active FAQ
+    const [activeModal, setActiveModal] = useState(null); // Track which modal is active
+    const [activePrice, setActivePrice] = useState(null);
+    const currentCity = useSelector((state) => state.general.currentLocation);
+    const route = usePathname().split("/").pop();
+    const [isMobile, setIsMobile] = useState(false);
+    const loggedInUser = useSelector((state) => state.auth.userDetails);
 
     const faqs = [
         {
@@ -278,14 +291,6 @@ function ProductPageLayout() {
         }
     ];
 
-    const [activeAccordion, setActiveAccordion] = useState(null); // Track active accordion
-    const [activeFaq, setActiveFaq] = useState(null); // Track the active FAQ
-    const [activeModal, setActiveModal] = useState(null); // Track which modal is active
-    const [activePrice, setActivePrice] = useState(null);
-    const currentCity = useSelector((state) => state.general.currentLocation);
-    const route = usePathname().split("/").pop();
-    const [isMobile, setIsMobile] = useState(false);
-
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
@@ -330,6 +335,31 @@ function ProductPageLayout() {
         queryKey: ["Car"],
         queryFn: () => getSingleCar(route)
     });
+
+    const wishlistMutation = useMutation({
+        mutationFn: toggleWishlist,
+        onSuccess: () => {
+            toast.success("Added To Wishlist");
+        },
+        onError: () => {
+            toast.error("Failed to add to wishlist");
+        }
+    });
+
+    const toggleWishlistFunc = () => {
+        // if(user)
+        if (!loggedInUser) {
+            store.dispatch(SET_USER_MODAL_STATUS(true));
+            toast.error("Please Login First");
+            return;
+        }
+
+        if (!loggedInUser?.account_verified) {
+            store.dispatch(SET_OTP_MODAL_STATUS(true));
+            toast.error("Please verify your account first.");
+        }
+        console.log("loggedInUser=> ", loggedInUser);
+    };
 
     useEffect(() => {
         setData(carData?.data);
@@ -472,9 +502,12 @@ function ProductPageLayout() {
                                 <Link href="">
                                     <i className="fal fa-share-alt" />
                                 </Link>
-                                <Link href="">
-                                    <i className="fal fa-heart" />
-                                </Link>
+                                <button
+                                    className={`wishlistBtn ${isWishlisted ? "active" : ""} `}
+                                    onClick={() => toggleWishlistFunc()}
+                                >
+                                    <i className={`${isWishlisted ? "fas" : "fal"} fa-heart`} />
+                                </button>
                             </div>
                         </div>
 

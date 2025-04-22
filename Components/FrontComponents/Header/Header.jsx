@@ -19,6 +19,7 @@ function Header() {
     const [selectedLocation, setSelectedLocation] = useState(currentCity); // Default location
     const isUser = useSelector((state) => state.auth.isUser);
     const categoryData = useSelector((state) => state.general.categories);
+    const user = useSelector((state) => state.auth.userDetails);
 
     const handleMouseEnter = (type) => {
         if (type === "cat") {
@@ -121,7 +122,7 @@ function Header() {
                                         )}
                                         {isUser && (
                                             <Link href={"/user/dashboard"} className="userMenu">
-                                                <h5>Current user</h5>
+                                                <h5>{user?.firstName}</h5>
                                                 <i className="fas fa-chevron-right" />
                                             </Link>
                                         )}
@@ -429,10 +430,7 @@ function Header() {
                                 <ul>
                                     {categoryData?.map((item, index) => (
                                         <li key={index}>
-                                            <Link
-                                                onClick={() => handleMouseLeave("")}
-                                                href={`/cars/${item?.slug}`}
-                                            >
+                                            <Link onClick={() => handleMouseLeave("")} href={`/cars/${item?.slug}`}>
                                                 {item?.name}
                                             </Link>
                                         </li>

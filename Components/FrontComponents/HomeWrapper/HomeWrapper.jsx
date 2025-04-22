@@ -17,6 +17,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { store } from "@/Redux/Store";
 import { SET_BRANDS, SET_CATEGORIES, SET_CITIES } from "@/Redux/Slices/General";
+import OtpModal from "../OtpModal/OtpModal";
 function HomeWrapper({ children }) {
     const [lenis, setLenis] = useState(null);
     const [isLenisEnabled, setIsLenisEnabled] = useState(typeof window !== "undefined" && window.innerWidth >= 768); // ✅ Fix: Ensure window is defined
@@ -114,6 +115,7 @@ function HomeWrapper({ children }) {
             <Header />
             <Suspense fallback={<Loading />}>{children}</Suspense>
             <LoginModal />
+            <OtpModal />
             <Footer />
         </main>
     );

@@ -1,6 +1,5 @@
 import React from "react";
 import "./VendorDashboard.scss";
-import VendorCards from "../../../DummyData/VendorCards";
 import VendorHeading from "@/Components/VendorComponents/VendorHeading/VendorHeading";
 import LeadsChart from "@/Components/charts/LeadsChart";
 import CarChart from "@/Components/charts/CarListingChart";
@@ -21,10 +20,8 @@ export default function VendorDashboard() {
     ];
 
     const leadsData = [
-        { label: "Website Leads", value: 150 },
-        { label: "Referral Leads", value: 90 },
-        { label: "Social Media", value: 60 },
-        { label: "Other", value: 30 }
+        { label: "Whatsapp Leads", value: 150 },
+        { label: "Number Leads", value: 90 }
     ];
 
     return (

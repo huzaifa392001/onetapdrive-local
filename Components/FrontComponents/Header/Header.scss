@@ -137,7 +137,7 @@
         background: linear-gradient(90deg, rgb(236 234 230) 0%, rgb(228 225 220) 100%);
 
         &.navShow {
-            @apply select-auto pointer-events-auto opacity-100 visible top-[113px];
+            @apply select-auto pointer-events-auto opacity-100 visible top-[100px];
         }
 
         .brandsCont {

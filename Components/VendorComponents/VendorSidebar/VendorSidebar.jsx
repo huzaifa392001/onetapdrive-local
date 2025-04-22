@@ -18,6 +18,7 @@ function VendorSidebar() {
 
     // Define sidebar menu items with dividers
     const menuItems = [
+        { path: "/", label: "Website", icon: "fas fa-globe" },
         { path: "/vendor", label: "Dashboard", icon: "fas fa-home" },
         { path: "/vendor/license", label: "Trade License", icon: "fas fa-id-badge" },
         { path: "/vendor/leads", label: "Leads Management", icon: "fas fa-file-alt" },

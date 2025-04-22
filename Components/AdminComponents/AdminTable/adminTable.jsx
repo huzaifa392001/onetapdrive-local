@@ -10,13 +10,27 @@ import { formatDate } from "@/Utils/Utils";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Spinner from "@/Components/Spinner/Spinner";
+import { updateCarStatus } from "@/Services/AdminServices/AdminCars";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const AdminDataTable = (props) => {
     const rowData = props?.data || [];
+    const showAdminActions = props?.showAdminCarActions || false;
     const showAction = props?.showAction || false;
     const pathName = usePathname();
+    const statusMutation = useMutation({
+        mutationFn: updateCarStatus,
+        onSuccess: (_, variables) => {
+            const { id, enable } = variables;
+            toast.success("Status Updated");
+            refetchData?.();
+            setLocalRowData((prev) => prev.map((row) => (row.id === id ? { ...row, status: enable } : row)));
+        },
+        onError: () => {
+            toast.error("Failed to update status");
+        }
+    });
 
     const deleteMutation = useMutation({
         mutationFn: props?.deleteFunc,
@@ -40,6 +54,18 @@ const AdminDataTable = (props) => {
             const dynamicFields = Object.keys(rowData[0])
                 .filter((key) => key !== "slug" && key !== "id")
                 .map((key) => {
+                    if (key === "status") {
+                        return {
+                            field: key,
+                            headerName: "Status",
+                            flex: 1,
+                            cellRenderer: (params) => {
+                                const currentStatus = params.data?.status;
+
+                                return <p>{currentStatus ? "Active" : "Inactive"}</p>;
+                            }
+                        };
+                    }
                     if (key === "image") {
                         return {
                             field: key,
@@ -94,7 +120,37 @@ const AdminDataTable = (props) => {
                     };
                 });
 
-            // ✅ Fix: `actionColumn` ko function call kar ke pass karein
+            const carAction = [
+                {
+                    headerName: "Car Actions",
+                    width: 200,
+                    cellRenderer: (params) => {
+                        const id = params.data?.id;
+                        const currentStatus = params.data?.status;
+
+                        return (
+                            <div className="btnCont">
+                                <button
+                                    title="Toggle Status"
+                                    className={`themeBtn statusBtn iconBtn ${
+                                        currentStatus === true ? "active" : "inactive"
+                                    } ${statusMutation.isPending ? "disabled" : ""}`}
+                                    onClick={() => {
+                                        statusMutation.mutate({ id, enable: !currentStatus });
+                                    }}
+                                    disabled={statusMutation.isPending}
+                                >
+                                    <i className="fas fa-power-off" />
+                                </button>
+                                <Link title="Edit" className="themeBtn" href={`${pathName}/edit/${id}`}>
+                                    <i className="fas fa-pencil" />
+                                </Link>
+                            </div>
+                        );
+                    }
+                }
+            ];
+
             const actionColumn = {
                 headerName: "Action",
                 flex: 1,
@@ -121,12 +177,17 @@ const AdminDataTable = (props) => {
             };
 
             setColDefs([
-                { headerName: "Sr No.", valueGetter: "node.rowIndex + 1" },
+                {
+                    headerName: "Sr No.",
+                    valueGetter: "node.rowIndex + 1",
+                    width: 100
+                },
                 ...dynamicFields,
-                ...(showAction ? [actionColumn] : []) // ✅ Fix: `actionColumn` ko array mein call karein
+                ...(showAdminActions ? carAction : []),
+                ...(showAction ? [actionColumn] : [])
             ]);
         }
-    }, [rowData, showAction, pathName]); // ✅ Fix: `onDelete` ko dependencies mein add karein
+    }, [rowData, showAdminActions]); // 👈 Add showAdminActions as a dependency
 
     return (
         <div className="dataTable ag-theme-alpine">

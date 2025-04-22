@@ -26,8 +26,7 @@ const MyFleetLayout = () => {
                 id: car.id,
                 name: car.name,
                 category: car.category?.name || "N/A",
-                status: car.active,
-                Action: true
+                status: car.active
             })) || [];
         setVendorCarData(transformedData);
     }, [vendorData]);

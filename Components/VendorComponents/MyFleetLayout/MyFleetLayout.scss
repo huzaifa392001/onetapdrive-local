@@ -35,10 +35,10 @@
     @apply flex gap-3;
     .listingNumbers {
       @apply max-w-sm px-4 md:px-8 py-2 md:py-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-3;
-      h3{
+      h3 {
         @apply text-center text-base md:text-2xl mb-3;
       }
-      h1{
+      h1 {
         @apply text-center text-xl md:text-4xl text-black;
       }
     }

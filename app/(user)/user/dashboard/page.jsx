@@ -1,10 +1,10 @@
 "use client";
 
 import FullProductCard from "@/Components/FullProductCard/FullProductCard";
-import { getAllCars, getViewedCars, getWishlistedCars } from "@/Services/FrontServices/GeneralServices";
 import { useQueries } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./style.scss";
+import { getUserViewedCars, getUserWishlistCars } from "@/Services/UserServices/UserServices";
 
 function Page() {
     const [activeTab, setActiveTab] = useState("wishlist");
@@ -12,40 +12,34 @@ function Page() {
     const results = useQueries({
         queries: [
             {
-                queryKey: ["allCars"],
-                queryFn: getAllCars
-            },
-            {
-                queryKey: ["viewedCars"],
-                queryFn: getViewedCars
-            },
-            {
                 queryKey: ["wishlistedCars"],
-                queryFn: getWishlistedCars
+                queryFn: getUserWishlistCars
+            },
+            {
+                queryKey: ["ViewedCars"],
+                queryFn: getUserViewedCars
             }
         ]
     });
 
-    const [allCars, viewedCars, wishlistedCars] = results;
-    useEffect(() => {
-        console.log("allCars=> ", results[0]);
-    }, [results]);
+    const [wishlistedCars, viewedCars] = results;
 
     const tabs = [
         { label: "Wishlist", key: "wishlist" },
-        { label: "Contacted", key: "contacted" }, // You can connect this later
+        // { label: "Contacted", key: "contacted" },
         { label: "Viewed", key: "viewed" }
     ];
 
-    // Select data based on activeTab
     const getActiveData = () => {
         switch (activeTab) {
             case "wishlist":
+                if (wishlistedCars?.error?.response?.status === 404) return "no_data";
                 return wishlistedCars?.data?.data?.cars || [];
             case "viewed":
+                if (viewedCars?.error?.response?.status === 404) return "no_data";
                 return viewedCars?.data?.data?.cars || [];
-            case "contacted":
-                return allCars?.data?.data?.cars || []; // Placeholder
+            // case "contacted":
+            //     return [];
             default:
                 return [];
         }
@@ -64,7 +58,7 @@ function Page() {
                             className={`tabCol ${activeTab === tab.key ? "active" : ""}`}
                             onClick={() => setActiveTab(tab.key)}
                         >
-                            <h3>{tab.label}</h3>
+                            <h6>{tab.label}</h6>
                         </div>
                     ))}
                 </div>
@@ -72,17 +66,14 @@ function Page() {
                 {/* Tab Content */}
                 <div className="tabContent">
                     <div className="resultRow">
-                        {activeData.map((item, index) => (
-                            <FullProductCard data={item} featured key={index} />
-                        ))}
+                        {activeData === "no_data" || activeData.length === 0 ? (
+                            <div className="noResult">
+                                <p>No cars found.</p>
+                            </div>
+                        ) : (
+                            activeData.map((item, index) => <FullProductCard data={item} featured key={index} />)
+                        )}
                     </div>
-
-                    {/* <div className="totalResult">
-                        <p>
-                            Showing <span>1</span> - <span>{activeData.length}</span> of{" "}
-                            <span>{activeData.length}</span> Cars
-                        </p>
-                    </div> */}
                 </div>
             </div>
         </section>

@@ -43,11 +43,7 @@ function CarsPageLayout({ brands }) {
                 : getCategorizedCars({ category: activeRoute || "" }),
         enabled: true
     });
-
-    useEffect(() => {
-        console.log("carsData=> ", carsData);
-    }, [carsData]);
-
+    
     if (isPending) return <Loading />;
 
     return (

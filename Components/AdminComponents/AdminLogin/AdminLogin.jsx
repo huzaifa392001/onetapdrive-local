@@ -13,8 +13,7 @@ import FormGroup from "@/Components/FormGroup";
 import { requiredValidation } from "@/Utils/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector } from "react-redux";
-import { SET_ACCESS_TOKEN, SET_ADMIN_DETAILS, SET_IS_ADMIN } from "@/Redux/Slices/Auth";
-import { store } from "@/Redux/Store";
+
 function AdminLogin() {
     const { isAdmin } = useSelector((state) => state.auth.isAdmin);
     const [admin, setAdmin] = useState(isAdmin);
@@ -57,7 +56,6 @@ function AdminLogin() {
         control,
         handleSubmit,
         formState: { errors, isValid },
-        watch
     } = useForm({
         resolver: yupResolver(schema),
         defaultValues: init

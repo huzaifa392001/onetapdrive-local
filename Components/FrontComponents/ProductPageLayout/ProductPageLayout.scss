@@ -47,11 +47,18 @@
             .btnCont {
                 @apply flex items-center ml-auto gap-x-2;
 
-                a {
+                a,
+                button {
                     @apply flex items-center justify-center px-3 py-2.5 text-[var(--white)] bg-[#0005] rounded-md backdrop-blur-sm duration-300 transition-all;
 
                     &:hover {
                         @apply bg-[var(--black)];
+                    }
+
+                    &.wishlistBtn {
+                        &.active {
+                            @apply text-[red];
+                        }
                     }
                 }
             }
@@ -218,7 +225,8 @@
 
                 .btnCont {
                     @apply flex gap-x-4 mt-3 w-full;
-                    a {
+                    a,
+                    button {
                         @apply w-full border-2 rounded-lg flex items-center justify-center py-4 gap-x-2 font-medium transition-all duration-300;
 
                         svg {

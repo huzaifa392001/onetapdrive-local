@@ -1,14 +1,18 @@
 import FormGroup from "@/Components/FormGroup";
 import Spinner from "@/Components/Spinner/Spinner";
+import { SET_ACCESS_TOKEN, SET_IS_USER, SET_USER_DETAILS } from "@/Redux/Slices/Auth";
+import { store } from "@/Redux/Store";
 import { userSignUp } from "@/Services/AuthService/AuthService";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
-function SignUp({ setStatus }) {
+function SignUp({ setModal }) {
+    const router = useRouter();
     const init = {
         firstName: "",
         email: "",
@@ -78,17 +82,27 @@ function SignUp({ setStatus }) {
 
     const signupMutation = useMutation({
         mutationFn: userSignUp,
-        onSuccess: () => {
-            setStatus(1);
+        onSuccess: (res) => {
+            store.dispatch(SET_ACCESS_TOKEN(res?.data?.access_token));
+            store.dispatch(SET_USER_DETAILS(res?.data?.user_details));
+            store.dispatch(SET_IS_USER(true));
             toast.success("User Signup Successfully!");
+
+            setModal();
         },
-        onError: () => {
-            toast.error("Error while Signup");
+        onError: (error) => {
+            const res = error?.response?.data;
+
+            const errorMsg =
+                res?.errors?.[0]?.email || // First specific error
+                res?.message || // General message fallback
+                "Error while Signup"; // Final fallback
+
+            toast.error(errorMsg);
         }
     });
 
     const onSubmit = (data) => {
-        console.log("data =>", data);
         signupMutation.mutate(data);
     };
 

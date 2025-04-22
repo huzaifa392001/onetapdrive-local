@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./LoginModal.scss";
 import { useSelector } from "react-redux";
 import { store } from "@/Redux/Store";
@@ -10,11 +10,17 @@ import Image from "next/image";
 function LoginModal() {
     // const visibility = true;
     const visibility = useSelector((state) => state.general.userModalStatus);
-    const [showState, setShowState] = useState(0);
+    const [showState, setShowState] = useState(1);
 
     const handleModalVisible = () => {
         store.dispatch(SET_USER_MODAL_STATUS(false));
     };
+
+    useEffect(() => {
+        return () => {
+            store.dispatch(SET_USER_MODAL_STATUS(false));
+        };
+    }, []);
 
     return (
         <div className={`modal ${visibility == true ? "visible" : ""}`}>
@@ -39,7 +45,7 @@ function LoginModal() {
                     {showState === 0 && (
                         <div class="formWrap">
                             <h4>Sign Up</h4>
-                            <SignUp setStatus={setShowState} />
+                            <SignUp setModal={handleModalVisible} />
                             <p onClick={() => setShowState(1)}>
                                 Already a User? <span>Login Now</span>
                             </p>
@@ -48,26 +54,10 @@ function LoginModal() {
                     {showState === 1 && (
                         <div className="formWrap">
                             <h4>Login</h4>
-                            <Login />
+                            <Login setModal={handleModalVisible} />
                             <p onClick={() => setShowState(0)}>
                                 Already a User? <span>Signup Now</span>
                             </p>
-                            {/* {step === 1 && (
-                            <>
-                                <button className="themeBtn googleBtn">
-                                    <i className="fab fa-google" />
-                                    Sign in with Google
-                                </button>
-                                <div className="or">
-                                    <span>OR</span>
-                                </div>
-                                
-                            </>
-                        )}
-
-                        {step === 2 && (
-                           
-                        )} */}
                         </div>
                     )}
                 </div>

@@ -108,6 +108,7 @@ function HomeWrapper({ children }) {
         store.dispatch(SET_CATEGORIES(categoriesData));
         store.dispatch(SET_BRANDS(brandsData));
         store.dispatch(SET_CITIES(citiesData));
+        setLocations()
     }, [categoriesData, brandsData, citiesData]);
 
     if (!categoriesData || !brandsData || !citiesData) {

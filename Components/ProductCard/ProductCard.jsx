@@ -13,16 +13,16 @@ function ProductCard(props) {
 
     return (
         <div onMouseLeave={() => setActiveImageIndex(0)} className={`productCard ${props?.className}`}>
-            {!props?.premium && (
+            {!product?.premium && (
                 <Link href={`/product/${product?.slug}`}>
                     <figure className="imgCont">
-                        {props?.premium && (
+                        {product?.premium && (
                             <span className="imgTag">
                                 <i className="fas fa-star" />
                                 Premium
                             </span>
                         )}
-                        {props?.featured && (
+                        {product?.featured && (
                             <span className="imgTag">
                                 <i className="fas fa-stars" />
                                 Featured
@@ -36,7 +36,7 @@ function ProductCard(props) {
                     </figure>
                 </Link>
             )}
-            {props?.premium && (
+            {product?.premium && (
                 <Link href={`/product/${product?.slug}`}>
                     <figure className="imgCont">
                         {props?.premium && (

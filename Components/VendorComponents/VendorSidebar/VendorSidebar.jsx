@@ -20,7 +20,7 @@ function VendorSidebar() {
 
     // Define sidebar menu items with dividers
     const menuItems = [
-        { path: "/", label: "Website", icon: "fas fa-globe" },
+        { path: "/", label: "Website", icon: "fas fa-globe", target: "_blank" },
         { path: "/vendor", label: "Dashboard", icon: "fas fa-home" },
         { path: "/vendor/license", label: "Trade License", icon: "fas fa-id-badge" },
         { path: "/vendor/leads", label: "Leads Management", icon: "fas fa-file-alt" },
@@ -105,7 +105,7 @@ function VendorSidebar() {
                             </li>
                         ) : (
                             <li key={index}>
-                                <Link href={item.path} className={isActive ? "active" : ""}>
+                                <Link href={item.path} target={item?.target || ""} className={isActive ? "active" : ""}>
                                     <i className={`${item.icon} fa-lg`}></i>
                                     <span>{item.label}</span>
                                 </Link>

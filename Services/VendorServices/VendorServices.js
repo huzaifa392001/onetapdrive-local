@@ -51,3 +51,13 @@ export const getLeads = async () => {
         throw error;
     }
 }
+
+export const createDiscountedPrice = async (data) => {
+    try {
+        const response = await API.post(`/cars/discount-offer`, data);
+        return response.data;
+    } catch (error) {
+        console.error("Error toggling car status:", error);
+        throw error;
+    }
+}

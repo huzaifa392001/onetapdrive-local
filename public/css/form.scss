@@ -128,10 +128,11 @@
         }
 
         &.readonly {
-            color: rgba(var(--rgb-greycol), 0.4);
-            background-color: rgba(var(--rgb-greycol), 0.1);
+            color: rgba(#000, 0.4);
+            background-color: rgba(#000, 0.1);
             cursor: no-drop;
             border-color: transparent;
+            outline: none !important;
 
             &:focus {
                 border-color: transparent;

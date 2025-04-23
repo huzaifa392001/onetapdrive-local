@@ -1,0 +1,7 @@
+.offerSec {
+    @apply grid grid-cols-2 p-0 gap-x-5;
+
+    .offerBox {
+        @apply bg-[var(--white)] shadow-lg rounded-lg p-4 flex flex-col gap-2;
+    }
+}

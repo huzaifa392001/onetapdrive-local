@@ -1,5 +1,6 @@
 import { SET_CURRENT_LOCATION } from "@/Redux/Slices/General";
 import API from "../Constants/api";
+import { store } from "@/Redux/Store";
 
 export const getCategories = async () => {
     try {
@@ -99,12 +100,13 @@ export const setLocations = async (location) => {
             return;
         }
 
-        // Fetch current location using geolocation API
+        // Get current coordinates using browser geolocation
         const getCurrentLocation = () => {
             return new Promise((resolve, reject) => {
                 if (!navigator.geolocation) {
                     return reject(new Error("Geolocation is not supported by your browser."));
                 }
+
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const { latitude, longitude } = position.coords;
@@ -116,19 +118,28 @@ export const setLocations = async (location) => {
             });
         };
 
-        const locationCoords = await getCurrentLocation();
-        const { latitude, longitude } = locationCoords;
+        const { latitude, longitude } = await getCurrentLocation();
 
-        // Fetch city name from latitude and longitude using a geocoding API
+        // Get city name from coordinates using reverse geocoding
         const response = await fetch(
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
         );
+
         const data = await response.json();
+        const city = data.city || "Dubai";
 
-        const city = data.city || "Unknown Location";
+        store.dispatch(SET_CURRENT_LOCATION(city));
+    } catch (error) {
+        console.error("Error fetching location:", error);
+        store.dispatch(SET_CURRENT_LOCATION("Dubai")); // Final fallback
+    }
+};
 
-        store.dispatch(SET_CURRENT_LOCATION(city || "Dubai"));
+export const generateLead = async (body) => {
+    try {
+        const res = await API.post("/leads/store", body);
+        return res?.data;
     } catch (e) {
-        console.error("Error fetching location:", e);
+        console.error("Error generating lead:", e);
     }
 }

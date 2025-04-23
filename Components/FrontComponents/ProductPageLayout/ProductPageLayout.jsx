@@ -9,14 +9,14 @@ import { usePathname } from "next/navigation";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import Head from "next/head";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getSingleCar } from "@/Services/FrontServices/GeneralServices";
+import { generateLead, getSingleCar } from "@/Services/FrontServices/GeneralServices";
 import Loading from "@/app/(home)/loading";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Fancybox from "@/Components/Fancybox/Fancybox";
-import { getSingleWishlistedCar, toggleWishlist, viewedCar } from "@/Services/UserServices/UserServices";
+import { getSingleWishlistedCar, toggleWishlist } from "@/Services/UserServices/UserServices";
 import { toast } from "react-toastify";
 import { store } from "@/Redux/Store";
 import { SET_OTP_MODAL_STATUS, SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
@@ -303,7 +303,7 @@ function ProductPageLayout() {
     });
 
     const wishlistMutation = useMutation({
-        mutationFn: toggleWishlist,
+        mutationFn: () => toggleWishlist(),
         onSuccess: () => {
             toast.success("Added To Wishlist");
         },
@@ -311,6 +311,10 @@ function ProductPageLayout() {
             toast.error("Failed to add to wishlist");
         }
     });
+
+    const generateLeadMutation = useMutation({
+        mutationFn: generateLead,
+    })
 
     // const viewedCarMutation = useMutation({
     //     mutationFn: viewedCar
@@ -329,8 +333,8 @@ function ProductPageLayout() {
 
     const renderTags = () => {
         const tags = [];
-        if (product?.premium) tags.push("Premium");
-        if (product?.featured) tags.push("Featured");
+        if (data?.premium) tags.push("Premium");
+        if (data?.refreshedAt) tags.push("Featured");
 
         return tags.map((tag, index) => (
             <span key={index} className="tag">
@@ -339,9 +343,11 @@ function ProductPageLayout() {
             </span>
         ));
     };
+
     const handleAccordionClick = (index) => {
         setActiveAccordion((prevIndex) => (prevIndex === index ? null : index));
     };
+    
     const handleFaqClick = (index) => {
         if (activeFaq === index) {
             setActiveFaq(null); // Deselect the FAQ if it's already active
@@ -349,16 +355,19 @@ function ProductPageLayout() {
             setActiveFaq(index); // Set the clicked FAQ as active
         }
     };
+
     const handlePriceClick = (index) => {
         setActivePrice((prevIndex) => (prevIndex === index ? null : index));
     };
+
     const handleOptionClick = (option) => {
         setActiveModal(option); // Set the active modal to the clicked option
     };
 
     const toggleWishlistFunc = (id) => {
         // if(user)
-        if (!loggedInUser) {
+
+        if (!loggedInUser?.id) {
             store.dispatch(SET_USER_MODAL_STATUS(true));
             toast.error("Please Login First");
             return;
@@ -389,6 +398,29 @@ function ProductPageLayout() {
             setFancyboxIsActive(true);
         }
     };
+
+    const handleGenerateLead = (type) => {
+        if (!loggedInUser?.id) {
+            store.dispatch(SET_USER_MODAL_STATUS(true));
+            toast.error("Please Login First");
+            return;
+        }
+
+        if (!loggedInUser?.account_verified) {
+            store.dispatch(SET_OTP_MODAL_STATUS(true));
+            toast.error("Please verify your account first.");
+            return;
+        }
+        const body = {
+            vendor_id: parseInt(user?.id),
+            car_id: parseInt(data?.id),
+            type: type
+        };
+
+        console.log("leadBody=> ", body)
+
+        generateLeadMutation.mutate(body);
+    }
 
     useEffect(() => {
         setIsWishlisted(wishlistData?.data?.isCarWishlist);
@@ -600,12 +632,12 @@ function ProductPageLayout() {
                             <div className="priceCont">
                                 <div className="leftSide">
                                     <h2>
-                                        {product?.daily_discount_price && (
+                                        {data?.carPrices?.map((item) => {
                                             <span className="cutPrice">
                                                 From &nbsp;&nbsp;
-                                                <del>AED {product?.daily_discount_price}</del>
+                                                <del>AED {item?.discount === "daily" ? item?.price : null}</del>
                                             </span>
-                                        )}
+                                        })}
                                         AED{" "}
                                         {data?.carPrices?.map((item) =>
                                             item?.priceType === "daily" ? item?.price : null
@@ -619,10 +651,12 @@ function ProductPageLayout() {
                                             <i className="fas fa-check" />
                                             <span>1 day rental available</span>
                                         </li>
-                                        <li>
-                                            <i className="fas fa-check" />
-                                            <span>Insurance Included</span>
-                                        </li>
+                                        {data?.insuranceIncluded && (
+                                            <li>
+                                                <i className="fas fa-check" />
+                                                <span>Insurance Included</span>
+                                            </li>
+                                        )}
                                     </ul>
                                 </div>
                             </div>
@@ -719,7 +753,7 @@ function ProductPageLayout() {
                                     </figure>
                                     <h5>Book directly from supplier</h5>
                                     <div className="btnCont">
-                                        <Link href={""} className="call">
+                                        <button onClick={() => handleGenerateLead("call")} className="call">
                                             <svg
                                                 width="21"
                                                 height="20"
@@ -733,8 +767,8 @@ function ProductPageLayout() {
                                                 <path d="M18.8064 15.2751C18.8064 15.5084 18.7647 15.7501 18.6814 15.9834C18.6564 16.0501 18.6314 16.1167 18.598 16.1834C18.4564 16.4834 18.273 16.7667 18.0314 17.0334C17.623 17.4834 17.173 17.8084 16.6647 18.0167C16.6564 18.0167 16.648 18.0251 16.6397 18.0251C16.148 18.2251 15.6147 18.3334 15.0397 18.3334C14.1897 18.3334 13.2814 18.1334 12.323 17.7251C11.3647 17.3167 10.4064 16.7667 9.45638 16.0751C9.13138 15.8334 8.80638 15.5917 8.49805 15.3334L11.223 12.6084C11.4564 12.7834 11.6647 12.9167 11.8397 13.0084C11.8814 13.0251 11.9314 13.0501 11.9897 13.0751C12.0564 13.1001 12.123 13.1084 12.198 13.1084C12.3397 13.1084 12.448 13.0584 12.5397 12.9667L13.173 12.3417C13.3814 12.1334 13.5814 11.9751 13.773 11.8751C13.9647 11.7584 14.1564 11.7001 14.3647 11.7001C14.523 11.7001 14.6897 11.7334 14.873 11.8084C15.0564 11.8834 15.248 11.9917 15.4564 12.1334L18.2147 14.0917C18.4314 14.2417 18.5814 14.4167 18.673 14.6251C18.7564 14.8334 18.8064 15.0417 18.8064 15.2751Z" />
                                             </svg>
                                             <span>{user?.phoneNumber}</span>
-                                        </Link>
-                                        <Link href={""} className="whatsapp">
+                                        </button>
+                                        <button onClick={() => handleGenerateLead("whatsapp")} className="whatsapp">
                                             <svg
                                                 width="21"
                                                 height="20"
@@ -745,7 +779,7 @@ function ProductPageLayout() {
                                                 <path d="M16.584 3.79297C14.9473 2.15234 12.7676 1.25 10.4512 1.25C5.66992 1.25 1.7793 5.14062 1.7793 9.92188C1.7793 11.4492 2.17773 12.9414 2.93555 14.2578L1.70508 18.75L6.30273 17.543C7.56836 18.2344 8.99414 18.5977 10.4473 18.5977H10.4512C15.2285 18.5977 19.2051 14.707 19.2051 9.92578C19.2051 7.60938 18.2207 5.43359 16.584 3.79297ZM10.4512 17.1367C9.1543 17.1367 7.88477 16.7891 6.7793 16.1328L6.51758 15.9766L3.79102 16.6914L4.51758 14.0312L4.3457 13.7578C3.62305 12.6094 3.24414 11.2852 3.24414 9.92188C3.24414 5.94922 6.47852 2.71484 10.4551 2.71484C12.3809 2.71484 14.1895 3.46484 15.5488 4.82812C16.9082 6.19141 17.7441 8 17.7402 9.92578C17.7402 13.9023 14.4238 17.1367 10.4512 17.1367ZM14.4043 11.7383C14.1895 11.6289 13.123 11.1055 12.9238 11.0352C12.7246 10.9609 12.5801 10.9258 12.4355 11.1445C12.291 11.3633 11.877 11.8477 11.748 11.9961C11.623 12.1406 11.4941 12.1602 11.2793 12.0508C10.0059 11.4141 9.16992 10.9141 8.33008 9.47266C8.10742 9.08984 8.55273 9.11719 8.9668 8.28906C9.03711 8.14453 9.00195 8.01953 8.94727 7.91016C8.89258 7.80078 8.45898 6.73438 8.2793 6.30078C8.10352 5.87891 7.92383 5.9375 7.79102 5.92969C7.66602 5.92188 7.52148 5.92188 7.37695 5.92188C7.23242 5.92188 6.99805 5.97656 6.79883 6.19141C6.59961 6.41016 6.04102 6.93359 6.04102 8C6.04102 9.06641 6.81836 10.0977 6.92383 10.2422C7.0332 10.3867 8.45117 12.5742 10.627 13.5156C12.002 14.1094 12.541 14.1602 13.2285 14.0586C13.6465 13.9961 14.5098 13.5352 14.6895 13.0273C14.8691 12.5195 14.8691 12.0859 14.8145 11.9961C14.7637 11.8984 14.6191 11.8438 14.4043 11.7383Z" />
                                             </svg>
                                             <span>{vendor?.whatsappNumber}</span>
-                                        </Link>
+                                        </button>
                                     </div>
                                     <div className="priceAccordion">
                                         {data?.carPrices?.map((price, index) => (

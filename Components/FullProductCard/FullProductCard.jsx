@@ -13,7 +13,7 @@ function FullProductCard(props) {
         <div onMouseLeave={() => setActiveImageIndex(0)} className="fullProductCard">
             <Link href={`/product/${product?.slug}`}>
                 <figure className="productImg">
-                    {props?.featured && (
+                    {product?.refreshedAt && (
                         <span className="imgTag">
                             <i className="fas fa-stars" />
                             Featured
@@ -59,7 +59,7 @@ function FullProductCard(props) {
                             {product?.seatingCapacity?.name}{" "} {product?.features && "with "}
                             {product?.features
                                 ?.slice(0, 3)
-                                ?.map((item, index, array) => 
+                                ?.map((item, index, array) =>
                                     `${item?.name ? item?.name + (index < array.length - 1 ? ", " : "") : ""}`
                                 )}
                         </span>

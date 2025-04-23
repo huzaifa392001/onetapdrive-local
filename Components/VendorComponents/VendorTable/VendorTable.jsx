@@ -9,10 +9,11 @@ import "./VendorTable.scss";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { boostCar, changeCarStatus } from "@/Services/VendorServices/VendorServices";
+import { formatDate } from "@/Utils/Utils";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const VendorTable = ({ data = [], refetchData }) => {
+const VendorTable = ({ data = [], refetchData, action }) => {
     const gridRef = useRef(null);
     const pathName = usePathname();
     const [colDefs, setColDefs] = useState([]);
@@ -92,6 +93,17 @@ const VendorTable = ({ data = [], refetchData }) => {
                         }
                     };
                 }
+                if (key === 'time') {
+                    return {
+                        field: key,
+                        headerName: "Date",
+                        flex: 1,
+                        cellRenderer: (params) => {
+                            const updatedDate = formatDate(params?.value)
+                            return <p>{updatedDate}</p>;
+                        }
+                    }
+                }
 
                 return {
                     field: key,
@@ -142,36 +154,36 @@ const VendorTable = ({ data = [], refetchData }) => {
                 width: 100
             },
             ...dynamicFields,
-            ...actionColumn
+            ...(action ? actionColumn : [])
         ]);
     }, [data]);
 
-    const defaultColDef = useMemo(
-        () => ({
-            resizable: true,
-            floatingFilter: false,
-            suppressSizeToFit: false
-        }),
-        []
-    );
+const defaultColDef = useMemo(
+    () => ({
+        resizable: true,
+        floatingFilter: false,
+        suppressSizeToFit: false
+    }),
+    []
+);
 
-    return (
-        <div className="dataTable ag-theme-alpine">
-            <AgGridReact
-                ref={gridRef}
-                rowData={localRowData}
-                columnDefs={colDefs}
-                pagination={true}
-                paginationPageSize={10}
-                defaultColDef={defaultColDef}
-                rowHeight={80}
-                headerHeight={50}
-                suppressCellFocus={true}
-                domLayout="autoHeight"
-                onGridReady={onGridReady}
-            />
-        </div>
-    );
+return (
+    <div className="dataTable ag-theme-alpine">
+        <AgGridReact
+            ref={gridRef}
+            rowData={localRowData}
+            columnDefs={colDefs}
+            pagination={true}
+            paginationPageSize={10}
+            defaultColDef={defaultColDef}
+            rowHeight={80}
+            headerHeight={50}
+            suppressCellFocus={true}
+            domLayout="autoHeight"
+            onGridReady={onGridReady}
+        />
+    </div>
+);
 };
 
 export default VendorTable;

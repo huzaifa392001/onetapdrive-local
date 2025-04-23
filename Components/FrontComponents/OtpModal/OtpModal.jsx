@@ -62,7 +62,7 @@ function OtpModal() {
 
     const handleOTPPaste = (e, index) => {
         e.preventDefault();
-        const pasteData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 4);
+        const pasteData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
         const values = pasteData.split("");
         const newOtp = [...otp];
 
@@ -133,12 +133,11 @@ function OtpModal() {
                                     <div class="btnWrapper">
                                         <button
                                             disabled={verifyOtpMutation.isPending}
-                                            className={`themeBtn full ${
-                                                verifyOtpMutation?.isPending ? "disabled" : ""
-                                            }`}
+                                            className={`themeBtn full ${verifyOtpMutation?.isPending ? "disabled" : ""
+                                                }`}
                                             type="submit"
                                         >
-                                            {verifyOtpMutation ? <Spinner /> : "Verify"}
+                                            {verifyOtpMutation?.isPending ? <Spinner /> : "Verify"}
                                         </button>
                                     </div>
                                     <div className="inputWrap">

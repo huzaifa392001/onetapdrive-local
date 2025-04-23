@@ -25,7 +25,7 @@ function FullProductCard(props) {
                                 src={image?.image || ""}
                                 fill
                                 alt=""
-                                // className={activeImageIndex === index ? "active" : ""}
+                            // className={activeImageIndex === index ? "active" : ""}
                             />
                             {index === 3 && (
                                 <div className="goToCont">
@@ -56,10 +56,12 @@ function FullProductCard(props) {
                         &nbsp;
                         <span>
                             Hire in {product?.city?.name}: {product?.color?.name} {product?.category?.name},{" "}
-                            {product?.seatingCapacity?.name}{" "}
+                            {product?.seatingCapacity?.name}{" "} {product?.features && "with "}
                             {product?.features
                                 ?.slice(0, 3)
-                                ?.map((item) => `${item?.name ? "with " + item?.name + ", " : ""}`)}
+                                ?.map((item, index, array) => 
+                                    `${item?.name ? item?.name + (index < array.length - 1 ? ", " : "") : ""}`
+                                )}
                         </span>
                     </h3>
                 </Link>

@@ -65,9 +65,9 @@ const RentalTerms = memo(function RentalTerms({ edit, control, errors }) {
                     )}
                 </div>
 
-                <div className={`inputCont ${errors?.additionalPricePerKM ? "error" : ""}`}>
+                <div className={`inputCont ${errors?.additionalPricePerKm ? "error" : ""}`}>
                     <Controller
-                        name="additionalPricePerKM"
+                        name="additionalPricePerKm"
                         control={control}
                         rules={{
                             required: "Additional price is required",
@@ -77,8 +77,8 @@ const RentalTerms = memo(function RentalTerms({ edit, control, errors }) {
                             <input {...field} type="number" placeholder="Additional Price per KM*" />
                         )}
                     />
-                    {errors?.additionalPricePerKM && (
-                        <p className="error-message">{errors.additionalPricePerKM.message}</p>
+                    {errors?.additionalPricePerKm && (
+                        <p className="error-message">{errors.additionalPricePerKm.message}</p>
                     )}
                 </div>
 

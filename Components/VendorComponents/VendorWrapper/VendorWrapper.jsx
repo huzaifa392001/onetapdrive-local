@@ -26,6 +26,7 @@ import {
 import { getCurrentVendor } from "@/Services/VendorServices/VendorServices";
 import { store } from "@/Redux/Store";
 import { SET_VENDOR_DETAILS } from "@/Redux/Slices/Auth";
+import { getCurrentUser } from "@/Services/AuthService/AuthService";
 
 function VendorWrapper({ children }) {
     const isVendor = useSelector((state) => state.auth.isVendor);
@@ -33,7 +34,7 @@ function VendorWrapper({ children }) {
 
     const { data: vendorData } = useQuery({
         queryKey: ["vendorProfile"],
-        queryFn: getCurrentVendor
+        queryFn: getCurrentUser
     });
 
     useEffect(() => {
@@ -63,7 +64,8 @@ function VendorWrapper({ children }) {
     });
 
     useEffect(() => {
-        store.dispatch(SET_VENDOR_DETAILS(vendorData?.data));
+        console.log('vendorData', vendorData);
+        store.dispatch(SET_VENDOR_DETAILS(vendorData?.data?.user));
     }, [vendorData]);
 
     if (!isVendor) return null; // ✅ Prevent rendering anything before redirect

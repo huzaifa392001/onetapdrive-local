@@ -10,8 +10,6 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Spinner from "@/Components/Spinner/Spinner";
 import { login } from "@/Services/AuthService/AuthService";
-import { store } from "@/Redux/Store";
-import { SET_ACCESS_TOKEN, SET_IS_VENDOR, SET_USER_DETAILS } from "@/Redux/Slices/Auth";
 
 function VendorLogin() {
     const router = useRouter()
@@ -20,12 +18,8 @@ function VendorLogin() {
 
     const loginMutation = useMutation({
         mutationFn: login,
-        onSuccess: (res) => {
-            console.log("res=> ", res)
+        onSuccess: () => {
             toast.success('Login Successfully!');
-            store.dispatch(SET_ACCESS_TOKEN(res?.data?.access_token));
-            store.dispatch(SET_IS_VENDOR(true));
-            store.dispatch(SET_USER_DETAILS(res?.data?.user_details))
             // TODO: Redirect to vendor dashboard
             router.push("/vendor");
         },
@@ -110,7 +104,8 @@ function VendorLogin() {
                             </Link>
 
                             <div className="btnCont">
-                                <button type="submit" className="themeBtn">
+                                <button disabled={loginMutation.isPending} type="submit" className={`themeBtn 
+                                    ${loginMutation.isPending ? " disabled" : null}`}>
                                     {loginMutation.isPending ? <Spinner /> : "Sign In"}
                                 </button>
                             </div>
@@ -121,8 +116,8 @@ function VendorLogin() {
                         </p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </div >
+        </section >
     );
 }
 

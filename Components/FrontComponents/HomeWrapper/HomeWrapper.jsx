@@ -110,6 +110,10 @@ function HomeWrapper({ children }) {
         store.dispatch(SET_CITIES(citiesData));
     }, [categoriesData, brandsData, citiesData]);
 
+    if (!categoriesData || !brandsData || !citiesData) {
+        return <Loading />; // ✅ Show loading state while fetching data
+    }
+
     return (
         <main className="wrapper">
             <Header />

@@ -18,7 +18,7 @@ function VendorHeader() {
     });
 
     const handleLogout = () => {
-        vendorLogout();
+        logoutMutation.mutate();
     };
 
     const toggleDropdown = () => {
@@ -37,12 +37,12 @@ function VendorHeader() {
             <div className="customDropdown">
                 <button type="button" onClick={toggleDropdown} className="dropdownButton">
                     <Image
-                        src={vendor?.companyLogo || "/images/noImage.jpg"}
+                        src={vendor?.vendorProfile?.companyLogo || "/images/noImage.jpg"}
                         width={35}
                         height={35}
                         alt="Company Logo"
                     ></Image>
-                    {vendor?.companyName}
+                    {vendor?.vendorProfile?.companyName}
                     <i className="fas fa-chevron-down"></i>
                 </button>
 

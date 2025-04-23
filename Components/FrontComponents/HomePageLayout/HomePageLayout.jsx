@@ -12,19 +12,24 @@ import FAQsSection from "@/Components/FAQsSection/FAQsSection";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCars } from "@/Services/FrontServices/GeneralServices";
+import { getAllCars, getCategorizedCars } from "@/Services/FrontServices/GeneralServices";
 
 function HomePageLayout() {
     const [windowWidth, setWindowWidth] = useState(0);
     const [productsData, setProductsData] = useState([]);
+
     const { data: products } = useQuery({
         queryKey: ["products"],
         queryFn: () => getAllCars()
     });
 
+    const { data: luxuryProducts, isPending: isLuxuryPending } = useQuery({
+        queryKey: ['luxuryCar'],
+        queryFn: () => getCategorizedCars({ category: "luxury" })
+    })
+
     useEffect(() => {
-        console.log("products", products?.data?.cars);
-        setProductsData(products?.data?.cars);
+        setProductsData(products?.data?.cars?.slice(0, 4));
     }, [products]);
 
     const docData = [
@@ -100,7 +105,7 @@ function HomePageLayout() {
                     </figure>
                 </div>
             </section>
-            <CarsSection secHeading={"Luxury Car Rental"} data={productsData} />
+            <CarsSection secHeading={"Luxury Car Rental"} data={luxuryProducts?.data?.cars?.slice(0, 4)} />
             <section className="addBanner">
                 <div className="customContainer">
                     <figure className="imgCont">

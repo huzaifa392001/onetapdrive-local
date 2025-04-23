@@ -35,8 +35,13 @@ const VendorTable = ({ data = [], refetchData }) => {
         onSuccess: () => {
             toast.success("Car Boosted");
         },
-        onError: () => {
-            toast.error("Failed to Boost Car");
+        onError: (res) => {
+            if (res?.response?.data?.errors[0]?.message === "You have already used your refresh limit") {
+                toast.error("You have Used Your Refresh Limit");
+            }
+            else {
+                toast.error("Failed to refresh car");
+            }
         }
     });
 
@@ -109,9 +114,8 @@ const VendorTable = ({ data = [], refetchData }) => {
                         <div className="btnCont">
                             <button
                                 title="Toggle Status"
-                                className={`themeBtn statusBtn iconBtn ${
-                                    currentStatus === true ? "active" : "inactive"
-                                } ${statusMutation.isPending ? "disabled" : ""}`}
+                                className={`themeBtn statusBtn iconBtn ${currentStatus === true ? "active" : "inactive"
+                                    } ${statusMutation.isPending ? "disabled" : ""}`}
                                 onClick={() => {
                                     statusMutation.mutate({ id, enable: !currentStatus });
                                 }}

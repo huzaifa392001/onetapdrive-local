@@ -429,10 +429,12 @@ function ProductPageLayout() {
                             <h1>{data?.name}</h1>
                             <h3>
                                 Hire in {data?.city?.name}: {data?.color?.name} {data?.category?.name},{" "}
-                                {data?.seatingCapacity?.name}{" "}
+                                {data?.seatingCapacity?.name}{" "} {data?.features && "with "}
                                 {data?.features
                                     ?.slice(0, 3)
-                                    ?.map((item) => `${item?.name ? "with " + item?.name + ", " : ""}`)}
+                                    ?.map((item, index, array) =>
+                                        `${item?.name ? item?.name + (index < array.length - 1 ? ", " : "") : ""}`
+                                    )}
                             </h3>
                         </div>
                     </div>

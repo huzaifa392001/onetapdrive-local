@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { vendorSignup } from "@/Services/AuthService/AuthService";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Spinner from "@/Components/Spinner/Spinner";
 
 function ListCarPageLayout() {
     const router = useRouter();
@@ -291,7 +292,7 @@ function ListCarPageLayout() {
                                     <div className="contentCol">
                                         <div className={`inputCont full ${errors?.password ? "error" : ""}`}>
                                             <label htmlFor="password">
-                                                Password<span className="required">*</span>
+                                                Create a Password<span className="required">*</span>
                                             </label>
                                             <input
                                                 className={`${errors?.password ? "errorInput" : ""}`}
@@ -550,10 +551,10 @@ function ListCarPageLayout() {
                                 <div className="btnCont">
                                     <button
                                         type="submit"
-                                        disabled={!isFormValid()}
-                                        className={`themeBtn large ${!isFormValid() ? "disabled" : ""}`}
+                                        disabled={!isFormValid() || signupMutation.isPending}
+                                        className={`themeBtn large ${!isFormValid() || signupMutation.isPending ? "disabled" : ""}`}
                                     >
-                                        Submit
+                                        {signupMutation?.isPending ? <Spinner /> : 'Submit'}
                                     </button>
                                 </div>
                             </form>

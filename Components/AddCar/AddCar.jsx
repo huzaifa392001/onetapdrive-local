@@ -74,7 +74,7 @@ function AddCar({ edit }) {
             .test("has-daily", "Daily pricing is required", (prices) => {
                 return prices.some((item) => item.priceType === "daily" && item.price && item.kilometers);
             }),
-        additionalPricePerKM: Yup.string().required("Additional Price is required"),
+        additionalPricePerKm: Yup.string().required("Additional Price is required"),
         securityDepositReturn: Yup.string().required("Security Deposit Return is required"),
         minimumRequiredAge: Yup.number()
             .required("Minimum Required Age is required")
@@ -114,7 +114,7 @@ function AddCar({ edit }) {
             { priceType: "monthly", price: null, kilometers: null }
         ],
         insuranceIncluded: false,
-        additionalPricePerKML: "",
+        additionalPricePerKm: "",
         minimumRequiredAge: "",
         securityDepositReturn: ""
     };
@@ -149,6 +149,7 @@ function AddCar({ edit }) {
 
     // Form submission handler
     const onSubmit = (data) => {
+        console.log('data=> ', data)
         addCarMutation.mutate(data);
     };
 
@@ -217,7 +218,7 @@ function AddCar({ edit }) {
                     <button
                         type="submit"
                         className={`themeBtn  `}
-                        // disabled={addCarMutation.isPending || !isValid}
+                    // disabled={addCarMutation.isPending || !isValid}
                     >
                         {addCarMutation.isPending ? "Loading..." : edit ? "Update" : "Submit"}
                     </button>

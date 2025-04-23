@@ -15,14 +15,21 @@ function CarsSection(props) {
         windowWidth > 1024
             ? setTotal(8)
             : windowWidth > 768
-            ? setTotal(3)
-            : windowWidth > 480
-            ? setTotal(2)
-            : setTotal(1);
+                ? setTotal(3)
+                : windowWidth > 480
+                    ? setTotal(2)
+                    : setTotal(1);
         window.addEventListener("resize", () => {
             setWindowWidth(window.innerWidth); // Update the windowWidth when the window is resized
         });
     });
+    useEffect(() => {
+        console.log("props?.data=> ", props?.data);
+    }, [props?.data]);
+
+    // Don't render the component if data is empty or undefined
+    if (!props?.data || props?.data?.length === 0) return null;
+
     return (
         <section className="productSec">
             <div className="customContainer">

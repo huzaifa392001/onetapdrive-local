@@ -15,10 +15,6 @@ const UserManagementPage = () => {
   });
 
   useEffect(() => {
-    console.log("usersResponse =>", usersResponse);
-  }, [usersResponse]);
-
-  useEffect(() => {
     const transformed = usersResponse?.data?.data?.map(user => ({
       id: user.id,
       name: user.name,

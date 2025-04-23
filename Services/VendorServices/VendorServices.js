@@ -41,3 +41,13 @@ export const boostCar = async (id) => {
         throw error;
     }
 }
+
+export const getLeads = async () => {
+    try {
+        const response = await API.get(`/leads/get-leads`);
+        return response.data;
+    } catch (error) {
+        console.error("Error toggling car status:", error);
+        throw error;
+    }
+}

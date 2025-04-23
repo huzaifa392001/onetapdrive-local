@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./VendorSidebar.scss";
+import { useSelector } from "react-redux";
 
 function VendorSidebar() {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const vendor = useSelector((state) => state.auth.vendorDetails);
     const pathName = usePathname();
 
     const toggleSubMenu = () => {
@@ -49,6 +51,15 @@ function VendorSidebar() {
             {/* Sidebar */}
             <div className={`vendor-sidebar ${isSidebarVisible ? "visible" : ""}`}>
                 <ul>
+                    <li className="progress">
+                        <div class="data">
+                            <span>Consumed Refresh</span>
+                            <span>{vendor?.vendorPackageOrder?.userConsumePackageItems[1]?.used} / {vendor?.vendorPackageOrder?.userConsumePackageItems[1]?.quantity}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="filled" style={{ width: `${(vendor?.vendorPackageOrder?.userConsumePackageItems[1]?.used / vendor?.vendorPackageOrder?.userConsumePackageItems[1]?.quantity) * 100}%` }} />
+                        </div>
+                    </li>
                     {menuItems.map((item, index) => {
                         if (item.type === "divider") {
                             return (

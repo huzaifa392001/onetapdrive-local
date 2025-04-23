@@ -16,7 +16,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Fancybox from "@/Components/Fancybox/Fancybox";
-import { toggleWishlist } from "@/Services/UserServices/UserServices";
+import { getSingleWishlistedCar, toggleWishlist, viewedCar } from "@/Services/UserServices/UserServices";
 import { toast } from "react-toastify";
 import { store } from "@/Redux/Store";
 import { SET_OTP_MODAL_STATUS, SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
@@ -291,6 +291,31 @@ function ProductPageLayout() {
         }
     ];
 
+    const { data: carData, isPending } = useQuery({
+        queryKey: ["Car"],
+        queryFn: () => getSingleCar(route)
+    });
+
+    const { data: wishlistData, isPending: isWishlistPending } = useQuery({
+        queryKey: ["wishlist", carData?.data?.id], // good to include the id in the key
+        queryFn: () => getSingleWishlistedCar(carData?.data?.id),
+        enabled: !!data?.id
+    });
+
+    const wishlistMutation = useMutation({
+        mutationFn: toggleWishlist,
+        onSuccess: () => {
+            toast.success("Added To Wishlist");
+        },
+        onError: () => {
+            toast.error("Failed to add to wishlist");
+        }
+    });
+
+    // const viewedCarMutation = useMutation({
+    //     mutationFn: viewedCar
+    // });
+
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
@@ -331,22 +356,7 @@ function ProductPageLayout() {
         setActiveModal(option); // Set the active modal to the clicked option
     };
 
-    const { data: carData, isPending } = useQuery({
-        queryKey: ["Car"],
-        queryFn: () => getSingleCar(route)
-    });
-
-    const wishlistMutation = useMutation({
-        mutationFn: toggleWishlist,
-        onSuccess: () => {
-            toast.success("Added To Wishlist");
-        },
-        onError: () => {
-            toast.error("Failed to add to wishlist");
-        }
-    });
-
-    const toggleWishlistFunc = () => {
+    const toggleWishlistFunc = (id) => {
         // if(user)
         if (!loggedInUser) {
             store.dispatch(SET_USER_MODAL_STATUS(true));
@@ -357,15 +367,16 @@ function ProductPageLayout() {
         if (!loggedInUser?.account_verified) {
             store.dispatch(SET_OTP_MODAL_STATUS(true));
             toast.error("Please verify your account first.");
+            return;
         }
+
+        const body = {
+            enabled: isWishlisted
+        };
+
+        wishlistMutation.mutate({ id: id, body: body });
         console.log("loggedInUser=> ", loggedInUser);
     };
-
-    useEffect(() => {
-        setData(carData?.data);
-        setUser(carData?.data?.user);
-        setVendor(carData?.data?.user?.vendorProfile);
-    }, [carData]);
 
     const openFancyboxFromIndex = (startIndex = 0) => {
         if (data?.images?.length) {
@@ -378,6 +389,16 @@ function ProductPageLayout() {
             setFancyboxIsActive(true);
         }
     };
+
+    useEffect(() => {
+        setIsWishlisted(wishlistData?.data?.isCarWishlist);
+    }, [wishlistData]);
+
+    useEffect(() => {
+        setData(carData?.data);
+        setUser(carData?.data?.user);
+        setVendor(carData?.data?.user?.vendorProfile);
+    }, [carData]);
 
     if (!data || isPending) return <Loading />;
 
@@ -397,7 +418,7 @@ function ProductPageLayout() {
                         city={data?.city?.name}
                         brand={data?.model?.brand?.name}
                         model={data?.model?.name}
-                        // route={activeRoute}
+                    // route={activeRoute}
                     />
 
                     <div className="headingContainer">
@@ -503,8 +524,10 @@ function ProductPageLayout() {
                                     <i className="fal fa-share-alt" />
                                 </Link>
                                 <button
-                                    className={`wishlistBtn ${isWishlisted ? "active" : ""} `}
-                                    onClick={() => toggleWishlistFunc()}
+                                    className={`wishlistBtn ${isWishlistPending ? "disabledBtn" : ""} ${isWishlisted ? "active" : ""
+                                        } `}
+                                    onClick={() => toggleWishlistFunc(data?.id)}
+                                    disabled={isWishlistPending}
                                 >
                                     <i className={`${isWishlisted ? "fas" : "fal"} fa-heart`} />
                                 </button>
@@ -732,9 +755,8 @@ function ProductPageLayout() {
                                                 <div className="priceTitle">
                                                     <h3>{price?.priceType}</h3>
                                                     <i
-                                                        className={`far ${
-                                                            activePrice === index ? "fa-minus" : "fa-plus"
-                                                        }`}
+                                                        className={`far ${activePrice === index ? "fa-minus" : "fa-plus"
+                                                            }`}
                                                     />
                                                 </div>
 
@@ -1011,16 +1033,14 @@ function ProductPageLayout() {
                                 {accordions.map((accordion, accordionIndex) => (
                                     <div key={accordionIndex} className="accordionSection">
                                         <button
-                                            className={`accordionTitle ${
-                                                activeAccordion === accordionIndex ? "active" : ""
-                                            }`}
+                                            className={`accordionTitle ${activeAccordion === accordionIndex ? "active" : ""
+                                                }`}
                                             onClick={() => handleAccordionClick(accordionIndex)}
                                         >
                                             <h3>{accordion.title}</h3>
                                             <i
-                                                className={`far ${
-                                                    activeAccordion === accordionIndex ? "fa-minus" : "fa-plus"
-                                                }`}
+                                                className={`far ${activeAccordion === accordionIndex ? "fa-minus" : "fa-plus"
+                                                    }`}
                                             />
                                         </button>
 

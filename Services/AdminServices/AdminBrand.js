@@ -6,7 +6,6 @@ export const getBrands = async () => {
         return response?.data
     }
     catch (e) {
-        return e;
     }
 }
 
@@ -23,7 +22,7 @@ export const addBrand = async (body) => {
         return response?.data;
     } catch (e) {
         console.error("API Error:", e);
-        throw e;
+        throw error;
     }
 };
 
@@ -33,6 +32,6 @@ export const deleteBrand = async (id) => {
         return response
     }
     catch (e) {
-        return e;
+        throw error;
     }
 }

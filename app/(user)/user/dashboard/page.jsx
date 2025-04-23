@@ -34,10 +34,10 @@ function Page() {
         switch (activeTab) {
             case "wishlist":
                 if (wishlistedCars?.error?.response?.status === 404) return "no_data";
-                return wishlistedCars?.data?.data?.cars || [];
+                return wishlistedCars?.data?.data || [];
             case "viewed":
                 if (viewedCars?.error?.response?.status === 404) return "no_data";
-                return viewedCars?.data?.data?.cars || [];
+                return viewedCars?.data?.data || [];
             // case "contacted":
             //     return [];
             default:

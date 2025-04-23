@@ -100,3 +100,33 @@ export const userSignUp = async (data) => {
         throw e; // Keep original Axios error
     }
 };
+
+export const sendOtp = async () => {
+    try {
+        const res = await API.post("/users/generate-otp");
+        return res?.data;
+    } catch (e) {
+        console.error("Error during Signup:", e.response?.data || e.message);
+        throw e; // Keep original Axios error
+    }
+}
+
+export const verifyOtp = async (data) => {
+    try {
+        const res = await API.post("/users/verify-otp", data);
+        return res?.data;
+    } catch (e) {
+        console.error("Error during Signup:", e.response?.data || e.message);
+        throw e; // Keep original Axios error
+    }
+}
+
+export const getCurrentUser = async () => {
+    try {
+        const res = await API.get("/auth/profile")
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting all cars:", e);
+        throw error;
+    }
+}

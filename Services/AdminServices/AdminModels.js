@@ -5,7 +5,7 @@ export const getModels = async () => {
         const response = await API.get("/models");
         return response?.data;
     } catch (e) {
-        return e;
+        throw error;
     }
 }
 
@@ -21,8 +21,7 @@ export const addModel = async (body) => {
         }
         return response?.data;
     } catch (e) {
-        console.error("API Error:", e);
-        throw e;
+        throw error;
     }
 };
 
@@ -32,6 +31,6 @@ export const deleteModel = async (id) => {
         return response
     }
     catch (e) {
-        return e;
+        throw error;
     }
 }

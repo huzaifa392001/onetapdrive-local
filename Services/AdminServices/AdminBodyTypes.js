@@ -6,18 +6,18 @@ export const getAllBodyTypes = async () => {
         return response?.data;
     }
     catch (e) {
-        return e
+        throw error;
     }
 }
 
-export const addBodyType = async () => {
+export const addBodyType = async (body) => {
     try {
         const response = await API.post("/body_types", body, {
             headers: { "Content-Type": "multipart/form-data" }
         });
         return response?.data || { message: "Body Type added successfully!" };
     } catch (error) {
-        throw new Error(error.response?.data?.message || "Failed to add Body Type");
+        throw error;
     }
 }
 
@@ -27,6 +27,6 @@ export const deleteBodyType = async (id) => {
         return response
     }
     catch (e) {
-        return e;
+        throw error;
     }
 }

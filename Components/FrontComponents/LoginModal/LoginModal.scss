@@ -100,13 +100,6 @@ body {
                         }
                     }
 
-                    &.otp {
-                        @apply grid grid-cols-4 gap-x-5 mt-2;
-                        input {
-                            @apply border w-full h-[60px] rounded-lg border-[#bdbdbd] text-[2rem] text-center;
-                        }
-                    }
-
                     .notRcv {
                         @apply text-right text-[14px] font-normal mt-1;
                         button {

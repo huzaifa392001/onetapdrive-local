@@ -5,13 +5,17 @@ export const getAdminCars = async () => {
         const res = await API.get("/cars");
         return res?.data;
     } catch (e) {
-        console.error("Error getting all cars:", e);
+        throw error;
     }
 };
 
 export const updateCarStatus = async (carId, enable) => {
-    const response = await API.put(`/cars/status-toggle/${carId}`, {
-        enable
-    });
-    return response.data;
+    try {
+        const response = await API.put(`/cars/status-toggle/${carId}`, {
+            enable
+        });
+        return response.data;
+    } catch (e) {
+        throw error;
+    }
 };

@@ -6,7 +6,7 @@ export const getCategories = async () => {
         return response?.data
     }
     catch (e) {
-        return e;
+        throw error;
     }
 }
 
@@ -17,7 +17,7 @@ export const addCategory = async (body) => {
         });
         return response?.data || { message: "Category added successfully!" };
     } catch (error) {
-        throw new Error(error.response?.data?.message || "Failed to add category");
+        throw error;
     }
 };
 
@@ -27,6 +27,6 @@ export const deleteCategory = async (id) => {
         return response
     }
     catch (e) {
-        return e;
+        throw error;
     }
 }

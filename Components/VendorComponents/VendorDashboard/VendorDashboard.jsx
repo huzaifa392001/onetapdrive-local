@@ -1,8 +1,8 @@
 import React from "react";
 import "./VendorDashboard.scss";
 import VendorHeading from "@/Components/VendorComponents/VendorHeading/VendorHeading";
-import LeadsChart from "@/components/charts/LeadsChart";
-import CarChart from "@/components/charts/CarListingChart";
+import LeadsChart from "@/Components/charts/LeadsChart";
+import CarChart from "@/Components/charts/CarListingChart";
 export default function VendorDashboard() {
     const carListingData = [
         { month: "January", carListed: 85, carWithDriverListed: 62 },

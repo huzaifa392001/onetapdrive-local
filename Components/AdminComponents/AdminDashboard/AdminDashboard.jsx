@@ -2,8 +2,8 @@ import React from "react";
 import "./AdminDashboard.scss";
 // import UserChart from "@/Components/ui/UserChart";
 // import CarChart from "@/Components/ui/CarChart";
-import UserChart from "@/components/charts/UserChart";
-import CarChart from "@/components/charts/CarListingChart";
+import UserChart from "@/Components/charts/UserChart";
+import CarChart from "@/Components/charts/CarListingChart";
 import AdminCard from "@/DummyData/AdminCard.json";
 import Link from "next/link";
 

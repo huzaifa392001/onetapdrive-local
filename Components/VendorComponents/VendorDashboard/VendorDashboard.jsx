@@ -1,8 +1,8 @@
 import React from "react";
 import "./VendorDashboard.scss";
 import VendorHeading from "@/Components/VendorComponents/VendorHeading/VendorHeading";
-import LeadsChart from "@/Components/charts/LeadsChart";
-import CarChart from "@/Components/charts/CarListingChart";
+import LeadsChart from "@/components/charts/LeadsChart";
+import CarChart from "@/components/charts/CarListingChart";
 export default function VendorDashboard() {
     const carListingData = [
         { month: "January", carListed: 85, carWithDriverListed: 62 },
@@ -31,26 +31,6 @@ export default function VendorDashboard() {
                 <CarChart title="Your Listing" description="January - June 2025" data={carListingData} />
                 <LeadsChart title="Leads" description="" data={leadsData} />
             </div>
-            {/* <div className="vendorCardsWrapper">
-                {VendorCards.map((card, index) => (
-                    <div key={index} className="vendorHomeCard">
-                        <div className="bgIcon">
-                            <i className={card.icon}></i>
-                        </div>
-                        <div className="cardBody">
-                            <i className={card.icon}></i>
-                            <div className="cardContent">
-                                <div className="cardNameDiv">
-                                    <p className="cardNamePara">{card.title}</p>
-                                    <div className="cardCount">
-                                        <p className="cardCountPara">{card.count}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div> */}
         </>
     );
 }

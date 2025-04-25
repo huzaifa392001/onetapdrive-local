@@ -28,6 +28,12 @@ function HomePageLayout() {
         queryFn: () => getCategorizedCars({ category: "luxury" })
     })
 
+    const { data: economyProducts, isPending: isEconomyPending } = useQuery({
+        queryKey: ['economyCar'],
+        queryFn: () => getCategorizedCars({ category: "economy-cars" })
+    })
+
+
     useEffect(() => {
         setProductsData(products?.data?.cars?.slice(0, 4));
     }, [products]);
@@ -113,7 +119,7 @@ function HomePageLayout() {
                     </figure>
                 </div>
             </section>
-            <CarsSection isFeatured secHeading={"Economy Cars"} data={productsData} />
+            <CarsSection isFeatured secHeading={"Economy Cars"} data={economyProducts?.data?.cars?.slice(0, 4)} />
             {/* New Section  */}
 
             <section className="docSec" style={{ backgroundImage: "url('/images/doc-sec-bg.webp')" }}>
@@ -160,7 +166,7 @@ function HomePageLayout() {
                     </div>
                 </div>
             </section>
-            <CarsSection secHeading={"Car with driver"} data={productsData} />
+            {/* <CarsSection secHeading={"Car with driver"} data={productsData} /> */}
             <section className="benefitSec" style={{ backgroundImage: "url('/images/benefits-sec-bg.webp')" }}>
                 <div className="customContainer">
                     <SecHeading heading={"Top Benefits to Rent a Car with Driver in Dubai"} />

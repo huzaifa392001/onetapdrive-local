@@ -39,9 +39,9 @@ function CropImage({ image, onCropComplete, onCancel }) {
                     />
                 </div>
                 <div className="btnCont">
-                    <button className="themeBtn cancel" onClick={onCancel}>
+                    {/* <button className="themeBtn cancel" onClick={onCancel}>
                         Cancel
-                    </button>
+                    </button> */}
                     <button className="themeBtn" onClick={handleSave}>
                         Save
                     </button>

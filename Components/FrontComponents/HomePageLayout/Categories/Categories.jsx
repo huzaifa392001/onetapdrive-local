@@ -39,9 +39,9 @@ function Categories() {
 
     useEffect(() => {
         if (windowWidth > 768) {
-            setTotalCat(7);
+            setTotalCat(8);
         } else {
-            setTotalCat(6);
+            setTotalCat(8);
         }
     }, [windowWidth]);
 
@@ -61,9 +61,9 @@ function Categories() {
                                 <CategoryCard data={category} />
                             </div>
                         ))}
-                        <div className="catCol cwd">
+                        {/* <div className="catCol cwd">
                             <CategoryCard data={carWithDriver} />
-                        </div>
+                        </div> */}
                     </div>
                     {hasEnoughCategories && (
                         <div className="showMoreCont">

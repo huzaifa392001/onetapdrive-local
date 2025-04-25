@@ -35,11 +35,11 @@ function CarsSection(props) {
             <div className="customContainer">
                 <div className="headingCont">
                     <SecHeading heading={props?.secHeading} />
-                    {!props?.limited && (
+                    {/* {!props?.limited && (
                         <Link href={""} className="themeBtn">
                             View All
                         </Link>
-                    )}
+                    )} */}
                 </div>
                 <div className="prodRow col4">
                     {Array.isArray(props?.data) &&

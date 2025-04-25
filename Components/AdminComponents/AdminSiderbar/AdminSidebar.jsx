@@ -24,8 +24,8 @@ function AdminSidebar() {
         { path: "/admin/leads-management", label: "Leads Management", icon: "fas fa-file-alt" },
         // { path: "/admin/inquiry-management", label: "Inquiry Management", icon: "fas fa-phone-alt" },
         // { path: "/admin/reviews-management", label: "Reviews Management", icon: "fas fa-comments" },
-        { path: "/admin/subscription-email", label: "Subscription Email", icon: "fas fa-envelope" },
-        { path: "/admin/subscription-email", label: "Website Traffic", icon: "fas fa-envelope" },
+        // { path: "/admin/subscription-email", label: "Subscription Email", icon: "fas fa-envelope" },
+        // { path: "/admin/subscription-email", label: "Website Traffic", icon: "fas fa-envelope" },
         // Divider between general options and car management
         { type: "divider", label: "Car Management" },
         // {
@@ -38,9 +38,10 @@ function AdminSidebar() {
         //     ]
         // },
         { path: "/admin/car-listing", label: "Car Listing", icon: "fas fa-car" },
-        { path: "/admin/car-with-driver-listing", label: "Car With Driver Listing", icon: "fas fa-car" },
-        // { path: "/admin/car-active-management", label: "Car Active Management", icon: "fas fa-check-square" },
+        // { path: "/admin/car-with-driver-listing", label: "Car With Driver Listing", icon: "fas fa-car" },
+        { path: "/admin/car-active-management", label: "Car Active Management", icon: "fas fa-check-square" },
         { path: "/admin/car-refresh-management", label: "Car Refresh Management", icon: "fas fa-sync-alt" },
+        // { path: "/admin/active-car-management", label: "Active Car Management", icon: "fas fa-sync-alt" },
 
         { type: "divider", label: "Website" },
         { path: "/admin/brands", label: "Brands", icon: "fad fa-star" },

@@ -43,3 +43,22 @@
         }
     }
 }
+
+.vendorLoginPopup {
+    @apply fixed inset-0 bg-black/60 flex items-center justify-center z-50;
+
+    .popupContent {
+        @apply bg-white p-6 rounded-2xl shadow-xl w-[90%] max-w-md text-center;
+
+        h2 {
+            @apply mb-6;
+
+            span {
+                @apply text-[var(--theme-color)] font-bold;
+            }
+        }
+        p {
+            @apply mb-3;
+        }
+    }
+}

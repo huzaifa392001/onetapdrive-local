@@ -30,7 +30,8 @@ function Page() {
         bodyType?.data?.map((item) => {
             const updatedItem = {
                 id: item?.id,
-                name: item?.name
+                name: item?.name,
+                image: item?.image
             };
             setBodyTypeData((prev) => [...prev, updatedItem]);
         });

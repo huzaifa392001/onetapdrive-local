@@ -154,12 +154,12 @@ function Header() {
                                                 Car Brands <i className="fas fa-chevron-down"></i>
                                             </Link>
                                         </li>
-                                        <li onMouseEnter={() => handleMouseEnter("carsWithDriver")}>
+                                        {/* <li onMouseEnter={() => handleMouseEnter("carsWithDriver")}>
                                             <Link href={""}>
                                                 <i className="fas fa-car" />
                                                 Cars with Driver <i className="fas fa-chevron-right" />
                                             </Link>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                                 {/* <div className="searchBarCont">
@@ -196,7 +196,7 @@ function Header() {
                                     <h4>Popular Categories</h4>
                                     <ul>
                                         <li>
-                                            <Link href={"/cars/economy"}>
+                                            <Link href={"/cars/economy-cars"}>
                                                 <span>Economy Cars</span>
                                             </Link>
                                         </li>
@@ -216,12 +216,12 @@ function Header() {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/muscle"}>
+                                            <Link href={"/cars/muscle-cars"}>
                                                 <span>Muscle Cars</span>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={"/cars/electric"}>
+                                            <Link href={"/cars/electric-cars"}>
                                                 <span>Electric Cars</span>
                                             </Link>
                                         </li>
@@ -243,12 +243,20 @@ function Header() {
                                 <div className="catCol">
                                     <h4>Category</h4>
                                     <ul>
-                                        {categoryData?.map((item, index) => (
-                                            <li key={index}>
-                                                <Link href={`/cars/${item?.slug}`}>{item?.name}</Link>
-                                            </li>
-                                        ))}
+                                        {categoryData
+                                            ?.filter(
+                                                (item) =>
+                                                    !["muscle cars", "economy cars", "electric cars"].includes(
+                                                        item?.name?.toLowerCase()
+                                                    )
+                                            )
+                                            .map((item, index) => (
+                                                <li key={index}>
+                                                    <Link href={`/cars/${item?.slug}`}>{item?.name}</Link>
+                                                </li>
+                                            ))}
                                     </ul>
+
                                 </div>
                             </div>
                         </div>

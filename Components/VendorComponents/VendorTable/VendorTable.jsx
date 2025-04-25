@@ -8,26 +8,34 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import "./VendorTable.scss";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
-import { boostCar, changeCarStatus } from "@/Services/VendorServices/VendorServices";
+import { boostCar, changeCarStatus, deleteCar, deleteDiscountPrice } from "@/Services/VendorServices/VendorServices";
 import { formatDate } from "@/Utils/Utils";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const VendorTable = ({ data = [], refetchData, action }) => {
+const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendor }) => {
     const gridRef = useRef(null);
     const pathName = usePathname();
     const [colDefs, setColDefs] = useState([]);
     const [localRowData, setLocalRowData] = useState(data);
+
     const statusMutation = useMutation({
         mutationFn: changeCarStatus,
-        onSuccess: (_, variables) => {
-            const { id, enable } = variables;
+        onSuccess: () => {
             toast.success("Status Updated");
             refetchData?.();
-            setLocalRowData((prev) => prev.map((row) => (row.id === id ? { ...row, status: enable } : row)));
+            if (typeof refetchVendor === 'function') {
+                refetchVendor();
+            }
         },
-        onError: () => {
-            toast.error("Failed to update status");
+        onError: (error) => {
+            console.log("refreshItem", refreshItem);
+            if (refreshItem?.used === refreshItem?.quantity) {
+                toast.error("You have used your Active limit, Please make 1 car inactive to make another active");
+            } else {
+                const errorMessage = error?.response?.data?.message || "Failed to update status";
+                toast.error(errorMessage);
+            }
         }
     });
 
@@ -45,6 +53,28 @@ const VendorTable = ({ data = [], refetchData, action }) => {
             }
         }
     });
+
+    const deleteDiscountPriceMutation = useMutation({
+        mutationFn: deleteDiscountPrice,
+        onSuccess: () => {
+            toast.success("Discounted Price Deleted");
+            refetchData?.();
+        },
+        onError: () => {
+            toast.error("Failed to delete discounted price");
+        }
+    })
+
+    const deleteCarMutation = useMutation({
+        mutationFn: deleteCar,
+        onSuccess: () => {
+            toast.success("Car Deleted");
+            refetchData?.();
+        },
+        onError: () => {
+            toast.error("Error Deleting Car.")
+        }
+    })
 
     useEffect(() => {
         setLocalRowData(data);
@@ -67,6 +97,18 @@ const VendorTable = ({ data = [], refetchData, action }) => {
                         flex: 1,
                         cellRenderer: (params) => {
                             const currentStatus = params.data?.status;
+
+                            return <p>{currentStatus ? "Active" : "Inactive"}</p>;
+                        }
+                    };
+                }
+                if (key === "adminStatus") {
+                    return {
+                        field: key,
+                        headerName: "Admin Status",
+                        flex: 1,
+                        cellRenderer: (params) => {
+                            const currentStatus = params.data?.adminStatus;
 
                             return <p>{currentStatus ? "Active" : "Inactive"}</p>;
                         }
@@ -104,6 +146,46 @@ const VendorTable = ({ data = [], refetchData, action }) => {
                         }
                     }
                 }
+                if (key === "prices") {
+                    return {
+                        field: key,
+                        headerName: "Date",
+                        flex: 2,
+                        cellRenderer: (params) => {
+                            return params?.value?.map((item, index) => (
+                                <div className="priceBox" key={index}>
+                                    <p key={index}>{item?.priceType} Price: <span>{item?.price}</span></p>
+                                    <p key={index}>{item?.priceType} Discounted Price: <span>{item?.discountedPrice}</span></p>
+                                </div>
+                            ))
+
+                        }
+                    }
+                }
+
+                if (key === "deletePrice") {
+                    return {
+                        field: key,
+                        headerName: "Delete Price",
+                        flex: 0,
+                        cellRenderer: (params) => {
+                            return (
+                                <div className="btnCont">
+                                    <button
+                                        title="Toggle Status"
+                                        className={`themeBtn statusBtn iconBtn ${deleteDiscountPriceMutation?.isPaused ? "disabled" : ""} `}
+                                        onClick={() => {
+                                            deleteDiscountPriceMutation.mutate(params?.data?.id);
+                                        }}
+                                        disabled={deleteDiscountPriceMutation.isPending}
+                                    >
+                                        <i className="fas fa-trash" />
+                                    </button>
+                                </div>
+                            );
+                        }
+                    };
+                }
 
                 return {
                     field: key,
@@ -117,7 +199,7 @@ const VendorTable = ({ data = [], refetchData, action }) => {
         const actionColumn = [
             {
                 headerName: "Action",
-                width: 200,
+                flex: 1,
                 cellRenderer: (params) => {
                     const id = params.data?.id;
                     const currentStatus = params.data?.status;
@@ -138,9 +220,19 @@ const VendorTable = ({ data = [], refetchData, action }) => {
                             <button title="Refresh" onClick={() => refreshCar.mutate(id)} className="themeBtn iconBtn">
                                 <i className="fas fa-rocket" />
                             </button>
-                            <Link title="Edit" className="themeBtn" href={`${pathName}/edit/${id}`}>
+                            {/* <Link title="Edit" className="themeBtn" href={`${pathName}/edit/${id}`}>
                                 <i className="fas fa-pencil" />
-                            </Link>
+                            </Link> */}
+                            {/* <button
+                                title="Toggle Status"
+                                className={`themeBtn statusBtn iconBtn ${deleteCarMutation?.isPaused ? "disabled" : ""} `}
+                                onClick={() => {
+                                    deleteCarMutation.mutate(params?.data?.id);
+                                }}
+                                disabled={deleteCarMutation.isPending}
+                            >
+                                <i className="fas fa-trash" />
+                            </button> */}
                         </div>
                     );
                 }
@@ -158,32 +250,32 @@ const VendorTable = ({ data = [], refetchData, action }) => {
         ]);
     }, [data]);
 
-const defaultColDef = useMemo(
-    () => ({
-        resizable: true,
-        floatingFilter: false,
-        suppressSizeToFit: false
-    }),
-    []
-);
+    const defaultColDef = useMemo(
+        () => ({
+            resizable: true,
+            floatingFilter: false,
+            suppressSizeToFit: false
+        }),
+        []
+    );
 
-return (
-    <div className="dataTable ag-theme-alpine">
-        <AgGridReact
-            ref={gridRef}
-            rowData={localRowData}
-            columnDefs={colDefs}
-            pagination={true}
-            paginationPageSize={10}
-            defaultColDef={defaultColDef}
-            rowHeight={80}
-            headerHeight={50}
-            suppressCellFocus={true}
-            domLayout="autoHeight"
-            onGridReady={onGridReady}
-        />
-    </div>
-);
+    return (
+        <div className="dataTable ag-theme-alpine">
+            <AgGridReact
+                ref={gridRef}
+                rowData={localRowData}
+                columnDefs={colDefs}
+                pagination={true}
+                paginationPageSize={10}
+                defaultColDef={defaultColDef}
+                rowHeight={80}
+                headerHeight={50}
+                suppressCellFocus={true}
+                domLayout="autoHeight"
+                onGridReady={onGridReady}
+            />
+        </div>
+    );
 };
 
 export default VendorTable;

@@ -9,7 +9,7 @@ export const getAdminCars = async () => {
     }
 };
 
-export const updateCarStatus = async (carId, enable) => {
+export const updateCarStatus = async ({ carId, enable }) => {
     try {
         const response = await API.put(`/cars/status-toggle/${carId}`, {
             enable

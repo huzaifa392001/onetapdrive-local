@@ -5,37 +5,41 @@ import SecHeading from '@/Components/SecHeading/SecHeading';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { getAllUsers } from '@/Services/AdminServices/AdminServices';
+import Loading from '@/Components/Loading/Loading';
 
 const UserManagementPage = () => {
-  const [userData, setUserData] = useState([]);
+    const [userData, setUserData] = useState([]);
 
-  const { data: usersResponse } = useQuery({
-    queryKey: ["users"],
-    queryFn: getAllUsers,
-  });
+    const { data: usersResponse, isPending, refetch } = useQuery({
+        queryKey: ["users"],
+        queryFn: getAllUsers,
+    });
 
-  useEffect(() => {
-    const transformed = usersResponse?.data?.data?.map(user => ({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      status: user.active ? "Active" : "Inactive",
-      Action: "",
-    }));
-    setUserData(transformed);
-  }, [usersResponse]);
+    useEffect(() => {
+        const transformed = usersResponse?.data?.map(user => ({
+            id: user.id,
+            name: user.firstName,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            leadGenerated: user.lead_count,
+            status: user.status,
+        }));
+        setUserData(transformed);
+    }, [usersResponse]);
 
-  return (
-    <>
-      <div className="headingCont">
-        <SecHeading heading="User Management" />
-        <Link href="user-management/create" className="themeBtn">
-          Create
-        </Link>
-      </div>
-      <AdminDataTable data={userData} showAction={true} />
-    </>
-  );
+    if (isPending) return <Loading />
+
+    return (
+        <>
+            <div className="headingCont">
+                <SecHeading heading="User Management" />
+                {/* <Link href="user-management/create" className="themeBtn">
+                    Create
+                </Link> */}
+            </div>
+            <AdminDataTable data={userData} showUserAction refetchData={refetch} />
+        </>
+    );
 };
 
 export default UserManagementPage;

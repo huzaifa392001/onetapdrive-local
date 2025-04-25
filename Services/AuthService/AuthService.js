@@ -5,7 +5,7 @@ import API from "../Constants/api";
 export const login = async (data) => {
     try {
         const res = await API.post("/auth/login", data);
-        console.log("res=> ", res)
+        // console.log("res=> ", res)
         if (res?.data?.data?.user_details?.role?.name === "superadmin") {
             store.dispatch(SET_ADMIN_DETAILS(res?.data?.data?.user_details));
             store.dispatch(SET_IS_ADMIN(true));
@@ -15,12 +15,14 @@ export const login = async (data) => {
             store.dispatch(SET_IS_USER(false));
         }
         else if (res?.data?.data?.user_details?.role?.name === "vendor") {
-            store.dispatch(SET_VENDOR_DETAILS(res?.data?.data?.user_details));
-            store.dispatch(SET_IS_VENDOR(true));
-            store.dispatch(SET_ADMIN_DETAILS(null));
-            store.dispatch(SET_IS_ADMIN(false));
-            store.dispatch(SET_USER_DETAILS(null));
-            store.dispatch(SET_IS_USER(false));
+            if (res?.data?.data?.user_details?.status) {
+                store.dispatch(SET_VENDOR_DETAILS(res?.data?.data?.user_details));
+                store.dispatch(SET_IS_VENDOR(true));
+                store.dispatch(SET_ADMIN_DETAILS(null));
+                store.dispatch(SET_IS_ADMIN(false));
+                store.dispatch(SET_USER_DETAILS(null));
+                store.dispatch(SET_IS_USER(false));
+            }
         }
         else if (res?.data?.data?.user_details?.role?.name === "client") {
             store.dispatch(SET_USER_DETAILS(res?.data?.data?.user_details));
@@ -67,6 +69,20 @@ export const vendorLogout = async () => {
 export const vendorSignup = async (data) => {
     try {
         const res = await API.post("/vendors", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return res.data;
+    } catch (e) {
+        console.error(`Error making Request: ${e}`);
+        throw new Error(e.response?.data?.message || "Signup failed!");
+    }
+}
+
+export const updateVendor = async (data) => {
+    try {
+        const res = await API.put("/vendors/update", data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -130,3 +146,23 @@ export const getCurrentUser = async () => {
         throw error;
     }
 }
+
+export const forgotPassword = async (data) => {
+    try {
+        const res = await API.post("/auth/forgot-password", data);
+        return res?.data;
+    } catch (error) {
+        console.error("Error forgot Password:", error);
+        throw error;
+    }
+};
+
+export const resetPassword = async (data) => {
+    try {
+        const res = await API.post("auth/reset-password", data);
+        return res?.data;
+    } catch (error) {
+        console.error("Error reste Password:", error);
+        throw error;
+    }
+};

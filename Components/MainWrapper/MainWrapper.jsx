@@ -1,4 +1,5 @@
 "use client"
+import { RowProvider } from '@/contexts/RowContext';
 import { persistor, store } from '@/Redux/Store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
@@ -12,7 +13,9 @@ function MainWrapper({ children }) {
         <QueryClientProvider client={queryClient}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    {children}
+                    <RowProvider>
+                        {children}
+                    </RowProvider>
                 </PersistGate>
             </Provider>
             <ToastContainer />

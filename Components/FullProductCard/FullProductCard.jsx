@@ -134,27 +134,37 @@ function FullProductCard(props) {
                     <div className="rightArea">
                         <div className="priceCont">
                             <div className="priceBox">
-                                {product?.daily_discount_price && (
-                                    <p className="cutPrice">
-                                        <del>AED {product?.daily_discount_price}</del>
-                                    </p>
-                                )}
+                                {(() => {
+                                    const dailyPrice = product?.carPrices?.find(item => item?.priceType === "daily");
+                                    if (dailyPrice?.discountedPrice) {
+                                        return (
+                                            <p className="cutPrice">
+                                                <del>AED {dailyPrice.price}</del>
+                                            </p>
+                                        );
+                                    } else if (product?.daily_discount_price) {
+                                        return (
+                                            <p className="cutPrice">
+                                                <del>AED {product?.daily_discount_price}</del>
+                                            </p>
+                                        );
+                                    }
+                                    return null;
+                                })()}
                                 <h6>
                                     <span>
                                         AED{" "}
-                                        {product?.carPrices?.map((item) =>
-                                            item?.priceType === "daily" ? item?.price : null
-                                        )}
+                                        {(() => {
+                                            const dailyPrice = product?.carPrices?.find(item => item?.priceType === "daily");
+                                            return dailyPrice?.discountedPrice || dailyPrice?.price || "";
+                                        })()}
                                     </span>{" "}
                                     / day
                                 </h6>
                                 <p>
                                     <i className="fas fa-road" />
                                     <span>
-                                        {product?.carPrices?.map((item) =>
-                                            item?.priceType === "daily" ? item?.kilometers : null
-                                        )}{" "}
-                                        KM
+                                        {product?.carPrices?.find(item => item?.priceType === "daily")?.kilometers || ""} KM
                                     </span>
                                 </p>
                             </div>
@@ -168,8 +178,13 @@ function FullProductCard(props) {
 
                                     return fallback ? (
                                         <>
+                                            {fallback.discountedPrice && (
+                                                <p className="cutPrice">
+                                                    <del>AED {fallback.price}</del>
+                                                </p>
+                                            )}
                                             <h6>
-                                                <span>AED {fallback.price}</span> / {fallback.priceType}
+                                                <span>AED {fallback.discountedPrice || fallback.price}</span> / {fallback.priceType}
                                             </h6>
                                             <p>
                                                 <i className="fas fa-road" />

@@ -5,6 +5,7 @@ import { store } from "@/Redux/Store";
 import { SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
 import SignUp from "../SignUp/SignUp";
 import Login from "./Login/Login";
+import ForgotPassword from "../ForgotPassword/ForgotPassword";
 import Image from "next/image";
 
 function LoginModal() {
@@ -42,8 +43,20 @@ function LoginModal() {
                             View saved cars, contacted listings and more
                         </h6>
                     </div>
+                    {showState === 1 && (
+                        <div className="formWrap">
+                            <h4>Login</h4>
+                            <Login setModal={handleModalVisible} />
+                            <p onClick={() => setShowState(0)}>
+                                New here? <span>Signup Now</span>
+                            </p>
+                            <p onClick={() => setShowState(2)}>
+                                <span>Forgot Password?</span>
+                            </p>
+                        </div>
+                    )}
                     {showState === 0 && (
-                        <div class="formWrap">
+                        <div className="formWrap">
                             <h4>Sign Up</h4>
                             <SignUp setModal={handleModalVisible} />
                             <p onClick={() => setShowState(1)}>
@@ -51,12 +64,12 @@ function LoginModal() {
                             </p>
                         </div>
                     )}
-                    {showState === 1 && (
+                    {showState === 2 && (
                         <div className="formWrap">
-                            <h4>Login</h4>
-                            <Login setModal={handleModalVisible} />
-                            <p onClick={() => setShowState(0)}>
-                                Already a User? <span>Signup Now</span>
+                            <h4>Forgot Password</h4>
+                            <ForgotPassword setModal={handleModalVisible} />
+                            <p onClick={() => setShowState(1)}>
+                                <span>Back to Login</span>
                             </p>
                         </div>
                     )}

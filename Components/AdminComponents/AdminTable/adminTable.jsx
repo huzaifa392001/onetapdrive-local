@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import Image from "next/image";
-import "./adminTable.scss";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { formatDate } from "@/Utils/Utils";
@@ -11,26 +10,40 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Spinner from "@/Components/Spinner/Spinner";
 import { updateCarStatus } from "@/Services/AdminServices/AdminCars";
+import { useRow } from "@/contexts/RowContext";
+import { changeUserStatus } from "@/Services/AdminServices/AdminServices";
+import "./adminTable.scss";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const AdminDataTable = (props) => {
+    const { setSelectedRow } = useRow();
     const rowData = props?.data || [];
     const showAdminActions = props?.showAdminCarActions || false;
     const showAction = props?.showAction || false;
+    const showUserAction = props?.showUserAction || false;
     const pathName = usePathname();
     const statusMutation = useMutation({
         mutationFn: updateCarStatus,
-        onSuccess: (_, variables) => {
-            const { id, enable } = variables;
+        onSuccess: () => {
             toast.success("Status Updated");
-            refetchData?.();
-            setLocalRowData((prev) => prev.map((row) => (row.id === id ? { ...row, status: enable } : row)));
+            props.refetchData()
         },
         onError: () => {
             toast.error("Failed to update status");
         }
     });
+
+    const changeUserMutation = useMutation({
+        mutationFn: changeUserStatus,
+        onSuccess: () => {
+            toast.success("Status Updated");
+            props.refetchData()
+        },
+        onError: () => {
+            toast.error("Failed to update status");
+        }
+    })
 
     const deleteMutation = useMutation({
         mutationFn: props?.deleteFunc,
@@ -114,6 +127,13 @@ const AdminDataTable = (props) => {
                             cellRenderer: (params) => <h6 className="title">{params.value}</h6>
                         };
                     }
+                    if (key.indexOf("_") > -1) {
+                        const headerName = (key.split('_').map((word) => word.charAt(0).toUpperCase() + word.slice(1))).join(' ')
+                        return {
+                            field: key,
+                            headerName,
+                        }
+                    }
                     return {
                         field: key,
                         headerName: key.charAt(0).toUpperCase() + key.slice(1)
@@ -128,15 +148,15 @@ const AdminDataTable = (props) => {
                         const id = params.data?.id;
                         const currentStatus = params.data?.status;
 
+
                         return (
                             <div className="btnCont">
                                 <button
                                     title="Toggle Status"
-                                    className={`themeBtn statusBtn iconBtn ${
-                                        currentStatus === true ? "active" : "inactive"
-                                    } ${statusMutation.isPending ? "disabled" : ""}`}
+                                    className={`themeBtn statusBtn iconBtn ${currentStatus === true ? "active" : "inactive"
+                                        } ${statusMutation.isPending ? "disabled" : ""}`}
                                     onClick={() => {
-                                        statusMutation.mutate({ id, enable: !currentStatus });
+                                        statusMutation.mutate({ carId: id, enable: !currentStatus });
                                     }}
                                     disabled={statusMutation.isPending}
                                 >
@@ -158,10 +178,9 @@ const AdminDataTable = (props) => {
                     if (!showAction) {
                         return null;
                     }
-
                     return (
                         <div className="btnCont">
-                            <Link className="themeBtn" href={`${pathName}/edit/${params.data?.id}`}>
+                            <Link onClick={() => setSelectedRow(params.data)} className="themeBtn" href={`${pathName}/edit/${params.data?.id}`}>
                                 Edit
                             </Link>
                             <button
@@ -176,6 +195,65 @@ const AdminDataTable = (props) => {
                 }
             };
 
+            const userActionColumn = {
+                headerName: "Action",
+                flex: 1,
+                cellRenderer: (params) => {
+                    const id = params.data?.id;
+                    const currentStatus = params.data?.status;
+
+                    if (!showUserAction) {
+                        return null;
+                    }
+                    return (
+                        <div className="btnCont">
+                            <button
+                                title="Toggle Status"
+                                className={`themeBtn statusBtn iconBtn ${currentStatus === true ? "active" : "inactive"
+                                    } ${changeUserMutation.isPending ? "disabled" : ""}`}
+                                onClick={() => {
+                                    changeUserMutation.mutate({ id, enable: !currentStatus });
+                                }}
+                                disabled={changeUserMutation.isPending}
+                            >
+                                <i className="fas fa-power-off" />
+                            </button>
+                        </div>
+                    );
+                }
+            };
+
+            const refreshAction = [
+                {
+                    headerName: "Car Actions",
+                    width: 200,
+                    cellRenderer: (params) => {
+                        const id = params.data?.id;
+                        const currentStatus = params.data?.status;
+
+
+                        return (
+                            <div className="btnCont">
+                                <button
+                                    title="Toggle Status"
+                                    className={`themeBtn statusBtn iconBtn ${currentStatus === true ? "active" : "inactive"
+                                        } ${statusMutation.isPending ? "disabled" : ""}`}
+                                    onClick={() => {
+                                        statusMutation.mutate({ carId: id, enable: !currentStatus });
+                                    }}
+                                    disabled={statusMutation.isPending}
+                                >
+                                    <i className="fas fa-power-off" />
+                                </button>
+                                <Link title="Edit" className="themeBtn" href={`${pathName}/edit/${id}`}>
+                                    <i className="fas fa-pencil" />
+                                </Link>
+                            </div>
+                        );
+                    }
+                }
+            ];
+
             setColDefs([
                 {
                     headerName: "Sr No.",
@@ -184,7 +262,8 @@ const AdminDataTable = (props) => {
                 },
                 ...dynamicFields,
                 ...(showAdminActions ? carAction : []),
-                ...(showAction ? [actionColumn] : [])
+                ...(showAction ? [actionColumn] : []),
+                ...(showUserAction ? [userActionColumn] : [])
             ]);
         }
     }, [rowData, showAdminActions]); // 👈 Add showAdminActions as a dependency

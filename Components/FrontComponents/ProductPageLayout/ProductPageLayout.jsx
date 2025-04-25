@@ -316,10 +316,6 @@ function ProductPageLayout() {
         mutationFn: generateLead,
     })
 
-    // const viewedCarMutation = useMutation({
-    //     mutationFn: viewedCar
-    // });
-
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
@@ -347,7 +343,7 @@ function ProductPageLayout() {
     const handleAccordionClick = (index) => {
         setActiveAccordion((prevIndex) => (prevIndex === index ? null : index));
     };
-    
+
     const handleFaqClick = (index) => {
         if (activeFaq === index) {
             setActiveFaq(null); // Deselect the FAQ if it's already active
@@ -365,8 +361,6 @@ function ProductPageLayout() {
     };
 
     const toggleWishlistFunc = (id) => {
-        // if(user)
-
         if (!loggedInUser?.id) {
             store.dispatch(SET_USER_MODAL_STATUS(true));
             toast.error("Please Login First");
@@ -399,6 +393,44 @@ function ProductPageLayout() {
         }
     };
 
+    const buildWhatsAppMessage = () => {
+        const brand = data?.model?.brand?.name || '';
+        const model = data?.model?.name || '';
+        const year = data?.makeYear || '';
+        const company = vendor?.companyName || '';
+
+        let message = `Hi there, I would like to rent ${brand} ${model} ${year} by ${company}.\n\n`;
+
+        // Get daily price
+        const dailyPrice = data?.carPrices?.find(price => price.priceType === "daily")?.price;
+        if (dailyPrice) {
+            message += `Price per day: AED ${dailyPrice}/day\n`;
+        }
+
+        // Get weekly price
+        const weeklyPrice = data?.carPrices?.find(price => price.priceType === "weekly")?.price;
+        if (weeklyPrice) {
+            message += `Price per week: AED ${weeklyPrice}/week\n`;
+        }
+
+        // Get monthly price
+        const monthlyPrice = data?.carPrices?.find(price => price.priceType === "monthly")?.price;
+        if (monthlyPrice) {
+            message += `Price per month: AED ${monthlyPrice}/month\n`;
+        }
+
+        message += `Link: ${window.location.href}\n\n`;
+        message += `Note: Any changes made to this message will result in the inquiry not being sent to the agent.`;
+
+        const whatsappNumber = (vendor?.whatsappNumber || '').replace(/[^0-9+]/g, '');
+        const encodedMessage = encodeURIComponent(message);
+
+        // Open WhatsApp with the message
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+        return { whatsappNumber, encodedMessage };
+    };
+
     const handleGenerateLead = (type) => {
         if (!loggedInUser?.id) {
             store.dispatch(SET_USER_MODAL_STATUS(true));
@@ -411,16 +443,21 @@ function ProductPageLayout() {
             toast.error("Please verify your account first.");
             return;
         }
+
+        if (type === "whatsapp") {
+            buildWhatsAppMessage();
+        }
+
         const body = {
             vendor_id: parseInt(user?.id),
             car_id: parseInt(data?.id),
             type: type
         };
 
-        console.log("leadBody=> ", body)
+        console.log("leadBody=> ", body);
 
         generateLeadMutation.mutate(body);
-    }
+    };
 
     useEffect(() => {
         setIsWishlisted(wishlistData?.data?.isCarWishlist);
@@ -450,7 +487,6 @@ function ProductPageLayout() {
                         city={data?.city?.name}
                         brand={data?.model?.brand?.name}
                         model={data?.model?.name}
-                    // route={activeRoute}
                     />
 
                     <div className="headingContainer">
@@ -480,7 +516,6 @@ function ProductPageLayout() {
                                 modules={[Pagination]}
                                 className="mySwiper"
                             >
-                                {/* Main image */}
                                 {data?.images?.map((item, index) => (
                                     <SwiperSlide key={index}>
                                         <figure>
@@ -496,7 +531,6 @@ function ProductPageLayout() {
                                 ))}
                             </Swiper>
                         ) : (
-                            // Desktop layout as it is
                             <>
                                 <figure>
                                     <Image
@@ -510,7 +544,7 @@ function ProductPageLayout() {
 
                                 {(data?.images?.length > 1 ? data.images.slice(1, 5) : [null, null, null]).map(
                                     (image, index) => {
-                                        const actualIndex = index + 1; // Because you sliced from index 1
+                                        const actualIndex = index + 1;
 
                                         if (index === 1) {
                                             return (
@@ -550,7 +584,6 @@ function ProductPageLayout() {
                             </>
                         )}
 
-                        {/* Tags and Buttons remain outside Swiper */}
                         <div className="imgTags">
                             {renderTags()}
                             <div className="btnCont">
@@ -581,7 +614,6 @@ function ProductPageLayout() {
                             <div className="tags">
                                 <span className="tag">
                                     {data?.category?.name || "Category Not Available"}
-                                    {/* <i className="fas fa-car" /> */}
                                 </span>
                                 <span className="tag">
                                     <svg
@@ -720,18 +752,10 @@ function ProductPageLayout() {
                                         <span>Features & Specs</span>
                                         <i className="fas fa-chevron-right" />
                                     </li>
-                                    {/* <li onClick={() => handleOptionClick("supplier")}>
-                                        <span>Supplier Details</span>
-                                        <i className="fas fa-chevron-right" />
-                                    </li> */}
                                     <li onClick={() => handleOptionClick("requirements")}>
                                         <span>Requirements</span>
                                         <i className="fas fa-chevron-right" />
                                     </li>
-                                    {/* <li onClick={() => handleOptionClick('payment')}>
-                                        <span>Payment Mode</span>
-                                        <i className='fas fa-chevron-right' />
-                                    </li> */}
                                     <li onClick={() => handleOptionClick("faq")}>
                                         <span>FAQs (Frequently Asked Questions)</span>
                                         <i className="fas fa-chevron-right" />
@@ -785,7 +809,7 @@ function ProductPageLayout() {
                                         {data?.carPrices?.map((price, index) => (
                                             <div
                                                 key={index}
-                                                className={`priceBox ${activePrice === index ? "active" : ""}`} // Add active class based on state
+                                                className={`priceBox ${activePrice === index ? "active" : ""}`}
                                                 onClick={() => handlePriceClick(index)}
                                             >
                                                 <div className="priceTitle">
@@ -798,35 +822,32 @@ function ProductPageLayout() {
 
                                                 <div className="priceDetails">
                                                     <p className="priceMileage">
-                                                        <strong>Price:</strong> {price?.price}
+                                                        <strong> {price?.discountedPrice ? "Original" : ""} Price:</strong>
+                                                        {price?.discountedPrice
+                                                            ? <del>AED {price?.price}</del>
+                                                            : <span>AED {price?.price}</span>
+                                                        }
                                                     </p>
+                                                    {price?.discountedPrice && (
+                                                        <p className="priceMileage">
+                                                            <strong>Discounted Price:</strong> {price?.discountedPrice}
+                                                        </p>
+                                                    )}
                                                     <p className="priceMileage">
-                                                        <strong>Included mileage limit:</strong> {price?.kilometers}
+                                                        <strong>Included mileage limit:</strong> {price?.kilometers} KM
                                                     </p>
-                                                    {/* <p className="priceMileage">
-                                                            <strong>Additional mileage charge:</strong>{" "}
-                                                            {price.details.additionalMileage}
-                                                        </p> */}
 
-                                                    {/* Show Insurance for Weekly */}
                                                     {price?.details?.insurance && (
                                                         <p className="priceMileage">
                                                             <strong>Insurance:</strong> {price?.details?.insurance}
                                                         </p>
                                                     )}
 
-                                                    {/* Show Monthly Detail for Monthly */}
                                                     {price?.details?.monthly && (
                                                         <p className="priceMileage">
                                                             <strong>Monthly:</strong> {price?.details?.monthly}
                                                         </p>
                                                     )}
-                                                    {/* {data?.specialNoteForCustomer && (
-                                                        <p>
-                                                            <strong>Supplier Note:</strong>{" "}
-                                                            {data?.specialNoteForCustomer}
-                                                        </p>
-                                                    )} */}
                                                 </div>
                                             </div>
                                         ))}
@@ -837,8 +858,6 @@ function ProductPageLayout() {
                     </div>
                 </div>
             </section>
-
-            {/* <CarsSection secHeading={"More Like This"} limited data={relatedCars} /> */}
 
             <div data-lenis-prevent className={`sideModal ${activeModal === "faq" ? "active" : ""}`}>
                 <div className="backdrop" onClick={() => handleOptionClick()} />
@@ -854,14 +873,14 @@ function ProductPageLayout() {
                             {faqs?.map((faq, index) => (
                                 <div
                                     key={index}
-                                    className={`faqBox ${activeFaq === index ? "active" : ""}`} // Add active class based on state
+                                    className={`faqBox ${activeFaq === index ? "active" : ""}`}
                                     onClick={() => handleFaqClick(index)}
                                 >
                                     <div className="question">
                                         <h3>{faq?.question}</h3>
                                         <i className={`far ${activeFaq === index ? "fa-minus" : "fa-plus"}`} />
                                     </div>
-                                    {activeFaq === index && ( // Only show answer if this FAQ is active
+                                    {activeFaq === index && (
                                         <div className="answer">
                                             <p>{faq?.answer}</p>
                                         </div>
@@ -895,16 +914,12 @@ function ProductPageLayout() {
                             <ul>
                                 <li>
                                     <h4>Minimum Driver&apos;s Age</h4>
-                                    <h3>18 Years</h3>
+                                    <h3>{data?.minimumRequiredAge} Years</h3>
                                 </li>
                                 <li>
                                     <h4>Security Deposit</h4>
                                     <h3>AED {data?.securityDepositAmount}</h3>
                                 </li>
-                                {/* <li>
-                                    <h4>Refunded in</h4>
-                                    <h3>30 days</h3>
-                                </li> */}
                             </ul>
                             <h3>For UAE Residents</h3>
                             <ul>
@@ -1011,21 +1026,6 @@ function ProductPageLayout() {
                                         </li>
                                     ))}
                             </ul>
-                            {/* <h3>Listed in</h3>
-                            <ul className="listedIn">
-                                <li>
-                                    <a href="{}">Sedan Car Rentals in Dubai</a>
-                                    <i className="fas fa-arrow-right"></i>
-                                </li>
-                                <li>
-                                    <a href="{}">Compact Car Rentals in Dubai</a>
-                                    <i className="fas fa-arrow-right"></i>
-                                </li>
-                                <li>
-                                    <a href="{}">Economy Car Rentals in Dubai</a>
-                                    <i className="fas fa-arrow-right"></i>
-                                </li>
-                            </ul> */}
                         </div>
                     </div>
                 </div>
@@ -1148,8 +1148,7 @@ function ProductPageLayout() {
                                 {data?.carPrices?.map((item) =>
                                     item?.priceType === "daily" ? item?.kilometers : null
                                 )}{" "}
-                                km/day
-                                {/* (AED 25 per additional km applicable) */}. Security deposit of AED{" "}
+                                km/day. Security deposit of AED{" "}
                                 {data?.securityDepositAmount} is required. Contact {vendor?.companyName} directly for
                                 bookings and inquiries.
                             </p>

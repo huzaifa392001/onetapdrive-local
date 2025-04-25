@@ -12,10 +12,14 @@ import { createDiscountedPrice, getVendorCars } from '@/Services/VendorServices/
 import { requiredValidation } from '@/Utils/validation';
 import { toast } from 'react-toastify';
 import Spinner from '@/Components/Spinner/Spinner';
+import { useSelector } from 'react-redux';
+import Loading from '@/Components/Loading/Loading';
+import Link from 'next/link';
 
 function Page() {
-
-    const { data: carsData } = useQuery({
+    const [discounterCars, setDiscountedCars] = useState([])
+    const [createDiscountModal, setCreateDiscountModal] = useState(false)
+    const { data: carsData, isPending, refetch } = useQuery({
         queryKey: ["cars"],
         queryFn: getVendorCars
     })
@@ -60,7 +64,9 @@ function Page() {
         mutationFn: createDiscountedPrice,
         onSuccess: () => {
             toast.success("Discounted Price Created Successfully")
-            reset()
+            reset();
+            setCreateDiscountModal(false)
+            refetch()
         },
         onError: () => {
             toast.error("Something went wrong")
@@ -92,7 +98,7 @@ function Page() {
                 inputtype: "number",
                 req: true,
                 readOnly: true,
-                colWidth: "col_md_6"
+                colWidth: "col_md_6",
             },
             {
                 type: "input",
@@ -109,7 +115,7 @@ function Page() {
                 inputtype: "number",
                 req: true,
                 readOnly: true,
-                colWidth: "col_md_6"
+                colWidth: "col_md_6",
             },
             {
                 type: "input",
@@ -126,7 +132,7 @@ function Page() {
                 inputtype: "number",
                 req: true,
                 readOnly: true,
-                colWidth: "col_md_6"
+                colWidth: "col_md_6",
             },
             {
                 type: "input",
@@ -180,10 +186,27 @@ function Page() {
         }
     }, [selectedCarId, carsData, setValue])
 
+    useEffect(() => {
+        const updatedData = carsData?.data?.cars?.filter((car) =>
+            car.carPrices?.some(price => price.discountedPrice !== null)
+        )
+
+        const transformedData =
+            updatedData?.map((car) => {
+                return {
+                    id: car.id,
+                    name: car.name,
+                    prices: car.carPrices || [],
+                    deletePrice: true
+                };
+            }) || [];
+
+        setDiscountedCars(transformedData);
+    }, [carsData])
+
     const onSubmit = (data) => {
-        console.log("data=> ", data)
         const payload = {
-            id: 20,
+            id: parseInt(data?.id?.value),
             car_prices: [
                 {
                     price: data?.dailyPrice,
@@ -205,26 +228,43 @@ function Page() {
         discountMutation.mutate(payload)
     }
 
+    if (isPending) return <Loading />
+
     return (
-        <section className="offerSec">
-            <div class="offerBox">
-                <SecHeading heading="Manage Car Discount" />
-                <form onSubmit={handleSubmit(onSubmit)} action="">
-                    {fields?.map((item, i) => (
-                        <FormGroup key={i} item={item} control={control} errors={errors} />
-                    ))}
-                    <button disabled={discountMutation?.isPending || !isValid}
-                        className={`themeBtn full ${discountMutation?.isPending || !isValid ? "disabled" : ""}`} type='submit'>
-                        {discountMutation?.isPending ? <Spinner /> : "Submit"}
-                        {/* {signupMutation?.isPending ? <Spinner /> : " Sign Up"} */}
-                    </button>
-                </form>
-            </div>
-            <div class="offerBox">
-                <SecHeading heading="Discounted Cars" />
-                <VendorTable data={[]} />
-            </div>
-        </section>
+        <>
+            <section className="offerSec">
+                <div class="offerBox">
+                    <div className='headingBox'>
+                        <SecHeading heading="Discounted Cars" />
+                        <button onClick={() => setCreateDiscountModal(true)} className="themeBtn">
+                            Create Discount
+                        </button>
+                    </div>
+                    <VendorTable data={discounterCars} refetchData={refetch} />
+                </div>
+            </section>
+            {createDiscountModal && (
+                <div className='offerModal'>
+                    <div class="offerBox ">
+                        <div class="header">
+                            <button onClick={() => setCreateDiscountModal(false)}>
+                                <i class="fas fa-times" />
+                            </button>
+                        </div>
+                        <SecHeading heading="Manage Car Discount" />
+                        <form onSubmit={handleSubmit(onSubmit)} action="">
+                            {fields?.map((item, i) => (
+                                <FormGroup key={i} item={item} control={control} errors={errors} />
+                            ))}
+                            <button disabled={discountMutation?.isPending || !isValid}
+                                className={`themeBtn full ${discountMutation?.isPending || !isValid ? "disabled" : ""}`} type='submit'>
+                                {discountMutation?.isPending ? <Spinner /> : "Submit"}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </>
     )
 }
 

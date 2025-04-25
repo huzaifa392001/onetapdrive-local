@@ -42,6 +42,16 @@ export const boostCar = async (id) => {
     }
 }
 
+export const deleteCar = async (id) => {
+    try {
+        const response = await API.delete(`/cars/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error toggling car status:", error);
+        throw error;
+    }
+}
+
 export const getLeads = async () => {
     try {
         const response = await API.get(`/leads/get-leads`);
@@ -61,3 +71,36 @@ export const createDiscountedPrice = async (data) => {
         throw error;
     }
 }
+
+export const deleteDiscountPrice = async (id) => {
+    try {
+        const response = await API.delete(`/cars/discount-offer/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error toggling car status:", error);
+        throw error;
+    }
+}
+
+export const updateTradeLicense = async (body) => {
+    try {
+        const response = await API.put(`/vendors/update-license/`, body, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error toggling car status:", error);
+        throw error;
+    }
+};
+
+export const getSingleCar = async (carId) => {
+    try {
+        const res = await API.get(`/cars/${carId}`);
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting single car:", e);
+    }
+};

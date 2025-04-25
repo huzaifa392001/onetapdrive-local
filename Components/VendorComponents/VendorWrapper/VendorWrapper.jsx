@@ -23,9 +23,8 @@ import {
     getSpecs,
     getTransmission
 } from "@/Services/VendorServices/VendorAddCarServices";
-import { getCurrentVendor } from "@/Services/VendorServices/VendorServices";
 import { store } from "@/Redux/Store";
-import { SET_VENDOR_DETAILS } from "@/Redux/Slices/Auth";
+import { SET_ACCESS_TOKEN, SET_IS_VENDOR, SET_VENDOR_DETAILS } from "@/Redux/Slices/Auth";
 import { getCurrentUser } from "@/Services/AuthService/AuthService";
 
 function VendorWrapper({ children }) {
@@ -42,6 +41,16 @@ function VendorWrapper({ children }) {
             router.push("/vendor-login"); // ✅ Redirect if not a vendor
         }
     }, [isVendor, router]);
+
+    useEffect(() => {
+
+        // console.log("status=> ", vendorData?.data?.user?.status)
+        if (vendorData && !vendorData?.data?.user?.status) {
+            store.dispatch(SET_VENDOR_DETAILS(null));
+            store.dispatch(SET_IS_VENDOR(false))
+            store.dispatch(SET_ACCESS_TOKEN(null));
+        }
+    }, [vendorData])
 
     const queries = useQueries({
         queries: [
@@ -64,7 +73,7 @@ function VendorWrapper({ children }) {
     });
 
     useEffect(() => {
-        console.log('vendorData', vendorData);
+        // console.log('vendorData', vendorData);
         store.dispatch(SET_VENDOR_DETAILS(vendorData?.data?.user));
     }, [vendorData]);
 

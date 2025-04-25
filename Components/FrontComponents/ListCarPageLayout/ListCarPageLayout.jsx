@@ -18,6 +18,8 @@ function ListCarPageLayout() {
     const [companyLicensePreview, setCompanyLicensePreview] = useState(null);
     const [companyLogoFile, setCompanyLogoFile] = useState(null);
     const [companyLicenseFile, setCompanyLicenseFile] = useState(null);
+    const [phoneCountryCode, setPhoneCountryCode] = useState("+971"); // Default UAE code
+    const [whatsappCountryCode, setWhatsappCountryCode] = useState("+971"); // Default UAE code
 
     const handleImageChange = (e, setPreview, setFile, fieldName) => {
         const file = e.target.files[0];
@@ -139,9 +141,9 @@ function ListCarPageLayout() {
         formData.append("firstName", data.fullName);
         formData.append("username", username);
         formData.append("email", data.email);
-        formData.append("phoneNumber", data.phoneNumber);
+        formData.append("phoneNumber", `${phoneCountryCode}${data.phoneNumber}`);
         formData.append("password", data.password);
-        formData.append("whatsappNumber", data.whatsappNumber);
+        formData.append("whatsappNumber", `${whatsappCountryCode}${data.whatsappNumber}`);
         formData.append("companyName", data.companyName);
         formData.append("companyType", data.companyType);
         formData.append("jobTitle", data.jobTitle);
@@ -157,8 +159,13 @@ function ListCarPageLayout() {
         formData.append("licenseExpiryDate", data.licenseExpiryDate);
         formData.append("countryId", 1);
         formData.append("cityId", 2);
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
 
-        signupMutation.mutate(formData);
+        // signupMutation.mutate(formData);
+
+        // signupMutation.mutate(formData);
     };
 
     const images = new Array(12).fill("");
@@ -256,34 +263,62 @@ function ListCarPageLayout() {
                                         </div>
                                     </div>
                                     <div className="contentCol">
-                                        <div className={`inputCont full ${errors?.phoneNumber ? "error" : ""}`}>
+                                        <div className={`inputCont phoneNumber full ${errors?.phoneNumber ? "error" : ""}`}>
                                             <label htmlFor="phoneNumber">
                                                 Phone Number<span className="required">*</span>
                                             </label>
-                                            <input
-                                                className={`${errors?.phoneNumber ? "errorInput" : ""}`}
-                                                {...register("phoneNumber")}
-                                                type="tel"
-                                                placeholder="Enter Phone Number"
-                                                id="phoneNumber"
-                                            />
+                                            <div className="phoneInputWrapper">
+                                                <select
+                                                    className="countryCodeSelect"
+                                                    value={phoneCountryCode}
+                                                    onChange={(e) => setPhoneCountryCode(e.target.value)}
+                                                >
+                                                    <option value="+971">+971</option>
+                                                    <option value="+966">+966</option>
+                                                    <option value="+974">+974</option>
+                                                    <option value="+973">+973</option>
+                                                    <option value="+965">+965</option>
+                                                    <option value="+968">+968</option>
+                                                </select>
+                                                <input
+                                                    className={`${errors?.phoneNumber ? "errorInput" : ""}`}
+                                                    {...register("phoneNumber")}
+                                                    type="tel"
+                                                    placeholder="Enter Phone Number"
+                                                    id="phoneNumber"
+                                                />
+                                            </div>
                                             {errors?.phoneNumber && (
                                                 <p className="errorText">{errors.phoneNumber.message}</p>
                                             )}
                                         </div>
                                     </div>
                                     <div className="contentCol">
-                                        <div className={`inputCont full ${errors?.whatsappNumber ? "error" : ""}`}>
+                                        <div className={`inputCont phoneNumber full ${errors?.whatsappNumber ? "error" : ""}`}>
                                             <label htmlFor="whatsappNumber">
                                                 WhatsApp Number<span className="required">*</span>
                                             </label>
-                                            <input
-                                                className={`${errors?.whatsappNumber ? "errorInput" : ""}`}
-                                                {...register("whatsappNumber")}
-                                                type="tel"
-                                                placeholder="Enter WhatsApp Number"
-                                                id="whatsappNumber"
-                                            />
+                                            <div className="phoneInputWrapper">
+                                                <select
+                                                    className="countryCodeSelect"
+                                                    value={whatsappCountryCode}
+                                                    onChange={(e) => setWhatsappCountryCode(e.target.value)}
+                                                >
+                                                    <option value="+971">+971</option>
+                                                    <option value="+966">+966</option>
+                                                    <option value="+974">+974</option>
+                                                    <option value="+973">+973</option>
+                                                    <option value="+965">+965</option>
+                                                    <option value="+968">+968</option>
+                                                </select>
+                                                <input
+                                                    className={`${errors?.whatsappNumber ? "errorInput" : ""}`}
+                                                    {...register("whatsappNumber")}
+                                                    type="tel"
+                                                    placeholder="Enter WhatsApp Number"
+                                                    id="whatsappNumber"
+                                                />
+                                            </div>
                                             {errors?.whatsappNumber && (
                                                 <p className="errorText">{errors.whatsappNumber.message}</p>
                                             )}

@@ -5,15 +5,18 @@ import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
 import { vendorLogout } from "@/Services/AuthService/AuthService";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 function VendorHeader() {
     const [isOpen, setIsOpen] = useState(false);
     const vendor = useSelector((state) => state.auth.vendorDetails);
+    // const router = useRouter();
 
     const logoutMutation = useMutation({
         mutationFn: vendorLogout,
         onSuccess: () => {
             toast.success("Logout Successfully");
+            // router.push("/vendor-login");
         }
     });
 

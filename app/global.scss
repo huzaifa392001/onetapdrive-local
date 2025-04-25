@@ -457,6 +457,22 @@ section {
             }
         }
     }
+
+    &.phoneNumber {
+        .phoneInputWrapper {
+            @apply flex;
+            input,
+            select {
+                min-width: 0 !important;
+                width: 75% !important;
+            }
+
+            & select {
+                font-size: 1rem !important;
+                width: 25% !important;
+            }
+        }
+    }
 }
 
 .errorText {

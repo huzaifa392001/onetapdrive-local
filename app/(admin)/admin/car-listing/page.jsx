@@ -26,6 +26,7 @@ const Page = () => {
             vendorData?.data?.cars?.map((car) => ({
                 id: car.id,
                 name: car.name,
+                companyName: car.user.vendorProfile.companyName,
                 category: car.category?.name || "N/A",
                 status: car.status // 👈 Add this line (assuming it's `active` in your response)
             })) || [];
@@ -53,7 +54,7 @@ const Page = () => {
                     Add
                 </Link>
             </div>
-            <AdminDataTable data={vendorCarData} showAdminCarActions={true} />
+            <AdminDataTable data={vendorCarData} refetchData={refetch} showAdminCarActions={true} />
         </>
     );
 };

@@ -2,6 +2,7 @@ import path from 'path';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    reactStrictMode: true, // <-- Added this line
     sassOptions: {
         includePaths: [path.join(process.cwd(), 'styles')],
         additionalData: `

@@ -1,11 +1,10 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import "./AdminDashboard.scss";
-import UserChart from "@/Components/charts/UserChart";
-import CarChart from "@/Components/charts/CarListingChart";
+import UserChart from "@/Components/Charts/UserChart";
+import CarChart from "@/Components/Charts/CarListingChart";
 import { useQuery } from "@tanstack/react-query";
 import { getAdminDashboard } from "@/Services/AdminServices/AdminServices";
-import LeadsChart from "@/Components/charts/LeadsChart";
 
 export default function AdminDashboard() {
     const [listingData, setListingData] = useState([]);

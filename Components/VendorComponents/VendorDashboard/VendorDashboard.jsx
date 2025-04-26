@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import "./VendorDashboard.scss";
 import VendorHeading from "@/Components/VendorComponents/VendorHeading/VendorHeading";
-import LeadsChart from "@/Components/charts/LeadsChart";
-import CarChart from "@/Components/charts/CarListingChart";
+import LeadsChart from "@/Components/Charts/LeadsChart";
+import CarChart from "@/Components/Charts/CarListingChart";
 import { useQuery } from "@tanstack/react-query";
 import { getVendorDashboard } from "@/Services/VendorServices/VendorServices";
 

@@ -1,6 +1,0 @@
-.prodRow {
-    @apply grid gap-x-5;
-    &.col4 {
-        @apply lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1;
-    }
-}

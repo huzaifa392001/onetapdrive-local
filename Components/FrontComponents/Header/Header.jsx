@@ -81,7 +81,7 @@ function Header() {
                                             <div className="placeHolder">
                                                 {/* <Image src={"/images/uae-flag.png"} width={30} height={15} alt="UAE's Flag" /> */}
                                                 <i className="fas fa-map-marker-alt mapMarker" />
-                                                <h4>{selectedLocation}</h4> {/* Display selected location */}
+                                                <span>{selectedLocation}</span> {/* Display selected location */}
                                                 <i className="fas fa-chevron-down" />
                                             </div>
 
@@ -271,7 +271,7 @@ function Header() {
                                     <div className="placeHolder">
                                         {/* <Image src={"/images/uae-flag.png"} width={30} height={15} alt="UAE's Flag" /> */}
                                         <i className="fas fa-map-marker-alt mapMarker" />
-                                        <h4>{selectedLocation}</h4> {/* Display selected location */}
+                                        <span>{selectedLocation}</span> {/* Display selected location */}
                                     </div>
                                 </div>
                                 <figure className="logoCont">
@@ -338,7 +338,7 @@ function Header() {
                                 </div>
                                 <ul>
                                     <li>
-                                        <Link onClick={() => handleMouseLeave("")} href={"/cars/all"}>
+                                        <Link onClick={() => handleMouseLeave("")} href={"/cars"}>
                                             Home
                                         </Link>
                                     </li>
@@ -354,11 +354,11 @@ function Header() {
                                             <i className="fas fa-caret-right" />
                                         </button>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                         <Link onClick={() => handleMouseLeave("")} href={"/cars/all"}>
                                             Cars with Driver
                                         </Link>
-                                    </li>
+                                    </li> */}
                                     <li>
                                         <Link onClick={() => handleMouseLeave("")} href={"/about-us/"}>
                                             About Us
@@ -390,6 +390,11 @@ function Header() {
                                 </button>
                                 <h4>Popular Categories</h4>
                                 <ul>
+                                    <li>
+                                        <Link onClick={() => handleMouseLeave("")} href={"/cars/all"}>
+                                            <span>All Cars</span>
+                                        </Link>
+                                    </li>
                                     <li>
                                         <Link onClick={() => handleMouseLeave("")} href={"/cars/economy"}>
                                             <span>Economy Cars</span>

@@ -214,7 +214,7 @@
             @apply flex items-center justify-between;
             .location {
                 .placeHolder {
-                    @apply flex items-center gap-x-2 text-[var(--white)] cursor-pointer text-[1.125rem] font-medium;
+                    @apply flex items-center gap-x-2 text-[var(--white)] cursor-pointer text-[1rem] md:text-[1.125rem] font-medium;
                     .mapMarker {
                         @apply text-[var(--theme-color)];
                     }

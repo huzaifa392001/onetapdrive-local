@@ -1,5 +1,5 @@
 .fullProductCard {
-    @apply bg-[var(--white)] shadow-md rounded-2xl overflow-hidden border transition-all duration-300 flex md:flex-row flex-col cursor-pointer my-8 lg:my-0;
+    @apply bg-[var(--white)] shadow-md rounded-2xl overflow-hidden border transition-all duration-300 flex md:flex-row flex-col cursor-pointer my-0;
 
     a {
         @apply block;

@@ -17,7 +17,7 @@ body {
     }
 
     .modalWrap {
-        @apply relative bg-[var(--white)] rounded-xl overflow-hidden lg:max-w-[40%] md:max-w-[80%];
+        @apply relative bg-[var(--white)] rounded-xl overflow-hidden lg:max-w-[40%] md:max-w-[80%] w-[95%];
         .modalHeader {
             @apply flex items-center justify-between px-3 border-b border-b-[#bdbdbd];
 

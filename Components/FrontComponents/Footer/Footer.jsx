@@ -65,24 +65,24 @@ function Footer() {
         };
     })
 
-    if (windowWidth > 768) {
-        return (
-            <footer className="footer">
-                <div
-                    className="contentSec"
-                    style={{ backgroundImage: "url(/images/mercedes.webp)" }}
-                >
-                    <div className="content">
-                        <div className="customContainer">
-                            <h2>Are you a Car Rental Company? Join US.</h2>
-                            <h4>
-                                List your cars with the UAE&apos;s Biggest Car Rental & Learning
-                                Marketplace Today!
-                            </h4>
-                            <Link href={"/list-your-rental-cars"} className="themeBtn">Sign up now</Link>
-                        </div>
+    return (
+        <footer className="footer">
+            <div
+                className="contentSec"
+                style={{ backgroundImage: "url(/images/mercedes.webp)" }}
+            >
+                <div className="content">
+                    <div className="customContainer">
+                        <h2>Are you a Car Rental Company? Join US.</h2>
+                        <h4>
+                            List your cars with the UAE&apos;s Biggest Car Rental & Learning
+                            Marketplace Today!
+                        </h4>
+                        <Link href={"/list-your-rental-cars"} className="themeBtn">Sign up now</Link>
                     </div>
                 </div>
+            </div>
+            {windowWidth > 768 && (
                 <div className="footerSec">
                     <div className="footerContainer">
                         <div className="footerRow">
@@ -156,12 +156,9 @@ function Footer() {
                         </div>
                     </div>
                 </div>
-            </footer>
-        );
-    }
-    else {
-        return
-    }
+            )}
+        </footer>
+    );
 }
 
 export default Footer;

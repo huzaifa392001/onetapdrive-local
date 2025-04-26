@@ -1,9 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getCategoryById, updateCategory, deleteCategory } from '@/Services/AdminServices/AdminServices';
 import SecHeading from '@/Components/SecHeading/SecHeading';
 import Image from 'next/image';
+import { deleteCategory } from '@/Services/AdminServices/AdminCategories';
 
 function EditCategoryPage() {
     const router = useRouter();

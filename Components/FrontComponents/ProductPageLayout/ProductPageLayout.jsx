@@ -390,12 +390,9 @@ function ProductPageLayout() {
     };
 
     const buildWhatsAppMessage = () => {
-        const brand = data?.model?.brand?.name || '';
-        const model = data?.model?.name || '';
-        const year = data?.makeYear || '';
         const company = vendor?.companyName || '';
 
-        let message = `Hi there, I would like to rent ${brand} ${model} ${year} by ${company}.\n\n`;
+        let message = `Hi there, I would like to rent {data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name} by ${company}.\n\n`;
 
         // Get daily price
         const dailyPrice = data?.carPrices?.find(price => price.priceType === "daily")?.price;

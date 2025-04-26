@@ -19,14 +19,8 @@ const nextConfig = {
                 pathname: '/static/images/**',
             },
             {
-                protocol: 'http',
-                hostname: '35.154.240.227',
-                port: '5000',
-                pathname: '/static/images/**',
-            },
-            {
                 protocol: 'https',
-                hostname: 'onetapdrive.com',
+                hostname: 'api.onetapdrive.com',
                 pathname: '/static/images/**', // <- Added this line
             },
             {

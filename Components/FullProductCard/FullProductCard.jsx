@@ -15,12 +15,9 @@ function FullProductCard(props) {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
 
     const buildWhatsAppMessage = () => {
-        const brand = product?.model?.brand?.name || '';
-        const model = product?.model?.name || '';
-        const year = product?.makeYear || '';
         const company = product?.user?.vendorProfile?.companyName || '';
 
-        let message = `Hi there, I would like to rent ${brand} ${model} ${year} by ${company}.\n\n`;
+        let message = `Hi there, I would like to rent ${product?.model?.brand?.name} ${product?.model?.name} ${product?.makeYear?.name} by ${company}.\n\n`;
 
         // Get daily price
         const dailyPrice = product?.carPrices?.find(price => price.priceType === "daily")?.price;

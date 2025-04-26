@@ -24,7 +24,7 @@ function Page() {
         setCategoriesData([])
         categories?.data?.map((item) => {
             const updatedItem = {
-                id: item?.category_id,
+                id: item?.id,
                 name: item?.name,
                 image: item?.image
             }

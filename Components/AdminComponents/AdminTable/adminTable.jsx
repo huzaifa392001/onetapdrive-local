@@ -215,9 +215,9 @@ const AdminDataTable = (props) => {
                     }
                     return (
                         <div className="btnCont">
-                            <Link onClick={() => setSelectedRow(params.data)} className="themeBtn" href={`${pathName}/edit/${params.data?.id}`}>
+                            {/* <Link onClick={() => setSelectedRow(params.data)} className="themeBtn" href={`${pathName}/edit/${params.data?.id}`}>
                                 Edit
-                            </Link>
+                            </Link> */}
                             <button
                                 className="themeBtn"
                                 onClick={() => handleDelete(params.data?.id)}

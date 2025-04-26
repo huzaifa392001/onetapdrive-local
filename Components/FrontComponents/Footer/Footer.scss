@@ -2,14 +2,14 @@
     .contentSec {
         @apply bg-cover bg-no-repeat bg-center p-0;
         .content {
-            @apply flex items-center justify-center text-center bg-[#0007] h-full w-full lg:min-h-[450px] min-h-[300px];
+            @apply flex items-center justify-center text-center bg-[#0007] h-full w-full lg:min-h-[450px] min-h-[300px] px-3 md:px-0;
             backdrop-filter: blur(4px);
             h2 {
                 @apply text-[var(--theme-color)] text-[2.5rem] lg:text-[4rem] font-bold;
             }
 
             h4 {
-                @apply text-[1.5rem] lg:text-[2rem] text-[var(--white)];
+                @apply text-[1.5rem] lg:text-[2rem] text-[var(--white)] my-6 md:my-0 leading-[1.875rem];
             }
 
             .themeBtn {
@@ -35,7 +35,7 @@
                 &.col4 {
                     @apply lg:col-span-4 md:col-span-5;
                 }
-                &.footerAddress{
+                &.footerAddress {
                     @apply lg:col-span-3 col-span-12 lg:mt-0 mt-2;
                 }
                 .logoCont {

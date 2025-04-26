@@ -1,0 +1,43 @@
+.adminBtnCont {
+    @apply flex items-center justify-center w-full gap-x-2;
+    .themeBtn {
+        @apply block w-full py-0;
+
+        &.iconBtn {
+            i {
+                @apply m-0;
+            }
+        }
+        &.statusBtn {
+            &.active {
+                @apply text-[var(--white)] bg-green-600;
+            }
+            &.inactive {
+                @apply text-[var(--white)] bg-red-600;
+            }
+            > * {
+                @apply text-[var(--white)];
+            }
+        }
+    }
+}
+
+.secHeading {
+    @apply mb-5;
+}
+
+.listingAddFlex {
+    @apply flex items-center justify-between;
+    .listingNumbersFlex {
+        @apply flex gap-3;
+        .listingNumbers {
+            @apply max-w-sm px-4 md:px-8 py-2 md:py-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-3;
+            h3 {
+                @apply text-center text-base md:text-2xl mb-3;
+            }
+            h1 {
+                @apply text-center text-xl md:text-4xl text-black;
+            }
+        }
+    }
+}

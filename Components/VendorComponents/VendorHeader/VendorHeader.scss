@@ -1,0 +1,21 @@
+.vendorHeader {
+    @apply w-full h-24 bg-[var(--vendor-bg)] flex items-center justify-between lg:pr-0 pr-12 px-4 relative;
+    .customDropdown {
+        @apply relative inline-block;
+        .dropdownButton {
+            @apply px-4 py-2 gap-2 text-white font-medium rounded-lg text-sm inline-flex items-center capitalize;
+            i {
+                @apply ml-2.5;
+            }
+        }
+        .dropdownMenu {
+            @apply origin-top-right absolute z-50 right-0 mt-2 w-44 rounded-lg shadow-lg ring-1 ring-white ring-opacity-5 p-3 bg-[var(--secondary-color)];
+            li {
+                @apply block px-4 py-2 text-white;
+                i {
+                    @apply mr-2;
+                }
+            }
+        }
+    }
+}

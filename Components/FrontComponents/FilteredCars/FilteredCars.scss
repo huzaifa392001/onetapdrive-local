@@ -1,0 +1,18 @@
+.filteredCars {
+    @apply pt-4;
+    .premiumRow {
+        @apply grid grid-cols-1 md:grid-cols-3 gap-x-3 py-4;
+    }
+    .totalResult {
+        @apply border-y py-2 text-center mt-5;
+        p {
+            @apply text-[var(--grey-color)] text-[14px] font-semibold;
+            span {
+                @apply text-[var(--black)];
+            }
+        }
+    }
+    .resultRow {
+        @apply pt-12 grid md:grid-cols-1 sm:grid-cols-2 gap-6;
+    }
+}

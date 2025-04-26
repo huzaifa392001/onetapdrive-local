@@ -1,0 +1,505 @@
+@use "./index.css" as *;
+
+html {
+    font-size: 16px;
+    overflow-x: clip;
+    scroll-behavior: initial !important;
+    overscroll-behavior: none !important;
+
+    @include respond-to($breakpoint-xl) {
+        font-size: 14px !important; // xl
+    }
+
+    @include respond-to($breakpoint-lg) {
+        font-size: 12px !important; // lg
+    }
+
+    @include respond-to($breakpoint-md) {
+        font-size: 14px !important; // md
+    }
+
+    @include respond-to($breakpoint-sm) {
+        font-size: 13px !important; // sm
+    }
+
+    @include respond-to($breakpoint-xs) {
+        font-size: 11px !important; // xs
+    }
+
+    &.lenis {
+        @apply h-auto;
+        .body {
+            @apply h-auto;
+        }
+        &.lenis-smooth {
+            scroll-behavior: auto !important;
+            &[data-lenis-prevent] {
+                overscroll-behavior: contain;
+            }
+            iframe {
+                @apply pointer-events-none;
+            }
+        }
+        &.lenis-stopped {
+            @apply overflow-hidden;
+        }
+    }
+
+    body {
+        overflow-x: clip;
+        background-color: var(--background);
+    }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 2px;
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: var(--theme-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+h1,
+.h1 {
+    font-size: 3em; // 48px
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+
+    &.display-l {
+        font-size: 3.25em; // 52px
+        letter-spacing: -1px;
+    }
+
+    &.display-xl {
+        font-size: 3.75em; // 60px
+        letter-spacing: -1px;
+    }
+
+    &.display-2xl {
+        font-size: 4.75em; // 76px
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-bottom: 0.27em;
+    }
+}
+
+h2,
+.h2 {
+    font-size: 2.5em; // 40px
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+h3,
+.h3 {
+    font-size: 2em; //32px
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.375em;
+    letter-spacing: -0.5px;
+}
+
+h4,
+.h4 {
+    font-size: 1.75em; // 28px
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+h5,
+.h5 {
+    font-size: 1.5em; // 24px
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+h6,
+.h6 {
+    font-size: 1.25em; // 20px
+    font-weight: 400;
+    margin: 0;
+}
+
+.themeBtn {
+    @apply relative block text-center bg-[var(--theme-color-100)] py-2 px-4 rounded-lg text-[var(--black)] font-semibold text-[14px] border border-[var(--theme-color-500)] transition-all duration-200 capitalize select-auto pointer-events-auto;
+
+    &:not(.disabled) {
+        &:hover {
+            @apply bg-[var(--theme-color-500)] text-[var(--white)];
+        }
+    }
+
+    &.small {
+        @apply w-fit;
+    }
+
+    &.iconBtn {
+        i {
+            @apply mr-2;
+        }
+    }
+
+    &.altr {
+        @apply bg-[var(--secondary-color)] text-[var(--white)] hover:text-[var(--theme-color)];
+    }
+
+    &.themeBtnAlt {
+        @apply bg-transparent text-[var(--black)] border-[var(--black)] underline underline-offset-2;
+
+        &:hover {
+            @apply text-[var(--theme-color)] border-[var(--theme-color)];
+        }
+    }
+
+    &.delete {
+        @apply bg-red-500 border-red-500 text-[var(--white)] hover:bg-red-700;
+    }
+
+    &.secondary {
+        @apply bg-[var(--secondary-color)] text-[var(--white)] hover:bg-[var(--theme-color)];
+    }
+
+    &.large {
+        @apply py-2 px-12 text-[16px];
+    }
+
+    &.full {
+        @apply w-full;
+    }
+
+    &.disabled {
+        @apply bg-[var(--secondary-color-100)] border-[var(--secondary-color-100)] cursor-not-allowed;
+    }
+}
+
+section {
+    position: relative;
+    @apply lg:py-20 py-10;
+
+    &.Toastify {
+        padding: 0 !important;
+    }
+}
+
+.customContainer {
+    @apply container mx-auto md:px-1 sm:px-2 px-2;
+}
+
+.largeContainer {
+    @apply lg:container lg:px-0 px-2;
+}
+
+.swiper {
+    padding-bottom: 2rem !important;
+    .swiper-pagination-bullet {
+        background-color: var(--theme-color) !important;
+        width: 10px;
+        height: 10px;
+        bottom: 0 !important;
+    }
+}
+
+.headingCont {
+    @apply flex items-center justify-between mb-3;
+
+    &.desc {
+        @apply flex-col items-start justify-start;
+    }
+}
+
+.adminHeadingCont {
+    @apply flex items-center justify-between mt-[2rem] mb-[3rem];
+}
+
+.termsSec {
+    .headingCont {
+        h1 {
+            @apply text-[3rem] font-bold;
+        }
+        p {
+            @apply text-[1.25rem] font-normal;
+        }
+
+        @apply mb-8;
+    }
+
+    h3 {
+        @apply text-[1.75rem] font-semibold mb-1 leading-[2.25rem];
+    }
+
+    ul {
+        @apply list-decimal pl-4;
+
+        li {
+            span {
+                @apply block font-semibold text-[1.375rem];
+            }
+
+            & + li {
+                @apply mt-4;
+            }
+        }
+
+        & + * {
+            @apply mt-10;
+        }
+    }
+
+    p {
+        @apply text-[1.125rem];
+
+        & + * {
+            @apply mt-10;
+        }
+    }
+}
+
+.breadCrumb {
+    @apply py-2 border-b;
+    ul {
+        @apply flex items-center gap-x-2;
+        li {
+            @apply flex items-center gap-x-1 text-[14px] font-medium capitalize transition-colors duration-300;
+
+            &::after {
+                content: "\f0da";
+                font-family: "Font Awesome 5 Pro";
+                font-weight: 900;
+
+                @apply text-[var(--grey-color)] ml-2;
+            }
+
+            &:last-child {
+                &::after {
+                    content: none;
+                }
+            }
+
+            &:hover {
+                @apply text-[var(--theme-color)];
+            }
+        }
+    }
+}
+
+.inputCont {
+    label {
+        @apply text-[1.125rem] font-medium block mb-1;
+
+        .small {
+            @apply font-normal text-[13px];
+        }
+
+        &:has(+ p) {
+            @apply mb-0;
+        }
+
+        & + p {
+            @apply mb-1 text-[12px];
+        }
+    }
+    input:not([type="file"]),
+    textarea,
+    select {
+        @apply w-full rounded-md border min-h-10 block px-2 outline-none text-[#000];
+
+        &:focus {
+            @apply border-[var(--theme-color)];
+        }
+
+        &::placeholder {
+        }
+    }
+
+    .multiInput {
+        @apply flex items-center gap-x-2;
+
+        input {
+            @apply min-w-0;
+            &:first-child {
+                @apply w-3/4;
+            }
+            &:nth-child(n + 2) {
+                @apply w-1/4;
+            }
+        }
+    }
+
+    .imgInput {
+        @apply relative;
+        label {
+            @apply h-[150px] w-full border rounded-md flex items-center justify-center relative;
+            input {
+                @apply absolute inset-0 cursor-pointer opacity-0;
+            }
+            &:has(input:focus) {
+                @apply border-[var(--theme-color)];
+            }
+        }
+        .imgBox {
+            @apply h-[150px] w-full border rounded-md flex items-center justify-center relative;
+            img {
+                @apply w-full h-full object-contain;
+            }
+            .actions {
+                @apply absolute top-1 right-1 z-10;
+                span {
+                    @apply bg-red-200 text-red-700 w-7 h-7 text-[13px] flex items-center justify-center rounded-md cursor-pointer;
+                }
+            }
+        }
+    }
+
+    .featuresList {
+        @apply flex items-center flex-wrap gap-3;
+        li {
+            @apply relative border rounded-md overflow-hidden px-3 py-1 transition-all duration-300;
+            input {
+                @apply absolute inset-0 opacity-0 cursor-pointer;
+            }
+            &:has(input:checked) {
+                @apply bg-[var(--theme-color)] text-[var(--white)];
+            }
+        }
+    }
+
+    &.error {
+        input,
+        select,
+        textarea {
+            @apply border-red-500;
+        }
+
+        .imgInput {
+            label {
+                @apply border-red-500;
+            }
+        }
+    }
+
+    .errorInput {
+        @apply border-red-500;
+    }
+
+    .inputWrap {
+        @apply relative min-h-10 w-full overflow-hidden rounded-md border;
+        > i {
+            @apply absolute top-0 left-0 w-8 h-full flex items-center justify-center bg-gray-300;
+        }
+
+        input,
+        select,
+        textarea {
+            @apply pl-9 h-full rounded-none border-none w-full;
+        }
+        .showPassBtn {
+            @apply absolute top-0 right-0 h-full w-8 flex items-center justify-center;
+        }
+
+        &.errorInput {
+            > i {
+                @apply bg-red-400 text-[var(--white)];
+            }
+        }
+    }
+
+    &.checkbox,
+    &.radio {
+        .checkBoxCont,
+        .radioBoxCont {
+            @apply flex items-center gap-x-3;
+            .checkBoxHolder,
+            .radioBoxHolder {
+                @apply relative w-5 h-5 border border-[var(--grey-color)] rounded-sm m-0;
+
+                input {
+                    @apply absolute inset-0 w-full h-full opacity-0 m-0 p-0 min-h-max transition-all duration-200;
+                    margin: 0 !important;
+                }
+
+                i {
+                    @apply absolute inset-0 w-full h-full flex items-center justify-center opacity-0 text-[var(--white)] transition-all duration-200;
+                }
+
+                &:has(input:checked) {
+                    @apply border-[var(--theme-color)] bg-[var(--theme-color)];
+                    i {
+                        @apply opacity-100;
+                    }
+                }
+            }
+            label:not(.checkBoxHolder) {
+                @apply m-0 cursor-pointer;
+            }
+
+            &:hover {
+                label {
+                    @apply border-[var(--theme-color)] text-[var(--theme-color)];
+                }
+            }
+        }
+    }
+
+    &.phoneNumber {
+        .phoneInputWrapper {
+            @apply flex;
+            input,
+            select {
+                min-width: 0 !important;
+                width: 75% !important;
+            }
+
+            & select {
+                font-size: 1rem !important;
+                width: 25% !important;
+            }
+        }
+    }
+}
+
+.errorText {
+    @apply text-red-500 text-[13px] font-normal text-left;
+    color: #ef4444 !important;
+    font-size: 13px !important;
+    font-weight: normal !important;
+    text-align: left !important;
+}
+
+.priceInputRow {
+    @apply flex items-center gap-x-3;
+
+    .inputCont {
+        @apply w-full;
+        & + .inputCont {
+            margin: 0 !important;
+        }
+        .themeBtn {
+            @apply w-auto text-[12px] rounded-full px-4 py-1 ml-auto mt-1;
+        }
+    }
+}
+
+.gridcell {
+    text-transform: capitalize;
+}

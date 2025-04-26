@@ -1,0 +1,190 @@
+.productCard {
+    > a {
+        @apply block w-full;
+    }
+
+    @apply bg-[var(--white)] shadow-md rounded-2xl overflow-hidden border-transparent border transition-all duration-300 cursor-pointer;
+    .imgCont {
+        @apply relative w-full overflow-hidden h-[200px];
+        .imgTag {
+            @apply absolute top-2 left-2 z-10 text-[12px] font-semibold text-[var(--black)] bg-[var(--white)] rounded-[30px] px-3 py-1 flex items-center gap-x-1;
+            i {
+                @apply text-[var(--theme-color)];
+            }
+        }
+        img {
+            @apply object-cover w-full h-full object-center transition-all duration-300;
+        }
+        .imgBox {
+            @apply absolute inset-0 w-full h-full overflow-hidden opacity-0 invisible transition-all duration-300;
+            &.active {
+                @apply opacity-100 visible;
+            }
+            .goToCont {
+                @apply absolute flex flex-col items-center justify-center h-full w-full bg-[#0004] backdrop-blur-[1px] gap-y-2;
+
+                h6 {
+                    @apply text-[var(--white)] text-[1.25rem] font-semibold;
+                }
+
+                .themeBtn {
+                    i {
+                        @apply ml-2;
+                    }
+                }
+            }
+        }
+        .barRow {
+            @apply absolute bottom-0 left-0 flex items-center w-full z-20 h-full opacity-0 invisible;
+            span {
+                @apply block h-full relative;
+                width: 25%;
+                flex: 0 1 25%;
+
+                &::before {
+                    content: "";
+                    @apply h-1 bg-[#fff7] block rounded-3xl absolute bottom-3 z-10 mx-auto left-2/4 -translate-x-2/4;
+                    width: calc(100% - 20px);
+                }
+
+                &.active {
+                    &::before {
+                        @apply bg-[var(--theme-color)];
+                    }
+                }
+            }
+        }
+    }
+    .content {
+        @apply py-3 px-3 flex flex-col justify-between;
+        height: calc(100% - 200px);
+
+        h3 {
+            @apply text-[1.375rem] font-semibold text-[var(--black)] capitalize leading-7;
+        }
+
+        .tags {
+            @apply flex items-center gap-2 mt-3 md:flex-wrap md:gap-y-2;
+            .tag {
+                @apply flex items-center justify-center px-3 border rounded-md gap-x-1 border-[var(--grey-color)] text-[13px];
+            }
+        }
+
+        .divider {
+            @apply border-t my-2;
+        }
+
+        .priceCont {
+            @apply grid grid-cols-2;
+            .priceBox {
+                @apply flex flex-col justify-end;
+
+                .cutPrice {
+                    @apply text-[12px];
+                }
+                h6 {
+                    @apply text-[12px] font-normal;
+                    span {
+                        @apply font-medium text-[1rem];
+                    }
+
+                    & + p {
+                        @apply flex items-center gap-x-2 lg:text-[14px] md:text-[12px] text-[var(--grey-color)] font-normal;
+                        i {
+                        }
+                    }
+                }
+            }
+        }
+
+        .brandCont {
+            @apply flex items-center gap-x-2 justify-between md:flex-col lg:flex-row lg:gap-y-0 md:gap-y-2;
+            .brand {
+                @apply lg:w-[100px] lg:h-[60px] w-[50px] h-[60px] overflow-hidden relative;
+                img {
+                    @apply w-full h-full object-contain object-left;
+                }
+            }
+            .detail {
+                ul {
+                    li {
+                        @apply flex items-center gap-x-2;
+                        p {
+                            @apply lg:text-[13px] lg:text-[12px] font-normal capitalize;
+                        }
+                    }
+                }
+            }
+        }
+
+        .btnCont {
+            @apply flex gap-x-2 mt-3;
+            a {
+                @apply w-full border-2 rounded-lg flex items-center justify-center py-4 gap-x-2 font-medium transition-all duration-300;
+
+                svg {
+                    @apply transition-all duration-300;
+                }
+
+                &.call {
+                    @apply border-[var(--theme-color)];
+                    svg {
+                        fill: var(--theme-color);
+                    }
+
+                    &:hover {
+                        @apply bg-[var(--theme-color)] text-[var(--white)];
+                        svg {
+                            fill: var(--white);
+                        }
+                    }
+                }
+
+                &.whatsapp {
+                    @apply border-[#007B00];
+                    svg {
+                        fill: #007b00;
+                    }
+
+                    &:hover {
+                        @apply bg-[#007B00] text-[var(--white)];
+                        svg {
+                            fill: var(--white);
+                        }
+                    }
+                }
+            }
+            figure {
+                @apply w-2/4 border-2 rounded-lg  flex items-center justify-center;
+            }
+        }
+    }
+
+    &:hover {
+        @apply border-[var(--grey-color)] shadow-[var(--grey-color)];
+        .imgCont {
+            .barRow {
+                @apply opacity-100 visible;
+            }
+        }
+    }
+
+    &.featured,
+    &.premium {
+        .content {
+            .priceCont {
+                h6 {
+                    span {
+                        @apply text-[var(--theme-color)];
+                    }
+                }
+            }
+        }
+    }
+
+    &.premium {
+        .imgTag {
+            @apply absolute;
+        }
+    }
+}

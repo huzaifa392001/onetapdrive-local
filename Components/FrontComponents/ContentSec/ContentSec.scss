@@ -1,0 +1,80 @@
+.contentSec {
+    .mainSecHeading {
+        @apply mb-20;
+    }
+
+    .contentRow {
+        @apply grid grid-cols-12 gap-8 items-center;
+        .contentCol {
+            @apply col-span-12 md:col-span-6;
+            .content {
+                p {
+                    @apply mt-3 font-normal leading-8;
+
+                    & + .secHeading {
+                        @apply mt-6;
+                    }
+                }
+
+                h6 {
+                    @apply font-semibold mt-2 mb-4;
+                }
+                ul {
+                    li {
+                        @apply flex items-center gap-4 py-2 px-4 text-[14px] m-0 font-medium;
+
+                        img {
+                            @apply w-[50px] h-[50px] object-contain;
+                        }
+
+                        & + li {
+                            @apply border-t-2 border-[#0005];
+                        }
+
+                        &:last-child {
+                            @apply border-b border-[#0005];
+                        }
+                    }
+                }
+                .themeBtn {
+                    @apply mt-4;
+                }
+            }
+            figure {
+                @apply relative w-full h-[500px] overflow-hidden;
+                img {
+                    @apply w-full h-full object-cover aspect-square rounded-xl md:rounded-[30px];
+                }
+                video {
+                    @apply w-full h-[400px] object-cover rounded-xl md:rounded-[30px];
+                }
+
+                &.videoCont {
+                    @apply h-auto;
+                }
+            }
+
+            &.col7 {
+                @apply col-span-12 lg:col-span-7 md:order-2;
+            }
+
+            &.col5 {
+                @apply col-span-12 lg:col-span-5 md:order-1;
+            }
+        }
+
+        &.invertCol {
+            .contentCol {
+                &:first-of-type {
+                    @apply order-1;
+                }
+            }
+        }
+    }
+
+    &.topAligned {
+        .contentRow {
+            @apply items-start;
+        }
+    }
+}

@@ -1,0 +1,72 @@
+[
+    {
+        "company name": "Drift Car Rental",
+        "active car listing": "10",
+        "total car listing": "8",
+        "total refreshes": "6",
+        "remaining refreshes": "4"
+    },
+    {
+        "company name": "Urban Ride Rentals",
+        "active car listing": "15",
+        "total car listing": "20",
+        "total refreshes": "8",
+        "remaining refreshes": "12"
+    },
+    {
+        "company name": "Luxury Wheels",
+        "active car listing": "8",
+        "total car listing": "12",
+        "total refreshes": "5",
+        "remaining refreshes": "7"
+    },
+    {
+        "company name": "City Drive Rentals",
+        "active car listing": "20",
+        "total car listing": "25",
+        "total refreshes": "10",
+        "remaining refreshes": "15"
+    },
+    {
+        "company name": "Fast Track Cars",
+        "active car listing": "12",
+        "total car listing": "18",
+        "total refreshes": "6",
+        "remaining refreshes": "12"
+    },
+    {
+        "company name": "Elite Car Hire",
+        "active car listing": "5",
+        "total car listing": "10",
+        "total refreshes": "3",
+        "remaining refreshes": "7"
+    },
+    {
+        "company name": "Speedy Rent-a-Car",
+        "active car listing": "18",
+        "total car listing": "30",
+        "total refreshes": "12",
+        "remaining refreshes": "18"
+    },
+    {
+        "company name": "Luxury Motors",
+        "active car listing": "25",
+        "total car listing": "40",
+        "total refreshes": "15",
+        "remaining refreshes": "25"
+    },
+    {
+        "company name": "Global Car Rentals",
+        "active car listing": "7",
+        "total car listing": "12",
+        "total refreshes": "5",
+        "remaining refreshes": "7"
+    },
+    {
+        "company name": "Super Car Rentals",
+        "active car listing": "30",
+        "total car listing": "50",
+        "total refreshes": "20",
+        "remaining refreshes": "30"
+    }
+]

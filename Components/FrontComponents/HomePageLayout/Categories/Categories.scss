@@ -1,0 +1,25 @@
+.categoriesSec {
+    @apply lg:py-20 md:py-10 py-5;
+
+    .categorySwiper {
+        @apply mt-6;
+    }
+
+    .catRow {
+        @apply grid grid-cols-2 md:grid-cols-4 gap-y-4 pt-6;
+        .catCol {
+            @apply px-2;
+
+            &.cwd {
+                @apply col-span-2 md:col-span-1;
+            }
+        }
+    }
+
+    .showMoreCont {
+        @apply flex items-center justify-center mt-5;
+        .themeBtn {
+            @apply md:w-auto w-full;
+        }
+    }
+}

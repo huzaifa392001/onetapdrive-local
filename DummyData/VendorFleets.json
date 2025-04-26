@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "car_name": "Tesla Model Y",
+    "price_set": "450 / Day",
+    "status": "active",
+    "Action": ""
+  },
+  {
+    "id": 2,
+    "car_name": "Ford F-Series",
+    "price_set": "450 / Day",
+    "status": "inactive"
+  },
+  {
+    "id": 3,
+    "car_name": "Toyota Corolla",
+    "price_set": "450 / Day",
+    "status": "active"
+  },
+  {
+    "id": 4,
+    "car_name": "Mercedes EQA",
+    "price_set": "450 / Day",
+    "status": "active"
+  },
+  {
+    "id": 5,
+    "car_name": "Fiat 500",
+    "price_set": "450 / Day",
+    "status": "active"
+  },
+  {
+    "id": 6,
+    "car_name": "Nissan Juke",
+    "price_set": "450 / Day",
+    "status": "active"
+  },
+  {
+    "id": 7,
+    "car_name": "Vauxhall Corsa",
+    "price_set": "450 / Day",
+    "status": "active"
+  },
+  {
+    "id": 8,
+    "car_name": "Volvo EX30",
+    "price_set": "450 / Day",
+    "status": "active"
+  },
+  {
+    "id": 9,
+    "car_name": "Mercedes Maybach",
+    "price_set": "450 / Day",
+    "status": "active"
+  },
+  {
+    "id": 10,
+    "car_name": "Jaguar I-PACE",
+    "price_set": "450 / Day",
+    "status": "active"
+  }
+]

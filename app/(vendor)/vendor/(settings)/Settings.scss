@@ -1,0 +1,27 @@
+.settingsSection {
+    @apply h-full;
+    .settingWrapper {
+        @apply h-full py-3 px-6;
+
+        .profilePicContainer {
+            @apply flex flex-col gap-6 justify-center items-center mb-8;
+            .profilePic {
+                @apply w-40 h-40 rounded-full border-2 overflow-hidden bg-gray-400;
+                img {
+                    @apply w-full h-full object-contain;
+                }
+            }
+        }
+
+        .formGrid {
+            @apply md:grid md:grid-cols-2 gap-x-10 gap-y-8;
+            .inputCont{
+                @apply mb-5 md:mb-0;
+            }
+        }
+
+        .btnCont {
+            @apply flex items-center justify-center col-span-2 gap-2;
+        }
+    }
+}

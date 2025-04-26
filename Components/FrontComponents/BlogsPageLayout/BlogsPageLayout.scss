@@ -1,0 +1,16 @@
+.blogsSec {
+    .blogsRow {
+        @apply grid sm:grid-cols-2 md:grid-cols-3 gap-5;
+    }
+
+    .pagination {
+        @apply flex items-center gap-3 justify-center mt-6;
+        button {
+            @apply border-2 border-[var(--theme-color)] w-[30px] h-[30px] rounded-md text-[var(--secondary-color)] font-medium transition-all duration-200 hover:bg-[var(--theme-color)] hover:text-[var(--white)];
+
+            &.active {
+                @apply bg-[var(--theme-color)] text-[var(--white)];
+            }
+        }
+    }
+}

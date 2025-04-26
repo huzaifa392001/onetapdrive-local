@@ -1,0 +1,241 @@
+.fullProductCard {
+    @apply bg-[var(--white)] shadow-md rounded-2xl overflow-hidden border transition-all duration-300 flex md:flex-row flex-col cursor-pointer my-8 lg:my-0;
+
+    a {
+        @apply block;
+    }
+
+    .productImg {
+        @apply relative overflow-hidden xl:h-[300px] xl:w-[400px] lg:h-[300px] lg:w-[300px] md:h-[250px] md:w-[250px] h-[250px] w-full aspect-square;
+        flex: 0 1 400px;
+        @include respond-to($breakpoint-lg) {
+            flex: 0 1 300px;
+        }
+        @include respond-to($breakpoint-md) {
+            flex: 0 1 250px;
+        }
+
+        .imgTag {
+            @apply absolute top-2 left-2 z-10 text-[12px] font-semibold text-[var(--black)] bg-[var(--white)] rounded-[30px] px-3 py-1 flex items-center gap-x-1;
+            i {
+                @apply text-[var(--theme-color)];
+            }
+        }
+        .imgBox {
+            @apply absolute inset-0 w-full h-full overflow-hidden opacity-0 invisible transition-all duration-300;
+            &.active {
+                @apply opacity-100 visible;
+            }
+            img {
+                @apply object-cover w-full h-full object-center transition-all duration-300;
+            }
+            .goToCont {
+                @apply absolute flex flex-col items-center justify-center h-full w-full bg-[#0004] backdrop-blur-[1px] gap-y-2;
+
+                h6 {
+                    @apply text-[var(--white)] text-[1.25rem] font-semibold;
+                }
+
+                .themeBtn {
+                    i {
+                        @apply ml-2;
+                    }
+                }
+            }
+        }
+
+        .barRow {
+            @apply absolute bottom-0 left-0 flex items-center w-full z-10 h-full opacity-0 invisible;
+            span {
+                @apply block h-full relative;
+                width: 25%;
+                flex: 0 1 25%;
+
+                &::before {
+                    content: "";
+                    @apply h-1 bg-[#fff7] block rounded-3xl absolute bottom-3 z-10 mx-auto left-2/4 -translate-x-2/4;
+                    width: calc(100% - 20px);
+                }
+
+                &.active {
+                    &::before {
+                        @apply bg-[var(--theme-color)];
+                    }
+                }
+            }
+        }
+    }
+
+    .content {
+        @apply px-5 py-2 flex flex-col justify-between;
+        width: calc(100% - 400px);
+        flex: 0 1 calc(100% - 400px);
+
+        @include respond-to($breakpoint-xl) {
+            width: calc(100% - 300px);
+            flex: 0 1 calc(100% - 300px);
+        }
+
+        @include respond-to($breakpoint-lg) {
+            width: calc(100% - 250px);
+            flex: 0 1 calc(100% - 250px);
+        }
+
+        @include respond-to($breakpoint-md) {
+            width: 100%;
+            flex: 0 1 100%;
+        }
+
+        h3 {
+            @apply text-[var(--black)] font-bold text-[1.25rem];
+            span {
+                @apply text-[14px] md:ml-1 text-[var(--grey-color)] font-normal md:inline block line-clamp-2;
+            }
+        }
+
+        .carInfo {
+            @apply md:flex pt-3 border-t;
+
+            .leftArea {
+                width: 65%;
+                flex: 0 1 65%;
+                @apply md:pr-2 flex flex-col justify-start md:h-full;
+
+                @include respond-to($breakpoint-md) {
+                    width: 100%;
+                    flex: 0 1 100%;
+                }
+            }
+
+            .rightArea {
+                width: 35%;
+                flex: 0 1 35%;
+                @apply md:pl-2 flex flex-col justify-between md:h-full;
+
+                @include respond-to($breakpoint-md) {
+                    width: 100%;
+                    flex: 0 1 100%;
+                }
+            }
+
+            .tags {
+                @apply flex md:flex-wrap items-center gap-2 mb-4;
+                .tag {
+                    @apply flex items-center justify-center px-3 border rounded-[30px] gap-x-1 border-[var(--grey-color)] text-[13px] md:w-fit w-full;
+                }
+            }
+
+            .detail {
+                ul {
+                    li {
+                        @apply flex items-center gap-x-3;
+                        p {
+                            @apply text-[13px] font-normal capitalize;
+                        }
+                    }
+                }
+            }
+
+            .priceCont {
+                @apply flex md:flex-col justify-between gap-y-4 md:mt-0 mt-3;
+                .priceBox {
+                    @apply flex flex-col justify-end;
+
+                    .cutPrice {
+                        @apply text-[12px];
+                    }
+                    h6 {
+                        @apply text-[12px] font-medium;
+                        span {
+                            @apply font-bold text-[1rem] text-[var(--theme-color)];
+                        }
+
+                        & + p {
+                            @apply flex items-center gap-x-2 text-[14px] text-[var(--grey-color)] font-semibold;
+                            i {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .btnCont {
+            @apply flex gap-x-4 mt-3;
+            a,
+            button {
+                @apply w-full border-2 rounded-lg flex items-center justify-center py-4 gap-x-2 font-medium transition-all duration-300;
+
+                svg {
+                    @apply transition-all duration-300;
+                }
+
+                span {
+                    @apply md:block hidden;
+                }
+
+                &.call {
+                    @apply border-[var(--theme-color)];
+                    svg {
+                        fill: var(--theme-color);
+                    }
+
+                    &:hover {
+                        @apply bg-[var(--theme-color)] text-[var(--white)];
+                        svg {
+                            fill: var(--white);
+                        }
+                    }
+                }
+
+                &.whatsapp {
+                    @apply border-[#007B00];
+                    svg {
+                        fill: #007b00;
+                    }
+
+                    &:hover {
+                        @apply bg-[#007B00] text-[var(--white)];
+                        svg {
+                            fill: var(--white);
+                        }
+                    }
+                }
+            }
+            figure {
+                @apply w-2/4 border-2 rounded-lg  flex items-center justify-center;
+            }
+        }
+    }
+
+    &:hover {
+        @apply shadow-[var(--grey-color)];
+        .productImg {
+            img {
+                // @apply scale-110;
+            }
+            .barRow {
+                @apply opacity-100 visible;
+            }
+        }
+    }
+
+    &.featured,
+    &.premium {
+        .content {
+            .priceCont {
+                h6 {
+                    span {
+                        @apply text-[var(--theme-color)];
+                    }
+                }
+            }
+        }
+    }
+
+    &.premium {
+        .imgTag {
+            @apply absolute;
+        }
+    }
+}

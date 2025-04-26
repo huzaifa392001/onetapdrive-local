@@ -1,0 +1,102 @@
+.formWrapper {
+    @apply w-full grid grid-cols-12 mt-10 gap-x-4;
+
+    &:not(:has(.preview)) {
+        form {
+            @apply col-span-12;
+        }
+    }
+
+    form {
+        @apply col-span-8 px-6 py-3 gap-x-4 border bg-[var(--white)] shadow-md rounded-[20px];
+
+        &:not(:has(.divider)) {
+            @apply gap-y-6;
+        }
+
+        label {
+            @apply text-[1.125rem] mb-1 block;
+        }
+        .inputCont {
+            input,
+            textarea {
+                @apply w-full py-[12px] border shadow-md bg-transparent outline-none px-2 rounded-[6px] text-[var(--black)] placeholder:text-[#999a9b];
+            }
+
+            &.btnCont {
+                @apply flex items-center justify-end gap-x-4 col-span-2 mt-5;
+            }
+
+            &.content {
+                @apply col-span-2;
+            }
+
+            & + .inputCont {
+                @apply mt-3;
+            }
+        }
+
+        .divider {
+            @apply col-span-2 border-t mt-12 mb-2;
+        }
+
+        h3 {
+            @apply col-span-2 text-[1.5rem] font-medium mb-4;
+        }
+    }
+    .preview {
+        @apply col-span-4;
+        .previewBox {
+            > .heading {
+                @apply text-center font-bold text-[2rem] mb-3;
+            }
+            @apply py-3 px-6 border bg-[var(--white)] shadow-md rounded-[20px];
+            figure {
+                @apply relative w-full h-[150px] flex items-center justify-center border rounded-[20px] mb-2;
+                img {
+                    @apply object-contain object-center;
+                }
+            }
+            h2 {
+                @apply text-[1.5rem] text-center font-semibold;
+            }
+            .headingLayout {
+                @apply border-t mt-4 pt-2;
+
+                h3 {
+                    @apply text-[1.375rem];
+                }
+            }
+        }
+    }
+}
+.dataTable {
+    @apply w-full h-full overflow-x-auto;
+    .ag-theme-alpine {
+        @apply min-w-full;
+    }
+
+    .ag-header {
+        @apply overflow-x-auto;
+    }
+    .ag-row {
+        .ag-cell {
+            @apply flex items-center px-3;
+            .tableImgCol {
+                @apply flex items-center justify-start gap-x-2 py-2 max-h-[100px] overflow-hidden w-full;
+            }
+            .btnCont {
+                @apply flex items-center justify-center w-full gap-x-2;
+                .themeBtn {
+                    @apply block w-full py-0;
+                }
+            }
+            .title {
+                @apply text-[1rem] font-normal text-center;
+                &.heavy {
+                    @apply font-medium;
+                }
+            }
+        }
+    }
+}

@@ -38,9 +38,9 @@ export const getMakeYears = async () => {
     }
 };
 
-export const getAllCars = async () => {
+export const getAllCars = async ({ page, perPage }) => {
     try {
-        const res = await API.get("/cars");
+        const res = await API.get(`/cars?page=${page}&perPage=${perPage}`);
         return res?.data;
     } catch (e) {
         console.error("Error getting all cars:", e);
@@ -50,6 +50,24 @@ export const getAllCars = async () => {
 export const getCategorizedCars = async ({ category }) => {
     try {
         const res = await API.get(`/cars/category/${category}`);
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting all cars:", e);
+    }
+};
+
+export const getEconomyCars = async () => {
+    try {
+        const res = await API.get(`/cars/economy-cars`);
+        return res?.data;
+    } catch (e) {
+        console.error("Error getting all cars:", e);
+    }
+};
+
+export const getExoticCars = async () => {
+    try {
+        const res = await API.get(`/cars/exotic-cars`);
         return res?.data;
     } catch (e) {
         console.error("Error getting all cars:", e);

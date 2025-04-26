@@ -8,7 +8,7 @@ function page() {
   const blogUpdatedData = blogsData.map(
     ({ min_content, content, author, ...rest }) => rest
   );
-  console.log("blogUpdatedData=> ", blogUpdatedData);
+  
   return (
     <>
       <div className="headingCont">

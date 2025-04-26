@@ -46,7 +46,7 @@ function Page() {
             const transformed = premiumResponse?.data?.carDetails?.map((item, index) => ({
                 id: item.id || index,
                 name: item?.name,
-                company_name: item?.user?.vendorProfile?.companyName,
+                companyName: item?.user?.vendorProfile?.companyName,
                 category: item?.category?.name,
                 premium: item?.isPremium
             }));

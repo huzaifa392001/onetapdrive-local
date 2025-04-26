@@ -25,7 +25,6 @@ function Page() {
     };
 
     useEffect(() => {
-        console.log("bodyType> ", bodyType);
         setBodyTypeData([]);
         bodyType?.data?.map((item) => {
             const updatedItem = {

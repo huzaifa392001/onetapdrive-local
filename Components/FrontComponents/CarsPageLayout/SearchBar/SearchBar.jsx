@@ -132,11 +132,6 @@ function SearchBar({ sorting }) {
         []
     );
 
-    useEffect(() => {
-        console.log('searchedBrands=> ', searchedBrands)
-        console.log('searchedCars=> ', searchedCars)
-    }, [searchedBrands, searchedCars])
-
     // Handle search input change
     const handleSearchChange = (e) => {
         const value = e.target.value;

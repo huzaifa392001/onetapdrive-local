@@ -89,7 +89,6 @@ function Page() {
         formData.append("titles", data.categoryTitle);
         formData.append("description", data.categoryTitle);
 
-        console.log("Submitting Data: ", Object.fromEntries(formData.entries()));
         categoryMutation.mutate(formData);
     };
 

@@ -94,7 +94,6 @@ function Page() {
         formData.append("title", data.brandTitle);
         formData.append("description", data.brandTitle);
 
-        console.log("Submitting Data: ", Object.fromEntries(formData.entries()));
         brandMutation.mutate(formData);
     };
 

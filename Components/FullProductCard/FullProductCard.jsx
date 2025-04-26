@@ -3,11 +3,80 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import "./FullProductCard.scss";
+import { store } from "@/Redux/Store";
+import { toast } from "react-toastify";
+import { SET_OTP_MODAL_STATUS, SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
+import { useSelector } from "react-redux";
 
 function FullProductCard(props) {
+    const loggedInUser = useSelector((state) => state.auth.userDetails);
     const product = props?.data;
     // State for active image
     const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+    const buildWhatsAppMessage = () => {
+        const brand = product?.model?.brand?.name || '';
+        const model = product?.model?.name || '';
+        const year = product?.makeYear || '';
+        const company = product?.user?.vendorProfile?.companyName || '';
+
+        let message = `Hi there, I would like to rent ${brand} ${model} ${year} by ${company}.\n\n`;
+
+        // Get daily price
+        const dailyPrice = product?.carPrices?.find(price => price.priceType === "daily")?.price;
+        if (dailyPrice) {
+            message += `Price per day: AED ${dailyPrice}/day\n`;
+        }
+
+        // Get weekly price
+        const weeklyPrice = product?.carPrices?.find(price => price.priceType === "weekly")?.price;
+        if (weeklyPrice) {
+            message += `Price per week: AED ${weeklyPrice}/week\n`;
+        }
+
+        // Get monthly price
+        const monthlyPrice = product?.carPrices?.find(price => price.priceType === "monthly")?.price;
+        if (monthlyPrice) {
+            message += `Price per month: AED ${monthlyPrice}/month\n`;
+        }
+
+        message += `Link: ${window.location.href}\n\n`;
+        message += `Note: Any changes made to this message will result in the inquiry not being sent to the agent.`;
+
+        const whatsappNumber = (product?.user?.vendorProfile?.whatsappNumber || '').replace(/[^0-9+]/g, '');
+        const encodedMessage = encodeURIComponent(message);
+
+        // Open WhatsApp with the message
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+        return { whatsappNumber, encodedMessage };
+    };
+
+    const handleGenerateLead = (type) => {
+        if (!loggedInUser?.id) {
+            store.dispatch(SET_USER_MODAL_STATUS(true));
+            toast.error("Please Login First");
+            return;
+        }
+
+        if (!loggedInUser?.account_verified) {
+            store.dispatch(SET_OTP_MODAL_STATUS(true));
+            toast.error("Please verify your account first.");
+            return;
+        }
+
+        if (type === "whatsapp") {
+            buildWhatsAppMessage();
+        }
+
+        const body = {
+            vendor_id: parseInt(user?.id),
+            car_id: parseInt(product?.id),
+            type: type
+        };
+
+        generateLeadMutation.mutate(body);
+    };
 
     return (
         <div onMouseLeave={() => setActiveImageIndex(0)} className="fullProductCard">
@@ -52,7 +121,7 @@ function FullProductCard(props) {
             <div className="content">
                 <Link href={`/product/${product?.slug}`}>
                     <h3>
-                        {product?.name}
+                        {product?.model?.brand?.name} {product?.model?.name} {product?.makeYear?.name}
                         &nbsp;
                         <span>
                             Hire in {product?.city?.name}: {product?.color?.name} {product?.category?.name},{" "}
@@ -203,7 +272,7 @@ function FullProductCard(props) {
                     <figure className="brandImgCont">
                         <Image src={product?.user?.vendorProfile?.companyLogo} width={40} height={40} alt="" />
                     </figure>
-                    <Link href={""} className="call">
+                    <Link href={`tel:${product?.user?.phoneNumber}`} onClick={() => handleGenerateLead("call")} className="call">
                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.1817 8.95829C14.8234 8.95829 14.54 8.66663 14.54 8.31663C14.54 8.00829 14.2317 7.36663 13.715 6.80829C13.2067 6.26663 12.6484 5.94996 12.1817 5.94996C11.8234 5.94996 11.54 5.65829 11.54 5.30829C11.54 4.95829 11.8317 4.66663 12.1817 4.66663C13.015 4.66663 13.89 5.11663 14.6567 5.92496C15.3734 6.68329 15.8317 7.62496 15.8317 8.30829C15.8317 8.66663 15.54 8.95829 15.1817 8.95829Z" />
                             <path d="M18.1895 8.95829C17.8312 8.95829 17.5479 8.66663 17.5479 8.31663C17.5479 5.35829 15.1395 2.95829 12.1895 2.95829C11.8312 2.95829 11.5479 2.66663 11.5479 2.31663C11.5479 1.96663 11.8312 1.66663 12.1812 1.66663C15.8479 1.66663 18.8312 4.64996 18.8312 8.31663C18.8312 8.66663 18.5395 8.95829 18.1895 8.95829Z" />
@@ -212,12 +281,12 @@ function FullProductCard(props) {
                         </svg>
                         <span>{product?.user?.phoneNumber}</span>
                     </Link>
-                    <Link href={""} className="whatsapp">
+                    <button onClick={() => handleGenerateLead("whatsapp")} className="whatsapp">
                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M16.584 3.79297C14.9473 2.15234 12.7676 1.25 10.4512 1.25C5.66992 1.25 1.7793 5.14062 1.7793 9.92188C1.7793 11.4492 2.17773 12.9414 2.93555 14.2578L1.70508 18.75L6.30273 17.543C7.56836 18.2344 8.99414 18.5977 10.4473 18.5977H10.4512C15.2285 18.5977 19.2051 14.707 19.2051 9.92578C19.2051 7.60938 18.2207 5.43359 16.584 3.79297ZM10.4512 17.1367C9.1543 17.1367 7.88477 16.7891 6.7793 16.1328L6.51758 15.9766L3.79102 16.6914L4.51758 14.0312L4.3457 13.7578C3.62305 12.6094 3.24414 11.2852 3.24414 9.92188C3.24414 5.94922 6.47852 2.71484 10.4551 2.71484C12.3809 2.71484 14.1895 3.46484 15.5488 4.82812C16.9082 6.19141 17.7441 8 17.7402 9.92578C17.7402 13.9023 14.4238 17.1367 10.4512 17.1367ZM14.4043 11.7383C14.1895 11.6289 13.123 11.1055 12.9238 11.0352C12.7246 10.9609 12.5801 10.9258 12.4355 11.1445C12.291 11.3633 11.877 11.8477 11.748 11.9961C11.623 12.1406 11.4941 12.1602 11.2793 12.0508C10.0059 11.4141 9.16992 10.9141 8.33008 9.47266C8.10742 9.08984 8.55273 9.11719 8.9668 8.28906C9.03711 8.14453 9.00195 8.01953 8.94727 7.91016C8.89258 7.80078 8.45898 6.73438 8.2793 6.30078C8.10352 5.87891 7.92383 5.9375 7.79102 5.92969C7.66602 5.92188 7.52148 5.92188 7.37695 5.92188C7.23242 5.92188 6.99805 5.97656 6.79883 6.19141C6.59961 6.41016 6.04102 6.93359 6.04102 8C6.04102 9.06641 6.81836 10.0977 6.92383 10.2422C7.0332 10.3867 8.45117 12.5742 10.627 13.5156C12.002 14.1094 12.541 14.1602 13.2285 14.0586C13.6465 13.9961 14.5098 13.5352 14.6895 13.0273C14.8691 12.5195 14.8691 12.0859 14.8145 11.9961C14.7637 11.8984 14.6191 11.8438 14.4043 11.7383Z" />
                         </svg>
                         <span>{product?.user?.vendorProfile?.whatsappNumber}</span>
-                    </Link>
+                    </button>
                 </div>
             </div>
         </div>

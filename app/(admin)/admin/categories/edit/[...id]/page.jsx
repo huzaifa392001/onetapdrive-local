@@ -53,7 +53,6 @@ function EditCategoryPage() {
         try {
             const response = await updateCategory(id, updatedData);
             if (response?.data) {
-                console.log("Category updated successfully");
                 router.push('/admin/categories');
             }
         } catch (error) {
@@ -65,7 +64,6 @@ function EditCategoryPage() {
         try {
             const response = await deleteCategory(id);
             if (response?.data) {
-                console.log("Category deleted successfully");
                 router.push('/admin/categories');
             }
         } catch (error) {

@@ -43,12 +43,12 @@ function VendorWrapper({ children }) {
     }, [isVendor, router]);
 
     useEffect(() => {
-
-        // console.log("status=> ", vendorData?.data?.user?.status)
-        if (vendorData && !vendorData?.data?.user?.status) {
-            store.dispatch(SET_VENDOR_DETAILS(null));
-            store.dispatch(SET_IS_VENDOR(false))
-            store.dispatch(SET_ACCESS_TOKEN(null));
+        if (vendorData) {
+            if (!vendorData?.data?.user?.status) {
+                store.dispatch(SET_VENDOR_DETAILS(null));
+                store.dispatch(SET_IS_VENDOR(false));
+                store.dispatch(SET_ACCESS_TOKEN(null));
+            }
         }
     }, [vendorData])
 

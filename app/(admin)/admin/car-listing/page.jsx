@@ -18,7 +18,7 @@ const Page = () => {
         isPending
     } = useQuery({
         queryKey: ["cars"],
-        queryFn: getAdminAllCars
+        queryFn: () => getAdminAllCars({ page: 1, perPage: 10000 }),
     });
 
     useEffect(() => {
@@ -32,6 +32,7 @@ const Page = () => {
             })) || [];
 
         setVendorCarData(transformedData);
+        console.log("Vendor Car Data", vendorData);
     }, [vendorData]);
 
     if (isPending) return <Loading />;
@@ -43,12 +44,12 @@ const Page = () => {
                 <div className="listingNumbersFlex">
                     <div className="listingNumbers">
                         <h3>Total Listing</h3>
-                        <h1>{vendorData?.data?.cars?.length || 0}</h1>
+                        <h1>{vendorData?.data?.totalItems || 0}</h1>
                     </div>
-                    <div className="listingNumbers">
+                    {/* <div className="listingNumbers">
                         <h3>Active Listing</h3>
                         <h1>{vendorData?.data?.cars?.reduce((count, car) => (car.active ? count + 1 : count), 0)}</h1>
-                    </div>
+                    </div> */}
                 </div>
                 <Link href="fleet/create" className="themeBtn">
                     Add

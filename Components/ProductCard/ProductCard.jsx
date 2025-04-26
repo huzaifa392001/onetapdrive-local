@@ -79,7 +79,7 @@ function ProductCard(props) {
             )}
             <div className="content">
                 <Link href={`/product/${product?.slug}`}>
-                    <h3>{product?.name}</h3>
+                    <h3>{product?.model?.brand?.name} {product?.model?.name} {product?.makeYear?.name}</h3>
                     <div className="tags">
                         <span className="tag">
                             {product?.category?.name}

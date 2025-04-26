@@ -38,8 +38,8 @@ function ProductPageLayout() {
 
     const faqs = [
         {
-            question: `What is the daily and monthly rate of renting a ${data?.name}?`,
-            answer: `The daily price for the ${data?.name} is AED ${data?.carPrices?.map((item) =>
+            question: `What is the daily and monthly rate of renting a ${data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}?`,
+            answer: `The daily price for the ${data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name} is AED ${data?.carPrices?.map((item) =>
                 item?.priceType === "daily" ? item?.price : null
             )} per day and AED  ${data?.carPrices?.map((item) =>
                 item?.priceType === "monthly" ? item?.price : null
@@ -52,8 +52,8 @@ function ProductPageLayout() {
             )} km/day.`
         },
         {
-            question: `Are there any unique features that come with the ${data?.name}?`,
-            answer: `There are features that come with ${data?.name} like ${data?.features?.map((item) => {
+            question: `Are there any unique features that come with the ${data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}?`,
+            answer: `There are features that come with ${data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name} like ${data?.features?.map((item) => {
                 return " " + item?.name;
             })} that will allow you to have an enjoyable and comfortable ride.`
         },
@@ -270,7 +270,7 @@ function ProductPageLayout() {
                             <Link href={``} className="brand">
                                 <figure>
                                     <Image
-                                        src={`/images/brands/${product?.brand?.image}` || "/images/noImage.jpg"}
+                                        src={`/images/brands/${data?.brand?.image}` || "/images/noImage.jpg"}
                                         alt=""
                                         width={50}
                                         height={50}
@@ -468,10 +468,10 @@ function ProductPageLayout() {
     return (
         <>
             <Head>
-                <title>{data?.name}</title>
+                <title>{data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}</title>
                 <meta
                     name="description"
-                    content={`Rent ${product?.model?.brand?.name} ${product?.model_name} in ${currentCity}.`}
+                    content={`Rent ${data?.model?.brand?.name} ${data?.model_name} in ${currentCity}.`}
                 />
             </Head>
 
@@ -488,7 +488,7 @@ function ProductPageLayout() {
                             <Image src={data?.model?.brand?.image || "/images/noImage.jpg"} alt="" fill />
                         </figure>
                         <div className="heading">
-                            <h1>{data?.name}</h1>
+                            <h1>{data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}</h1>
                             <h3>
                                 Hire in {data?.city?.name}: {data?.color?.name} {data?.category?.name},{" "}
                                 {data?.seatingCapacity?.name}{" "} {data?.features && "with "}
@@ -603,7 +603,7 @@ function ProductPageLayout() {
 
                     <div className="detailLayout">
                         <div className="details">
-                            <h2 className="name">Rent {data?.name}</h2>
+                            <h2 className="name">Rent {data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}</h2>
 
                             <div className="tags">
                                 <span className="tag">
@@ -705,7 +705,7 @@ function ProductPageLayout() {
                                 </h4>
                                 <p>
                                     Drive the
-                                    <strong>{data?.name}</strong> in Dubai for AED  <strong>
+                                    <strong>{data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}</strong> in Dubai for AED  <strong>
                                         {data?.carPrices?.map((item) =>
                                             item?.priceType === "daily" ? item?.price : null
                                         )}
@@ -754,7 +754,7 @@ function ProductPageLayout() {
                                             src={vendor?.companyLogo || "/images/noImage.jpg"}
                                             width={80}
                                             height={80}
-                                            alt={`${product?.brand?.name}'s Image`}
+                                            alt={`${data?.brand?.name}'s Image`}
                                         />
                                     </figure>
                                     <h5>Book directly from supplier</h5>
@@ -1129,7 +1129,7 @@ function ProductPageLayout() {
                         <div className="desBox">
                             <p>
                                 Drive the
-                                <strong>{data?.name}</strong> in Dubai for AED  <strong>
+                                <strong>{data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}</strong> in Dubai for AED  <strong>
                                     {data?.carPrices?.map((item) =>
                                         item?.priceType === "daily" ? item?.price : null
                                     )}
@@ -1145,10 +1145,10 @@ function ProductPageLayout() {
                                 </strong> km per day. A security deposit of AED <strong>{data?.securityDepositAmount}</strong> is required at the time of booking and this is fully refundable.For availability and bookings, contact <strong>{vendor?.companyName}</strong> today.
                             </p>
                             <h3>
-                                What is it about the {data?.name} that makes it a great rental option in Dubai?
+                                What is it about the {data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name} that makes it a great rental option in Dubai?
                             </h3>
                             <p>
-                                The {data?.name} offers immaculate styling, great new features, and smooth drive, whether you’re roaming around the streets of Dubai or going on a longer distance drive, you receive both luxury and performance from the {data?.name} in one vehicle.
+                                The {data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name} offers immaculate styling, great new features, and smooth drive, whether you’re roaming around the streets of Dubai or going on a longer distance drive, you receive both luxury and performance from the {data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name} in one vehicle.
                             </p>
                             {/* <div className="ratingArea">
                                 <div className="rating">
@@ -1163,7 +1163,7 @@ function ProductPageLayout() {
                                 </div>
                                 <p>Based on 515 reviews</p>
                                 <p>
-                                    for {product?.brand?.name} {product?.model_name} {product?.make_year}
+                                    for {data?.brand?.name} {data?.model_name} {data?.make_year}
                                 </p>
                             </div> */}
                         </div>

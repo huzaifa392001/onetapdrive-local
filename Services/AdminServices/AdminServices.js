@@ -18,9 +18,9 @@ export const getAllVendors = async () => {
     }
 }
 
-export const getAdminAllCars = async () => {
+export const getAdminAllCars = async ({ page = 1, perPage = 1000 }) => {
     try {
-        const response = await API.get("/cars/all");
+        const response = await API.get(`/cars/all?page=${page}&perPage=${perPage}`);
         return response.data;
     } catch (error) {
         throw error;

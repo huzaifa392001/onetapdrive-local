@@ -7,11 +7,9 @@ import ProductCard from "@/Components/ProductCard/ProductCard";
 function FilteredCars(props) {
 
     const premiumCars = props?.premiumCars;
-
     useEffect(() => {
-        console.log("Filtered Cars", premiumCars)
-
-    }, [premiumCars])
+        console.log("paginationData=>", props?.paginationData)
+    }, [props?.paginationData])
 
     return (
         <div className="filteredCars">
@@ -30,8 +28,8 @@ function FilteredCars(props) {
             {/* {props?.carsData?.length > 0 && (
                 <div className="totalResult">
                     <p>
-                        Showing <span>1</span> - <span>{props?.carsData?.perPage || props?.carsData?.totalItems}</span>{" "}
-                        of <span>{props?.carsData?.totalItems}</span> Cars
+                        Showing <span>1</span> - <span>{props?.paginationData?.perPage || props?.paginationData?.totalItems}</span>{" "}
+                        of <span>{props?.paginationData?.totalItems}</span> Cars
                     </p>
                 </div>
             )} */}

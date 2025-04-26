@@ -5,7 +5,7 @@ import API from "../Constants/api";
 export const login = async (data) => {
     try {
         const res = await API.post("/auth/login", data);
-        // console.log("res=> ", res)
+        console.log("res=> ", res)
         if (res?.data?.data?.user_details?.role?.name === "superadmin") {
             store.dispatch(SET_ADMIN_DETAILS(res?.data?.data?.user_details));
             store.dispatch(SET_IS_ADMIN(true));

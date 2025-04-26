@@ -340,7 +340,7 @@ const AdminDataTable = (props) => {
                 columnDefs={colDefs}
                 pagination={true}
                 defaultColDef={setColDefs}
-                paginationPageSize={10}
+                paginationPageSize={20}
                 headerHeight={80}
                 suppressCellFocus={true}
                 suppressHorizontalScroll={false}

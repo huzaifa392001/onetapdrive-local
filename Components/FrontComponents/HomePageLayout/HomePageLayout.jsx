@@ -12,29 +12,31 @@ import FAQsSection from "@/Components/FAQsSection/FAQsSection";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCars, getCategorizedCars } from "@/Services/FrontServices/GeneralServices";
+import { getAllCars, getEconomyCars, getExoticCars } from "@/Services/FrontServices/GeneralServices";
+import Loading from "@/app/(home)/loading";
 
 function HomePageLayout() {
     const [windowWidth, setWindowWidth] = useState(0);
     const [productsData, setProductsData] = useState([]);
 
-    const { data: products } = useQuery({
+    const { data: products, isPending } = useQuery({
         queryKey: ["products"],
-        queryFn: () => getAllCars()
+        queryFn: () => getAllCars({ page: 1, perPage: 4 })
     });
 
     const { data: luxuryProducts, isPending: isLuxuryPending } = useQuery({
         queryKey: ['luxuryCar'],
-        queryFn: () => getCategorizedCars({ category: "luxury" })
+        queryFn: () => getExoticCars()
     })
 
     const { data: economyProducts, isPending: isEconomyPending } = useQuery({
         queryKey: ['economyCar'],
-        queryFn: () => getCategorizedCars({ category: "economy-cars" })
+        queryFn: () => getEconomyCars()
     })
 
 
     useEffect(() => {
+        console.log("products", products);
         setProductsData(products?.data?.cars?.slice(0, 4));
     }, [products]);
 
@@ -80,6 +82,8 @@ function HomePageLayout() {
         });
     });
 
+    if (isPending, isLuxuryPending, isEconomyPending) return <Loading />;
+
     return (
         <>
             <HomeBanner />
@@ -111,7 +115,7 @@ function HomePageLayout() {
                     </figure>
                 </div>
             </section>
-            <CarsSection secHeading={"Luxury Car Rental"} data={luxuryProducts?.data?.cars?.slice(0, 4)} />
+            <CarsSection secHeading={"Exotic Car Rental"} data={luxuryProducts?.data?.cars?.slice(0, 4)} />
             <section className="addBanner">
                 <div className="customContainer">
                     <figure className="imgCont">

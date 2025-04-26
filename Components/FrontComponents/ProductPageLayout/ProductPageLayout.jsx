@@ -54,20 +54,16 @@ function ProductPageLayout() {
         {
             question: `Are there any unique features that come with the ${data?.name}?`,
             answer: `There are features that come with ${data?.name} like ${data?.features?.map((item) => {
-                return item?.name;
+                return " " + item?.name;
             })} that will allow you to have an enjoyable and comfortable ride.`
         },
         {
-            question: "Can I get this car delivered?",
-            answer: "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+            question: "What documents do I need to rent this car?",
+            answer: ["For UAE Residents: UAE Driving License, Emirates ID (Residential Visa may be acceptable).", "For Tourist Visition UAE: Passport, Visit Visa, Home Country Driving License, International Driving Permit (IDP) is required."]
         },
         {
-            question: "Can I get this car delivered?",
-            answer: "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
-        },
-        {
-            question: "Can I get this car delivered?",
-            answer: "Grand Royal Rent a Car offers delivery upon request to your location (view fast delivery locations) within Dubai. However, free pick-up from their branch in Al Khabaisi is available during office hours. "
+            question: "Once I return the vehicle, how long will it take to receive my security deposit?",
+            answer: `The security deposit is fully refundable and usually is returned within ${data?.securityDepositReturn} days after the vehicle is returned and inspected.`
         }
     ];
 
@@ -454,8 +450,6 @@ function ProductPageLayout() {
             type: type
         };
 
-        console.log("leadBody=> ", body);
-
         generateLeadMutation.mutate(body);
     };
 
@@ -683,10 +677,10 @@ function ProductPageLayout() {
                                             <i className="fas fa-check" />
                                             <span>1 day rental available</span>
                                         </li>
-                                        {data?.insuranceIncluded && (
+                                        {!data?.insuranceIncluded && (
                                             <li>
                                                 <i className="fas fa-check" />
-                                                <span>Insurance Included</span>
+                                                <span>Insurance Required</span>
                                             </li>
                                         )}
                                     </ul>
@@ -710,36 +704,24 @@ function ProductPageLayout() {
                                     Description & Highlights:
                                 </h4>
                                 <p>
-                                    Drive the <strong>{data?.name}</strong> in Dubai for AED{" "}
-                                    <strong>
+                                    Drive the
+                                    <strong>{data?.name}</strong> in Dubai for AED  <strong>
                                         {data?.carPrices?.map((item) =>
                                             item?.priceType === "daily" ? item?.price : null
                                         )}
-                                    </strong>{" "}
-                                    per day or AED{" "}
-                                    <strong>
+                                    </strong> per day or AED <strong>
                                         {data?.carPrices?.map((item) =>
                                             item?.priceType === "monthly" ? item?.price : null
                                         )}
-                                    </strong>{" "}
-                                    per month. The rental includes comprehensive insurance and comes with a mileage
-                                    allowance of{" "}
+                                    </strong> per month. The rental includes comprehensive insurance and comes with a mileage allowance of
                                     <strong>
                                         {data?.carPrices?.map((item) =>
                                             item?.priceType === "daily" ? item?.kilometers : null
                                         )}
-                                    </strong>{" "}
-                                    km per day.
-                                </p>
-                                <p>
-                                    A security deposit of AED <strong>{data?.securityDepositAmount}</strong> is required
-                                    at the time of booking and this is fully refundable.
-                                </p>
-                                <p>
-                                    For availability and bookings, contact <strong>{vendor?.companyName}</strong> today.
+                                    </strong> km per day. A security deposit of AED <strong>{data?.securityDepositAmount}</strong> is required at the time of booking and this is fully refundable.For availability and bookings, contact <strong>{vendor?.companyName}</strong> today.
                                 </p>
                                 <button
-                                    className="themeBtn themeBtnAlt"
+                                    className="themeBtn"
                                     onClick={() => handleOptionClick("description")}
                                 >
                                     Read More
@@ -777,7 +759,7 @@ function ProductPageLayout() {
                                     </figure>
                                     <h5>Book directly from supplier</h5>
                                     <div className="btnCont">
-                                        <button onClick={() => handleGenerateLead("call")} className="call">
+                                        <Link href={`tel:${user?.phoneNumber}`} onClick={() => handleGenerateLead("call")} className="call">
                                             <svg
                                                 width="21"
                                                 height="20"
@@ -791,7 +773,7 @@ function ProductPageLayout() {
                                                 <path d="M18.8064 15.2751C18.8064 15.5084 18.7647 15.7501 18.6814 15.9834C18.6564 16.0501 18.6314 16.1167 18.598 16.1834C18.4564 16.4834 18.273 16.7667 18.0314 17.0334C17.623 17.4834 17.173 17.8084 16.6647 18.0167C16.6564 18.0167 16.648 18.0251 16.6397 18.0251C16.148 18.2251 15.6147 18.3334 15.0397 18.3334C14.1897 18.3334 13.2814 18.1334 12.323 17.7251C11.3647 17.3167 10.4064 16.7667 9.45638 16.0751C9.13138 15.8334 8.80638 15.5917 8.49805 15.3334L11.223 12.6084C11.4564 12.7834 11.6647 12.9167 11.8397 13.0084C11.8814 13.0251 11.9314 13.0501 11.9897 13.0751C12.0564 13.1001 12.123 13.1084 12.198 13.1084C12.3397 13.1084 12.448 13.0584 12.5397 12.9667L13.173 12.3417C13.3814 12.1334 13.5814 11.9751 13.773 11.8751C13.9647 11.7584 14.1564 11.7001 14.3647 11.7001C14.523 11.7001 14.6897 11.7334 14.873 11.8084C15.0564 11.8834 15.248 11.9917 15.4564 12.1334L18.2147 14.0917C18.4314 14.2417 18.5814 14.4167 18.673 14.6251C18.7564 14.8334 18.8064 15.0417 18.8064 15.2751Z" />
                                             </svg>
                                             <span>{user?.phoneNumber}</span>
-                                        </button>
+                                        </Link>
                                         <button onClick={() => handleGenerateLead("whatsapp")} className="whatsapp">
                                             <svg
                                                 width="21"
@@ -882,7 +864,13 @@ function ProductPageLayout() {
                                     </div>
                                     {activeFaq === index && (
                                         <div className="answer">
-                                            <p>{faq?.answer}</p>
+                                            {Array.isArray(faq?.answer) ? (
+                                                faq.answer.map((ans, index) => (
+                                                    <p key={index}>{ans}</p>
+                                                ))
+                                            ) : (
+                                                <p>{faq?.answer}</p>
+                                            )}
                                         </div>
                                     )}
                                 </div>
@@ -1140,29 +1128,29 @@ function ProductPageLayout() {
                     <div className="modalBody">
                         <div className="desBox">
                             <p>
-                                Rent and drive this {data?.name}-model in Dubai, UAE for AED{" "}
-                                {data?.carPrices?.map((item) => (item?.priceType === "daily" ? item?.price : null))}
-                                /day & AED{" "}
-                                {data?.carPrices?.map((item) => (item?.priceType === "monthly" ? item?.price : null))}
-                                /month. Rental cost includes basic comprehensive insurance and standard mileage limit of{" "}
-                                {data?.carPrices?.map((item) =>
-                                    item?.priceType === "daily" ? item?.kilometers : null
-                                )}{" "}
-                                km/day. Security deposit of AED{" "}
-                                {data?.securityDepositAmount} is required. Contact {vendor?.companyName} directly for
-                                bookings and inquiries.
+                                Drive the
+                                <strong>{data?.name}</strong> in Dubai for AED  <strong>
+                                    {data?.carPrices?.map((item) =>
+                                        item?.priceType === "daily" ? item?.price : null
+                                    )}
+                                </strong> per day or AED <strong>
+                                    {data?.carPrices?.map((item) =>
+                                        item?.priceType === "monthly" ? item?.price : null
+                                    )}
+                                </strong> per month. The rental includes comprehensive insurance and comes with a mileage allowance of
+                                <strong>
+                                    {data?.carPrices?.map((item) =>
+                                        item?.priceType === "daily" ? item?.kilometers : null
+                                    )}
+                                </strong> km per day. A security deposit of AED <strong>{data?.securityDepositAmount}</strong> is required at the time of booking and this is fully refundable.For availability and bookings, contact <strong>{vendor?.companyName}</strong> today.
                             </p>
                             <h3>
-                                Why hire the {product?.brand?.name} {product?.model_name}?
+                                What is it about the {data?.name} that makes it a great rental option in Dubai?
                             </h3>
                             <p>
-                                The fun begins where the pavement ends. Cranking out 261 horsepower and riding on a
-                                tough, full-length boxed ladder frame, the Xterra can handle practically anything the
-                                trail throws in front of it With legendary Nissan reliability, that iconic aluminum roof
-                                rack, rugged styling, and fully equipped off-road capability, Xterra is going to get you
-                                and your gear where you need to go.
+                                The {data?.name} offers immaculate styling, great new features, and smooth drive, whether you’re roaming around the streets of Dubai or going on a longer distance drive, you receive both luxury and performance from the {data?.name} in one vehicle.
                             </p>
-                            <div className="ratingArea">
+                            {/* <div className="ratingArea">
                                 <div className="rating">
                                     <div className="ratingStars">
                                         <i className="fas fa-star"></i>
@@ -1177,7 +1165,7 @@ function ProductPageLayout() {
                                 <p>
                                     for {product?.brand?.name} {product?.model_name} {product?.make_year}
                                 </p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

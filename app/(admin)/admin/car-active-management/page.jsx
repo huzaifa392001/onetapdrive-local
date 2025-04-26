@@ -1,5 +1,5 @@
 "use client";
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminDataTable from '@/Components/AdminComponents/AdminTable/adminTable';
 import SecHeading from '@/Components/SecHeading/SecHeading';
 import Link from 'next/link';
@@ -14,7 +14,7 @@ function Page() {
 
   const { data: refreshResponse } = useQuery({
     queryKey: ["active_car"],
-    queryFn: () =>  getCarRefresh("active_car"), // refresh, active_car, premium
+    queryFn: () => getCarRefresh("active_car"), // refresh, active_car, premium
   });
 
   useEffect(() => {
@@ -32,13 +32,13 @@ function Page() {
 
   return (
     <>
-    <div className="headingCont">
+      <div className="headingCont">
         <SecHeading heading="Active Car Management" />
         <Link href="car-refresh-management/create" className='themeBtn' >
           Create
         </Link>
-    </div>
-    <AdminDataTable data={refreshData} showAction={true} />
+      </div>
+      <AdminDataTable data={refreshData} showAction={true} />
     </>
   )
 }

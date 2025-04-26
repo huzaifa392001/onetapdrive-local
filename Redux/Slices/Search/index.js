@@ -25,7 +25,8 @@ const searchSlice = createSlice({
             transmission: "",
             fuel_type: "",
             color: []
-        }
+        },
+        searchedResult: []
     },
     reducers: {
         SET_IS_ACTIVE(state, action) {
@@ -52,9 +53,19 @@ const searchSlice = createSlice({
                 car_features: action.payload.car_features || state.searchParam.car_features, // Preserve or update car_features
                 color: action.payload.color || state.searchParam.color, // Preserve or update color
             };
+        },
+        SET_SEARCH_RESULT(state, action) {
+            state.searchedResult = action.payload;
         }
     },
 });
 
-export const { SET_IS_ACTIVE, SET_LOADING, SET_QUERY, SET_REQUESTED_PRODUCT, SET_SEARCH_PARAMS } = searchSlice.actions;
+export const {
+    SET_IS_ACTIVE,
+    SET_LOADING,
+    SET_QUERY,
+    SET_REQUESTED_PRODUCT,
+    SET_SEARCH_PARAMS,
+    SET_SEARCH_RESULT
+} = searchSlice.actions;
 export default searchSlice.reducer;

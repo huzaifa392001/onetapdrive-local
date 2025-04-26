@@ -143,3 +143,12 @@ export const generateLead = async (body) => {
         console.error("Error generating lead:", e);
     }
 }
+
+export const getPremiumCars = async (id) => {
+    try {
+        const response = await API.get(`/cars/premium-category/cars/${id}`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}

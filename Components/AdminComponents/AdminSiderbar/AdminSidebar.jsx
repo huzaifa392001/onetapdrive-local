@@ -41,6 +41,8 @@ function AdminSidebar() {
         // { path: "/admin/car-with-driver-listing", label: "Car With Driver Listing", icon: "fas fa-car" },
         { path: "/admin/car-active-management", label: "Car Active Management", icon: "fas fa-check-square" },
         { path: "/admin/car-refresh-management", label: "Car Refresh Management", icon: "fas fa-sync-alt" },
+        { path: "/admin/premium-car", label: "Premium Car", icon: "fas fa-crown" },
+
         // { path: "/admin/active-car-management", label: "Active Car Management", icon: "fas fa-sync-alt" },
 
         { type: "divider", label: "Website" },

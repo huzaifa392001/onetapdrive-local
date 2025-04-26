@@ -11,8 +11,10 @@ import { vendorSignup } from "@/Services/AuthService/AuthService";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Spinner from "@/Components/Spinner/Spinner";
+import { useSelector } from "react-redux";
 
 function Page() {
+    const cities = useSelector((state) => state.general.cities);
     const router = useRouter();
     const [companyLogoPreview, setCompanyLogoPreview] = useState(null);
     const [companyLicensePreview, setCompanyLicensePreview] = useState(null);
@@ -76,7 +78,7 @@ function Page() {
         companyLogo: null,
         companyLicense: null,
         licenseExpiryDate: "",
-        countryId: "United Arab Emirates",
+        countryId: 1,
         cityId: ""
     };
 
@@ -158,7 +160,7 @@ function Page() {
 
         formData.append("licenseExpiryDate", data.licenseExpiryDate);
         formData.append("countryId", 1);
-        formData.append("cityId", 2);
+        formData.append("cityId", data?.cityId);
 
         signupMutation.mutate(formData);
     };
@@ -386,14 +388,9 @@ function Page() {
                                     className={`${errors?.cityId ? "errorInput" : ""}`}
                                 >
                                     <option value="">Select City</option>
-                                    <option value="Dubai">Dubai</option>
-                                    <option value="Abu Dhabi">Abu Dhabi</option>
-                                    <option value="Sharjah">Sharjah</option>
-                                    <option value="Ajman">Ajman</option>
-                                    <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                                    <option value="Fujairah">Fujairah</option>
-                                    <option value="Umm Al Quwain">Umm Al Quwain</option>
-                                    <option value="Al Ain">Al Ain</option>
+                                    {cities?.map((item, index) => (
+                                        <option key={index} value={item?.id}>{item?.name}</option>
+                                    ))}
                                 </select>
                                 {errors?.cityId && <p className="errorText">{errors.cityId.message}</p>}
                             </div>

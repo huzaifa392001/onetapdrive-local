@@ -104,3 +104,13 @@ export const getSingleCar = async (carId) => {
         console.error("Error getting single car:", e);
     }
 };
+
+export const getVendorDashboard = async () => {
+    try {
+        const response = await API.get("/dashboard");
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching vendor dashboard data:", error);
+        throw error;
+    }
+}

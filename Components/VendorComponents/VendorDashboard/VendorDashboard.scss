@@ -1,34 +1,8 @@
 .chartWrapper {
-    @apply  flex justify-center items-center gap-2;
+    @apply grid grid-cols-2 items-center gap-2;
+    > * {
+        height: 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
 }
-
-
-.vendorHomeCard {
-    @apply w-full flex items-center gap-[20px] lg:gap-[5px] xl:gap-[20px] bg-[--vendor-bg] rounded-[20px] pl-10 lg:pl-0 xl:pl-10 text-[20px] lg:text-[14px] xl:text-[20px] text-white font-[500] relative;
-
-    &:hover .bgIcon {
-        transition: all .3s ease-in;
-        transform: scale(1.6) rotate(-10deg) ;
-    }    
-}
-
-.cardBody {
-    @apply  min-h-[130px] flex items-center gap-[20px] lg:gap-[10px] xl:gap-[20px] bg-[--vendor-bg] rounded-[20px] mx-4 lg:mx-2 xl:mx-4 text-[18px] lg:text-[15px] xl:text-[18px] text-white font-[500];
-
-   
-}
-
-.cardCountPara {
-    @apply font-[600] text-[24px];
-}
-
-.vendorCardsWrapper{
-        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mr-8 my-4;
-}
-.bgIcon {
-    @apply absolute right-0 opacity-[0.1] text-[3rem];   
-    @apply transition-transform duration-300 ease-in-out;
-}
-
-
-  

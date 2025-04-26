@@ -1,7 +1,7 @@
 .searchBar {
     @apply bg-[var(--secondary-color)] xl:px-4 py-4 sticky top-0 z-20;
     .searchCont {
-        @apply max-w-[100%] md:max-w-[500px] h-[50px] w-full flex items-center border rounded-lg px-3 gap-x-2;
+        @apply max-w-[100%] md:max-w-[500px] h-[50px] w-full flex items-center border rounded-lg px-3 gap-x-2 relative;
         input {
             @apply h-full w-full outline-none border-none bg-transparent text-[var(--white)];
 
@@ -9,13 +9,39 @@
                 @apply text-[var(--white)];
             }
         }
+
+        .searchDropdown {
+            @apply absolute top-[100%] left-0 bg-[var(--white)] z-10 rounded-lg shadow-xl min-w-[200px] w-full overflow-hidden max-h-[300px] overflow-y-auto;
+
+            li {
+                a {
+                    @apply flex items-center gap-x-4 transition-all duration-200 py-2 px-3;
+
+                    h6 {
+                        @apply font-medium text-[1rem];
+                    }
+
+                    &:hover {
+                        @apply bg-[var(--theme-color)] text-[var(--white)];
+                    }
+                }
+
+                &.heading {
+                    @apply text-[var(--text-color)] font-semibold text-[14px] px-3 py-2 border-b;
+                }
+
+                & + .heading {
+                    @apply border-t;
+                }
+            }
+        }
     }
     .sortBar {
-        @apply flex gap-x-4 ms-auto relative w-full md:w-2/4;
+        @apply flex gap-x-4 ms-auto relative w-full md:w-2/4 justify-end;
         .dropdownCont {
-            @apply w-full;
+            @apply w-1/4;
             .placeholder {
-                @apply w-full border border-[var(--white)] text-[var(--white)] flex items-center h-full md:py-0 py-2 px-3 rounded-lg gap-x-4 text-[14px] capitalize text-left justify-center;
+                @apply w-full border border-[var(--white)] text-[var(--white)] flex items-center h-full md:py-1 py-2 px-3 rounded-lg gap-x-4 text-[14px] capitalize text-left justify-between;
                 .min {
                     @apply text-[12px] block;
                 }
@@ -152,7 +178,7 @@
             .pageHeader {
                 @apply border-b pb-2 pt-8 mb-2;
                 h1 {
-                    @apply text-[2.5rem] font-bold capitalize;
+                    @apply text-[2.5rem] font-bold capitalize mb-3;
                 }
                 p {
                     @apply text-[var(--grey-color)] font-normal;

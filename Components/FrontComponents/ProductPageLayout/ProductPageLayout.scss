@@ -221,13 +221,24 @@
                     h5 {
                         @apply uppercase text-[14px];
                     }
+                    .btnCont {
+                        button,
+                        a {
+                            span {
+                                display: -webkit-box;
+                                -webkit-line-clamp: 1;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                            }
+                        }
+                    }
                 }
 
                 .btnCont {
                     @apply flex gap-x-4 mt-3 w-full;
                     a,
                     button {
-                        @apply w-full border-2 rounded-lg flex items-center justify-center py-4 gap-x-2 font-medium transition-all duration-300;
+                        @apply w-full border-2 rounded-lg flex items-center justify-center py-4 px-2 gap-x-2 font-medium transition-all duration-300;
 
                         svg {
                             @apply transition-all duration-300;

@@ -116,18 +116,20 @@ function FullProductCard(props) {
                         </div>
                         <div className="detail">
                             <ul>
-                                <li>
+                                {/* <li>
                                     <i className="fal fa-check-circle" />
                                     <p>Free Delivery</p>
-                                </li>
+                                </li> */}
                                 <li>
                                     <i className="fal fa-check-circle" />
                                     <p>1 day rental available</p>
                                 </li>
-                                <li>
-                                    <i className="fal fa-check-circle" />
-                                    <p>Insurance Required</p>
-                                </li>
+                                {!product?.insuranceIncluded && (
+                                    <li>
+                                        <i className="fal fa-check-circle" />
+                                        <p>Insurance Required</p>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>

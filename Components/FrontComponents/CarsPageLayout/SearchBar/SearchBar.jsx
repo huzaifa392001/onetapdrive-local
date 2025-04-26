@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import "../CarsPageLayout.scss";
 import { usePathname, useRouter } from "next/navigation";
 import { store } from "@/Redux/Store";
@@ -7,9 +7,11 @@ import { SET_SEARCH_PARAMS } from "@/Redux/Slices/Search";
 import { useSelector } from "react-redux";
 import Filter from "./Filter/Filter";
 import brandsData from "@/DummyData/brands.json";
+import { SearchServices } from "@/Services/FrontServices/SearchServices";
+import Image from "next/image";
+import Link from "next/link";
 
-function SearchBar({ activeCategory }) {
-    const path = usePathname();
+function SearchBar({ sorting }) {
     const categoryData = useSelector((state) => state?.general?.categories);
     const currentCategory = useSelector((state) => state?.search?.searchParam?.category);
     const [searchFilters, setSearchFilters] = useState(useSelector((state) => state.search.searchParam));
@@ -18,6 +20,11 @@ function SearchBar({ activeCategory }) {
     const [selectedSort, setSelectedSort] = useState("Daily: High to Low");
     const [priceFilter, setPriceFilter] = useState({ min: "", max: "" });
     const [isFilterVisible, setIsFilterVisible] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchedBrands, setSearchedBrands] = useState([]);
+    const [searchedCars, setSearchedCars] = useState([]);
+    const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+    const searchContRef = useRef(null);
     const Router = useRouter();
 
     // Calculate total quantity
@@ -56,6 +63,11 @@ function SearchBar({ activeCategory }) {
         setSelectedSort(displayText); // Update selected sort option
         setActiveDropdown(""); // Close dropdown
 
+        // Pass the sort type to parent component via the sorting prop
+        if (typeof sorting === 'function') {
+            sorting(displayText);
+        }
+
         // Dispatch sort option to Redux
         store.dispatch(
             SET_SEARCH_PARAMS({
@@ -76,8 +88,85 @@ function SearchBar({ activeCategory }) {
         );
     };
 
+    // Debounce function to delay API calls
+    const debounce = (func, delay) => {
+        let debounceTimer;
+        return function (...args) {
+            const context = this;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    };
+
+    // Debounced search handler
+    const debouncedSearch = useCallback(
+        debounce(async (term) => {
+            console.log('term=> ', term)
+            if (!term) {
+                setSearchedBrands([]);
+                setSearchedCars([]);
+                setShowSearchDropdown(false);
+                return;
+            }
+
+            const result = await SearchServices.getCarSuggestionsByQuery(term)
+            console.log('search result=> ', result)
+            if (result) {
+                if (result?.data?.brands?.length > 0) {
+                    setSearchedBrands(result.data.brands);
+                } else {
+                    setSearchedBrands([]);
+                }
+                if (result?.data?.cars?.length > 0) {
+                    setSearchedCars(result.data.cars);
+                } else {
+                    setSearchedCars([]);
+                }
+
+                // Show dropdown if we have any results or if search term exists
+                setShowSearchDropdown(
+                    result?.data?.brands?.length > 0 || result?.data?.cars?.length > 0 || term.length > 0
+                );
+            }
+        }, 500), // 500ms delay
+        []
+    );
+
+    useEffect(() => {
+        console.log('searchedBrands=> ', searchedBrands)
+        console.log('searchedCars=> ', searchedCars)
+    }, [searchedBrands, searchedCars])
+
+    // Handle search input change
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        debouncedSearch(value);
+    };
+
+    // Handle clicks outside search container
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchContRef.current && !searchContRef.current.contains(event.target)) {
+                setShowSearchDropdown(false);
+            }
+        };
+
+        // Add event listener
+        document.addEventListener("mousedown", handleClickOutside);
+
+        // Cleanup event listener
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        setSelectedCategory(currentCategory)
+    }, [currentCategory])
+
     const sortOptions = [
-        { mainHeading: "Featured", sortingType: null },
+        { mainHeading: "Featured", sortingType: "Default" },
         { mainHeading: "Daily", sortingType: "Low to High" },
         { mainHeading: "Daily", sortingType: "High to Low" },
         { mainHeading: "Weekly", sortingType: "Low to High" },
@@ -86,34 +175,80 @@ function SearchBar({ activeCategory }) {
         { mainHeading: "Monthly", sortingType: "High to Low" }
     ];
 
+    // Set initial sort value on component mount
     useEffect(() => {
-        if (activeCategory && categoryData?.length > 0) {
-            const foundCategory = categoryData.find(
-                (item) => item.name.toLowerCase() === activeCategory.toLowerCase()
-            );
-            setSelectedCategory(foundCategory ? foundCategory.name : "all");
-        } else {
-            setSelectedCategory("all");
+        if (typeof sorting === 'function') {
+            sorting(selectedSort);
         }
-    }, [activeCategory, categoryData]);
+    }, []);
 
     const handleFilter = (filterState) => {
         setIsFilterVisible(filterState);
     };
-
     return (
         <>
             <div className="searchBar">
                 <div className="searchContainer">
-                    <div className="searchCont">
-                        <input placeholder="Search" type="text" />
-                        <button className="themeBtn">Search</button>
+                    <div className="searchCont" ref={searchContRef}>
+                        <input
+                            placeholder="Search for Cars, Brands, Models..."
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onFocus={() => {
+                                if (searchTerm) setShowSearchDropdown(true);
+                            }}
+                        />
+                        {showSearchDropdown && (
+                            <div data-lenis-prevent className="searchDropdown">
+                                <ul>
+                                    {searchedBrands?.length > 0 && (
+                                        <>
+                                            <li className="heading">
+                                                Brands
+                                            </li>
+                                            {searchedBrands.map((item, index) => (
+                                                <li key={index}>
+                                                    <Link href={`/brands/${item?.slug}`}>
+                                                        {item?.image && (
+                                                            <Image src={item.image} alt={item.name} width={40} height={40} />
+                                                        )}
+                                                        <h6>{item?.name}</h6>
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </>
+                                    )}
+
+                                    {searchedCars?.length > 0 && (
+                                        <>
+                                            <li className="heading">
+                                                Cars
+                                            </li>
+                                            {searchedCars.map((item, index) => (
+                                                <li key={index}>
+                                                    <Link href={`/product/${item?.slug}`}>
+                                                        <h6>{item?.name}</h6>
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </>
+                                    )}
+
+                                    {searchTerm && searchedBrands.length === 0 && searchedCars.length === 0 && (
+                                        <li className="no-results">
+                                            <p>No results found</p>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                     <div className="sortBar">
                         {[
                             { label: selectedCategory, type: "category" },
                             { label: selectedSort, type: "sort" },
-                            { label: "Price", type: "price" }
+                            // { label: "Price", type: "price" }
                         ].map(({ label, type }, index) => (
                             <div className={`dropdownCont ${activeDropdown === type ? "active" : ""}`} key={index}>
                                 {type !== "sort" && (
@@ -141,9 +276,8 @@ function SearchBar({ activeCategory }) {
                                         {type === "category" ? (
                                             <ul data-lenis-prevent className="categoryGrid">
                                                 <li
-                                                    className={`categoryItem ${
-                                                        selectedCategory === "all" ? "active" : ""
-                                                    }`}
+                                                    className={`categoryItem ${selectedCategory === "all" ? "active" : ""
+                                                        }`}
                                                     onClick={() => handleCategorySelect("all")}
                                                 >
                                                     <span>All</span>
@@ -152,12 +286,11 @@ function SearchBar({ activeCategory }) {
                                                 {categoryData.map((item) => (
                                                     <li
                                                         key={item.name}
-                                                        className={`categoryItem ${
-                                                            selectedCategory.toLowerCase() ===
+                                                        className={`categoryItem ${selectedCategory.toLowerCase() ===
                                                             item.name.toLowerCase()
-                                                                ? "active"
-                                                                : ""
-                                                        }`}
+                                                            ? "active"
+                                                            : ""
+                                                            }`}
                                                         onClick={() => handleCategorySelect(item.name)}
                                                     >
                                                         <span>{item.name}</span>
@@ -170,14 +303,13 @@ function SearchBar({ activeCategory }) {
                                                 {sortOptions.map((option, index) => (
                                                     <li
                                                         key={index}
-                                                        className={`sortItem ${
-                                                            selectedSort ===
+                                                        className={`sortItem ${selectedSort ===
                                                             (option.sortingType
                                                                 ? `${option.mainHeading}: ${option.sortingType}`
                                                                 : option.mainHeading)
-                                                                ? "active"
-                                                                : ""
-                                                        }`}
+                                                            ? "active"
+                                                            : ""
+                                                            }`}
                                                         onClick={() => handleSortSelect(option)}
                                                     >
                                                         <span>
@@ -233,17 +365,16 @@ function SearchBar({ activeCategory }) {
                         ))}
                         <div className="dropdownCont">
                             <button onClick={() => handleFilter(true)} className="placeholder">
-                                <i className="far fa-sliders-h" />
                                 <div>
                                     <span>More Filters</span>
                                 </div>
+                                <i className="far fa-sliders-h" />
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             <Filter
-                setFilters={setSearchFilters}
                 brands={brandsData}
                 handle={handleFilter}
                 filterState={isFilterVisible}

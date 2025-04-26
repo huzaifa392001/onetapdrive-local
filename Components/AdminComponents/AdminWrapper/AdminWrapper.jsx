@@ -7,10 +7,19 @@ import AdminHeader from "../AdminHeader/AdminHeader";
 import AdminSidebar from "../AdminSiderbar/AdminSidebar";
 import "./AdminWrapper.scss";
 import Loading from "@/Components/Loading/Loading";
+import { useQuery } from "@tanstack/react-query";
+import { getCities } from "@/Services/FrontServices/GeneralServices";
+import { store } from "@/Redux/Store";
+import { SET_CITIES } from "@/Redux/Slices/General";
 
 function AdminWrapper({ children }) {
     const isAdmin = useSelector((state) => state.auth.isAdmin);
     const router = useRouter();
+
+    const { data: citiesData } = useQuery({
+        queryKey: ["cities"],
+        queryFn: () => getCities()
+    })
 
     useEffect(() => {
         if (!isAdmin) {
@@ -18,6 +27,10 @@ function AdminWrapper({ children }) {
         }
     }, [isAdmin, router]);
 
+    useEffect(() => {
+        store.dispatch(SET_CITIES(citiesData));
+    }, [citiesData]);
+    
     if (!isAdmin) return null;
 
     return (

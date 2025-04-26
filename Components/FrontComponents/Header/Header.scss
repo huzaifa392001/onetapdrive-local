@@ -56,7 +56,7 @@
                             }
 
                             &.navShow {
-                                @apply top-[130%] select-auto opacity-100 visible pointer-events-auto;
+                                @apply top-[100px] select-auto opacity-100 visible pointer-events-auto z-[11111];
                             }
                         }
                     }
@@ -170,7 +170,7 @@
         box-shadow: 0 0 15px 5px #0003;
 
         &.navShow {
-            @apply select-auto pointer-events-auto opacity-100 visible top-[113px];
+            @apply select-auto pointer-events-auto opacity-100 visible top-[100px] z-[11111];
         }
 
         .catRow {

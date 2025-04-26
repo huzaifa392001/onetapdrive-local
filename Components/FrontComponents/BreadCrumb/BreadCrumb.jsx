@@ -16,7 +16,7 @@ function BreadCrumb(props) {
                 )}
                 {props?.brand && (
                     <li>
-                        <Link href={`/cars/${props?.brand}`}>{props?.brand}</Link>
+                        <Link href={`/brands/${props?.brand}`}>{props?.brand}</Link>
                     </li>
                 )}
                 {props?.model && (
@@ -26,13 +26,15 @@ function BreadCrumb(props) {
                 )}
                 {states?.map((state, index) => {
                     const isLast = index === states.length - 1;
+                    const linkHref = state === "cars" ? "/cars" : `/cars/${state}`;
+
                     return (
                         <React.Fragment key={index}>
                             {isLast ? (
                                 <li>{state}</li>
                             ) : (
                                 <li>
-                                    <Link href={`/cars/${state}`}>{state}</Link>
+                                    <Link href={linkHref}>{state}</Link>
                                 </li>
                             )}
                         </React.Fragment>

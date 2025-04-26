@@ -1,52 +1,29 @@
-import ProductCard from "@/Components/ProductCard/ProductCard";
-import React, { Suspense } from "react";
-import productsData from "@/DummyData/Products.json";
-import ProductCardSkeleton from "@/Components/ProductCard/ProductCardSkeleton";
+import React, { Suspense, useEffect } from "react";
 import "./FilteredCars.scss";
 import FullProductCard from "@/Components/FullProductCard/FullProductCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
+import ProductCardSkeleton from "@/Components/ProductCard/ProductCardSkeleton";
+import ProductCard from "@/Components/ProductCard/ProductCard";
 
 function FilteredCars(props) {
+
+    const premiumCars = props?.premiumCars;
+
+    useEffect(() => {
+        console.log("Filtered Cars", premiumCars)
+
+    }, [premiumCars])
+
     return (
         <div className="filteredCars">
-            {/* <Swiper
-                modules={[Navigation, Pagination]}
-                spaceBetween={16}
-                slidesPerView={1} // Default for smaller screens
-                pagination={{ clickable: true }}
-                breakpoints={{
-                    575: {
-                        slidesPerView: 2
-                    },
-                    768: {
-                        slidesPerView: 3
-                    }
-                }}
-            >
+            <div class="premiumRow">
                 {props?.premium && (
                     <>
-                        {props?.carsData &&
-                            props?.carsData?.slice(0, 3).map((item, index) => (
-                                <Suspense key={index} fallback={<ProductCardSkeleton />}>
-                                    <SwiperSlide>
-                                        <ProductCard premium className={"premium"} data={item} />
-                                    </SwiperSlide>
-                                </Suspense>
-                            ))}
+                        {premiumCars?.carDetails?.map((item, index) => (
+                            <Suspense key={index} fallback={<ProductCardSkeleton />}>
+                                <ProductCard premium className={"premium"} data={item?.car} />
+                            </Suspense>
+                        ))}
                     </>
-                )}
-            </Swiper> */}
-            <div className="resultRow">
-                {props?.carsData?.length > 0 ? (
-                    props?.carsData.map((item, index) => <FullProductCard data={item} featured key={index} />)
-                ) : (
-                    <div className="noResult">
-                        <p>No cars found.</p>
-                    </div>
                 )}
             </div>
 
@@ -58,6 +35,16 @@ function FilteredCars(props) {
                     </p>
                 </div>
             )} */}
+
+            <div className="resultRow">
+                {props?.carsData?.length > 0 ? (
+                    props?.carsData.map((item, index) => <FullProductCard data={item} featured key={index} />)
+                ) : (
+                    <div className="noResult">
+                        <p>No cars found.</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

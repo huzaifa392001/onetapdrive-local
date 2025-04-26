@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import Spinner from "@/Components/Spinner/Spinner";
 import { updateCarStatus } from "@/Services/AdminServices/AdminCars";
 import { useRow } from "@/contexts/RowContext";
-import { changeUserStatus } from "@/Services/AdminServices/AdminServices";
+import { changeUserStatus, markPremium, removePremium } from "@/Services/AdminServices/AdminServices";
 import "./adminTable.scss";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -22,6 +22,7 @@ const AdminDataTable = (props) => {
     const showAdminActions = props?.showAdminCarActions || false;
     const showAction = props?.showAction || false;
     const showUserAction = props?.showUserAction || false;
+    const premiumAction = props?.premiumAction || false;
     const pathName = usePathname();
     const statusMutation = useMutation({
         mutationFn: updateCarStatus,
@@ -36,6 +37,28 @@ const AdminDataTable = (props) => {
 
     const changeUserMutation = useMutation({
         mutationFn: changeUserStatus,
+        onSuccess: () => {
+            toast.success("Status Updated");
+            props.refetchData()
+        },
+        onError: () => {
+            toast.error("Failed to update status");
+        }
+    })
+
+    const markPremiumMutation = useMutation({
+        mutationFn: markPremium,
+        onSuccess: () => {
+            toast.success("Status Updated");
+            props.refetchData()
+        },
+        onError: (e) => {
+            toast.error(e?.response?.data?.message);
+        }
+    })
+
+    const removePremiumMutation = useMutation({
+        mutationFn: removePremium,
         onSuccess: () => {
             toast.success("Status Updated");
             props.refetchData()
@@ -76,6 +99,18 @@ const AdminDataTable = (props) => {
                                 const currentStatus = params.data?.status;
 
                                 return <p>{currentStatus ? "Active" : "Inactive"}</p>;
+                            }
+                        };
+                    }
+                    if (key === "premium") {
+                        return {
+                            field: key,
+                            headerName: "Premium",
+                            flex: 1,
+                            cellRenderer: (params) => {
+                                const currentStatus = params.data?.premium;
+
+                                return <p>{currentStatus ? "Premium" : "Not Premium"}</p>;
                             }
                         };
                     }
@@ -195,6 +230,33 @@ const AdminDataTable = (props) => {
                 }
             };
 
+            const premiumActionColumn = {
+                headerName: "Action",
+                flex: 1,
+                cellRenderer: (params) => {
+                    const id = params.data?.id;
+                    const currentStatus = params.data?.premium;
+                    if (!premiumAction) {
+                        return null;
+                    }
+                    return (
+                        <div className="btnCont">
+                            <button
+                                title="Toggle Status"
+                                className={`themeBtn statusBtn iconBtn ${currentStatus === true ? "active" : "inactive"
+                                    } ${markPremiumMutation.isPending || removePremiumMutation.isPending ? "disabled" : ""}`}
+                                onClick={() => {
+                                    currentStatus === true ? removePremiumMutation.mutate(id) : markPremiumMutation.mutate(id)
+                                }}
+                                disabled={markPremiumMutation.isPending || removePremiumMutation.isPending}
+                            >
+                                <i className="fas fa-power-off" />
+                            </button>
+                        </div>
+                    );
+                }
+            };
+
             const userActionColumn = {
                 headerName: "Action",
                 flex: 1,
@@ -263,7 +325,8 @@ const AdminDataTable = (props) => {
                 ...dynamicFields,
                 ...(showAdminActions ? carAction : []),
                 ...(showAction ? [actionColumn] : []),
-                ...(showUserAction ? [userActionColumn] : [])
+                ...(showUserAction ? [userActionColumn] : []),
+                ...(premiumAction ? [premiumActionColumn] : []),
             ]);
         }
     }, [rowData, showAdminActions]); // 👈 Add showAdminActions as a dependency

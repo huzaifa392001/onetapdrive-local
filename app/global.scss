@@ -424,10 +424,13 @@ section {
         }
     }
 
-    &.checkbox {
-        .checkBoxCont {
+    &.checkbox,
+    &.radio {
+        .checkBoxCont,
+        .radioBoxCont {
             @apply flex items-center gap-x-3;
-            .checkBoxHolder {
+            .checkBoxHolder,
+            .radioBoxHolder {
                 @apply relative w-5 h-5 border border-[var(--grey-color)] rounded-sm m-0;
 
                 input {

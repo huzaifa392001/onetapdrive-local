@@ -9,14 +9,14 @@ import { useSelector } from "react-redux";
 import Image from "next/image";
 
 function LicenseLayout() {
-    const tradeLicense = useSelector((state) => state.auth.vendorDetails?.vendorProfile?.tradeLicense);
+    const vendor = useSelector((state) => state.auth.vendorDetails?.vendorProfile);
     const [file, setFile] = useState(null);
     const [filePreview, setFilePreview] = useState("");
-    const [expiryDate, setExpiryDate] = useState("");
+    const [expiryDate, setExpiryDate] = useState(vendor?.licenseExpiryDate || "");
 
     useEffect(() => {
-        console.log("tradeLicense=> ", tradeLicense)
-    }, [tradeLicense])
+        console.log("vendor=> ", vendor)
+    }, [vendor])
 
     const handleFileChange = (e) => {
         const uploadedFile = e.target.files[0];
@@ -129,9 +129,9 @@ function LicenseLayout() {
                                         View Uploaded File
                                     </a>
                                 )
-                            ) : tradeLicense ? (
+                            ) : vendor ? (
                                 <img
-                                    src={tradeLicense}
+                                    src={vendor?.tradeLicense}
                                     alt="Trade License"
                                     className="previewImage"
                                     style={{ maxWidth: '100%', maxHeight: '400px' }}

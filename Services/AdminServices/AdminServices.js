@@ -91,3 +91,48 @@ export const getAllLeads = async () => {
         throw error;
     }
 }
+
+export const getPremiumCar = async ({ premium, vendorId, categoryId }) => {
+    try {
+        const params = new URLSearchParams();
+
+        if (premium) params.append("premium", premium);
+        if (vendorId) params.append("vendor_id", vendorId);
+        if (categoryId) params.append("category_id", categoryId);
+
+        const response = await API.get(`/cars/premium/listing?${params.toString()}`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getAdminDashboard = async () => {
+    try {
+        const response = await API.get("/dashboard/admin");
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching vendor dashboard data:", error);
+        throw error;
+    }
+}
+
+export const markPremium = async (id) => {
+    try {
+        const response = await API.post(`/cars/premium/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error marking car as premium:", error);
+        throw error;
+    }
+}
+
+export const removePremium = async (id) => {
+    try {
+        const response = await API.delete(`/cars/premium/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error marking car as premium:", error);
+        throw error;
+    }
+}

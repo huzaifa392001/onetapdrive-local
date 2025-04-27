@@ -304,7 +304,7 @@
 }
 
 .filtersCont {
-    @apply fixed inset-0 h-screen w-full z-50 select-none pointer-events-none;
+    @apply fixed inset-0 h-[100dvh] w-full z-50 select-none pointer-events-none;
 
     &.active {
         @apply pointer-events-auto select-auto;
@@ -320,7 +320,7 @@
         @apply fixed inset-0 bg-[#0005] backdrop-blur-sm opacity-0 invisible transition-all duration-300 ease-linear;
     }
     .filterMenu {
-        @apply bg-[var(--white)] absolute right-[-450px] top-0 max-w-[450px] w-full h-screen overflow-y-auto transition-all duration-300 ease-linear flex flex-col;
+        @apply bg-[var(--white)] absolute right-[-450px] top-0 max-w-[450px] w-full h-[100dvh] overflow-y-auto transition-all duration-300 ease-linear flex flex-col;
 
         .filterHeader {
             @apply flex items-center justify-between pl-3 py-0 border-b-2;

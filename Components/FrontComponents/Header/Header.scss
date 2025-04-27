@@ -241,11 +241,11 @@
             }
         }
         .backDropBg {
-            @apply fixed inset-0 w-screen h-screen bg-[#0009] backdrop-blur-sm z-0 transition-all duration-300 opacity-0 invisible;
+            @apply fixed inset-0 w-screen h-[100dvh] bg-[#0009] backdrop-blur-sm z-0 transition-all duration-300 opacity-0 invisible;
         }
 
         .menuCont {
-            @apply fixed h-screen overflow-y-auto max-w-[300px] w-full top-0 bg-[var(--white)] z-10 transition-all duration-300 pt-14 shadow-md -left-[300px];
+            @apply fixed h-[100dvh] overflow-y-auto max-w-[300px] w-full top-0 bg-[var(--white)] z-10 transition-all duration-300 pt-14 shadow-md -left-[300px];
 
             &:has(h4) {
                 @apply pt-0;

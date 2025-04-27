@@ -1,5 +1,5 @@
 .adminWrapper {
-    @apply flex flex-wrap h-screen overflow-hidden;
+    @apply flex flex-wrap h-[100dvh] overflow-hidden;
     .adminContentWrap {
         width: calc(100% - 300px);
         flex: 0 1 calc(100% - 300px);

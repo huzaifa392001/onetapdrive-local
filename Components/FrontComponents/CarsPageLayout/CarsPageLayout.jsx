@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import FilteredCars from "../FilteredCars/FilteredCars";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCars, getBrandsCars, getCategorizedCars, getPremiumCars } from "@/Services/FrontServices/GeneralServices";
+import { getAllCars, getBrandsCars, getCategorizedCars, getEconomyCars, getPremiumCars } from "@/Services/FrontServices/GeneralServices";
 import Loading from "@/Components/Loading/Loading";
 import Link from "next/link";
 import { store } from "@/Redux/Store";
@@ -52,11 +52,14 @@ function CarsPageLayout({ brands, searched }) {
     const { data: carsData, isPending } = useQuery({
         queryKey: ["cars", brands ? "brand" : "category", activeRoute, page, perPage],
         queryFn: () =>
-            activeRoute === "all"
-                ? getAllCars({ page, perPage })
-                : brands
-                    ? getBrandsCars({ brand: activeRoute || "", page, perPage })
-                    : getCategorizedCars({ category: activeRoute || "", page, perPage }),
+            activeRoute === "economy-cars"
+                ?
+                getEconomyCars()
+                : activeRoute === "all"
+                    ? getAllCars({ page, perPage })
+                    : brands
+                        ? getBrandsCars({ brand: activeRoute || "", page, perPage })
+                        : getCategorizedCars({ category: activeRoute || "", page, perPage }),
         enabled: !searched
     });
 

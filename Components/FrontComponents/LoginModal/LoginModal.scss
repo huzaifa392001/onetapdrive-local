@@ -17,7 +17,7 @@ body {
     }
 
     .modalWrap {
-        @apply relative bg-[var(--white)] rounded-xl overflow-hidden lg:max-w-[40%] md:max-w-[80%] w-[95%];
+        @apply relative bg-[var(--white)] rounded-xl overflow-hidden lg:max-w-[40%] md:max-w-[80%] w-[95%] overflow-y-auto max-h-[90vh];
         .modalHeader {
             @apply flex items-center justify-between px-3 border-b border-b-[#bdbdbd];
 
@@ -32,6 +32,7 @@ body {
         .modalBody {
             @apply grid grid-cols-1 lg:grid-cols-2 px-3 py-5 gap-x-3;
             .content {
+                @apply md:block hidden;
                 figure {
                     @apply w-full h-[220px];
                     img {

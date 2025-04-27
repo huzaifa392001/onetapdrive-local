@@ -282,12 +282,12 @@
 }
 
 .sideModal {
-    @apply fixed inset-0 z-[99999] h-screen invisible select-none opacity-0 transition-all duration-300 overflow-hidden;
+    @apply fixed inset-0 z-[99999] h-[100dvh] invisible select-none opacity-0 transition-all duration-300 overflow-hidden;
     .backdrop {
         @apply absolute inset-0 bg-[#0005]  backdrop-blur transition-all duration-300 opacity-0 invisible h-full;
     }
     .modalContent {
-        @apply absolute h-screen max-w-[500px] w-full bg-[var(--white)] top-0 z-10 -right-full transition-all duration-300 overflow-y-auto;
+        @apply absolute h-[100dvh] max-w-[500px] w-full bg-[var(--white)] top-0 z-10 -right-full transition-all duration-300 overflow-y-auto;
         .modalHeader {
             @apply flex items-center justify-between border-b py-2 px-3;
             h2 {

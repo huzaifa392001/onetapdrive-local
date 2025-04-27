@@ -1,5 +1,5 @@
 .vendorLoginSec {
-    @apply flex items-center justify-center min-h-screen bg-[var(--white)] relative overflow-hidden;
+    @apply flex items-center justify-center min-h-[100dvh] bg-[var(--white)] relative overflow-hidden;
     .login-container {
         @apply relative z-20 w-full max-w-[800px] backdrop-blur-[20px] rounded-[24px] p-12 text-black overflow-hidden flex flex-col gap-y-3;
         background: var(--white);

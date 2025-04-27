@@ -24,7 +24,7 @@ function LoginModal() {
     }, []);
 
     return (
-        <div className={`modal ${visibility == true ? "visible" : ""}`}>
+        <div data-lenis-prevent className={`modal ${visibility == true ? "visible" : ""}`}>
             <div className="modalBackdrop" onClick={handleModalVisible} />
             <div className="modalWrap">
                 <div className="modalHeader">

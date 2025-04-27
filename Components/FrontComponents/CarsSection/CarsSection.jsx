@@ -4,7 +4,14 @@ import ProductCardSkeleton from "@/Components/ProductCard/ProductCardSkeleton";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
 import "./CarsSection.scss";
+
+import { Pagination } from 'swiper/modules';
 
 function CarsSection(props) {
     const [windowWidth, setWindowWidth] = useState(0);
@@ -35,24 +42,56 @@ function CarsSection(props) {
             <div className="customContainer">
                 <div className="headingCont">
                     <SecHeading heading={props?.secHeading} />
-                    {/* {!props?.limited && (
-                        <Link href={""} className="themeBtn">
+                    {!props?.limited && (
+                        <Link href={props?.btnLink || ""} className="themeBtn">
                             View All
                         </Link>
-                    )} */}
+                    )}
                 </div>
-                <div className="prodRow col4">
+                <Swiper
+                    pagination={{
+                        dynamicBullets: true,
+                    }}
+                    slidesPerView={1}
+                    spaceBetween={0}
+                    modules={[Pagination]}
+                    className="mySwiper"
+                    breakpoints={{
+                        575: {
+                            slidesPerView: 2,
+                            spaceBetween: 20,
+                        },
+                        768: {
+                            slidesPerView: 2,
+                            spaceBetween: 20,
+                        },
+                        992: {
+                            slidesPerView: 3,
+                            spaceBetween: 20,
+                        },
+                        1025: {
+                            slidesPerView: 4,
+                            spaceBetween: 20,
+                        },
+                    }}
+                >
                     {Array.isArray(props?.data) &&
-                        props?.data?.slice(0, total || 1).map((product, index) => (
-                            <Suspense key={index} fallback={<ProductCardSkeleton />}>
-                                <ProductCard
-                                    featured={props?.isFeatured}
-                                    className={`${props?.isFeatured ? "featured" : ""}`}
-                                    data={product}
-                                />
-                            </Suspense>
+                        props?.data?.map((product, index) => (
+                            <SwiperSlide key={index}>
+                                <Suspense fallback={<ProductCardSkeleton />}>
+                                    <ProductCard
+                                        featured={props?.isFeatured}
+                                        className={`${props?.isFeatured ? "featured" : ""}`}
+                                        data={product}
+                                    />
+                                </Suspense>
+                            </SwiperSlide>
                         ))}
-                </div>
+                </Swiper>
+                {/* <div className="prodRow col4">
+
+
+                </div> */}
             </div>
         </section>
     );

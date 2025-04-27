@@ -12,7 +12,7 @@ import FAQsSection from "@/Components/FAQsSection/FAQsSection";
 import SecHeading from "@/Components/SecHeading/SecHeading";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCars, getEconomyCars, getExoticCars } from "@/Services/FrontServices/GeneralServices";
+import { getAllCars, getCategorizedCars, getEconomyCars, getExoticCars } from "@/Services/FrontServices/GeneralServices";
 import Loading from "@/app/(home)/loading";
 
 function HomePageLayout() {
@@ -26,7 +26,12 @@ function HomePageLayout() {
 
     const { data: luxuryProducts, isPending: isLuxuryPending } = useQuery({
         queryKey: ['luxuryCar'],
-        queryFn: () => getExoticCars()
+        queryFn: () => getCategorizedCars({ category: "luxury" })
+    })
+
+    const { data: suvProducts, isPending: isSuvPending } = useQuery({
+        queryKey: ['suvCars'],
+        queryFn: () => getCategorizedCars({ category: "suv" })
     })
 
     const { data: economyProducts, isPending: isEconomyPending } = useQuery({
@@ -82,7 +87,7 @@ function HomePageLayout() {
         });
     });
 
-    if (isPending, isLuxuryPending, isEconomyPending) return <Loading />;
+    if (isPending, isLuxuryPending, isEconomyPending, isSuvPending) return <Loading />;
 
     return (
         <>
@@ -107,7 +112,7 @@ function HomePageLayout() {
                 </section>
             )}
             <Brands />
-            <CarsSection secHeading={"Dubai Car Rental"} data={productsData} />
+            <CarsSection secHeading={"Dubai Car Rental"} btnLink={`/cars/all`} data={productsData} />
             <section className="addBanner">
                 <div className="customContainer">
                     <figure className="imgCont">
@@ -115,7 +120,7 @@ function HomePageLayout() {
                     </figure>
                 </div>
             </section>
-            <CarsSection secHeading={"Exotic Car Rental"} data={luxuryProducts?.data?.cars?.slice(0, 4)} />
+            <CarsSection secHeading={"Exotic Car Rental"} btnLink={`/cars/luxury`} data={luxuryProducts?.data?.cars?.slice(0, 4)} />
             <section className="addBanner">
                 <div className="customContainer">
                     <figure className="imgCont">
@@ -123,7 +128,7 @@ function HomePageLayout() {
                     </figure>
                 </div>
             </section>
-            <CarsSection isFeatured secHeading={"Economy Cars"} data={economyProducts?.data?.cars?.slice(0, 4)} />
+            <CarsSection isFeatured secHeading={"Economy Cars"} btnLink={`/cars/economy-cars`} data={economyProducts?.data?.cars?.slice(0, 4)} />
             {/* New Section  */}
 
             <section className="docSec" style={{ backgroundImage: "url('/images/doc-sec-bg.webp')" }}>
@@ -170,6 +175,7 @@ function HomePageLayout() {
                     </div>
                 </div>
             </section>
+            <CarsSection isFeatured secHeading={"Suv Cars"} btnLink={`/cars/suv`} data={suvProducts?.data?.cars?.slice(0, 4)} />
             {/* <CarsSection secHeading={"Car with driver"} data={productsData} /> */}
             <section className="benefitSec" style={{ backgroundImage: "url('/images/benefits-sec-bg.webp')" }}>
                 <div className="customContainer">

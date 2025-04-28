@@ -52,12 +52,12 @@ function SignUp({ setModal }) {
             colWidth: "col_md_6"
         },
         {
-            type: "input",
+            type: "tel",
             name: "phoneNumber",
             placeholder: "Enter your Phone Number",
             label: "Phone Number",
             inputtype: "tel",
-            req: true
+            req: true,
         },
         {
             type: "input",

@@ -18,9 +18,9 @@ html {
         font-size: 14px !important; // md
     }
 
-        @include respond-to($breakpoint-sm) {
-            font-size: 13px !important; // sm
-        }
+    @include respond-to($breakpoint-sm) {
+        font-size: 13px !important; // sm
+    }
 
     @include respond-to($breakpoint-xs) {
         font-size: 11px !important; // xs

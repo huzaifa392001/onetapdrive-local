@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import "./OtpModal.scss";
 import { useMutation } from "@tanstack/react-query";
-import { sendOtp, verifyOtp } from "@/Services/AuthService/AuthService";
+import { getCurrentUser, sendOtp, verifyOtp } from "@/Services/AuthService/AuthService";
 import { toast } from "react-toastify";
 import Spinner from "@/Components/Spinner/Spinner";
 
@@ -34,6 +34,7 @@ function OtpModal() {
         mutationFn: verifyOtp,
         onSuccess: () => {
             handleModalVisible();
+            getCurrentUser()
             toast.success("Thank you for Verification");
         },
         onError: () => {

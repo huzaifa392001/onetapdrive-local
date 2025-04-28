@@ -9,7 +9,8 @@ const generalSlice = createSlice({
         brands: [],
         currentLocation: "", // Stores city name or user-provided location
         userModalStatus: false,
-        otpModalStatus: false
+        otpModalStatus: false,
+        lenisDisable: false,
     },
     reducers: {
         SET_DOWNLOAD_POPUP(state, action) {
@@ -32,7 +33,11 @@ const generalSlice = createSlice({
         },
         SET_OTP_MODAL_STATUS(state, action) {
             state.otpModalStatus = action.payload
-        }
+        },
+        SET_LENIS_DISABLE(state, action) {
+            state.lenisDisable = action.payload;
+        },
+
     },
 });
 
@@ -43,6 +48,7 @@ export const {
     SET_USER_MODAL_STATUS,
     SET_CITIES,
     SET_BRANDS,
-    SET_OTP_MODAL_STATUS
+    SET_OTP_MODAL_STATUS,
+    SET_LENIS_DISABLE,
 } = generalSlice.actions;
 export default generalSlice.reducer;

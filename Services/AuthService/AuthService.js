@@ -136,6 +136,32 @@ export const verifyOtp = async (data) => {
 export const getCurrentUser = async () => {
     try {
         const res = await API.get("/auth/profile")
+        if (res?.data?.data?.user_details?.role?.name === "superadmin") {
+            store.dispatch(SET_ADMIN_DETAILS(res?.data?.data?.user_details));
+            store.dispatch(SET_IS_ADMIN(true));
+            store.dispatch(SET_VENDOR_DETAILS(null));
+            store.dispatch(SET_IS_VENDOR(false));
+            store.dispatch(SET_USER_DETAILS(null));
+            store.dispatch(SET_IS_USER(false));
+        }
+        else if (res?.data?.data?.user_details?.role?.name === "vendor") {
+            if (res?.data?.data?.user_details?.status) {
+                store.dispatch(SET_VENDOR_DETAILS(res?.data?.data?.user_details));
+                store.dispatch(SET_IS_VENDOR(true));
+                store.dispatch(SET_ADMIN_DETAILS(null));
+                store.dispatch(SET_IS_ADMIN(false));
+                store.dispatch(SET_USER_DETAILS(null));
+                store.dispatch(SET_IS_USER(false));
+            }
+        }
+        else if (res?.data?.data?.user_details?.role?.name === "client") {
+            store.dispatch(SET_USER_DETAILS(res?.data?.data?.user_details));
+            store.dispatch(SET_IS_USER(true));
+            store.dispatch(SET_VENDOR_DETAILS(null));
+            store.dispatch(SET_IS_VENDOR(false));
+            store.dispatch(SET_ADMIN_DETAILS(null));
+            store.dispatch(SET_IS_ADMIN(false));
+        }
         return res?.data;
     } catch (e) {
         console.error("Error getting all cars:", e);

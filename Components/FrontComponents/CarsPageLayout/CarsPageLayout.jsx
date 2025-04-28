@@ -151,7 +151,6 @@ function CarsPageLayout({ brands, searched }) {
 
     useEffect(() => {
         if (searched) {
-            console.log("searchResult=> ", searchResult);
             setData(searchResult);
             setPage(1);
             setHasMore(false);

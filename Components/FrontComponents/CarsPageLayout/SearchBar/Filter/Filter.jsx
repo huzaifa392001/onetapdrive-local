@@ -117,7 +117,6 @@ function Filter({ handle, filterState }) {
     const searchMutation = useMutation({
         mutationFn: (searchParams) => SearchServices.filterCars(searchParams),
         onSuccess: (data) => {
-            console.log("Search results:", data);
             store.dispatch(SET_SEARCH_RESULT(data?.data));
             handleFilterState(false);
             router.push("/search"); // Redirect to search results page

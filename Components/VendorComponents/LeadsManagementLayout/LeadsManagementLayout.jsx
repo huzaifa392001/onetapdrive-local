@@ -18,7 +18,6 @@ const LeadsManagementLayout = () => {
     })
 
     useEffect(() => {
-        console.log("leadsData=> ", leadsData)
         const transformedData =
             leadsData?.data?.map((lead) => ({
                 id: lead.id,

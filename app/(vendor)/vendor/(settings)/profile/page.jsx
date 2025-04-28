@@ -26,7 +26,6 @@ function Page() {
     const updateVendorMutation = useMutation({
         mutationFn: updateVendor,
         onSuccess: (data) => {
-            console.log("data=> ", data);
             toast.success(data?.message);
             reset();
             router.push("/vendor");
@@ -124,7 +123,6 @@ function Page() {
         if (vendor?.data?.user) {
             const userData = vendor.data.user;
             const vendorProfile = userData.vendorProfile;
-            console.log("userData=> ", userData)
             if (vendorProfile) {
                 setValue("fullName", userData.firstName || "");
                 setValue("email", userData.email || "");

@@ -30,10 +30,7 @@ function CarsSection(props) {
             setWindowWidth(window.innerWidth); // Update the windowWidth when the window is resized
         });
     });
-    // useEffect(() => {
-    //     console.log("props?.data=> ", props?.data);
-    // }, [props?.data]);
-
+    
     // Don't render the component if data is empty or undefined
     if (!props?.data || props?.data?.length === 0) return null;
 

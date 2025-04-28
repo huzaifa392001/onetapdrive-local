@@ -39,8 +39,6 @@ const SelectField = (props) => {
                             : props.options?.find(
                                 (opt) => opt.value === value
                             ) || value;
-
-                        // console.log("props?.options=> ", props?.options);
                         return (
                             <div className="select__wrapper">
                                 <Select

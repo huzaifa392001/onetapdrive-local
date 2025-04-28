@@ -43,7 +43,6 @@ function Page() {
     const signupMutation = useMutation({
         mutationFn: vendorSignup,
         onSuccess: (data) => {
-            console.log("data=> ", data);
             toast.success(data?.message);
             // Reset form
             reset();

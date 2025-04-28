@@ -18,7 +18,6 @@ function SingleBlogLayout() {
         const tempBlog = blogsData.find((blog) => blog.slug === route);
         setBlog(tempBlog);
         setDate(formatDate(tempBlog?.date_posted))
-        console.log(tempBlog)
     }, [route]);
 
     if (!blog) {

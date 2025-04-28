@@ -41,7 +41,6 @@ function HomePageLayout() {
 
 
     useEffect(() => {
-        console.log("products", products);
         setProductsData(products?.data?.cars?.slice(0, 4));
     }, [products]);
 
@@ -93,6 +92,7 @@ function HomePageLayout() {
         <>
             <HomeBanner />
             <Categories />
+            <Brands />
             {windowWidth > 768 && (
                 <section className="customBanner" style={{ backgroundImage: "url(/images/mercedes.webp)" }}>
                     <div className="content">
@@ -111,7 +111,6 @@ function HomePageLayout() {
                     </div>
                 </section>
             )}
-            <Brands />
             <CarsSection secHeading={"Dubai Car Rental"} btnLink={`/cars/all`} data={productsData} />
             <section className="addBanner">
                 <div className="customContainer">

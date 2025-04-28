@@ -14,10 +14,6 @@ function LicenseLayout() {
     const [filePreview, setFilePreview] = useState("");
     const [expiryDate, setExpiryDate] = useState(vendor?.licenseExpiryDate || "");
 
-    useEffect(() => {
-        console.log("vendor=> ", vendor)
-    }, [vendor])
-
     const handleFileChange = (e) => {
         const uploadedFile = e.target.files[0];
         if (uploadedFile) {
@@ -42,8 +38,6 @@ function LicenseLayout() {
             alert("Please select a license expiry date.");
             return;
         }
-
-        console.log("Submitting:", { file, expiryDate });
 
         // Create a new FormData instance
         const formData = new FormData();

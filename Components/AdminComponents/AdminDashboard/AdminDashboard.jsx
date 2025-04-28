@@ -15,7 +15,6 @@ export default function AdminDashboard() {
     })
 
     useEffect(() => {
-        // console.log("Dashboard Data", dashboardData)
         setListingData(dashboardData?.cars)
         setUsersData(dashboardData?.users)
     }, [dashboardData])

@@ -143,13 +143,8 @@ function AddCar({ edit }) {
         }
     });
 
-    useEffect(() => {
-        console.log("errors=> ", errors);
-    }, [errors]);
-
     // Form submission handler
     const onSubmit = (data) => {
-        console.log('data=> ', data)
         addCarMutation.mutate(data);
     };
 

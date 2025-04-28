@@ -32,7 +32,6 @@ const Page = () => {
             })) || [];
 
         setVendorCarData(transformedData);
-        console.log("Vendor Car Data", vendorData);
     }, [vendorData]);
 
     if (isPending) return <Loading />;

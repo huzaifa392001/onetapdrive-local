@@ -7,9 +7,6 @@ import ProductCard from "@/Components/ProductCard/ProductCard";
 function FilteredCars(props) {
 
     const premiumCars = props?.premiumCars;
-    useEffect(() => {
-        console.log("paginationData=>", props?.paginationData)
-    }, [props?.paginationData])
 
     return (
         <div className="filteredCars">

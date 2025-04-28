@@ -2,6 +2,7 @@ import React from "react";
 import "./CategoryCard.scss";
 import Image from "next/image";
 import Link from "next/link";
+import ImageWithFallback from "@/Components/ImageWithFallback/ImageWithFallback";
 
 function CategoryCard(props) {
     const category = props.data;
@@ -9,7 +10,7 @@ function CategoryCard(props) {
     return (
         <Link href={`/cars/${category?.slug}`} className="categoryCard">
             <figure>
-                <Image
+                <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                     src={category?.image || category?.img || ""}
                     width={200}
                     height={200}

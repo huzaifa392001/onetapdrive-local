@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Spinner from "@/Components/Spinner/Spinner";
 import { useSelector } from "react-redux";
+import ImageWithFallback from "@/Components/ImageWithFallback/ImageWithFallback";
 
 function ListCarPageLayout() {
     const cities = useSelector((state) => state.general.cities);
@@ -43,7 +44,6 @@ function ListCarPageLayout() {
     const signupMutation = useMutation({
         mutationFn: vendorSignup,
         onSuccess: (data) => {
-            console.log("data=> ", data);
             toast.success(data?.message);
             // Reset form
             reset();
@@ -594,7 +594,7 @@ function ListCarPageLayout() {
                 <div className="imagesGrid">
                     {images.map((_, index) => (
                         <figure key={index}>
-                            <Image src={`/images/cars/${index + 1}.webp`} alt={`gallery image ${index + 1}`} fill />
+                            <ImageWithFallback fallbackSrc="/images/noImage.jpg" src={`/images/cars/${index + 1}.webp`} alt={`gallery image ${index + 1}`} fill />
                         </figure>
                     ))}
                 </div>

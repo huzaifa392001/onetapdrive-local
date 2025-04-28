@@ -16,7 +16,6 @@ const Page = () => {
     });
 
     useEffect(() => {
-        console.log("vendorsApiData=> ", vendorsApiData)
         const transformed = vendorsApiData?.data?.map(item => ({
             id: item.userId,
             name: item?.user?.firstName,

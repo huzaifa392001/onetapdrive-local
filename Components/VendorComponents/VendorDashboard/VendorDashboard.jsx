@@ -17,7 +17,6 @@ export default function VendorDashboard() {
     })
 
     useEffect(() => {
-        console.log("Dashboard Data", dashboardData)
         setListingData(dashboardData?.cars)
 
         // Convert totalLeadsByType object to array format

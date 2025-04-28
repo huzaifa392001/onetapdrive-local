@@ -64,6 +64,34 @@
                 }
             }
         }
+
+        .imgTags {
+            @apply absolute top-3 w-full px-3 flex items-center justify-start gap-x-3 z-[99999];
+            .btnCont {
+                @apply flex items-center ml-auto gap-x-2;
+
+                a,
+                button {
+                    @apply flex items-center justify-center px-3 py-2.5 text-[var(--white)] bg-[#0005] rounded-md backdrop-blur-sm duration-300 transition-all;
+
+                    &:hover {
+                        @apply bg-[var(--black)];
+                    }
+
+                    &.wishlistBtn {
+                        &.active {
+                            @apply text-[red];
+                        }
+                    }
+
+                    &.disabledBtn {
+                        i {
+                            @apply animate-spin text-white;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     .content {

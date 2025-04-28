@@ -26,6 +26,9 @@
         .footerRow {
             @apply grid gap-x-6 grid-cols-12;
             .footerCol {
+                h4 {
+                    @apply text-[1.125rem];
+                }
                 &.col2 {
                     @apply lg:col-span-2 md:col-span-3;
                 }

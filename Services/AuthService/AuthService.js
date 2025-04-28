@@ -5,7 +5,6 @@ import API from "../Constants/api";
 export const login = async (data) => {
     try {
         const res = await API.post("/auth/login", data);
-        console.log("res=> ", res)
         if (res?.data?.data?.user_details?.role?.name === "superadmin") {
             store.dispatch(SET_ADMIN_DETAILS(res?.data?.data?.user_details));
             store.dispatch(SET_IS_ADMIN(true));
@@ -46,7 +45,6 @@ export const adminLogout = async () => {
         store.dispatch(SET_ACCESS_TOKEN(null));
         store.dispatch(SET_IS_ADMIN(false));
         store.dispatch(SET_ADMIN_DETAILS(null))
-        console.log("Logged out successfully");
     } catch (e) {
         console.error(`Error during logout: ${e}`);
         throw new Error(e.response?.data?.message || "Logout failed!");
@@ -59,7 +57,6 @@ export const vendorLogout = async () => {
         store.dispatch(SET_ACCESS_TOKEN(null));
         store.dispatch(SET_IS_VENDOR(false));
         store.dispatch(SET_VENDOR_DETAILS(null))
-        console.log("Logged out successfully");
     } catch (e) {
         console.error(`Error during logout: ${e}`);
         throw new Error(e.response?.data?.message || "Logout failed!");
@@ -100,7 +97,6 @@ export const userLogout = async () => {
         store.dispatch(SET_ACCESS_TOKEN(null));
         store.dispatch(SET_IS_USER(false));
         store.dispatch(SET_USER_DETAILS(null))
-        console.log("Logged out successfully");
     } catch (e) {
         console.error(`Error during logout: ${e}`);
         throw new Error(e.response?.data?.message || "Logout failed!");

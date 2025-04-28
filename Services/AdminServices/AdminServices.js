@@ -30,7 +30,6 @@ export const getAdminAllCars = async ({ page = 1, perPage = 1000 }) => {
 export const getAllleads = async () => {
     try {
         const response = await API.get("/leads/get-leads");
-        console.log("Leads API raw response:", response);
         return response.data;
     } catch (error) {
         throw error;
@@ -41,7 +40,6 @@ export const getAllleads = async () => {
 export const getCarRefresh = async (slug) => {
     try {
         const response = await API.get(`/packages/items-consumption/${slug}`);
-        console.log("Refresh API raw response:", slug, response);
         return response.data;
     } catch (error) {
         throw error;
@@ -53,7 +51,6 @@ export const editCarRefresh = async ({ id, quantity }) => {
         const response = await API.put(`/packages/items-consumption/${id}`, {
             quantity,
         });
-        console.log("Refresh API raw response:", id, quantity, response);
         return response.data;
     } catch (error) {
         throw error;

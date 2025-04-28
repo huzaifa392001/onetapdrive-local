@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 import "./ProductPageLayout.scss";
 import product from "@/DummyData/SingleProduct.json";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import Head from "next/head";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { generateLead, getSingleCar } from "@/Services/FrontServices/GeneralServices";
+import { generateLead, getCategorizedCars, getSingleCar } from "@/Services/FrontServices/GeneralServices";
 import Loading from "@/app/(home)/loading";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -20,13 +20,15 @@ import { getSingleWishlistedCar, toggleWishlist } from "@/Services/UserServices/
 import { toast } from "react-toastify";
 import { store } from "@/Redux/Store";
 import { SET_OTP_MODAL_STATUS, SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
+import ImageWithFallback from "@/Components/ImageWithFallback/ImageWithFallback";
+import CarsSection from "../CarsSection/CarsSection";
 
 function ProductPageLayout() {
     const [data, setData] = useState();
     const [user, setUser] = useState({});
     const [vendor, setVendor] = useState({});
     const [fancyboxIsActive, setFancyboxIsActive] = useState(false);
-    const [isWishlisted, setIsWishlisted] = useState();
+    const [isWishlisted, setIsWishlisted] = useState(false);
     const [activeAccordion, setActiveAccordion] = useState(null); // Track active accordion
     const [activeFaq, setActiveFaq] = useState(null); // Track the active FAQ
     const [activeModal, setActiveModal] = useState(null); // Track which modal is active
@@ -35,6 +37,9 @@ function ProductPageLayout() {
     const route = usePathname().split("/").pop();
     const [isMobile, setIsMobile] = useState(false);
     const loggedInUser = useSelector((state) => state.auth.userDetails);
+    const [isCopied, setIsCopied] = useState(false);
+    const copyTimeoutRef = useRef(null);
+    const [currentCat, setCurrentCat] = useState('');
 
     const faqs = [
         {
@@ -269,7 +274,7 @@ function ProductPageLayout() {
                         <div className="logoSec">
                             <Link href={``} className="brand">
                                 <figure>
-                                    <Image
+                                    <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                         src={`/images/brands/${data?.brand?.image}` || "/images/noImage.jpg"}
                                         alt=""
                                         width={50}
@@ -292,16 +297,29 @@ function ProductPageLayout() {
         queryFn: () => getSingleCar(route)
     });
 
-    const { data: wishlistData, isPending: isWishlistPending } = useQuery({
+    const { data: wishlistData, isPending: isWishlistPending, refetch } = useQuery({
         queryKey: ["wishlist", carData?.data?.id], // good to include the id in the key
         queryFn: () => getSingleWishlistedCar(carData?.data?.id),
         enabled: !!data?.id
     });
 
+    const { data: relatedCars, isPending: isRelatedCarsPending } = useQuery({
+        queryKey: ['relatedCars'],
+        queryFn: () => getCategorizedCars({ category: currentCat.toLowerCase() }),
+        enabled: !!currentCat
+    })
+
     const wishlistMutation = useMutation({
-        mutationFn: () => toggleWishlist(),
-        onSuccess: () => {
-            toast.success("Added To Wishlist");
+        mutationFn: toggleWishlist,
+        onSuccess: (res) => {
+            if (res?.message === "User car wishlist has been added successfully") {
+                setIsWishlisted(true)
+                toast.success("Added To Wishlist");
+            } else {
+                setIsWishlisted(false)
+                toast.success("Removed From Wishlist");
+            }
+            refetch()
         },
         onError: () => {
             toast.error("Failed to add to wishlist");
@@ -370,11 +388,10 @@ function ProductPageLayout() {
         }
 
         const body = {
-            enabled: isWishlisted
+            enable: !isWishlisted
         };
 
         wishlistMutation.mutate({ id: id, body: body });
-        console.log("loggedInUser=> ", loggedInUser);
     };
 
     const openFancyboxFromIndex = (startIndex = 0) => {
@@ -453,6 +470,37 @@ function ProductPageLayout() {
         generateLeadMutation.mutate(body);
     };
 
+    const handleCopyLink = (e) => {
+        e.preventDefault();
+        const url = window.location.origin + `/car/${data?.slug}`;
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                setIsCopied(true);
+
+                // Clear any existing timeout
+                if (copyTimeoutRef.current) {
+                    clearTimeout(copyTimeoutRef.current);
+                }
+
+                // Set new timeout to hide the popup after 2 seconds
+                copyTimeoutRef.current = setTimeout(() => {
+                    setIsCopied(false);
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error("Failed to copy URL: ", error);
+                toast.error("Failed to copy URL");
+            });
+    };
+
+    useEffect(() => {
+        return () => {
+            if (copyTimeoutRef.current) {
+                clearTimeout(copyTimeoutRef.current);
+            }
+        };
+    }, []);
+
     useEffect(() => {
         setIsWishlisted(wishlistData?.data?.isCarWishlist);
     }, [wishlistData]);
@@ -461,9 +509,17 @@ function ProductPageLayout() {
         setData(carData?.data);
         setUser(carData?.data?.user);
         setVendor(carData?.data?.user?.vendorProfile);
+        setCurrentCat(carData?.data?.category?.name);
+
+        return () => {
+            setData();
+            setUser();
+            setVendor();
+            setCurrentCat()
+        }
     }, [carData]);
 
-    if (!data || isPending) return <Loading />;
+    if (isPending && isWishlistPending && isRelatedCarsPending && data) return <Loading />;
 
     return (
         <>
@@ -478,14 +534,13 @@ function ProductPageLayout() {
             <section className="productDetailSec">
                 <div className="customContainer">
                     <BreadCrumb
-                        city={data?.city?.name}
                         brand={data?.model?.brand?.name}
-                        model={data?.model?.name}
+                        category={data?.category?.name}
                     />
 
                     <div className="headingContainer">
                         <figure>
-                            <Image src={data?.model?.brand?.image || "/images/noImage.jpg"} alt="" fill />
+                            <ImageWithFallback fallbackSrc="/images/noImage.jpg" src={data?.model?.brand?.image || "/images/noImage.jpg"} alt="" fill />
                         </figure>
                         <div className="heading">
                             <h1>{data?.model?.brand?.name} {data?.model?.name} {data?.makeYear?.name}</h1>
@@ -513,7 +568,7 @@ function ProductPageLayout() {
                                 {data?.images?.map((item, index) => (
                                     <SwiperSlide key={index}>
                                         <figure>
-                                            <Image
+                                            <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                                 onClick={() => openFancyboxFromIndex(index)}
                                                 src={item?.image || "/images/noImage.jpg"}
                                                 alt="Car Thumbnail Image"
@@ -527,7 +582,7 @@ function ProductPageLayout() {
                         ) : (
                             <>
                                 <figure>
-                                    <Image
+                                    <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                         onClick={() => openFancyboxFromIndex(0)}
                                         src={data?.images?.[0]?.image || "/images/noImage.jpg"}
                                         alt="Car Thumbnail Image"
@@ -543,14 +598,14 @@ function ProductPageLayout() {
                                         if (index === 1) {
                                             return (
                                                 <figure key={index} className="multiImage">
-                                                    <Image
+                                                    <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                                         onClick={() => openFancyboxFromIndex(2)}
                                                         src={data?.images?.[2]?.image || "/images/noImage.jpg"}
                                                         alt={`Car image ${actualIndex + 0}`}
                                                         width={250}
                                                         height={250}
                                                     />
-                                                    <Image
+                                                    <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                                         onClick={() => openFancyboxFromIndex(3)}
                                                         src={data?.images?.[3]?.image || "/images/noImage.jpg"}
                                                         alt={`Car image ${actualIndex + 1}`}
@@ -565,7 +620,7 @@ function ProductPageLayout() {
 
                                         return (
                                             <figure key={index} onClick={() => openFancyboxFromIndex(actualIndex)}>
-                                                <Image
+                                                <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                                     src={image?.image || "/images/noImage.jpg"}
                                                     alt={`Car image ${actualIndex}`}
                                                     width={500}
@@ -581,16 +636,20 @@ function ProductPageLayout() {
                         <div className="imgTags">
                             {renderTags()}
                             <div className="btnCont">
-                                <Link href="">
+                                <button onClick={handleCopyLink} className="shareBtn">
                                     <i className="fal fa-share-alt" />
-                                </Link>
+                                    {isCopied && (
+                                        <span className="copyTooltip">Copied to clipboard!</span>
+                                    )}
+                                </button>
                                 <button
-                                    className={`wishlistBtn ${isWishlistPending ? "disabledBtn" : ""} ${isWishlisted ? "active" : ""
-                                        } `}
+                                    className={`wishlistBtn 
+                                        ${isWishlistPending || wishlistMutation?.isPending ? "disabledBtn" : ""} 
+                                        ${isWishlisted ? "active" : ""} `}
                                     onClick={() => toggleWishlistFunc(data?.id)}
-                                    disabled={isWishlistPending}
+                                    disabled={isWishlistPending || wishlistMutation?.isPending}
                                 >
-                                    <i className={`${isWishlisted ? "fas" : "fal"} fa-heart`} />
+                                    <i className={`${isWishlistPending || wishlistMutation?.isPending ? "fad fa-spinner" : isWishlisted ? "fas fa-heart" : "fal fa-heart"}`} />
                                 </button>
                             </div>
                         </div>
@@ -749,7 +808,7 @@ function ProductPageLayout() {
                             <div className="supplierBox">
                                 <div className="company">
                                     <figure>
-                                        <Image
+                                        <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                             title={vendor?.companyName}
                                             src={vendor?.companyLogo || "/images/noImage.jpg"}
                                             width={80}
@@ -1033,7 +1092,7 @@ function ProductPageLayout() {
                             <div className="logoSec">
                                 <Link href={``} className="brand">
                                     <figure>
-                                        <Image
+                                        <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                                             src={vendor?.companyLogo || "/images/noImage.jpg"}
                                             alt=""
                                             width={50}
@@ -1186,8 +1245,9 @@ function ProductPageLayout() {
                     </a>
                 ))}
             </Fancybox>
+            <CarsSection secHeading={"Related Cars"} btnLink={`/cars/${data?.category?.name.replaceAll(" ", "-")?.toLowerCase()}`} data={relatedCars?.data?.cars?.slice(0, 4)} />
         </>
     );
 }
 
-export default ProductPageLayout;
+export default memo(ProductPageLayout);

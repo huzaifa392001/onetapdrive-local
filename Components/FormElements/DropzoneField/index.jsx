@@ -62,7 +62,6 @@ const Dropzone = ({
         multiple,
         disabled: isFieldDisabled,
         onDrop: (acceptedFiles) => {
-            console.log(acceptedFiles, "acceptedFiles");
             onChange(acceptedFiles);
             setFiles(
                 acceptedFiles.map((file) =>
@@ -126,8 +125,6 @@ const Dropzone = ({
         setFiles([]);
         setdropzoneData?.([]);
     };
-
-    // console.log(files, "files");
 
     return (
         <>

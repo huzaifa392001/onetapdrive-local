@@ -1,20 +1,105 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ProductCard.scss";
+import ImageWithFallback from "../ImageWithFallback/ImageWithFallback";
+import { toggleWishlist } from "@/Services/UserServices/UserServices";
+import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import { store } from "@/Redux/Store";
+import { SET_OTP_MODAL_STATUS, SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
 
 function ProductCard(props) {
+    const loggedInUser = useSelector((state) => state.auth.userDetails);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const product = props?.data;
     const images = product?.thumbnail
         ? [{ name: product?.thumbnail }, ...product?.images?.slice(0, 3)] // Thumbnail + 3 images
         : [...product?.images?.slice(0, 4)]; // 4 images if no thumbnail
+    const [isWishlisted, setIsWishlisted] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
+    const copyTimeoutRef = useRef(null);
+
+    const wishlistMutation = useMutation({
+        mutationFn: toggleWishlist,
+        onSuccess: (res) => {
+            if (res?.message === "User car wishlist has been added successfully") {
+                setIsWishlisted(true)
+                toast.success("Added To Wishlist");
+            } else {
+                setIsWishlisted(false)
+                toast.success("Removed From Wishlist");
+            }
+        },
+        onError: () => {
+            toast.error("Failed to add to wishlist");
+        }
+    });
+
+    const handleCopyLink = (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Stop event propagation to prevent Link redirect
+        const url = window.location.origin + `/car/${product?.slug}`;
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                setIsCopied(true);
+
+                // Clear any existing timeout
+                if (copyTimeoutRef.current) {
+                    clearTimeout(copyTimeoutRef.current);
+                }
+
+                // Set new timeout to hide the popup after 2 seconds
+                copyTimeoutRef.current = setTimeout(() => {
+                    setIsCopied(false);
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error("Failed to copy URL: ", error);
+                toast.error("Failed to copy URL");
+            });
+    };
+
+    const toggleWishlistFunc = (e, id) => {
+        e.preventDefault();
+        e.stopPropagation(); // Stop event propagation to prevent Link redirect
+
+        if (!loggedInUser?.id) {
+            store.dispatch(SET_USER_MODAL_STATUS(true));
+            toast.error("Please Login First");
+            return;
+        }
+
+        if (!loggedInUser?.account_verified) {
+            store.dispatch(SET_OTP_MODAL_STATUS(true));
+            toast.error("Please verify your account first.");
+            return;
+        }
+
+        const body = {
+            enable: !isWishlisted
+        };
+
+        wishlistMutation.mutate({ id: id, body: body });
+    };
+
+    useEffect(() => {
+        return () => {
+            if (copyTimeoutRef.current) {
+                clearTimeout(copyTimeoutRef.current);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        setIsWishlisted(product?.isWishlist);
+    }, [product]);
 
     return (
         <div onMouseLeave={() => setActiveImageIndex(0)} className={`productCard ${props?.className}`}>
             {!props?.premium && (
-                <Link href={`/product/${product?.slug}`}>
+                <Link href={`/car/${product?.slug}`}>
                     <figure className="imgCont">
                         {props?.premium && (
                             <span className="imgTag">
@@ -28,16 +113,34 @@ function ProductCard(props) {
                                 Featured
                             </span>
                         )}
-                        <Image
+                        <ImageWithFallback fallbackSrc="/images/noImage.jpg"
                             src={product?.images?.find((item) => item?.order === 1)?.image || "/images/noImage.jpg"}
                             fill
                             alt=""
                         />
+                        <div className="imgTags">
+                            <div className="btnCont">
+                                <button onClick={handleCopyLink} className="shareBtn">
+                                    <i className="fal fa-share-alt" />
+                                    {isCopied && (
+                                        <span className="copyTooltip">Copied to clipboard!</span>
+                                    )}
+                                </button>
+                                <button
+                                    className={`wishlistBtn ${wishlistMutation?.isPending ? "disabledBtn" : ""} ${isWishlisted ? "active" : ""
+                                        } `}
+                                    onClick={(e) => toggleWishlistFunc(e, product?.id)}
+                                    disabled={wishlistMutation?.isPending}
+                                >
+                                    <i className={`${wishlistMutation?.isPending ? "fad fa-spinner" : isWishlisted ? "fas fa-heart" : "fal fa-heart"}`} />
+                                </button>
+                            </div>
+                        </div>
                     </figure>
                 </Link>
             )}
             {props?.premium && (
-                <Link href={`/product/${product?.slug}`}>
+                <Link href={`/car/${product?.slug}`}>
                     <figure className="imgCont">
                         {props?.premium && (
                             <span className="imgTag">
@@ -53,7 +156,7 @@ function ProductCard(props) {
                         )}
                         {product?.images?.map((image, index) => (
                             <div key={index} className={`imgBox ${activeImageIndex === index ? "active" : ""}`}>
-                                <Image src={image?.image} fill alt="" />
+                                <ImageWithFallback fallbackSrc="/images/noImage.jpg" src={image?.image} fill alt="" />
                                 {index === images?.length - 1 && (
                                     <div className="goToCont">
                                         <h6>Like what you see?</h6>
@@ -78,7 +181,7 @@ function ProductCard(props) {
                 </Link>
             )}
             <div className="content">
-                <Link href={`/product/${product?.slug}`}>
+                <Link href={`/car/${product?.slug}`}>
                     <h3>{product?.model?.brand?.name} {product?.model?.name} {product?.makeYear?.name}</h3>
                     <div className="tags">
                         <span className="tag">
@@ -96,7 +199,7 @@ function ProductCard(props) {
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
-                                <path d="M149.6 41L42.88 254.4c23.8 24.3 53.54 58.8 78.42 97.4 24.5 38.1 44.1 79.7 47.1 119.2h270.3L423.3 41H149.6zM164 64h230l8 192H74l90-192zm86.8 17.99l-141 154.81L339.3 81.99h-88.5zM336 279h64v18h-64v-18z"></path>
+                                <path d="M149.6 41L42.88 254.4c23.8 24.3 53.54 58.8 78.42 97.4 24.5 38.1 44.1 79.7 47.1 119.2h270.3L423.3 41H149.6zM164 64h230l8 192H74l90-192zm86.8 17.99l-141 154.81L339.3 81.99h-88.5zM336 279h64v18h-64v-18zM5 10H2v3h3v-3zm15 5H4v6h2v-4h12v4h2v-6z"></path>
                             </svg>
                         </span>
                         <span className="tag">
@@ -198,7 +301,7 @@ function ProductCard(props) {
                 <div className="divider" />
                 <div className="brandCont">
                     <Link title={product?.user?.vendorProfile?.companyName} href={``} className="brand">
-                        <Image src={product?.user?.vendorProfile?.companyLogo || "/images/noImage.jpg"} fill alt="" />
+                        <ImageWithFallback fallbackSrc="/images/noImage.jpg" src={product?.user?.vendorProfile?.companyLogo || "/images/noImage.jpg"} fill alt="" />
                     </Link>
                     <div className="detail">
                         <ul>

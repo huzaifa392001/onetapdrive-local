@@ -29,7 +29,6 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
             }
         },
         onError: (error) => {
-            console.log("refreshItem", refreshItem);
             if (refreshItem?.used === refreshItem?.quantity) {
                 toast.error("You have used your Active limit, Please make 1 car inactive to make another active");
             } else {

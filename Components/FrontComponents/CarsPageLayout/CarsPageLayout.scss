@@ -33,6 +33,14 @@
                 & + .heading {
                     @apply border-t;
                 }
+
+                &.car {
+                    a {
+                        img {
+                            @apply w-[70px] h-[40px] object-cover rounded-md overflow-hidden;
+                        }
+                    }
+                }
             }
         }
     }

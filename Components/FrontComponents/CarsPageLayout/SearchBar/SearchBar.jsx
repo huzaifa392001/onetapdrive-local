@@ -10,11 +10,11 @@ import brandsData from "@/DummyData/brands.json";
 import { SearchServices } from "@/Services/FrontServices/SearchServices";
 import Image from "next/image";
 import Link from "next/link";
+import ImageWithFallback from "@/Components/ImageWithFallback/ImageWithFallback";
 
 function SearchBar({ sorting }) {
     const categoryData = useSelector((state) => state?.general?.categories);
     const currentCategory = useSelector((state) => state?.search?.searchParam?.category);
-    const [searchFilters, setSearchFilters] = useState(useSelector((state) => state.search.searchParam));
     const [activeDropdown, setActiveDropdown] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(currentCategory);
     const [selectedSort, setSelectedSort] = useState("Daily: High to Low");
@@ -101,7 +101,6 @@ function SearchBar({ sorting }) {
     // Debounced search handler
     const debouncedSearch = useCallback(
         debounce(async (term) => {
-            console.log('term=> ', term)
             if (!term) {
                 setSearchedBrands([]);
                 setSearchedCars([]);
@@ -110,7 +109,6 @@ function SearchBar({ sorting }) {
             }
 
             const result = await SearchServices.getCarSuggestionsByQuery(term)
-            console.log('search result=> ', result)
             if (result) {
                 if (result?.data?.brands?.length > 0) {
                     setSearchedBrands(result.data.brands);
@@ -221,8 +219,9 @@ function SearchBar({ sorting }) {
                                                 Cars
                                             </li>
                                             {searchedCars.map((item, index) => (
-                                                <li key={index}>
-                                                    <Link href={`/product/${item?.slug}`}>
+                                                <li className="car" key={index}>
+                                                    <Link href={`/car/${item?.slug}`}>
+                                                        <ImageWithFallback fallbackSrc="/images/noImage.jpg" src={item.image} alt={item.name} width={100} height={100} />
                                                         <h6>{item?.name}</h6>
                                                     </Link>
                                                 </li>

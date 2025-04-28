@@ -1,15 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
 import ReactApexChart from "react-apexcharts";
 
 function UserChart({ title, description, data = [] }) {
-
-    useEffect(() => {
-
-        console.log("User Chart Data", data);
-    }, [data])
 
     const options = {
         chart: {

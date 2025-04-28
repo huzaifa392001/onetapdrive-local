@@ -11,17 +11,22 @@ function BreadCrumb(props) {
                 </li>
                 {props?.city && (
                     <li>
-                        <Link href={`/cars/${props?.city}`}>{props?.city}</Link>
+                        <Link href={`/cars/${props?.city?.toLowerCase()}`}>{props?.city}</Link>
                     </li>
                 )}
                 {props?.brand && (
                     <li>
-                        <Link href={`/brands/${props?.brand}`}>{props?.brand}</Link>
+                        <Link href={`/brands/${props?.brand?.toLowerCase()}`}>{props?.brand}</Link>
                     </li>
                 )}
                 {props?.model && (
                     <li>
-                        <Link href={`/cars/${props?.model}`}>{props?.model}</Link>
+                        <Link href={`/cars/${props?.model?.toLowerCase()}`}>{props?.model}</Link>
+                    </li>
+                )}
+                {props?.category && (
+                    <li>
+                        <Link href={`/cars/${props?.category?.toLowerCase()}`}>{props?.category}</Link>
                     </li>
                 )}
                 {states?.map((state, index) => {

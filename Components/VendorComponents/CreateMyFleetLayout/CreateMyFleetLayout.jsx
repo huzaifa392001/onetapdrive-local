@@ -23,7 +23,6 @@ function CreateMyFleetLayout() {
 
 
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
     alert(JSON.stringify(data, null, 2));
   };
 

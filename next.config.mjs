@@ -11,6 +11,7 @@ const nextConfig = {
         `,
     },
     images: {
+        domains:['one-tap-drive.s3.amazonaws.com'],
         remotePatterns: [
             {
                 protocol: 'http',

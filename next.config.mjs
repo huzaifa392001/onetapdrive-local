@@ -25,8 +25,23 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'one-tap-drive.s3.amazonaws.com',
+                pathname: '/uploads/**',
+            },
+            {
+                protocol: 'https',
                 hostname: 'onetapdrive.com',
                 pathname: '/staging/static/images/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'one-tap-drive.s3.amazonaws.com',
+                pathname: '/uploads/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'one-tap-drive.s3.amazonaws.com',
+                pathname: '/brands/**',
             },
         ],
     }

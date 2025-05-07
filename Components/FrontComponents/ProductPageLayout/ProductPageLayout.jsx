@@ -16,7 +16,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Fancybox from "@/Components/Fancybox/Fancybox";
-import { getSingleWishlistedCar, toggleWishlist } from "@/Services/UserServices/UserServices";
+import { getSingleWishlistedCar, toggleWishlist, viewedCar } from "@/Services/UserServices/UserServices";
 import { toast } from "react-toastify";
 import { store } from "@/Redux/Store";
 import { SET_OTP_MODAL_STATUS, SET_USER_MODAL_STATUS } from "@/Redux/Slices/General";
@@ -325,6 +325,14 @@ function ProductPageLayout() {
             toast.error("Failed to add to wishlist");
         }
     });
+
+    const viewedMutation = useMutation({
+        mutationFn: viewedCar,
+    })
+
+    useEffect(() => {
+        viewedMutation.mutate(data?.id)
+    }, [data?.id])
 
     const generateLeadMutation = useMutation({
         mutationFn: generateLead,

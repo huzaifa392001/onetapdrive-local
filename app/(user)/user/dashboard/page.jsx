@@ -46,6 +46,9 @@ function Page() {
     };
 
     const activeData = getActiveData();
+    
+    // Determine if we should mark items as wishlisted based on active tab
+    const isWishlistTab = activeTab === "wishlist";
 
     return (
         <section className="userSec">
@@ -71,7 +74,11 @@ function Page() {
                                 <p>No cars found.</p>
                             </div>
                         ) : (
-                            activeData.map((item, index) => <FullProductCard data={item} featured key={index} />)
+                            activeData.map((item, index) => {
+                                // Conditionally add isWishlisted property to the item object
+                                const updatedItem = isWishlistTab ? { ...item, isWishlist: true } : item;
+                                return <FullProductCard data={updatedItem} featured key={index} />
+                            })
                         )}
                     </div>
                 </div>

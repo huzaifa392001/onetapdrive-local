@@ -169,6 +169,20 @@ export const getCurrentUser = async () => {
     }
 }
 
+export const updateUser = async (data) => {
+    try {
+        const res = await API.put("/users/profile", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return res.data;
+    } catch (e) {
+        console.error(`Error making Request: ${e}`);
+        throw new Error(e.response?.data?.message || "Signup failed!");
+    }
+}
+
 export const forgotPassword = async (data) => {
     try {
         const res = await API.post("/auth/forgot-password", data);

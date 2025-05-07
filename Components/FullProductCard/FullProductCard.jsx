@@ -228,7 +228,7 @@ function FullProductCard(props) {
                             {product?.features
                                 ?.slice(0, 3)
                                 ?.map((item, index, array) =>
-                                    `${item?.name ? item?.name + (index < array.length - 1 ? ", " : "") : ""}`
+                                    `${item?.feature?.name ? item?.feature?.name + (index < array.length - 1 ? ", " : "") : ""}`
                                 )}
                         </span>
                     </h3>

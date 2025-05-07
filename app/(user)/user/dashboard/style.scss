@@ -11,6 +11,11 @@
                 }
             }
         }
+        .tabContent {
+            .resultRow {
+                @apply flex flex-col gap-4;
+            }
+        }
         .totalResult {
             @apply border-y py-2 text-center mt-5;
             p {

@@ -10,6 +10,19 @@ export const getVendorCars = async () => {
     }
 };
 
+export const getCwd = async () => {
+    try {
+        const response = await API.get("/cars/driver/listing");
+        return response.data;
+    } catch (error) {
+        console.error("Error creating car:", error);
+        throw error;
+    }
+};
+
+
+
+
 export const getCurrentVendor = async () => {
     try {
         const response = await API.get("/vendors/profile");

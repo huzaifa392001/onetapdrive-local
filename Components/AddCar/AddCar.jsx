@@ -11,13 +11,14 @@ import CarSpecs from "./CarSpecs/CarSpecs";
 import CarFeatures from "./CarFeatures/CarFeatures";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
-import { createCar } from "@/Services/VendorServices/VendorAddCarServices";
+import { createCar, createCwd } from "@/Services/VendorServices/VendorAddCarServices";
+
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 
-function AddCar({ edit }) {
+function AddCar({ edit, cwd }) {
     const router = useRouter();
     const validationSchema = Yup.object({
         name: Yup.string().required("Car name is required"),

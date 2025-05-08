@@ -13,6 +13,13 @@ function VendorSidebar() {
         queryKey: ["vendorProfile"],
         queryFn: getCurrentUser
     });
+
+    useEffect(() => {
+        if (vendorData) {
+            console.log("Vendor Data:", vendorData);
+        }
+    }, [vendorData]);
+
     const pathName = usePathname();
 
     const toggleSubMenu = () => {
@@ -23,16 +30,23 @@ function VendorSidebar() {
         setIsSidebarVisible(!isSidebarVisible);
     };
 
+    const companyType = vendorData?.data?.user?.vendorProfile?.companyType;
+    console.log("Company Type:", companyType);
+
     // Define sidebar menu items with dividers
     const menuItems = [
         { path: "/", label: "Website", icon: "fas fa-globe", target: "_blank" },
         { path: "/vendor", label: "Dashboard", icon: "fas fa-home" },
         { path: "/vendor/license", label: "Trade License", icon: "fas fa-id-badge" },
         { path: "/vendor/leads", label: "Leads Management", icon: "fas fa-file-alt" },
-        { path: "/vendor/fleet", label: "My Fleet", icon: "fas fa-car" },
+        ...(companyType === "rental_service" ? [{ path: "/vendor/fleet", label: "My Fleet", icon: "fas fa-car" }] : []),
+        ...(companyType === "car_with_driver"
+            ? [{ path: "/vendor/car-with-driver", label: "My Fleet With Driver", icon: "fas fa-taxi" }]
+            : []),
+        // { path: "/vendor/fleet", label: "My Fleet", icon: "fas fa-car" },
         // { path: "/vendor/car-with-driver", label: "My Fleet With Driver", icon: "fas fa-taxi" },
         { path: "/vendor/manage-car-offers", label: "Manage Car Offers", icon: "fas fa-percentage" },
-        { path: "/vendor/profile", label: "Profile", icon: "far fa-user" },
+        { path: "/vendor/profile", label: "Profile", icon: "far fa-user" }
         // {
         //     path: "",
         //     label: "Settings",
@@ -62,9 +76,10 @@ function VendorSidebar() {
                             <span>Consumed Refresh</span>
                             {vendorData?.data?.user?.vendorPackageOrder?.userConsumePackageItems ? (
                                 (() => {
-                                    const refreshItem = vendorData?.data?.user?.vendorPackageOrder.userConsumePackageItems.find(
-                                        item => item.type === "day" && item.item === "Refresh"
-                                    );
+                                    const refreshItem =
+                                        vendorData?.data?.user?.vendorPackageOrder.userConsumePackageItems.find(
+                                            (item) => item.type === "day" && item.item === "Refresh"
+                                        );
                                     return (
                                         <span>
                                             {refreshItem?.used || 0} / {refreshItem?.quantity || 0}
@@ -76,15 +91,19 @@ function VendorSidebar() {
                             )}
                         </div>
                         <div className="progress-bar">
-                            <div className="filled" style={{
-                                width: (() => {
-                                    const refreshItem = vendorData?.data?.user?.vendorPackageOrder?.userConsumePackageItems?.find(
-                                        item => item.type === "day" && item.item === "Refresh"
-                                    );
-                                    if (!refreshItem || !refreshItem.quantity) return "0%";
-                                    return `${(refreshItem.used / refreshItem.quantity) * 100}%`;
-                                })()
-                            }} />
+                            <div
+                                className="filled"
+                                style={{
+                                    width: (() => {
+                                        const refreshItem =
+                                            vendorData?.data?.user?.vendorPackageOrder?.userConsumePackageItems?.find(
+                                                (item) => item.type === "day" && item.item === "Refresh"
+                                            );
+                                        if (!refreshItem || !refreshItem.quantity) return "0%";
+                                        return `${(refreshItem.used / refreshItem.quantity) * 100}%`;
+                                    })()
+                                }}
+                            />
                         </div>
                     </li>
                     {menuItems.map((item, index) => {

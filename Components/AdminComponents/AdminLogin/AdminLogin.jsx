@@ -92,13 +92,13 @@ function AdminLogin() {
     }, [admin]);
 
     return (
-        <section className="adminLoginSec">
-            <div className="animated-background">
+        <section className="adminLoginSec" style={{ backgroundImage: "url(/images/login/login_bg_blur.jpg)" }}>
+            {/* <div className="animated-background">
                 <div className="gradient-sphere sphere-1"></div>
                 <div className="gradient-sphere sphere-2"></div>
                 <div className="gradient-sphere sphere-3"></div>
                 <div className="particles" id="particles"></div>
-            </div>
+            </div> */}
 
             <div className="login-container">
                 <div className="login-header">

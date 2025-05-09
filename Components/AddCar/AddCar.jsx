@@ -9,15 +9,17 @@ import RentalTerms from "./RentalTerms/RentalTerms";
 import MulkiyaDetails from "./MulkiyaDetails/MulkiyaDetails";
 import CarSpecs from "./CarSpecs/CarSpecs";
 import CarFeatures from "./CarFeatures/CarFeatures";
+import CarWithDriverDetails from "./CarWithDriverDetails/CarWithDriverDetails";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
-import { createCar } from "@/Services/VendorServices/VendorAddCarServices";
+import { createCar, createCwd } from "@/Services/VendorServices/VendorAddCarServices";
+
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 
-function AddCar({ edit }) {
+function AddCar({ edit, cwd }) {
     const router = useRouter();
     const validationSchema = Yup.object({
         name: Yup.string().required("Car name is required"),
@@ -78,7 +80,13 @@ function AddCar({ edit }) {
         securityDepositReturn: Yup.string().required("Security Deposit Return is required"),
         minimumRequiredAge: Yup.number()
             .required("Minimum Required Age is required")
-            .min(18, "Minimum Required Age is 18")
+            .min(18, "Minimum Required Age is 18"),
+
+        // Car WIrth driver
+
+        serviceTypeId: cwd ? Yup.string().required("Service type is required") : Yup.string(),
+        maximumPassengersAllow: cwd ? Yup.number().required("Maximum passengers is required") : Yup.number(),
+        luggage: cwd ? Yup.string().required("Luggage is required") : Yup.string()
     }).required();
 
     const defaultCarFormValues = {
@@ -116,7 +124,11 @@ function AddCar({ edit }) {
         insuranceIncluded: false,
         additionalPricePerKm: "",
         minimumRequiredAge: "",
-        securityDepositReturn: ""
+        securityDepositReturn: "",
+        // CWD-only defaults
+        serviceTypeId: "",
+        maximumPassengersAllow: "",
+        luggage: ""
     };
 
     const {
@@ -124,6 +136,7 @@ function AddCar({ edit }) {
         control,
         setValue,
         reset,
+        register,
         formState: { errors, isValid }
     } = useForm({
         defaultValues: defaultCarFormValues,
@@ -132,7 +145,7 @@ function AddCar({ edit }) {
 
     // API mutation
     const addCarMutation = useMutation({
-        mutationFn: createCar,
+        mutationFn: cwd ? createCwd : createCar,
         onSuccess: () => {
             toast.success(edit ? "Car updated successfully" : "Car added successfully");
             reset();
@@ -206,6 +219,7 @@ function AddCar({ edit }) {
                 <CarPricing control={control} errors={errors} onChange={handleCarPricingChange} />
                 <CarColors control={control} errors={errors} onChange={handleCarColorsChange} />
                 <RentalTerms control={control} errors={errors} onChange={handleRentalTermsChange} />
+                {cwd && <CarWithDriverDetails control={control} errors={errors} edit={edit} />}
                 <MulkiyaDetails control={control} errors={errors} onChange={handleMulkiyaDetailsChange} />
                 <CarSpecs control={control} errors={errors} onChange={handleCarSpecsChange} />
                 <CarFeatures control={control} errors={errors} onChange={handleCarFeaturesChange} />
@@ -213,7 +227,7 @@ function AddCar({ edit }) {
                     <button
                         type="submit"
                         className={`themeBtn  `}
-                    // disabled={addCarMutation.isPending || !isValid}
+                        // disabled={addCarMutation.isPending || !isValid}
                     >
                         {addCarMutation.isPending ? "Loading..." : edit ? "Update" : "Submit"}
                     </button>

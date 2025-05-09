@@ -24,7 +24,7 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
         onSuccess: () => {
             toast.success("Status Updated");
             refetchData?.();
-            if (typeof refetchVendor === 'function') {
+            if (typeof refetchVendor === "function") {
                 refetchVendor();
             }
         },
@@ -46,8 +46,7 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
         onError: (res) => {
             if (res?.response?.data?.errors[0]?.message === "You have already used your refresh limit") {
                 toast.error("You have Used Your Refresh Limit");
-            }
-            else {
+            } else {
                 toast.error("Failed to refresh car");
             }
         }
@@ -62,7 +61,7 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
         onError: () => {
             toast.error("Failed to delete discounted price");
         }
-    })
+    });
 
     const deleteCarMutation = useMutation({
         mutationFn: deleteCar,
@@ -71,9 +70,9 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
             refetchData?.();
         },
         onError: () => {
-            toast.error("Error Deleting Car.")
+            toast.error("Error Deleting Car.");
         }
-    })
+    });
 
     useEffect(() => {
         setLocalRowData(data);
@@ -134,16 +133,16 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                         }
                     };
                 }
-                if (key === 'time') {
+                if (key === "time") {
                     return {
                         field: key,
                         headerName: "Date",
                         flex: 1,
                         cellRenderer: (params) => {
-                            const updatedDate = formatDate(params?.value)
+                            const updatedDate = formatDate(params?.value);
                             return <p>{updatedDate}</p>;
                         }
-                    }
+                    };
                 }
                 if (key === "prices") {
                     return {
@@ -153,13 +152,16 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                         cellRenderer: (params) => {
                             return params?.value?.map((item, index) => (
                                 <div className="priceBox" key={index}>
-                                    <p key={index}>{item?.priceType} Price: <span>{item?.price}</span></p>
-                                    <p key={index}>{item?.priceType} Discounted Price: <span>{item?.discountedPrice}</span></p>
+                                    <p key={index}>
+                                        {item?.priceType} Price: <span>{item?.price}</span>
+                                    </p>
+                                    <p key={index}>
+                                        {item?.priceType} Discounted Price: <span>{item?.discountedPrice}</span>
+                                    </p>
                                 </div>
-                            ))
-
+                            ));
                         }
-                    }
+                    };
                 }
 
                 if (key === "deletePrice") {
@@ -172,7 +174,9 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                                 <div className="btnCont">
                                     <button
                                         title="Toggle Status"
-                                        className={`themeBtn statusBtn iconBtn ${deleteDiscountPriceMutation?.isPaused ? "disabled" : ""} `}
+                                        className={`themeBtn statusBtn iconBtn ${
+                                            deleteDiscountPriceMutation?.isPaused ? "disabled" : ""
+                                        } `}
                                         onClick={() => {
                                             deleteDiscountPriceMutation.mutate(params?.data?.id);
                                         }}
@@ -203,12 +207,32 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                     const id = params.data?.id;
                     const currentStatus = params.data?.status;
 
+                    // Three Dots Opt
+
+                    const [dropdownOpen, setDropdownOpen] = useState(false);
+                    const dropdownRef = useRef(null);
+                    // const router = useRouter();
+
+
+                    useEffect(() => {
+                        const handleClickOutside = (event) => {
+                            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                                setDropdownOpen(false);
+                            }
+                        };
+                        document.addEventListener("mousedown", handleClickOutside);
+                        return () => {
+                            document.removeEventListener("mousedown", handleClickOutside);
+                        };
+                    }, []);
+
                     return (
                         <div className="btnCont">
                             <button
                                 title="Toggle Status"
-                                className={`themeBtn statusBtn iconBtn ${currentStatus === true ? "active" : "inactive"
-                                    } ${statusMutation.isPending ? "disabled" : ""}`}
+                                className={`themeBtn statusBtn iconBtn ${
+                                    currentStatus === true ? "active" : "inactive"
+                                } ${statusMutation.isPending ? "disabled" : ""}`}
                                 onClick={() => {
                                     statusMutation.mutate({ id, enable: !currentStatus });
                                 }}
@@ -219,6 +243,28 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                             <button title="Refresh" onClick={() => refreshCar.mutate(id)} className="themeBtn iconBtn">
                                 <i className="fas fa-rocket" />
                             </button>
+                            <button
+                                title="More Option"
+                                className="themeBtn iconBtn"
+                                onClick={() => setDropdownOpen((prev) => !prev)}
+                            >
+                                <i className="fas fa-ellipsis-h" />
+                            </button>
+                            {dropdownOpen && (
+                                <div className="optionDropdownMenu">
+                                    <button onClick={() => console.log("Edit", id)}>
+                                        <i className="fas fa-pen" /> Edit
+                                    </button>
+                                    <button onClick={() => console.log("Edit Images", id)}>
+                                        <i className="fas fa-image" /> Edit Images
+                                    </button>
+                                    <button onClick={() => console.log("Delete", id)}>
+                                        <i className="fas fa-trash" /> Delete
+                                    </button>
+                                </div>
+                            )}
+
+
                             {/* <Link title="Edit" className="themeBtn" href={`${pathName}/edit/${id}`}>
                                 <i className="fas fa-pencil" />
                             </Link> */}
@@ -272,6 +318,7 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                 suppressCellFocus={true}
                 domLayout="autoHeight"
                 onGridReady={onGridReady}
+                ensureDomOrder={true}
             />
         </div>
     );

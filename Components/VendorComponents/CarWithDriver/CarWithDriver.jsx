@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import SecHeading from '@/Components/SecHeading/SecHeading'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
@@ -8,35 +8,25 @@ import { getCwd } from "@/Services/VendorServices/VendorServices"
 import "./CarWithDriver.scss"
 
 function CarWithDriver() {
-    const [vendorCwdData, setvendorCarWithDriver] = useState([]);
-    
-        const { data: CarWithDriverResponse, refetch } = useQuery({
-            queryKey: ["cwd"],
-            queryFn: getCwd,
-        });
 
-        useEffect(() => {
-            console.log("Full CarWithDriverResponse:", cwdResponse);
-        
-            const cars = CwdResponse?.data; // adjust this key based on real structure
-            if (Array.isArray(cars)) {
-                const transformed = cars.map(car => ({
-                    carName: car.car?.name,
-                }));
-                setvendorCarWithDriver(transformed);
-            } else {
-                console.warn("Expected an array, but got:", cars);
-            }
-        }, [CwdResponse]);
-        
+    const [cwdData, setCwdData] = useState([]);
     
-        // useEffect(() => {
-        //     const transformed = CarWithDriverResponse?.data?.map(car => ({
-        //         carName: car.car?.name,
-        //     }));
-        //     setvendorCarWithDriver(transformed);
-        //     console.log("CarWithDriverResponse", CarWithDriverResponse);
-        // }, [CarWithDriverResponse]);
+      const { data: cwdResponse, refetch  } = useQuery({
+        queryKey: ["cwd"],
+        queryFn: getCwd,
+      });
+    
+      useEffect(() => {
+        console.log("Full CarWithDriverResponse:", cwdResponse);
+        const transformed = (cwdResponse?.data?.cars || []).map(cwd => ({
+            id: cwd.id,
+            name: cwd.car?.name,
+            status: cwd.status,
+          }));
+        setCwdData(transformed);
+      }, [cwdResponse]);
+
+    
 
     return (
         <>
@@ -56,7 +46,7 @@ function CarWithDriver() {
                     Add
                 </Link>
             </div>
-            <VendorTable data={vendorCarWithDriverData} refetchData={refetch} showAction={true} />
+            <VendorTable data={cwdData} refetchData={refetch} showAction={true} />
         </>
     )
 }

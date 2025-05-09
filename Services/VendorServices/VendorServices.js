@@ -20,9 +20,6 @@ export const getCwd = async () => {
     }
 };
 
-
-
-
 export const getCurrentVendor = async () => {
     try {
         const response = await API.get("/vendors/profile");

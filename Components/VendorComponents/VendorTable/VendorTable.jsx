@@ -213,7 +213,6 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                     const dropdownRef = useRef(null);
                     // const router = useRouter();
 
-
                     useEffect(() => {
                         const handleClickOutside = (event) => {
                             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -252,18 +251,19 @@ const VendorTable = ({ data = [], refetchData, action, refreshItem, refetchVendo
                             </button>
                             {dropdownOpen && (
                                 <div className="optionDropdownMenu">
-                                    <button onClick={() => console.log("Edit", id)}>
-                                        <i className="fas fa-pen" /> Edit
-                                    </button>
-                                    <button onClick={() => console.log("Edit Images", id)}>
+                                    <Link href={`${pathName}/edit/${id}`}>
+                                        <button>
+                                            <i className="fas fa-pen" /> Edit
+                                        </button>
+                                    </Link>
+                                    {/* <button onClick={() => console.log("Edit Images", id)}>
                                         <i className="fas fa-image" /> Edit Images
                                     </button>
                                     <button onClick={() => console.log("Delete", id)}>
                                         <i className="fas fa-trash" /> Delete
-                                    </button>
+                                    </button> */}
                                 </div>
                             )}
-
 
                             {/* <Link title="Edit" className="themeBtn" href={`${pathName}/edit/${id}`}>
                                 <i className="fas fa-pencil" />

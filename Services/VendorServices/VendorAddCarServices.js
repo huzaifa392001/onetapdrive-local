@@ -16,6 +16,20 @@ export const createCar = async (formData) => {
     }
 };
 
+export const createCwd = async (formData) => {
+    try {
+        const response = await API.post("/cars/create-car-with-driver", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error creating cwd:", error);
+        throw error;
+    }
+};
+
 export const getCarBrands = async () => {
     try {
         const response = await API.get("/brands");

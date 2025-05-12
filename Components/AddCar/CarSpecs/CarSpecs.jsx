@@ -3,7 +3,7 @@ import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import { Controller } from "react-hook-form";
 
-const CarSpecs = memo(function CarSpecs({ control, errors }) {
+const CarSpecs = memo(function CarSpecs({ control, errors, cwd }) {
     const doorsData = useSelector((state) => state.car.doors);
     const transmissionData = useSelector((state) => state.car.transmission);
     const bagsData = useSelector((state) => state.car.bags);
@@ -25,9 +25,7 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                         rules={{ required: "Door specification is required" }}
                         render={({ field }) => (
                             <select {...field} id="car_doors">
-                                <option value="">
-                                    Select Car Doors*
-                                </option>
+                                <option value="">Select Car Doors*</option>
                                 {doorsData?.map((item, index) => (
                                     <option key={index} value={item?.id}>
                                         {item?.name}
@@ -47,9 +45,7 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                         rules={{ required: "Transmission type is required" }}
                         render={({ field }) => (
                             <select {...field} id="car_transmission">
-                                <option value="">
-                                    Select Car Transmission*
-                                </option>
+                                <option value="">Select Car Transmission*</option>
                                 {transmissionData?.map((item, index) => (
                                     <option key={index} value={item?.id}>
                                         {item?.name}
@@ -69,9 +65,7 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                         rules={{ required: "Bag fit specification is required" }}
                         render={({ field }) => (
                             <select {...field} id="bags_fit">
-                                <option value="">
-                                    Select Bags Limit*
-                                </option>
+                                <option value="">Select Bags Limit*</option>
                                 {bagsData?.map((item, index) => (
                                     <option key={index} value={item?.id}>
                                         {item?.name}
@@ -91,9 +85,7 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                         rules={{ required: "Fuel type is required" }}
                         render={({ field }) => (
                             <select {...field} id="fuel_type">
-                                <option value="">
-                                    Select Fuel Type*
-                                </option>
+                                <option value="">Select Fuel Type*</option>
                                 {fuelTypeData?.map((item, index) => (
                                     <option key={index} value={item?.id}>
                                         {item?.name}
@@ -113,9 +105,7 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                         rules={{ required: "Seating capacity is required" }}
                         render={({ field }) => (
                             <select {...field} id="seating_capacity">
-                                <option value="">
-                                    Select Seating Capacity*
-                                </option>
+                                <option value="">Select Seating Capacity*</option>
                                 {seatingData?.map((item, index) => (
                                     <option key={index} value={item?.id}>
                                         {item?.name}
@@ -135,9 +125,7 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                         rules={{ required: "Car specification is required" }}
                         render={({ field }) => (
                             <select {...field} id="car_specs">
-                                <option value="">
-                                    Select Car Specs*
-                                </option>
+                                <option value="">Select Car Specs*</option>
                                 {specsData?.map((item, index) => (
                                     <option key={index} value={item?.id}>
                                         {item?.name}
@@ -148,6 +136,54 @@ const CarSpecs = memo(function CarSpecs({ control, errors }) {
                     />
                     {errors?.specId && <p className="error-message">{errors.specId.message}</p>}
                 </div>
+
+                {cwd && (
+                    <>
+                        {/* Service Type */}
+                        <div className={`inputCont full ${errors?.serviceTypeId ? "error" : ""}`}>
+                            <label>Service Type*</label>
+                            <Controller
+                                name="serviceTypeId"
+                                control={control}
+                                rules={{ required: "Service Type is required" }}
+                                render={({ field }) => (
+                                    <input {...field} type="text" placeholder="Enter service type (e.g. Chauffeur)" />
+                                )}
+                            />
+                            {errors?.serviceTypeId && <p className="error-message">{errors.serviceTypeId.message}</p>}
+                        </div>
+
+                        {/* Maximum Passengers */}
+                        <div className={`inputCont full ${errors?.maximumPassengersAllow ? "error" : ""}`}>
+                            <label>Maximum Passengers Allowed*</label>
+                            <Controller
+                                name="maximumPassengersAllow"
+                                control={control}
+                                rules={{ required: "Max passengers allowed is required" }}
+                                render={({ field }) => (
+                                    <input {...field} type="number" placeholder="Enter max passengers" />
+                                )}
+                            />
+                            {errors?.maximumPassengersAllow && (
+                                <p className="error-message">{errors.maximumPassengersAllow.message}</p>
+                            )}
+                        </div>
+
+                        {/* Luggage */}
+                        <div className={`inputCont full ${errors?.luggage ? "error" : ""}`}>
+                            <label>Luggage Capacity*</label>
+                            <Controller
+                                name="luggage"
+                                control={control}
+                                rules={{ required: "Luggage info is required" }}
+                                render={({ field }) => (
+                                    <input {...field} type="text" placeholder="Enter luggage details" />
+                                )}
+                            />
+                            {errors?.luggage && <p className="error-message">{errors.luggage.message}</p>}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

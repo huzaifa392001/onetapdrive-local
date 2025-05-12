@@ -38,8 +38,8 @@
 
     .login-container {
         @apply relative z-[2] w-full max-w-[440px] backdrop-blur-[20px] rounded-[24px] p-12 text-white overflow-hidden opacity-0 translate-y-5;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: var(--white);
+        border: 1px solid var(--theme-color-800);
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         animation: slideIn 0.6s ease-out forwards;
 
@@ -60,17 +60,17 @@
             @apply text-center mb-10;
 
             h1 {
-                @apply text-[3rem] font-bold mb-2;
+                @apply text-[3rem] font-bold mb-2 text-[var(--theme-color-400)];
             }
 
             p {
-                @apply text-[#fff7] text-[1.125rem];
+                @apply text-[var(--secondary-color)] text-[1.125rem];
             }
         }
 
         .input-container {
             label {
-                color: var(--white);
+                color: var(--theme-color-400);
             }
         }
     }
@@ -133,6 +133,9 @@
 .submit-button:hover::before {
     left: 100%;
 }
+.password-icon i {
+    color: var(--secondary-color);
+} 
 
 @keyframes fadeIn {
     from {
